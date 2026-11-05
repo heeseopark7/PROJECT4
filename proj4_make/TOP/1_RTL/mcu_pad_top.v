@@ -4,8 +4,18 @@
 //           through an I/O pad cell of the GPDK045 I/O library:
 //             PADDI : input buffer   (.PAD = chip pin, .Y = signal to the core)
 //             PADDO : output driver  (.A = signal from the core, .PAD = chip pin)
-//           Pad instance names pad1, pad2, ... so that the SDC can use
-//           set_dont_touch on them (same naming as the lab design).
+//
+// Pad ring : 32 pads, 8 per side. The pad numbers follow the ring order,
+//            counter-clockwise from the left side (pad names pad1 ... pad32, so
+//            the SDC can use set_dont_touch on them).
+//              Left   pad1  ~ pad8  : clk, clrn, UARTRXD, UARTTXD
+//              Bottom pad9  ~ pad16 : SPI master  SCLK, MOSI, MISO, CSN
+//              Right  pad17 ~ pad24 : SPI slave   SCLK, MOSI, MISO, CSN
+//              Top    pad25 ~ pad32 : interrupts  UARTINTR, SPIINTR, SLVINTR
+//            Each side, position 1..8:
+//              VSSIOR | sig | sig | VDD | VSS | sig | sig | VDDIOR
+//            The power / ground pads are in the file "add_pad" (included at the
+//            end of this module, commented out until PnR).
 //
 // Pads in use now : clk, clrn (mcu_top has no other pins at the moment).
 // The UART / SPI pads are commented out like their slots in mcu_top.v. To
@@ -16,8 +26,7 @@
 // Port order: peripheral pins first (commented), clk / clrn last, so the port
 // list stays valid with or without the comments.
 //
-// Not included (done in the PnR step): power / ground pads (PADVDD, PADVSS,
-// PADVDDIOR, PADVSSIOR), corner and filler cells.
+// Not included: corner and filler cells (PnR step).
 // The debug outputs of mcu_top (pc, inst, aluout, memout) are not routed to
 // pads (too many pins). With no peripheral connected, nothing in mcu_top is
 // observable, so synthesis would remove it: connect at least one peripheral
@@ -108,26 +117,40 @@ mcu_top     u_mcu_top   (
 );
 
 //------------------------------------------------------------------------------
-// Input pads
+// Left side (pad1 ~ pad8) : pad1 VSSIOR, pad4 VDD, pad5 VSS, pad8 VDDIOR in add_pad
 //------------------------------------------------------------------------------
-PADDI pad1 (.PAD(clk),      .Y(in_clk));        // clock
-PADDI pad2 (.PAD(clrn),     .Y(in_clrn));       // reset
-// PADDI pad3 (.PAD(UARTRXD),  .Y(in_UARTRXD)); // [UART]
-// PADDI pad6 (.PAD(SPIMISO),  .Y(in_SPIMISO)); // [SPI]
-// PADDI pad11(.PAD(SLVSCLK),  .Y(in_SLVSCLK)); // [SLV]
-// PADDI pad12(.PAD(SLVMOSI),  .Y(in_SLVMOSI)); // [SLV]
-// PADDI pad14(.PAD(SLVCSN),   .Y(in_SLVCSN));  // [SLV]
+PADDI pad2  (.PAD(clk),      .Y(in_clk));            // clock
+PADDI pad3  (.PAD(clrn),     .Y(in_clrn));           // reset
+// PADDI pad6  (.PAD(UARTRXD),  .Y(in_UARTRXD));     // [UART]
+// PADDO pad7  (.A(out_UARTTXD), .PAD(UARTTXD));     // [UART]
 
 //------------------------------------------------------------------------------
-// Output pads
+// Bottom side (pad9 ~ pad16) : pad9 VSSIOR, pad12 VDD, pad13 VSS, pad16 VDDIOR in add_pad
 //------------------------------------------------------------------------------
-// PADDO pad4 (.A(out_UARTTXD),  .PAD(UARTTXD));  // [UART]
-// PADDO pad5 (.A(out_UARTINTR), .PAD(UARTINTR)); // [UART]
-// PADDO pad7 (.A(out_SPISCLK),  .PAD(SPISCLK));  // [SPI]
-// PADDO pad8 (.A(out_SPIMOSI),  .PAD(SPIMOSI));  // [SPI]
-// PADDO pad9 (.A(out_SPICSN),   .PAD(SPICSN));   // [SPI]
-// PADDO pad10(.A(out_SPIINTR),  .PAD(SPIINTR));  // [SPI]
-// PADDO pad13(.A(out_SLVMISO),  .PAD(SLVMISO));  // [SLV]
-// PADDO pad15(.A(out_SLVINTR),  .PAD(SLVINTR));  // [SLV]
+// PADDO pad10 (.A(out_SPISCLK), .PAD(SPISCLK));     // [SPI]
+// PADDO pad11 (.A(out_SPIMOSI), .PAD(SPIMOSI));     // [SPI]
+// PADDI pad14 (.PAD(SPIMISO),  .Y(in_SPIMISO));     // [SPI]
+// PADDO pad15 (.A(out_SPICSN),  .PAD(SPICSN));      // [SPI]
+
+//------------------------------------------------------------------------------
+// Right side (pad17 ~ pad24) : pad17 VSSIOR, pad20 VDD, pad21 VSS, pad24 VDDIOR in add_pad
+//------------------------------------------------------------------------------
+// PADDI pad18 (.PAD(SLVSCLK),  .Y(in_SLVSCLK));     // [SLV]
+// PADDI pad19 (.PAD(SLVMOSI),  .Y(in_SLVMOSI));     // [SLV]
+// PADDO pad22 (.A(out_SLVMISO), .PAD(SLVMISO));     // [SLV]
+// PADDI pad23 (.PAD(SLVCSN),   .Y(in_SLVCSN));      // [SLV]
+
+//------------------------------------------------------------------------------
+// Top side (pad25 ~ pad32) : pad25 VSSIOR, pad28 VDD, pad29 VSS, pad31 spare VSS,
+//                            pad32 VDDIOR in add_pad
+//------------------------------------------------------------------------------
+// PADDO pad26 (.A(out_UARTINTR), .PAD(UARTINTR));   // [UART]
+// PADDO pad27 (.A(out_SPIINTR),  .PAD(SPIINTR));    // [SPI]
+// PADDO pad30 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
+
+//------------------------------------------------------------------------------
+// Power / ground pads (all commented out in the file until PnR)
+//------------------------------------------------------------------------------
+`include "add_pad"
 
 endmodule
