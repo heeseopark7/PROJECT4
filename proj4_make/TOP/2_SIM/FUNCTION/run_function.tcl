@@ -28,6 +28,8 @@ xrun -64bit \
      ../../1_RTL/scinstmem.v \
      ../../1_RTL/scdatamem.v \
      ../../1_RTL/apb_bridge.v \
+     /GPDK045/digital/giolib045_v3.5/vlog/pads_FF_s1vg.v \
+     /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v \
      -l func_sim.log
 
 # When the SPI master / slave are connected in mcu_top.v, add these lines
