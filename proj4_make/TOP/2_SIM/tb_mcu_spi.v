@@ -23,12 +23,12 @@ module tb_mcu_spi;
         if (!$value$plusargs("HEX=%s", hex)) hex = "prog_spi.hex";
         if (!$value$plusargs("EXP=%h", exp1)) exp1 = 32'hA5;
         have2 = $value$plusargs("EXP2=%h", exp2);
-        $readmemh(hex, dut.u_imem.rom);
+        $readmemh(hex, dut.uut2.r_rom);
         #55 clrn = 1;
         repeat (3000) @(posedge clk);
         $display("HEX=%0s RAM[1]=%h RAM[2]=%h CSN=%b csn_falls=%0d sclk_toggles=%0d pc=%h",
-                 hex, dut.u_dmem.ram[1], dut.u_dmem.ram[2], CSN, csn_low_seen, sclk_toggles, pc);
-        if (dut.u_dmem.ram[1] === exp1 && (!have2 || dut.u_dmem.ram[2] === exp2)) $display("PASS");
+                 hex, dut.uut3.r_ram[1], dut.uut3.r_ram[2], CSN, csn_low_seen, sclk_toggles, pc);
+        if (dut.uut3.r_ram[1] === exp1 && (!have2 || dut.uut3.r_ram[2] === exp2)) $display("PASS");
         else $display("FAIL");
         $finish;
     end
