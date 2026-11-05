@@ -12,8 +12,8 @@ module tb_mcu_spi;
 
     wire [7:0] s_rx; wire s_valid; reg [7:0] echo = 0;
     always @(posedge clk) if (s_valid) echo <= s_rx;
-    spi_slave slv (.clk(clk), .rst_n(clrn), .cpol(1'b0), .cpha(1'b0), .sclk(SCLK), .cs_n(CSN),
-                   .mosi(MOSI), .miso(MISO), .tx_data(echo), .rx_data(s_rx), .rx_valid(s_valid));
+    spi_slave slv (.clk(clk), .nRst(clrn), .i_cpol(1'b0), .i_cpha(1'b0), .i_sclk(SCLK), .i_cs_n(CSN),
+                   .i_mosi(MOSI), .o_miso(MISO), .i_tx_data(echo), .o_rx_data(s_rx), .o_rx_valid(s_valid));
 
     reg [1023:0] hex; integer exp1, exp2, have2, csn_low_seen = 0, sclk_toggles = 0;
     always @(negedge CSN) csn_low_seen = csn_low_seen + 1;
