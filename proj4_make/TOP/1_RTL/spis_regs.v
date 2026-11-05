@@ -17,7 +17,10 @@
 //   SSDR : write = reply byte for the next transfer
 //          read  = last received byte (also clears RXNE)
 //   The reply byte is taken by spi_slave when the master pulls CS_N low (and
-//   after each received byte), so write SSDR before the master starts.
+//   right after each received byte), so write SSDR before the master starts.
+//   Several bytes in one CS_N frame repeat the same reply byte, because
+//   software cannot change SSDR fast enough between two bytes.
+//   The master must set its SCLK idle level (CPOL) before it pulls CS_N low.
 //==============================================================================
 
 `timescale 1ns / 1ps
