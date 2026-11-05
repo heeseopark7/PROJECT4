@@ -12,7 +12,7 @@
 `timescale 1ns / 1ps
 
 module scinstmem #(
-    parameter       INIT_FILE   = "prog.hex"            ,   // program image
+    parameter       INIT_FILE   = ""                    ,   // program image ("" = nothing loaded, the testbench loads it)
     parameter       AW          = 8                         // 2^AW words
 )(                  i_addr                              ,
                     o_inst
@@ -37,7 +37,9 @@ initial begin
     for (i = 0; i < (1<<AW); i = i + 1) begin
         r_rom[i]    =   32'd0           ;
     end
-    $readmemh(INIT_FILE, r_rom);
+    if (INIT_FILE != "")  begin
+        $readmemh(INIT_FILE, r_rom);
+    end
 end
 
 assign  o_inst = r_rom[i_addr[AW+1:2]]  ;

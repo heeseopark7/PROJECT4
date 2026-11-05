@@ -5,9 +5,12 @@
 # -define : To provide SDF definition present in the testbench file
 # -v : To provide library in ".v" format
 # +libext : library extention
-# +libext+.v -y : xrun would compile .v files automatically in the specific folder decribed with -y option 
+# +libext+.v -y : xrun would compile .v files automatically in the specific folder decribed with -y option
 
-# HEX file is defined at ../TESTBENCH/tb_cmsdk_mcu.v 
+# Target : mcu_top (CPU + memories + APB bridge) with ../TESTBENCH/tb_mcu_top.v
+# The test program is written inside tb_mcu_top.v (no HEX file is needed).
+# The RTL files are in ../../1_RTL. UART / SPI are commented out in mcu_top.v,
+# so their files are not listed yet (see the commented lines below).
 xrun -64bit \
      +max_err_count+50 \
      +define+function_sim \
@@ -16,53 +19,23 @@ xrun -64bit \
      -profthread \
      -gui \
      +libext+.v \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_timer/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_dualtimers/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_uart/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_watchdog/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_slave_mux/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_apb_subsystem/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_ahb_slave_mux/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_ahb_default_slave/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_ahb_gpio/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_ahb_to_apb/verilog \
-     -incdir ../../../../cortexm0_designstart/logical/models/clkgate \
-     -incdir ../../../../cortexm0_designstart/logical/cmsdk_iop_gpio/verilog \
-     -incdir ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0_integration/verilog \
-     -incdir ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0_dap/verilog \
-     -incdir ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/models/cells \
-     -incdir ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0ds/verilog \
-     -incdir ../../../../SoC_make_G45/TOP/RTL/memories_smkcow_1 \
-     -incdir ../../../../SoC_make_G45/TOP/RTL/verilog_smkcow \
-     -incdir ../../../../SoC_make_G45/TOP/RTL \
+     -incdir ../../1_RTL \
      -incdir ../TESTBENCH \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_timer/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_dualtimers/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_uart/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_watchdog/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_slave_mux/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_apb_subsystem/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_ahb_slave_mux/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_ahb_default_slave/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_ahb_gpio/verilog \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_ahb_to_apb/verilog \
-     -y ../../../../cortexm0_designstart/logical/models/clkgate \
-     -y ../../../../cortexm0_designstart/logical/cmsdk_iop_gpio/verilog \
-     -y ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0ds/verilog \
-     -y ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0_integration/verilog \
-     -y ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/cortexm0_dap/verilog \
-     -y ../../../../cortexm0_designstart/cores/cortexm0_designstart_r1p0/logical/models/cells \
-     -y ../../../../GPDK045/digital/giolib045_v3.5/vlog \
-     -y ../../../../GPDK045/digital//gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog \
-     -y ../../../../GPDK045/digital \
-     -y ../../../../SoC_make_G45/TOP/RTL/verilog_smkcow \
-     -y ../../../../SoC_make_G45/TOP/RTL \
-     ../TESTBENCH/tb_cmsdk_mcu.v \
-     ../../../../SoC_make_G45/TOP/RTL/cmsdk_mcu.v \
-     ../../RTL/memories_smkcow_1/cmsdk_ahb_ram.v \
-     ../../RTL/memories_smkcow_1/cmsdk_ahb_ram_beh.v \
-     ../../RTL/memories_smkcow_1/cmsdk_ahb_rom.v \
-     ../../RTL/memories_smkcow_1/cmsdk_ahb_rom_beh.v \
-     ../../../../GPDK045/digital/giolib045_v3.5/vlog/pads_FF_s1vg.v \
-     ../../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v \
+     -top tb_mcu_top \
+     ../TESTBENCH/tb_mcu_top.v \
+     ../../1_RTL/mcu_top.v \
+     ../../1_RTL/sccpu.v \
+     ../../1_RTL/scinstmem.v \
+     ../../1_RTL/scdatamem.v \
+     ../../1_RTL/apb_bridge.v \
      -l func_sim.log
+
+# When the SPI master / slave are connected in mcu_top.v, add these lines
+# before "-l func_sim.log" (and add the "\" at the end of the line above):
+#     ../../1_RTL/spi_apb_top.v \
+#     ../../1_RTL/spi_regs.v \
+#     ../../1_RTL/sclk_gen.v \
+#     ../../1_RTL/spi_master.v \
+#     ../../1_RTL/spi_slave_apb_top.v \
+#     ../../1_RTL/spis_regs.v \
+#     ../../1_RTL/spi_slave.v \
