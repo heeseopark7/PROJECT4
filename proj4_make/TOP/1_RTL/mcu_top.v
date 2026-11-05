@@ -1,45 +1,160 @@
-// MCU top: single-cycle MIPS + APB bridge + Extended UART (SPI slot reserved at 0x4000_1000)
+//==============================================================================
+// Module  : mcu_top
+// Purpose : Top level of the MCU. Single-cycle MIPS CPU, instruction memory,
+//           data RAM, address decoder and APB bridge.
+//           The UART and SPI slots are present only as commented-out code:
+//             UART : APB slot 0, 0x4000_0000 ~ 0x4000_0FFF
+//             SPI  : APB slot 1, 0x4000_1000 ~ 0x4000_1FFF (spec not final)
+//           To connect the UART, remove the "//" marks on the lines marked
+//           [UART] (ports, wires, psel, instance, read mux).
+//
+// Memory map:
+//   0x0000_0000 ~ 0x0000_007F : data RAM (any address outside the APB region)
+//   0x4000_xxxx               : APB region, slot = address[15:12]
+//   An APB address with no connected slave reads 0 and ignores writes.
+//
+// Data paths:
+//   (1) fetch  : pc -> scinstmem -> inst -> sccpu
+//   (2) RAM    : sccpu -> aluout/data/wmem -> scdatamem -> ram_out -> memout
+//   (3) APB    : sccpu -> decoder (req) -> apb_bridge -> stall / penable
+//   (4) read   : RAM data or APB read data -> memout -> sccpu
+//==============================================================================
+
+`timescale 1ns / 1ps
+
 module mcu_top (
-    input         clk,
-    input         clrn,
-    input         UARTRXD,
-    output        UARTTXD,
-    output        UARTINTR,
-    output [31:0] pc,
-    output [31:0] inst,
-    output [31:0] aluout,
-    output [31:0] memout
+                    clk                                 ,
+                    clrn                                ,
+//                  UARTRXD                             ,   // [UART]
+//                  UARTTXD                             ,   // [UART]
+//                  UARTINTR                            ,   // [UART]
+                    pc                                  ,
+                    inst                                ,
+                    aluout                              ,
+                    memout
 );
-    wire [31:0] data, ram_out, prdata;
-    wire        wmem, stall, penable;
 
-    // address decoder
-    wire is_lw     = (inst[31:26] == 6'h23);
-    wire in_apb    = (aluout[31:16] == 16'h4000);
-    wire req       = in_apb & (is_lw | wmem);
-    wire psel_uart = req & (aluout[15:12] == 4'h0);
-    // wire psel_spi = req & (aluout[15:12] == 4'h1);   // reserved (OI-5)
+//------------------------------------------------------------------------------
+// External ports
+//------------------------------------------------------------------------------
+input               clk                                 ;   // single clock (UART: PCLK)
+input               clrn                                ;   // reset, active-LOW, async assert (UART: PRESETn)
+// input            UARTRXD                             ;   // [UART] serial receive input
+// output           UARTTXD                             ;   // [UART] serial transmit output
+// output           UARTINTR                            ;   // [UART] combined interrupt (observe only)
+output  [31:0]      pc                                  ;   // debug: program counter
+output  [31:0]      inst                                ;   // debug: current instruction
+output  [31:0]      aluout                              ;   // debug: data address / ALU result
+output  [31:0]      memout                              ;   // debug: load data returned to the CPU
 
-    sccpu u_cpu (.clk(clk), .clrn(clrn), .inst(inst), .memout(memout), .stall(stall),
-                 .pc(pc), .wmem(wmem), .aluout(aluout), .data(data));
+//------------------------------------------------------------------------------
+// Internal wires
+//------------------------------------------------------------------------------
+wire    [31:0]      w_data                              ;   // sccpu -> RAM / APB, store data
+wire    [31:0]      w_ram_out                           ;   // scdatamem -> read mux, RAM read data
+// wire [31:0]      w_prdata                            ;   // [UART] UART -> read mux, APB read data
+wire                w_wmem                              ;   // sccpu -> RAM / APB, store strobe
+wire                w_stall                             ;   // apb_bridge -> sccpu, hold the CPU
+wire                w_penable                           ;   // apb_bridge -> slaves, ACCESS phase
+wire                w_is_lw                             ;   // current instruction is lw (opcode 0x23)
+wire                w_in_apb                            ;   // data address upper 16 bits == 0x4000
+wire                w_req                               ;   // lw/sw to the APB region in progress
+// wire             w_psel_uart                         ;   // [UART] slot 0 select
+// wire             w_psel_spi                          ;   // [SPI]  slot 1 select (reserved)
 
-    scinstmem u_imem (.a(pc), .inst(inst));
+//------------------------------------------------------------------------------
+// Address decoder
+//   The CPU has no read enable, so a read is recognized by the opcode.
+//------------------------------------------------------------------------------
+assign  w_is_lw      = (inst[31:26] == 6'h23)               ;
+assign  w_in_apb     = (aluout[31:16] == 16'h4000)          ;
+assign  w_req        = w_in_apb & (w_is_lw | w_wmem)        ;
+// assign  w_psel_uart  = w_req & (aluout[15:12] == 4'h0)   ;   // [UART]
+// assign  w_psel_spi   = w_req & (aluout[15:12] == 4'h1)   ;   // [SPI]
 
-    scdatamem u_dmem (.clk(clk), .we(wmem & ~in_apb), .addr(aluout),
-                      .datain(data), .dataout(ram_out));
+//------------------------------------------------------------------------------
+// sccpu : single-cycle MIPS CPU
+//------------------------------------------------------------------------------
+sccpu       uut1    (
+                .clk            (clk         )   ,
+                .nRst           (clrn        )   ,
+                .i_inst         (inst        )   ,
+                .i_memout       (memout      )   ,
+                .i_stall        (w_stall     )   ,
+                .o_pc           (pc          )   ,
+                .o_wmem         (w_wmem      )   ,
+                .o_aluout       (aluout      )   ,
+                .o_data         (w_data      )
+);
 
-    apb_bridge u_bridge (.clk(clk), .clrn(clrn), .req(req),
-                         .psel(), .penable(penable), .stall(stall));
+//------------------------------------------------------------------------------
+// scinstmem : instruction memory (read by pc only)
+//------------------------------------------------------------------------------
+scinstmem   uut2    (
+                .i_addr         (pc          )   ,
+                .o_inst         (inst        )
+);
 
-    uart_ex_top u_uart (
-        .PCLK(clk), .PRESETn(clrn),
-        .PSEL(psel_uart), .PENABLE(penable), .PWRITE(wmem),
-        .PADDR(aluout[11:2]), .PWDATA(data), .PRDATA(prdata),
-        .PREADY(), .PSLVERR(),
-        .UARTRXD(UARTRXD), .UARTTXD(UARTTXD),
-        .UARTRXINTR(), .UARTTXINTR(), .UARTRTINTR(), .UARTEINTR(),
-        .UARTINTR(UARTINTR));
+//------------------------------------------------------------------------------
+// scdatamem : data RAM. Stores to the APB region are blocked (w_in_apb),
+//   otherwise address bits [6:2] would overwrite RAM word 0.
+//------------------------------------------------------------------------------
+scdatamem   uut3    (
+                .clk            (clk                )   ,
+                .i_we           (w_wmem & ~w_in_apb )   ,
+                .i_addr         (aluout             )   ,
+                .i_wdata        (w_data             )   ,
+                .o_rdata        (w_ram_out          )
+);
 
-    // read mux: RAM / UART / unmapped APB = 0
-    assign memout = in_apb ? (psel_uart ? prdata : 32'd0) : ram_out;
+//------------------------------------------------------------------------------
+// apb_bridge : makes the SETUP / ACCESS timing and stalls the CPU
+//------------------------------------------------------------------------------
+apb_bridge  uut4    (
+                .clk            (clk         )   ,
+                .nRst           (clrn        )   ,
+                .i_req          (w_req       )   ,
+                .o_psel         (            )   ,
+                .o_penable      (w_penable   )   ,
+                .o_stall        (w_stall     )
+);
+
+//------------------------------------------------------------------------------
+// uart_ex_top : [UART] APB slave, slot 0 (PADDR is the word address [11:2])
+//------------------------------------------------------------------------------
+// uart_ex_top uut5    (
+//                 .PCLK           (clk            )   ,
+//                 .PRESETn        (clrn           )   ,
+//                 .PSEL           (w_psel_uart    )   ,
+//                 .PENABLE        (w_penable      )   ,
+//                 .PWRITE         (w_wmem         )   ,
+//                 .PADDR          (aluout[11:2]   )   ,
+//                 .PWDATA         (w_data         )   ,
+//                 .PRDATA         (w_prdata       )   ,
+//                 .PREADY         (               )   ,
+//                 .PSLVERR        (               )   ,
+//                 .UARTRXD        (UARTRXD        )   ,
+//                 .UARTTXD        (UARTTXD        )   ,
+//                 .UARTRXINTR     (               )   ,
+//                 .UARTTXINTR     (               )   ,
+//                 .UARTRTINTR     (               )   ,
+//                 .UARTEINTR      (               )   ,
+//                 .UARTINTR       (UARTINTR       )
+// );
+
+//------------------------------------------------------------------------------
+// spi_top : [SPI] APB slave, slot 1 (spec not final, OI-5)
+//------------------------------------------------------------------------------
+// spi_top     uut6    (
+//                 ...
+// );
+
+//------------------------------------------------------------------------------
+// Read data mux
+//   RAM address     : scdatamem output
+//   APB, no slave   : 0
+//------------------------------------------------------------------------------
+assign  memout = w_in_apb ? 32'd0 : w_ram_out ;
+// assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : 32'd0) : w_ram_out ;   // [UART] use this line instead
+
 endmodule
