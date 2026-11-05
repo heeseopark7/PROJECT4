@@ -4,13 +4,14 @@
 //           data RAM, address decoder and APB bridge.
 //           The UART and SPI slots are present only as commented-out code:
 //             UART : APB slot 0, 0x4000_0000 ~ 0x4000_0FFF
-//             SPI  : APB slot 1, 0x4000_1000 ~ 0x4000_1FFF (spec not final)
-//           To connect the UART, remove the "//" marks on the lines marked
-//           [UART] (ports, wires, psel, instance, read mux).
+//             SPI  : APB slot 1, 0x4000_1000 ~ 0x4000_1FFF (spi_apb_top)
+//           To connect a peripheral, remove the "//" marks on the lines marked
+//           [UART] / [SPI] (ports, wires, psel, instance) and use the matching
+//           read mux line at the bottom instead of the active one.
 //
 // Memory map:
 //   0x0000_0000 ~ 0x0000_007F : data RAM (any address outside the APB region)
-//   0x4000_xxxx               : APB region, slot = address[15:12]
+//   0x4000_xxxx               : APB region, slot = address[15:12] (0 = UART, 1 = SPI)
 //   An APB address with no connected slave reads 0 and ignores writes.
 //
 // Data paths:
@@ -28,6 +29,11 @@ module mcu_top (
 //                  UARTRXD                             ,   // [UART]
 //                  UARTTXD                             ,   // [UART]
 //                  UARTINTR                            ,   // [UART]
+//                  SPISCLK                             ,   // [SPI]
+//                  SPIMOSI                             ,   // [SPI]
+//                  SPIMISO                             ,   // [SPI]
+//                  SPICSN                              ,   // [SPI]
+//                  SPIINTR                             ,   // [SPI]
                     pc                                  ,
                     inst                                ,
                     aluout                              ,
@@ -42,6 +48,11 @@ input               clrn                                ;   // reset, active-LOW
 // input            UARTRXD                             ;   // [UART] serial receive input
 // output           UARTTXD                             ;   // [UART] serial transmit output
 // output           UARTINTR                            ;   // [UART] combined interrupt (observe only)
+// output           SPISCLK                             ;   // [SPI] serial clock
+// output           SPIMOSI                             ;   // [SPI] master out, slave in
+// input            SPIMISO                             ;   // [SPI] master in, slave out
+// output           SPICSN                              ;   // [SPI] chip select, active-LOW
+// output           SPIINTR                             ;   // [SPI] interrupt (observe only)
 output  [31:0]      pc                                  ;   // debug: program counter
 output  [31:0]      inst                                ;   // debug: current instruction
 output  [31:0]      aluout                              ;   // debug: data address / ALU result
@@ -53,6 +64,7 @@ output  [31:0]      memout                              ;   // debug: load data 
 wire    [31:0]      w_data                              ;   // sccpu -> RAM / APB, store data
 wire    [31:0]      w_ram_out                           ;   // scdatamem -> read mux, RAM read data
 // wire [31:0]      w_prdata                            ;   // [UART] UART -> read mux, APB read data
+// wire [31:0]      w_prdata_spi                        ;   // [SPI]  SPI -> read mux, APB read data
 wire                w_wmem                              ;   // sccpu -> RAM / APB, store strobe
 wire                w_stall                             ;   // apb_bridge -> sccpu, hold the CPU
 wire                w_penable                           ;   // apb_bridge -> slaves, ACCESS phase
@@ -60,7 +72,7 @@ wire                w_is_lw                             ;   // current instructi
 wire                w_in_apb                            ;   // data address upper 16 bits == 0x4000
 wire                w_req                               ;   // lw/sw to the APB region in progress
 // wire             w_psel_uart                         ;   // [UART] slot 0 select
-// wire             w_psel_spi                          ;   // [SPI]  slot 1 select (reserved)
+// wire             w_psel_spi                          ;   // [SPI]  slot 1 select
 
 //------------------------------------------------------------------------------
 // Address decoder
@@ -143,10 +155,22 @@ apb_bridge  uut4    (
 // );
 
 //------------------------------------------------------------------------------
-// spi_top : [SPI] APB slave, slot 1 (spec not final, OI-5)
+// spi_apb_top : [SPI] APB slave, slot 1 (PADDR is the word address [11:2])
 //------------------------------------------------------------------------------
-// spi_top     uut6    (
-//                 ...
+// spi_apb_top uut6    (
+//                 .PCLK           (clk            )   ,
+//                 .PRESETn        (clrn           )   ,
+//                 .PSEL           (w_psel_spi     )   ,
+//                 .PENABLE        (w_penable      )   ,
+//                 .PWRITE         (w_wmem         )   ,
+//                 .PADDR          (aluout[11:2]   )   ,
+//                 .PWDATA         (w_data         )   ,
+//                 .PRDATA         (w_prdata_spi   )   ,
+//                 .SPISCLK        (SPISCLK        )   ,
+//                 .SPIMOSI        (SPIMOSI        )   ,
+//                 .SPIMISO        (SPIMISO        )   ,
+//                 .SPICSN         (SPICSN         )   ,
+//                 .SPIINTR        (SPIINTR        )
 // );
 
 //------------------------------------------------------------------------------
@@ -155,6 +179,6 @@ apb_bridge  uut4    (
 //   APB, no slave   : 0
 //------------------------------------------------------------------------------
 assign  memout = w_in_apb ? 32'd0 : w_ram_out ;
-// assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : 32'd0) : w_ram_out ;   // [UART] use this line instead
+// assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : w_psel_spi ? w_prdata_spi : 32'd0) : w_ram_out ;   // [UART]+[SPI]: use this line instead
 
 endmodule
