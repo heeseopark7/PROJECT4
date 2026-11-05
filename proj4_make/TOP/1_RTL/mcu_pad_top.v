@@ -38,19 +38,19 @@
 `timescale 1ns / 1ps
 
 module mcu_pad_top (
-//                  UARTRXD                             ,   // [UART]
-//                  UARTTXD                             ,   // [UART]
-//                  UARTINTR                            ,   // [UART]
-//                  SPISCLK                             ,   // [SPI]
-//                  SPIMOSI                             ,   // [SPI]
-//                  SPIMISO                             ,   // [SPI]
-//                  SPICSN                              ,   // [SPI]
-//                  SPIINTR                             ,   // [SPI]
-//                  SLVSCLK                             ,   // [SLV]
-//                  SLVMOSI                             ,   // [SLV]
-//                  SLVMISO                             ,   // [SLV]
-//                  SLVCSN                              ,   // [SLV]
-//                  SLVINTR                             ,   // [SLV]
+                    UARTRXD                             ,   // [UART]
+                    UARTTXD                             ,   // [UART]
+                    UARTINTR                            ,   // [UART]
+                    SPISCLK                             ,   // [SPI]
+                    SPIMOSI                             ,   // [SPI]
+                    SPIMISO                             ,   // [SPI]
+                    SPICSN                              ,   // [SPI]
+                    SPIINTR                             ,   // [SPI]
+                    SLVSCLK                             ,   // [SLV]
+                    SLVMOSI                             ,   // [SLV]
+                    SLVMISO                             ,   // [SLV]
+                    SLVCSN                              ,   // [SLV]
+                    SLVINTR                             ,   // [SLV]
                     clk                                 ,
                     clrn
 );
@@ -60,38 +60,38 @@ module mcu_pad_top (
 //------------------------------------------------------------------------------
 input               clk                                 ;   // clock
 input               clrn                                ;   // reset, active-LOW
-// input            UARTRXD                             ;   // [UART] serial receive
-// output           UARTTXD                             ;   // [UART] serial transmit
-// output           UARTINTR                            ;   // [UART] interrupt
-// output           SPISCLK                             ;   // [SPI]  serial clock
-// output           SPIMOSI                             ;   // [SPI]  master out, slave in
-// input            SPIMISO                             ;   // [SPI]  master in, slave out
-// output           SPICSN                              ;   // [SPI]  chip select
-// output           SPIINTR                             ;   // [SPI]  interrupt
-// input            SLVSCLK                             ;   // [SLV]  serial clock from the master
-// input            SLVMOSI                             ;   // [SLV]  master out, slave in
-// output           SLVMISO                             ;   // [SLV]  master in, slave out
-// input            SLVCSN                              ;   // [SLV]  chip select
-// output           SLVINTR                             ;   // [SLV]  interrupt
+input               UARTRXD                             ;   // [UART] serial receive
+output              UARTTXD                             ;   // [UART] serial transmit
+output              UARTINTR                            ;   // [UART] interrupt
+output              SPISCLK                             ;   // [SPI]  serial clock
+output              SPIMOSI                             ;   // [SPI]  master out, slave in
+input               SPIMISO                             ;   // [SPI]  master in, slave out
+output              SPICSN                              ;   // [SPI]  chip select
+output              SPIINTR                             ;   // [SPI]  interrupt
+input               SLVSCLK                             ;   // [SLV]  serial clock from the master
+input               SLVMOSI                             ;   // [SLV]  master out, slave in
+output              SLVMISO                             ;   // [SLV]  master in, slave out
+input               SLVCSN                              ;   // [SLV]  chip select
+output              SLVINTR                             ;   // [SLV]  interrupt
 
 //------------------------------------------------------------------------------
 // Internal wires (in_ = pad to core, out_ = core to pad)
 //------------------------------------------------------------------------------
 wire                in_clk                              ;   // clock after the input pad
 wire                in_clrn                             ;   // reset after the input pad
-// wire             in_UARTRXD                          ;   // [UART]
-// wire             out_UARTTXD                         ;   // [UART]
-// wire             out_UARTINTR                        ;   // [UART]
-// wire             out_SPISCLK                         ;   // [SPI]
-// wire             out_SPIMOSI                         ;   // [SPI]
-// wire             in_SPIMISO                          ;   // [SPI]
-// wire             out_SPICSN                          ;   // [SPI]
-// wire             out_SPIINTR                         ;   // [SPI]
-// wire             in_SLVSCLK                          ;   // [SLV]
-// wire             in_SLVMOSI                          ;   // [SLV]
-// wire             out_SLVMISO                         ;   // [SLV]
-// wire             in_SLVCSN                           ;   // [SLV]
-// wire             out_SLVINTR                         ;   // [SLV]
+wire                in_UARTRXD                          ;   // [UART]
+wire                out_UARTTXD                         ;   // [UART]
+wire                out_UARTINTR                        ;   // [UART]
+wire                out_SPISCLK                         ;   // [SPI]
+wire                out_SPIMOSI                         ;   // [SPI]
+wire                in_SPIMISO                          ;   // [SPI]
+wire                out_SPICSN                          ;   // [SPI]
+wire                out_SPIINTR                         ;   // [SPI]
+wire                in_SLVSCLK                          ;   // [SLV]
+wire                in_SLVMOSI                          ;   // [SLV]
+wire                out_SLVMISO                         ;   // [SLV]
+wire                in_SLVCSN                           ;   // [SLV]
+wire                out_SLVINTR                         ;   // [SLV]
 
 //------------------------------------------------------------------------------
 // Core
@@ -99,19 +99,19 @@ wire                in_clrn                             ;   // reset after the i
 mcu_top     u_mcu_top   (
                 .clk            (in_clk          )   ,
                 .clrn           (in_clrn         )   ,
-//              .UARTRXD        (in_UARTRXD      )   ,   // [UART]
-//              .UARTTXD        (out_UARTTXD     )   ,   // [UART]
-//              .UARTINTR       (out_UARTINTR    )   ,   // [UART]
-//              .SPISCLK        (out_SPISCLK     )   ,   // [SPI]
-//              .SPIMOSI        (out_SPIMOSI     )   ,   // [SPI]
-//              .SPIMISO        (in_SPIMISO      )   ,   // [SPI]
-//              .SPICSN         (out_SPICSN      )   ,   // [SPI]
-//              .SPIINTR        (out_SPIINTR     )   ,   // [SPI]
-//              .SLVSCLK        (in_SLVSCLK      )   ,   // [SLV]
-//              .SLVMOSI        (in_SLVMOSI      )   ,   // [SLV]
-//              .SLVMISO        (out_SLVMISO     )   ,   // [SLV]
-//              .SLVCSN         (in_SLVCSN       )   ,   // [SLV]
-//              .SLVINTR        (out_SLVINTR     )   ,   // [SLV]
+                .UARTRXD        (in_UARTRXD      )   ,   // [UART]
+                .UARTTXD        (out_UARTTXD     )   ,   // [UART]
+                .UARTINTR       (out_UARTINTR    )   ,   // [UART]
+                .SPISCLK        (out_SPISCLK     )   ,   // [SPI]
+                .SPIMOSI        (out_SPIMOSI     )   ,   // [SPI]
+                .SPIMISO        (in_SPIMISO      )   ,   // [SPI]
+                .SPICSN         (out_SPICSN      )   ,   // [SPI]
+                .SPIINTR        (out_SPIINTR     )   ,   // [SPI]
+                .SLVSCLK        (in_SLVSCLK      )   ,   // [SLV]
+                .SLVMOSI        (in_SLVMOSI      )   ,   // [SLV]
+                .SLVMISO        (out_SLVMISO     )   ,   // [SLV]
+                .SLVCSN         (in_SLVCSN       )   ,   // [SLV]
+                .SLVINTR        (out_SLVINTR     )   ,   // [SLV]
                 .pc             (                )   ,   // debug, no pads
                 .inst           (                )   ,
                 .aluout         (                )   ,
@@ -125,37 +125,37 @@ mcu_top     u_mcu_top   (
 //------------------------------------------------------------------------------
 PADDI pad2  (.PAD(clk),      .Y(in_clk));            // clock
 PADDI pad3  (.PAD(clrn),     .Y(in_clrn));           // reset
-// PADDI pad4  (.PAD(UARTRXD),  .Y(in_UARTRXD));     // [UART]
-// PADDO pad7  (.A(out_UARTTXD), .PAD(UARTTXD));     // [UART]
+PADDI pad4  (.PAD(UARTRXD),  .Y(in_UARTRXD));     // [UART]
+PADDO pad7  (.A(out_UARTTXD), .PAD(UARTTXD));     // [UART]
 
 //------------------------------------------------------------------------------
 // Bottom side (pad13 ~ pad24)
 //   power pads in add_pad: pad13 VSSIOR, pad17 VDD, pad18 VSS, pad24 VDDIOR
 //   signal slots: pad14 pad15 pad16 pad19 pad20 pad21 pad22 pad23 (pad20 ~ pad23 reserved)
 //------------------------------------------------------------------------------
-// PADDO pad14 (.A(out_SPISCLK), .PAD(SPISCLK));     // [SPI]
-// PADDO pad15 (.A(out_SPIMOSI), .PAD(SPIMOSI));     // [SPI]
-// PADDI pad16 (.PAD(SPIMISO),  .Y(in_SPIMISO));     // [SPI]
-// PADDO pad19 (.A(out_SPICSN),  .PAD(SPICSN));      // [SPI]
+PADDO pad14 (.A(out_SPISCLK), .PAD(SPISCLK));     // [SPI]
+PADDO pad15 (.A(out_SPIMOSI), .PAD(SPIMOSI));     // [SPI]
+PADDI pad16 (.PAD(SPIMISO),  .Y(in_SPIMISO));     // [SPI]
+PADDO pad19 (.A(out_SPICSN),  .PAD(SPICSN));      // [SPI]
 
 //------------------------------------------------------------------------------
 // Right side (pad25 ~ pad36)
 //   power pads in add_pad: pad25 VSSIOR, pad29 VDD, pad30 VSS, pad36 VDDIOR
 //   signal slots: pad26 pad27 pad28 pad31 pad32 pad33 pad34 pad35 (pad32 ~ pad35 reserved)
 //------------------------------------------------------------------------------
-// PADDI pad26 (.PAD(SLVSCLK),  .Y(in_SLVSCLK));     // [SLV]
-// PADDI pad27 (.PAD(SLVMOSI),  .Y(in_SLVMOSI));     // [SLV]
-// PADDO pad28 (.A(out_SLVMISO), .PAD(SLVMISO));     // [SLV]
-// PADDI pad31 (.PAD(SLVCSN),   .Y(in_SLVCSN));      // [SLV]
+PADDI pad26 (.PAD(SLVSCLK),  .Y(in_SLVSCLK));     // [SLV]
+PADDI pad27 (.PAD(SLVMOSI),  .Y(in_SLVMOSI));     // [SLV]
+PADDO pad28 (.A(out_SLVMISO), .PAD(SLVMISO));     // [SLV]
+PADDI pad31 (.PAD(SLVCSN),   .Y(in_SLVCSN));      // [SLV]
 
 //------------------------------------------------------------------------------
 // Top side (pad37 ~ pad48)
 //   power pads in add_pad: pad37 VSSIOR, pad41 VDD, pad42 VSS, pad48 VDDIOR
 //   signal slots: pad38 pad39 pad40 pad43 pad44 pad45 pad46 pad47 (pad43 ~ pad47 reserved)
 //------------------------------------------------------------------------------
-// PADDO pad38 (.A(out_UARTINTR), .PAD(UARTINTR));   // [UART]
-// PADDO pad39 (.A(out_SPIINTR),  .PAD(SPIINTR));    // [SPI]
-// PADDO pad40 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
+PADDO pad38 (.A(out_UARTINTR), .PAD(UARTINTR));   // [UART]
+PADDO pad39 (.A(out_SPIINTR),  .PAD(SPIINTR));    // [SPI]
+PADDO pad40 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
 
 //------------------------------------------------------------------------------
 // Power / ground pads (all commented out in the file until PnR)

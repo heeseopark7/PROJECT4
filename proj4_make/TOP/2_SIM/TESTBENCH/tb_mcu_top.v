@@ -1,14 +1,15 @@
 //==============================================================================
 // Testbench : tb_mcu_top
-// Purpose   : Self-checking test of mcu_top in its default state (CPU, memories,
-//             APB bridge; UART / SPI slots commented out).
+// Purpose   : Self-checking test of mcu_top (CPU, memories, APB bridge, UART,
+//             SPI master, SPI slave). The peripheral pins are tied to their idle
+//             levels here; the program only touches APB slot 0 (UART base).
 //             Program (written into the instruction memory below, no hex file):
 //               1) sum 1..10 -> RAM[0]            (CPU loop, branch, add, sw)
-//               2) sw to the APB region 0x4000_0000 (no slave)
-//               3) lw from the APB region -> RAM[1]
+//               2) sw to the APB region 0x4000_0000 (UARTDR; UART is disabled, so nothing is sent)
+//               3) lw from the APB region -> RAM[1] (UARTDR, RX FIFO empty reads 0)
 //             Checks:
 //               RAM[0] = 0x37   sum is right, APB store did not hit RAM word 0
-//               RAM[1] = 0x00   APB read with no slave returns 0
+//               RAM[1] = 0x00   UARTDR read with an empty RX FIFO returns 0
 //               stall pulses = 2, penable pulses = 2   (one per APB access)
 //               penable is never high together with stall (SETUP / ACCESS)
 //               penable is high for exactly 1 clock per access
@@ -21,6 +22,14 @@ module tb_mcu_top;
 reg                 clk = 0                             ;
 reg                 clrn                                ;
 wire    [31:0]      pc, inst, aluout, memout            ;
+reg                 uartrxd = 1'b1                      ;   // UART RX idle = 1
+reg                 spimiso = 1'b0                      ;   // SPI master MISO
+reg                 slvsclk = 1'b0                      ;   // SPI slave pins, idle
+reg                 slvmosi = 1'b0                      ;
+reg                 slvcsn  = 1'b1                      ;   // not selected
+wire                uarttxd, uartintr                   ;
+wire                spisclk, spimosi, spicsn, spiintr   ;
+wire                slvmiso, slvintr                    ;
 integer             err = 0                             ;
 integer             n_stall = 0                         ;
 integer             n_pen = 0                           ;
@@ -44,6 +53,19 @@ end
 mcu_top u_mcu_top (
                 .clk            (clk         )   ,
                 .clrn           (clrn        )   ,
+                .UARTRXD        (uartrxd     )   ,
+                .UARTTXD        (uarttxd     )   ,
+                .UARTINTR       (uartintr    )   ,
+                .SPISCLK        (spisclk     )   ,
+                .SPIMOSI        (spimosi     )   ,
+                .SPIMISO        (spimiso     )   ,
+                .SPICSN         (spicsn      )   ,
+                .SPIINTR        (spiintr     )   ,
+                .SLVSCLK        (slvsclk     )   ,
+                .SLVMOSI        (slvmosi     )   ,
+                .SLVMISO        (slvmiso     )   ,
+                .SLVCSN         (slvcsn      )   ,
+                .SLVINTR        (slvintr     )   ,
                 .pc             (pc          )   ,
                 .inst           (inst        )   ,
                 .aluout         (aluout      )   ,
