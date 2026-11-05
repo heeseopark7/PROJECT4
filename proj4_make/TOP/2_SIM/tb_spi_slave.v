@@ -25,7 +25,7 @@
 module tb_spi_slave;
 
 reg                 PCLK = 0                            ;
-reg                 PRESETn = 0                         ;
+reg                 PRESETn                             ;
 reg                 PSEL = 0                            ;
 reg                 PENABLE = 0                         ;
 reg                 PWRITE = 0                          ;
@@ -45,9 +45,22 @@ integer             err = 0                             ;
 reg     [31:0]      rd                                  ;
 reg     [7:0]       m_rx                                ;
 
-always #5 PCLK = ~PCLK;
+//------------------------------------------------------------------------------
+// Clock and reset
+//------------------------------------------------------------------------------
+parameter           CLK_PERIOD = 10                     ;   // ns
 
-spi_slave_apb_top dut (
+always #(CLK_PERIOD/2) PCLK = ~PCLK;
+
+initial begin
+    PRESETn = 1'b0;
+    #33 PRESETn = 1'b1;                                       // release reset
+end
+
+//------------------------------------------------------------------------------
+// DUT : SPI slave (APB slave)
+//------------------------------------------------------------------------------
+spi_slave_apb_top u_dut (
                 .PCLK           (PCLK        )   ,
                 .PRESETn        (PRESETn     )   ,
                 .PSEL           (PSEL        )   ,
@@ -121,7 +134,7 @@ task cs_high; begin SLVCSN = 1; repeat (6) @(posedge PCLK); end endtask
 integer m;
 reg     [7:0] txb, rpl;
 initial begin
-    #33 PRESETn = 1;
+    wait (PRESETn === 1'b1);
     repeat (2) @(posedge PCLK);
 
     apb_read(SSCR, rd); check("reset SSCR", rd, 32'h0);
@@ -193,6 +206,43 @@ initial begin
     #5000000;
     $display("FAIL tb_spi_slave (watchdog)");
     $finish;
+end
+
+//------------------------------------------------------------------------------
+// Misc : time format, waveform dump, SDF annotation
+//   Same compile switches as the lab testbench (run with xrun):
+//     function_sim : RTL simulation, dump all signals to ./dump
+//     sdf_gate     : gate-level netlist after synthesis, max delays
+//     sdf_post_wst : post-layout netlist, worst-case (max) delays
+//     sdf_post_bst : post-layout netlist, best-case (min) delays
+//   The SDF file names below are placeholders: use the names written by the
+//   3_SYN / 5_PNR steps.
+//------------------------------------------------------------------------------
+initial    $timeformat(-9, 0, " ns", 0);
+
+initial begin
+`ifdef function_sim
+    $shm_open("./dump/tb_spi_slave");
+    $shm_probe(tb_spi_slave, "AC");
+`endif
+
+`ifdef sdf_gate
+    $sdf_annotate("./spi_slave_apb_top_delays.sdf", tb_spi_slave.u_dut);
+    $shm_open("./dump/tb_spi_slave_sdf_gate");
+    $shm_probe(tb_spi_slave, "AC");
+`endif
+
+`ifdef sdf_post_wst
+    $sdf_annotate("./spi_slave_apb_top_post_wst.sdf", tb_spi_slave.u_dut);
+    $shm_open("./dump/tb_spi_slave_sdf_post_wst");
+    $shm_probe(tb_spi_slave, "AC");
+`endif
+
+`ifdef sdf_post_bst
+    $sdf_annotate("./spi_slave_apb_top_post_bst.sdf", tb_spi_slave.u_dut);
+    $shm_open("./dump/tb_spi_slave_sdf_post_bst");
+    $shm_probe(tb_spi_slave, "AC");
+`endif
 end
 
 endmodule
