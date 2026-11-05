@@ -2,7 +2,7 @@
 // Testbench : tb_mcu_top
 // Purpose   : Self-checking test of mcu_top in its default state (CPU, memories,
 //             APB bridge; UART / SPI slots commented out).
-//             Program (prog_mcu_top.hex):
+//             Program (written into the instruction memory below, no hex file):
 //               1) sum 1..10 -> RAM[0]            (CPU loop, branch, add, sw)
 //               2) sw to the APB region 0x4000_0000 (no slave)
 //               3) lw from the APB region -> RAM[1]
@@ -12,7 +12,6 @@
 //               stall pulses = 2, penable pulses = 2   (one per APB access)
 //               penable is never high together with stall (SETUP / ACCESS)
 //               penable is high for exactly 1 clock per access
-// Run from this folder (hex path is relative to where the simulator starts).
 //==============================================================================
 
 `timescale 1ns / 1ps
@@ -63,7 +62,20 @@ task check(input [255:0] name, input [31:0] got, input [31:0] exp);
 endtask
 
 initial begin
-    #1 $readmemh("prog_mcu_top.hex", dut.uut2.r_rom, 0, 12);   // after scinstmem's own init
+    #1;                                              // after scinstmem's own init
+    dut.uut2.r_rom[0] = 32'h2008000A;
+    dut.uut2.r_rom[1] = 32'h20090000;
+    dut.uut2.r_rom[2] = 32'h01284820;
+    dut.uut2.r_rom[3] = 32'h2108FFFF;
+    dut.uut2.r_rom[4] = 32'h1500FFFD;
+    dut.uut2.r_rom[5] = 32'hAC090000;
+    dut.uut2.r_rom[6] = 32'h3C084000;
+    dut.uut2.r_rom[7] = 32'h200A0055;
+    dut.uut2.r_rom[8] = 32'hAD0A0000;
+    dut.uut2.r_rom[9] = 32'h200B0077;
+    dut.uut2.r_rom[10] = 32'h8D0B0000;
+    dut.uut2.r_rom[11] = 32'hAC0B0004;
+    dut.uut2.r_rom[12] = 32'h0800000C;
     #32 clrn = 1;
     repeat (400) @(posedge clk);
     check("RAM[0] (sum)",        dut.uut3.r_ram[0], 32'h37);
