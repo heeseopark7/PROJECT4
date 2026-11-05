@@ -1,5 +1,5 @@
 //==============================================================================
-// add_pad : power / ground pads of mcu_pad_top (32-pad ring, 8 pads per side)
+// add_pad : power / ground pads of mcu_pad_top (48-pad ring, 12 pads per side)
 //   Included by mcu_pad_top.v at the end of the module (`include "add_pad").
 //   Everything is commented out for now. When the power pads are needed
 //   (PnR), remove the "//" marks. These cells have no signal ports.
@@ -8,36 +8,35 @@
 //               PADVDDIOR I/O ring power    PADVSSIOR I/O ring ground
 //
 //   Ring order (numbers follow the ring, counter-clockwise from the left side):
-//     Left   : pad1  ~ pad8     Bottom : pad9  ~ pad16
-//     Right  : pad17 ~ pad24    Top    : pad25 ~ pad32
-//   Every side has the same pattern (position 1..8):
-//     1 VSSIOR | 2 signal | 3 signal | 4 VDD | 5 VSS | 6 signal | 7 signal | 8 VDDIOR
-//   The signal pads (positions 2, 3, 6, 7) are in mcu_pad_top.v.
-//   Top side position 7 (pad31) has no signal: it holds a spare ground pad.
-//   Total : 15 signal pads + 17 power pads (16 + 1 spare) = 32 pads.
+//     Left   : pad1  ~ pad12    Bottom : pad13 ~ pad24
+//     Right  : pad25 ~ pad36    Top    : pad37 ~ pad48
+//   Every side has the same pattern (position 1..12):
+//     1 VSSIOR | 2 3 4 signal | 5 VDD | 6 VSS | 7 8 9 10 11 signal | 12 VDDIOR
+//   The signal slots (positions 2,3,4,7,8,9,10,11) are in mcu_pad_top.v.
+//   Total : 16 power pads + 32 signal slots (15 used, 17 reserved) = 48 pads.
+//   If more power pads are needed, a reserved signal slot can be used for one.
 //==============================================================================
 
-// ---- Left side (pad1 ~ pad8) ------------------------------------------------
+// ---- Left side (pad1 ~ pad12) ----------------------------------------
 //PADVSSIOR pad1();
-//PADVDD    pad4();
-//PADVSS    pad5();
-//PADVDDIOR pad8();
+//PADVDD    pad5();
+//PADVSS    pad6();
+//PADVDDIOR pad12();
 
-// ---- Bottom side (pad9 ~ pad16) ----------------------------------------------
-//PADVSSIOR pad9();
-//PADVDD    pad12();
-//PADVSS    pad13();
-//PADVDDIOR pad16();
-
-// ---- Right side (pad17 ~ pad24) ----------------------------------------------
-//PADVSSIOR pad17();
-//PADVDD    pad20();
-//PADVSS    pad21();
+// ---- Bottom side (pad13 ~ pad24) --------------------------------------
+//PADVSSIOR pad13();
+//PADVDD    pad17();
+//PADVSS    pad18();
 //PADVDDIOR pad24();
 
-// ---- Top side (pad25 ~ pad32) ------------------------------------------------
+// ---- Right side (pad25 ~ pad36) ---------------------------------------
 //PADVSSIOR pad25();
-//PADVDD    pad28();
-//PADVSS    pad29();
-//PADVSS    pad31();    // spare ground pad (no signal on this slot)
-//PADVDDIOR pad32();
+//PADVDD    pad29();
+//PADVSS    pad30();
+//PADVDDIOR pad36();
+
+// ---- Top side (pad37 ~ pad48) -----------------------------------------
+//PADVSSIOR pad37();
+//PADVDD    pad41();
+//PADVSS    pad42();
+//PADVDDIOR pad48();
