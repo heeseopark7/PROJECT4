@@ -18,26 +18,26 @@
 ## 2. 블록 다이어그램
 
 ```
-                    mcu_pad_top  (패드 48개 링, 신호 패드 15개)
-   +---------------------------------------------------------------------------+
-   |  clk, clrn  --PADDI-->  +-------------------- mcu_top ---------------------+ |
-   |                         |                                                  | |
-   |                         |  +-------+ pc  +-----------+ inst                | |
-   |                         |  | sccpu |---->| scinstmem |----+                | |
-   |                         |  |       |<----+-----------+    |                | |
-   |                         |  +---^---+ aluout, data, wmem    |                | |
-   |                         |  stall|  memout   |              |                | |
-   |                         |  +----+----+      v              |                | |
-   |                         |  |apb_     |  address decoder     |                | |
-   |                         |  |bridge   |  (in_apb, req, psel) |                | |
-   |                         |  +----+----+      |               |                | |
-   |                         |       | PENABLE   +--> scdatamem (RAM)            | |
-   |                         |       +-----------+--> uart_ex_top      slot 0 ----+--> UARTTXD / <-- UARTRXD / UARTINTR
-   |                         |                   +--> spi_apb_top      slot 1 ----+--> SPISCLK, SPIMOSI, SPICSN, SPIINTR / <-- SPIMISO
-   |                         |                   +--> spi_slave_apb_top slot 2 ---+--> SLVMISO, SLVINTR / <-- SLVSCLK, SLVMOSI, SLVCSN
-   |                         |  read mux: RAM / UART / SPI master / SPI slave / 0  | |
-   |                         +----------------------------------------------------+ |
-   +---------------------------------------------------------------------------+
+mcu_pad_top = mcu_top + PADDI/PADDO pads
+(pads: clk, clrn, UART, SPI master, SPI slave; 48-pad ring, 15 signal pads)
+
++------------------------------- mcu_top --------------------------------+
+|                                                                        |
+|  +-------+  pc    +-----------+                                        |
+|  | sccpu |------->| scinstmem |   inst goes back to sccpu              |
+|  +---+---+        +-----------+                                        |
+|      | aluout, wdata, wmem                                             |
+|      v                                                                 |
+|  address decoder ----+--> scdatamem (RAM)                              |
+|      |               +--> uart_ex_top        slot 0   UART pins        |
+|  +---+--------+      +--> spi_apb_top        slot 1   SPI master pins  |
+|  | apb_bridge |      +--> spi_slave_apb_top  slot 2   SPI slave pins   |
+|  +---+--------+                                                        |
+|      | stall -> sccpu,  PENABLE -> slaves                              |
+|                                                                        |
+|  read mux (RAM / UART / SPI master / SPI slave / 0) -> memout          |
+|                                                                        |
++------------------------------------------------------------------------+
 ```
 
 ## 3. 파일 구성
