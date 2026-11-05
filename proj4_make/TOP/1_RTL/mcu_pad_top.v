@@ -19,20 +19,18 @@
 //            file "add_pad" (included at the end of this module, commented out
 //            until PnR).
 //
-// Pads in use now : clk, clrn (mcu_top has no other pins at the moment).
-// The UART / SPI pads are commented out like their slots in mcu_top.v. To
-// connect a peripheral, remove the "//" marks on the lines marked [UART] /
-// [SPI] / [SLV] here (ports, wires, pads, mcu_top connections) and do the same
-// in mcu_top.v.
+// Pads in use : 15 signal pads = clk, clrn, UART (RXD, TXD, INTR),
+//               SPI master (SCLK, MOSI, MISO, CSN, INTR) and
+//               SPI slave (SCLK, MOSI, MISO, CSN, INTR).
+//               The 4 other UART interrupt outputs (RX, TX, RT, E) are left open
+//               inside mcu_top; only the combined UARTINTR goes to a pad.
 //
-// Port order: peripheral pins first (commented), clk / clrn last, so the port
-// list stays valid with or without the comments.
+// Port order: peripheral pins first, clk / clrn last.
 //
 // Not included: corner and filler cells (PnR step).
 // The debug outputs of mcu_top (pc, inst, aluout, memout) are not routed to
-// pads (too many pins). With no peripheral connected, nothing in mcu_top is
-// observable, so synthesis would remove it: connect at least one peripheral
-// before synthesis.
+// pads (too many pins). The peripheral pins are the observable outputs of the
+// chip, so synthesis keeps the logic that drives them.
 //==============================================================================
 
 `timescale 1ns / 1ps

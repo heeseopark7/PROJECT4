@@ -1,19 +1,17 @@
 //==============================================================================
 // Module  : mcu_top
 // Purpose : Top level of the MCU. Single-cycle MIPS CPU, instruction memory,
-//           data RAM, address decoder and APB bridge.
-//           The UART and SPI slots are present only as commented-out code:
-//             UART : APB slot 0, 0x4000_0000 ~ 0x4000_0FFF
+//           data RAM, address decoder, APB bridge and three APB slaves:
+//             UART : APB slot 0, 0x4000_0000 ~ 0x4000_0FFF (uart_ex_top)
 //             SPI  : APB slot 1, 0x4000_1000 ~ 0x4000_1FFF (spi_apb_top, master)
 //             SLV  : APB slot 2, 0x4000_2000 ~ 0x4000_2FFF (spi_slave_apb_top, slave)
-//           To connect a peripheral, remove the "//" marks on the lines marked
-//           [UART] / [SPI] / [SLV] (ports, wires, psel, instance) and use the matching
-//           read mux line at the bottom instead of the active one.
+//           All three slaves share PCLK = clk, PRESETn = clrn, PENABLE, PWRITE,
+//           PADDR = aluout[11:2] and PWDATA; only PSEL and PRDATA are per slave.
 //
 // Memory map:
 //   0x0000_0000 ~ 0x0000_007F : data RAM (any address outside the APB region)
 //   0x4000_xxxx               : APB region, slot = address[15:12] (0 = UART, 1 = SPI master, 2 = SPI slave)
-//   An APB address with no connected slave reads 0 and ignores writes.
+//   An APB address that selects no slave (slot 3 ~ 15) reads 0 and ignores writes.
 //
 // Data paths:
 //   (1) fetch  : pc -> scinstmem -> inst -> sccpu
@@ -211,9 +209,9 @@ spi_slave_apb_top uut7 (
 //------------------------------------------------------------------------------
 // Read data mux
 //   RAM address     : scdatamem output
+//   APB address     : read data of the selected slave (slot 0 / 1 / 2)
 //   APB, no slave   : 0
 //------------------------------------------------------------------------------
-// assign  memout = w_in_apb ? 32'd0 : w_ram_out ;   // no peripheral connected
-assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : w_psel_spi ? w_prdata_spi : w_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;   // [UART]+[SPI]+[SLV]: use this line instead
+assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : w_psel_spi ? w_prdata_spi : w_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;
 
 endmodule
