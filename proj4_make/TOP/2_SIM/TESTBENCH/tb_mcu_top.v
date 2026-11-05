@@ -1,16 +1,22 @@
 //==============================================================================
 // Testbench : tb_mcu_top
 // Purpose   : Self-checking test of mcu_top (CPU, memories, APB bridge, UART,
-//             SPI master, SPI slave). The peripheral pins are tied to their idle
-//             levels here; the program only touches APB slot 0 (UART base).
-//             Program (written into the instruction memory below, no hex file):
-//               1) sum 1..10 -> RAM[0]            (CPU loop, branch, add, sw)
-//               2) sw to the APB region 0x4000_0000 (UARTDR; UART is disabled, so nothing is sent)
-//               3) lw from the APB region -> RAM[1] (UARTDR, RX FIFO empty reads 0)
-//             Checks:
-//               RAM[0] = 0x37   sum is right, APB store did not hit RAM word 0
-//               RAM[1] = 0x00   UARTDR read with an empty RX FIFO returns 0
-//               stall pulses = 2, penable pulses = 2   (one per APB access)
+//             SPI master, SPI slave). The program is inside scinstmem (1_RTL),
+//             so nothing is loaded here and the same TB can be reused for the
+//             gate-level and post-layout runs.
+//             Program (see scinstmem.v):
+//               1) sum 1..10 -> RAM[0]                         (CPU loop, branch)
+//               2) UART loopback, send 'A' (0x41) -> RAM[1]    (APB slot 0)
+//               3) SPI master sends 0xA5 to the SPI slave, which answers 0x3C
+//                  -> RAM[2] = 0x3C, RAM[3] = 0xA5             (APB slots 1, 2)
+//             The SPI master and slave pins are wired together in this TB.
+//             Checks on the chip pins (valid in every run):
+//               UARTTXD   : one frame, 8N1, data = 0x41
+//               SPI       : 8 SCLK rising edges, MOSI byte = 0xA5, MISO byte = 0x3C
+//               final pc  = 0xAC  (program finished)
+//             Checks on internal signals (RTL run only, "function_sim"):
+//               RAM[0] = 0x37, RAM[1] = 0x41, RAM[2] = 0x3C, RAM[3] = 0xA5
+//               stall pulses = penable pulses (one pair per APB access)
 //               penable is never high together with stall (SETUP / ACCESS)
 //               penable is high for exactly 1 clock per access
 //==============================================================================
@@ -22,13 +28,10 @@ module tb_mcu_top;
 reg                 clk = 0                             ;
 reg                 clrn                                ;
 wire    [31:0]      pc, inst, aluout, memout            ;
-reg                 uartrxd = 1'b1                      ;   // UART RX idle = 1
-reg                 spimiso = 1'b0                      ;   // SPI master MISO
-reg                 slvsclk = 1'b0                      ;   // SPI slave pins, idle
-reg                 slvmosi = 1'b0                      ;
-reg                 slvcsn  = 1'b1                      ;   // not selected
+reg                 uartrxd = 1'b1                      ;   // UART RX pin idle = 1 (loopback is inside)
 wire                uarttxd, uartintr                   ;
 wire                spisclk, spimosi, spicsn, spiintr   ;
+wire                spimiso                             ;   // slave reply, goes to the master
 wire                slvmiso, slvintr                    ;
 integer             err = 0                             ;
 integer             n_stall = 0                         ;
@@ -39,6 +42,7 @@ integer             pen_len = 0                         ;
 // Clock and reset
 //------------------------------------------------------------------------------
 parameter           CLK_PERIOD = 10                     ;   // ns
+parameter           UART_BIT   = 640                    ;   // ns, 16 ticks x IBRD(4) x CLK_PERIOD
 
 always #(CLK_PERIOD/2) clk = ~clk;
 
@@ -48,8 +52,11 @@ initial begin
 end
 
 //------------------------------------------------------------------------------
-// DUT : MCU (CPU + memories + APB bridge)
+// DUT : MCU (CPU + memories + APB bridge + UART + SPI master + SPI slave)
+//   SPI master pins are connected straight to the SPI slave pins.
 //------------------------------------------------------------------------------
+assign  spimiso = slvmiso;
+
 mcu_top u_mcu_top (
                 .clk            (clk         )   ,
                 .clrn           (clrn        )   ,
@@ -61,10 +68,10 @@ mcu_top u_mcu_top (
                 .SPIMISO        (spimiso     )   ,
                 .SPICSN         (spicsn      )   ,
                 .SPIINTR        (spiintr     )   ,
-                .SLVSCLK        (slvsclk     )   ,
-                .SLVMOSI        (slvmosi     )   ,
+                .SLVSCLK        (spisclk     )   ,
+                .SLVMOSI        (spimosi     )   ,
                 .SLVMISO        (slvmiso     )   ,
-                .SLVCSN         (slvcsn      )   ,
+                .SLVCSN         (spicsn      )   ,
                 .SLVINTR        (slvintr     )   ,
                 .pc             (pc          )   ,
                 .inst           (inst        )   ,
@@ -72,7 +79,45 @@ mcu_top u_mcu_top (
                 .memout         (memout      )
 );
 
-// bridge monitor
+//------------------------------------------------------------------------------
+// Pin monitors (work on the chip pins only)
+//------------------------------------------------------------------------------
+// UART TX : wait for the start bit, sample every bit in the middle of its cell
+reg     [7:0]       tx_byte = 8'h00                     ;
+integer             tx_frames = 0                       ;
+integer             k                                   ;
+
+always @(negedge uarttxd) begin
+    if (clrn === 1'b1) begin
+        #(UART_BIT + UART_BIT/2);                          // middle of D0
+        for (k = 0; k < 8; k = k + 1) begin
+            tx_byte[k] = uarttxd;
+            #(UART_BIT);
+        end
+        if (uarttxd !== 1'b1) begin $display("ERROR: UARTTXD stop bit is not 1"); err = err + 1; end
+        tx_frames = tx_frames + 1;
+    end
+end
+
+// SPI : mode 0, the master and the slave sample on the rising edge of SCLK
+reg     [7:0]       mosi_sh = 8'h00, miso_sh = 8'h00    ;
+reg     [7:0]       mosi_byte = 8'h00, miso_byte = 8'h00;
+integer             sclk_rise = 0                       ;
+
+always @(posedge spisclk) begin
+    if (spicsn === 1'b0) begin
+        mosi_sh   = {mosi_sh[6:0], spimosi};
+        miso_sh   = {miso_sh[6:0], spimiso};
+        sclk_rise = sclk_rise + 1;
+        if (sclk_rise == 8) begin                          // 8th edge: the byte is complete
+            mosi_byte = mosi_sh;
+            miso_byte = miso_sh;
+        end
+    end
+end
+
+`ifdef function_sim
+// APB bridge monitor (internal signals, RTL run only)
 always @(posedge clk) begin
     if (clrn) begin
         if (u_mcu_top.w_stall && !u_mcu_top.w_penable) n_stall = n_stall + 1;
@@ -85,6 +130,7 @@ always @(posedge clk) begin
         else pen_len = 0;
     end
 end
+`endif
 
 task check(input [255:0] name, input [31:0] got, input [31:0] exp);
     begin
@@ -96,28 +142,34 @@ task check(input [255:0] name, input [31:0] got, input [31:0] exp);
     end
 endtask
 
+//------------------------------------------------------------------------------
+// Run until the program reaches its end loop (pc = 0xAC), then check
+//------------------------------------------------------------------------------
+integer             cyc = 0                             ;
+
 initial begin
-    #1;                                              // after scinstmem's own init
-    u_mcu_top.uut2.r_rom[0] = 32'h2008000A;
-    u_mcu_top.uut2.r_rom[1] = 32'h20090000;
-    u_mcu_top.uut2.r_rom[2] = 32'h01284820;
-    u_mcu_top.uut2.r_rom[3] = 32'h2108FFFF;
-    u_mcu_top.uut2.r_rom[4] = 32'h1500FFFD;
-    u_mcu_top.uut2.r_rom[5] = 32'hAC090000;
-    u_mcu_top.uut2.r_rom[6] = 32'h3C084000;
-    u_mcu_top.uut2.r_rom[7] = 32'h200A0055;
-    u_mcu_top.uut2.r_rom[8] = 32'hAD0A0000;
-    u_mcu_top.uut2.r_rom[9] = 32'h200B0077;
-    u_mcu_top.uut2.r_rom[10] = 32'h8D0B0000;
-    u_mcu_top.uut2.r_rom[11] = 32'hAC0B0004;
-    u_mcu_top.uut2.r_rom[12] = 32'h0800000C;
     wait (clrn === 1'b1);
-    repeat (400) @(posedge clk);
+    while (pc !== 32'hAC && cyc < 20000) begin
+        @(posedge clk);
+        cyc = cyc + 1;
+    end
+    repeat (20) @(posedge clk);                            // let the last store settle
+    if (cyc >= 20000) begin $display("ERROR: timeout, pc = %h", pc); err = err + 1; end
+
+`ifdef function_sim
     check("RAM[0] (sum)",        u_mcu_top.uut3.r_ram[0], 32'h37);
-    check("RAM[1] (APB read)",   u_mcu_top.uut3.r_ram[1], 32'h00);
-    check("stall pulses",        n_stall,           2);
-    check("penable pulses",      n_pen,             2);
-    check("final pc",            pc,                32'h30);
+    check("RAM[1] (UART echo)",  u_mcu_top.uut3.r_ram[1], 32'h41);
+    check("RAM[2] (SPI master)", u_mcu_top.uut3.r_ram[2], 32'h3C);
+    check("RAM[3] (SPI slave)",  u_mcu_top.uut3.r_ram[3], 32'hA5);
+    check("stall = penable",     (n_stall == n_pen) && (n_pen != 0), 1);
+    $display("info : APB accesses = %0d", n_pen);
+`endif
+    check("UARTTXD frames",      tx_frames,         1);
+    check("UARTTXD data",        tx_byte,           32'h41);
+    check("SCLK rising edges",   sclk_rise,         8);
+    check("MOSI byte (master)",  mosi_byte,         32'hA5);
+    check("MISO byte (slave)",   miso_byte,         32'h3C);
+    check("final pc",            pc,                32'hAC);
     if (err == 0) $display("PASS tb_mcu_top");
     else          $display("FAIL tb_mcu_top (%0d errors)", err);
     $finish;
