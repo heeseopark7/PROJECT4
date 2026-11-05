@@ -1,8 +1,7 @@
 //==============================================================================
 // Testbench : tb_mcu_top
 // Purpose   : Self-checking test of mcu_top in its default state (CPU, memories,
-//             APB bridge, SPI slave in APB slot 2; UART / SPI master slots
-//             commented out; the SPI slave pins are tied off here).
+//             APB bridge; UART / SPI slots commented out).
 //             Program (written into the instruction memory below, no hex file):
 //               1) sum 1..10 -> RAM[0]            (CPU loop, branch, add, sw)
 //               2) sw to the APB region 0x4000_0000 (no slave)
@@ -22,10 +21,6 @@ module tb_mcu_top;
 reg                 clk = 0                             ;
 reg                 clrn                                ;
 wire    [31:0]      pc, inst, aluout, memout            ;
-reg                 slvsclk = 1'b0                      ;   // SPI slave pins, idle
-reg                 slvmosi = 1'b0                      ;
-reg                 slvcsn  = 1'b1                      ;   // not selected
-wire                slvmiso, slvintr                    ;
 integer             err = 0                             ;
 integer             n_stall = 0                         ;
 integer             n_pen = 0                           ;
@@ -49,11 +44,6 @@ end
 mcu_top u_mcu_top (
                 .clk            (clk         )   ,
                 .clrn           (clrn        )   ,
-                .SLVSCLK        (slvsclk     )   ,
-                .SLVMOSI        (slvmosi     )   ,
-                .SLVMISO        (slvmiso     )   ,
-                .SLVCSN         (slvcsn      )   ,
-                .SLVINTR        (slvintr     )   ,
                 .pc             (pc          )   ,
                 .inst           (inst        )   ,
                 .aluout         (aluout      )   ,

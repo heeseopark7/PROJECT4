@@ -9,8 +9,8 @@
 
 # Target : mcu_top (CPU + memories + APB bridge) with ../TESTBENCH/tb_mcu_top.v
 # The test program is written inside tb_mcu_top.v (no HEX file is needed).
-# The RTL files are in ../../1_RTL. The SPI slave (SLV) is connected in mcu_top.v;
-# UART / SPI master are commented out, so their files are not listed yet.
+# The RTL files are in ../../1_RTL. UART / SPI are commented out in mcu_top.v,
+# so their files are not listed yet (see the commented lines below).
 xrun -64bit \
      +max_err_count+50 \
      +define+function_sim \
@@ -28,16 +28,16 @@ xrun -64bit \
      ../../1_RTL/scinstmem.v \
      ../../1_RTL/scdatamem.v \
      ../../1_RTL/apb_bridge.v \
-     ../../1_RTL/spi_slave_apb_top.v \
-     ../../1_RTL/spis_regs.v \
-     ../../1_RTL/spi_slave.v \
      /GPDK045/digital/giolib045_v3.5/vlog/pads_FF_s1vg.v \
      /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v \
      -l func_sim.log
 
-# When the SPI master is connected in mcu_top.v, add these lines
+# When the SPI master / slave are connected in mcu_top.v, add these lines
 # before "-l func_sim.log" (and add the "\" at the end of the line above):
 #     ../../1_RTL/spi_apb_top.v \
 #     ../../1_RTL/spi_regs.v \
 #     ../../1_RTL/sclk_gen.v \
 #     ../../1_RTL/spi_master.v \
+#     ../../1_RTL/spi_slave_apb_top.v \
+#     ../../1_RTL/spis_regs.v \
+#     ../../1_RTL/spi_slave.v \
