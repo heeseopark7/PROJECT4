@@ -10,12 +10,17 @@ puts "Hostname : [info hostname]"
 # Preset global variables and attributes
 ######################################################################
 
-set TOP_DESIGN  cmsdk_mcu
+set TOP_DESIGN  mcu_pad_top
 
 set LOG_DIR     "./log"
 set RPT_DIR     "./report"
 set UNMAPPED_DIR   "./unmapped"
 set MAPPED_DIR     "./mapped"
+
+# the report / netlist folders must exist before the first write
+foreach d [list $LOG_DIR $RPT_DIR $UNMAPPED_DIR $MAPPED_DIR] {
+  file mkdir $d
+}
 
 #GPDK 045 SVT
 set STD_LIB_PATH "/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing"
@@ -31,9 +36,29 @@ set LEF_LIST {gsclib045_tech.lef gsclib045_macro.lef giolib045.lef}
 set QRC_LIST {gpdk045.tch}
 
 set RTL_SOURCES "../1_RTL/mcu_pad_top.v \
-		../1_RTL/verilog_smkcow/cmsdk_mcu_clkctrl.v \
-		../1_RTL/verilog_smkcow/cmsdk_mcu_pin_mux.v \
+		../1_RTL/mcu_top.v \
+		../1_RTL/sccpu.v \
+		../1_RTL/scinstmem.v \
+		../1_RTL/scdatamem.v \
+		../1_RTL/apb_bridge.v \
+		../1_RTL/uart_ex_top.v \
+		../1_RTL/baud_gen.v \
+		../1_RTL/tx_fifo.v \
+		../1_RTL/rx_fifo.v \
+		../1_RTL/tx_logic.v \
+		../1_RTL/rx_logic.v \
+		../1_RTL/reg_block.v \
+		../1_RTL/interrupt_logic.v \
+		../1_RTL/spi_apb_top.v \
+		../1_RTL/spi_regs.v \
+		../1_RTL/sclk_gen.v \
+		../1_RTL/spi_master.v \
+		../1_RTL/spi_slave_apb_top.v \
+		../1_RTL/spis_regs.v \
+		../1_RTL/spi_slave.v \
 "
+# "add_pad" (power / ground pads) is included by mcu_pad_top.v with `include,
+# found through init_hdl_search_path (../1_RTL).
 set_db auto_ungroup none
 set_db max_cpus_per_server 2
 
@@ -65,7 +90,6 @@ elaborate ${TOP_DESIGN}
 puts "Runtime & Memory after 'read_hdl'"
 time_info Elaboration
 
-set_db hinst:u_cmsdk_mcu_system .preserve true
 set_db optimize_merge_flops false
 set_db optimize_merge_latches false
 
@@ -79,8 +103,8 @@ check_design -unresolved >> ${RPT_DIR}/00_check_design.rpt
 ## Constraints Setup
 ####################################################################
 
-#read_sdc  ./cons/cmsdk_mcu.sdc
-source -verbose  ./cons/cmsdk_mcu.sdc     ; #This command can't write report by using the mark '>'
+#read_sdc  ./cons/mcu_pad_top.sdc
+source -verbose  ./cons/mcu_pad_top.sdc   ; #This command can't write report by using the mark '>'
 source -verbose  ./cons/dont_use_45nm.tcl ; #This command can't write report by using the mark '>'
 puts "The number of exceptions is [llength [vfind "design:$TOP_DESIGN" -exception *]]"
 #set_db "design:$DESIGN" .force_wireload <wireload name> 
