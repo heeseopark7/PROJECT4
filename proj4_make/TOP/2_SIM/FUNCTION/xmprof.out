@@ -1,0 +1,76 @@
+xmsim(64): 22.03-s012: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
+
+Linux kopo-seongnam 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 80 CPUs, 385372 Meg RAM, 500 hits/sec, (hah013)
+
+	model name:Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
+ 
+	cache size:28160 KB
+ 
+xmelab options:
+	-CDSLIB
+	./xcelium.d/run.lnx8664.22.03.d/cds.lib
+	-HDLVAR
+	./xcelium.d/run.lnx8664.22.03.d/hdl.var
+	-WORK
+	worklib
+	-ERROR
+	50
+	-ENABLE_SVMEMOPT
+	+max_err_count+50
+	+define+function_sim
+	+libext+.v
+	-MESSAGES
+	-ACCESS
+	+rwc
+	tb_mcu_top
+
+Profiled Intervals: 
+ #Id                                PBSR Info               #start                  #stop             #start_CPU          #stop_CPU               #CPS
+[ 1]                                                          0 NS   to           8645 NS                 0.0887             3.5394          2505.2997
+
+Memory Usage - 46.8M program + 86.3M data + 2.0M profile = 135.1M total
+CPU Usage - 2.6s system + 1.2s user = 3.9s total (2.4% cpu)
+
+License Acquisition Time - 0.0s
+Snapshot Loading: CPU Usage - 0.0s system + 0.0s user = 0.1s total (6.3s, 1.1% cpu)
+
+Derived hit_rate: 468 hps
+
+------------------------------------------------------------
+Stream Counts (1618 hits total)
+------------------------------------------------------------
+%hits #hits  #inst  name
+ 97.5  1578 [     ] outside engine
+  1.1    18 [     ] SHM Waveform Dump Setup
+  0.4     7 [     ] SHM Waveform Dump
+  0.2     3 [     ] tcl_functions
+  0.1     2 [     ] simulation setup time 
+
+------------------------------------------------------------
+Most Active Modules (behavioral)
+------------------------------------------------------------
+%hits #hits  #inst  name
+
+------------------------------------------------------------
+Stream Type Summary Counts (1618 hits total)
+------------------------------------------------------------
+%hits #hits  #inst  name
+ 97.5  1578 [     ] Outside engine 
+  1.6    26 [     ] Waveform Dump 
+  0.3     5 [     ] HDL C interface 
+  0.2     3 [     ] TCL Functions 
+  0.1     2 [     ] Simulation Setup Time 
+  0.1     1 [   85] Continuous assignments 
+  0.1     1 [     ] Simulation Engine Time 
+  0.1     1 [     ] Support for callbacks (or UI) 
+  0.1     1 [     ] CAG2 stream 
+
+------------------------------------------------------------
+Technology-wise Summary Counts (1618 hits total)
+------------------------------------------------------------
+%hits #hits  name
+ 97.7  1581 Miscellaneous 
+  2.0    32 Analysis 
+  0.2     3 TB/SV 
+  0.1     2 RTL/Design 
+

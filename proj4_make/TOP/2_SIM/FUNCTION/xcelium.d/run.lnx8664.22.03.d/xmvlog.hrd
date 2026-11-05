@@ -1,0 +1,12 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-DEFINE
+function_sim
+-LIBEXT
+.v
+-INCDIR
+../../1_RTL
+-INCDIR
+../TESTBENCH
