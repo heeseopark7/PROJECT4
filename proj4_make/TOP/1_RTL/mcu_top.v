@@ -35,11 +35,11 @@ module mcu_top (
 //                  SPIMISO                             ,   // [SPI]
 //                  SPICSN                              ,   // [SPI]
 //                  SPIINTR                             ,   // [SPI]
-//                  SLVSCLK                             ,   // [SLV]
-//                  SLVMOSI                             ,   // [SLV]
-//                  SLVMISO                             ,   // [SLV]
-//                  SLVCSN                              ,   // [SLV]
-//                  SLVINTR                             ,   // [SLV]
+                    SLVSCLK                             ,   // [SLV]
+                    SLVMOSI                             ,   // [SLV]
+                    SLVMISO                             ,   // [SLV]
+                    SLVCSN                              ,   // [SLV]
+                    SLVINTR                             ,   // [SLV]
                     pc                                  ,
                     inst                                ,
                     aluout                              ,
@@ -59,11 +59,11 @@ input               clrn                                ;   // reset, active-LOW
 // input            SPIMISO                             ;   // [SPI] master in, slave out
 // output           SPICSN                              ;   // [SPI] chip select, active-LOW
 // output           SPIINTR                             ;   // [SPI] interrupt (observe only)
-// input            SLVSCLK                             ;   // [SLV] serial clock from the master
-// input            SLVMOSI                             ;   // [SLV] master out, slave in
-// output           SLVMISO                             ;   // [SLV] master in, slave out
-// input            SLVCSN                              ;   // [SLV] chip select, active-LOW
-// output           SLVINTR                             ;   // [SLV] interrupt (observe only)
+input               SLVSCLK                             ;   // [SLV] serial clock from the master
+input               SLVMOSI                             ;   // [SLV] master out, slave in
+output              SLVMISO                             ;   // [SLV] master in, slave out
+input               SLVCSN                              ;   // [SLV] chip select, active-LOW
+output              SLVINTR                             ;   // [SLV] interrupt (observe only)
 output  [31:0]      pc                                  ;   // debug: program counter
 output  [31:0]      inst                                ;   // debug: current instruction
 output  [31:0]      aluout                              ;   // debug: data address / ALU result
@@ -76,7 +76,7 @@ wire    [31:0]      w_data                              ;   // sccpu -> RAM / AP
 wire    [31:0]      w_ram_out                           ;   // scdatamem -> read mux, RAM read data
 // wire [31:0]      w_prdata                            ;   // [UART] UART -> read mux, APB read data
 // wire [31:0]      w_prdata_spi                        ;   // [SPI]  SPI master -> read mux, APB read data
-// wire [31:0]      w_prdata_slv                        ;   // [SLV]  SPI slave -> read mux, APB read data
+wire    [31:0]      w_prdata_slv                        ;   // [SLV]  SPI slave -> read mux, APB read data
 wire                w_wmem                              ;   // sccpu -> RAM / APB, store strobe
 wire                w_stall                             ;   // apb_bridge -> sccpu, hold the CPU
 wire                w_penable                           ;   // apb_bridge -> slaves, ACCESS phase
@@ -85,7 +85,7 @@ wire                w_in_apb                            ;   // data address uppe
 wire                w_req                               ;   // lw/sw to the APB region in progress
 // wire             w_psel_uart                         ;   // [UART] slot 0 select
 // wire             w_psel_spi                          ;   // [SPI]  slot 1 select
-// wire             w_psel_slv                          ;   // [SLV]  slot 2 select
+wire                w_psel_slv                          ;   // [SLV]  slot 2 select
 
 //------------------------------------------------------------------------------
 // Address decoder
@@ -96,7 +96,7 @@ assign  w_in_apb     = (aluout[31:16] == 16'h4000)          ;
 assign  w_req        = w_in_apb & (w_is_lw | w_wmem)        ;
 // assign  w_psel_uart  = w_req & (aluout[15:12] == 4'h0)   ;   // [UART]
 // assign  w_psel_spi   = w_req & (aluout[15:12] == 4'h1)   ;   // [SPI]
-// assign  w_psel_slv   = w_req & (aluout[15:12] == 4'h2)   ;   // [SLV]
+assign  w_psel_slv   = w_req & (aluout[15:12] == 4'h2)   ;   // [SLV]
 
 //------------------------------------------------------------------------------
 // sccpu : single-cycle MIPS CPU
@@ -192,28 +192,29 @@ apb_bridge  uut4    (
 //   Needs its own pins: connect SLVSCLK / SLVMOSI / SLVCSN to a master and
 //   SLVMISO back to it (outside this chip, or to the master pins on the board).
 //------------------------------------------------------------------------------
-// spi_slave_apb_top uut7 (
-//                 .PCLK           (clk            )   ,
-//                 .PRESETn        (clrn           )   ,
-//                 .PSEL           (w_psel_slv     )   ,
-//                 .PENABLE        (w_penable      )   ,
-//                 .PWRITE         (w_wmem         )   ,
-//                 .PADDR          (aluout[11:2]   )   ,
-//                 .PWDATA         (w_data         )   ,
-//                 .PRDATA         (w_prdata_slv   )   ,
-//                 .SLVSCLK        (SLVSCLK        )   ,
-//                 .SLVMOSI        (SLVMOSI        )   ,
-//                 .SLVMISO        (SLVMISO        )   ,
-//                 .SLVCSN         (SLVCSN         )   ,
-//                 .SLVINTR        (SLVINTR        )
-// );
+spi_slave_apb_top uut7 (
+                .PCLK           (clk            )   ,
+                .PRESETn        (clrn           )   ,
+                .PSEL           (w_psel_slv     )   ,
+                .PENABLE        (w_penable      )   ,
+                .PWRITE         (w_wmem         )   ,
+                .PADDR          (aluout[11:2]   )   ,
+                .PWDATA         (w_data         )   ,
+                .PRDATA         (w_prdata_slv   )   ,
+                .SLVSCLK        (SLVSCLK        )   ,
+                .SLVMOSI        (SLVMOSI        )   ,
+                .SLVMISO        (SLVMISO        )   ,
+                .SLVCSN         (SLVCSN         )   ,
+                .SLVINTR        (SLVINTR        )
+);
 
 //------------------------------------------------------------------------------
 // Read data mux
 //   RAM address     : scdatamem output
 //   APB, no slave   : 0
 //------------------------------------------------------------------------------
-assign  memout = w_in_apb ? 32'd0 : w_ram_out ;
+// assign  memout = w_in_apb ? 32'd0 : w_ram_out ;   // no peripheral connected
+assign  memout = w_in_apb ? (w_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;   // [SLV] only
 // assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : w_psel_spi ? w_prdata_spi : w_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;   // [UART]+[SPI]+[SLV]: use this line instead
 
 endmodule

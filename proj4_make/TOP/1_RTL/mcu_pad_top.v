@@ -46,11 +46,11 @@ module mcu_pad_top (
 //                  SPIMISO                             ,   // [SPI]
 //                  SPICSN                              ,   // [SPI]
 //                  SPIINTR                             ,   // [SPI]
-//                  SLVSCLK                             ,   // [SLV]
-//                  SLVMOSI                             ,   // [SLV]
-//                  SLVMISO                             ,   // [SLV]
-//                  SLVCSN                              ,   // [SLV]
-//                  SLVINTR                             ,   // [SLV]
+                    SLVSCLK                             ,   // [SLV]
+                    SLVMOSI                             ,   // [SLV]
+                    SLVMISO                             ,   // [SLV]
+                    SLVCSN                              ,   // [SLV]
+                    SLVINTR                             ,   // [SLV]
                     clk                                 ,
                     clrn
 );
@@ -68,11 +68,11 @@ input               clrn                                ;   // reset, active-LOW
 // input            SPIMISO                             ;   // [SPI]  master in, slave out
 // output           SPICSN                              ;   // [SPI]  chip select
 // output           SPIINTR                             ;   // [SPI]  interrupt
-// input            SLVSCLK                             ;   // [SLV]  serial clock from the master
-// input            SLVMOSI                             ;   // [SLV]  master out, slave in
-// output           SLVMISO                             ;   // [SLV]  master in, slave out
-// input            SLVCSN                              ;   // [SLV]  chip select
-// output           SLVINTR                             ;   // [SLV]  interrupt
+input               SLVSCLK                             ;   // [SLV]  serial clock from the master
+input               SLVMOSI                             ;   // [SLV]  master out, slave in
+output              SLVMISO                             ;   // [SLV]  master in, slave out
+input               SLVCSN                              ;   // [SLV]  chip select
+output              SLVINTR                             ;   // [SLV]  interrupt
 
 //------------------------------------------------------------------------------
 // Internal wires (in_ = pad to core, out_ = core to pad)
@@ -87,11 +87,11 @@ wire                in_clrn                             ;   // reset after the i
 // wire             in_SPIMISO                          ;   // [SPI]
 // wire             out_SPICSN                          ;   // [SPI]
 // wire             out_SPIINTR                         ;   // [SPI]
-// wire             in_SLVSCLK                          ;   // [SLV]
-// wire             in_SLVMOSI                          ;   // [SLV]
-// wire             out_SLVMISO                         ;   // [SLV]
-// wire             in_SLVCSN                           ;   // [SLV]
-// wire             out_SLVINTR                         ;   // [SLV]
+wire                in_SLVSCLK                          ;   // [SLV]
+wire                in_SLVMOSI                          ;   // [SLV]
+wire                out_SLVMISO                         ;   // [SLV]
+wire                in_SLVCSN                           ;   // [SLV]
+wire                out_SLVINTR                         ;   // [SLV]
 
 //------------------------------------------------------------------------------
 // Core
@@ -107,11 +107,11 @@ mcu_top     u_mcu_top   (
 //              .SPIMISO        (in_SPIMISO      )   ,   // [SPI]
 //              .SPICSN         (out_SPICSN      )   ,   // [SPI]
 //              .SPIINTR        (out_SPIINTR     )   ,   // [SPI]
-//              .SLVSCLK        (in_SLVSCLK      )   ,   // [SLV]
-//              .SLVMOSI        (in_SLVMOSI      )   ,   // [SLV]
-//              .SLVMISO        (out_SLVMISO     )   ,   // [SLV]
-//              .SLVCSN         (in_SLVCSN       )   ,   // [SLV]
-//              .SLVINTR        (out_SLVINTR     )   ,   // [SLV]
+                .SLVSCLK        (in_SLVSCLK      )   ,   // [SLV]
+                .SLVMOSI        (in_SLVMOSI      )   ,   // [SLV]
+                .SLVMISO        (out_SLVMISO     )   ,   // [SLV]
+                .SLVCSN         (in_SLVCSN       )   ,   // [SLV]
+                .SLVINTR        (out_SLVINTR     )   ,   // [SLV]
                 .pc             (                )   ,   // debug, no pads
                 .inst           (                )   ,
                 .aluout         (                )   ,
@@ -143,10 +143,10 @@ PADDI pad3  (.PAD(clrn),     .Y(in_clrn));           // reset
 //   power pads in add_pad: pad25 VSSIOR, pad29 VDD, pad30 VSS, pad36 VDDIOR
 //   signal slots: pad26 pad27 pad28 pad31 pad32 pad33 pad34 pad35 (pad32 ~ pad35 reserved)
 //------------------------------------------------------------------------------
-// PADDI pad26 (.PAD(SLVSCLK),  .Y(in_SLVSCLK));     // [SLV]
-// PADDI pad27 (.PAD(SLVMOSI),  .Y(in_SLVMOSI));     // [SLV]
-// PADDO pad28 (.A(out_SLVMISO), .PAD(SLVMISO));     // [SLV]
-// PADDI pad31 (.PAD(SLVCSN),   .Y(in_SLVCSN));      // [SLV]
+PADDI pad26 (.PAD(SLVSCLK),  .Y(in_SLVSCLK));     // [SLV]
+PADDI pad27 (.PAD(SLVMOSI),  .Y(in_SLVMOSI));     // [SLV]
+PADDO pad28 (.A(out_SLVMISO), .PAD(SLVMISO));     // [SLV]
+PADDI pad31 (.PAD(SLVCSN),   .Y(in_SLVCSN));      // [SLV]
 
 //------------------------------------------------------------------------------
 // Top side (pad37 ~ pad48)
@@ -155,7 +155,7 @@ PADDI pad3  (.PAD(clrn),     .Y(in_clrn));           // reset
 //------------------------------------------------------------------------------
 // PADDO pad38 (.A(out_UARTINTR), .PAD(UARTINTR));   // [UART]
 // PADDO pad39 (.A(out_SPIINTR),  .PAD(SPIINTR));    // [SPI]
-// PADDO pad40 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
+PADDO pad40 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
 
 //------------------------------------------------------------------------------
 // Power / ground pads (all commented out in the file until PnR)
