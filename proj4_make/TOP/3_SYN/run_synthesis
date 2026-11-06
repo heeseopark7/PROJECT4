@@ -3,7 +3,7 @@
 echo -n "Syn Start : " > cds_syn_runtime
 date > cds_syn_runtime
 
-genus -f ./script/cortexm0_45nm.tcl -log ./log/all.log
+genus -f ./script/syn_mcu_pad_top.tcl -log ./log/all.log
 
 ## End Time
 echo -n "Syn End   : " >> cds_syn_runtime
