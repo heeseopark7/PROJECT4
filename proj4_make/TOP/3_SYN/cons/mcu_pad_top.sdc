@@ -28,7 +28,7 @@ reset_design
 # Clock period in ns. The CPU is single-cycle with asynchronous memories
 # (pc -> ROM -> decode -> ALU -> RAM/APB mux -> register file is one path),
 # so start relaxed and tighten it after looking at the timing report.
-set CLK_PERIOD 20
+set CLK_PERIOD 5
 
 create_clock -period $CLK_PERIOD -name MAIN_CLOCK [get_ports clk]
 
@@ -59,8 +59,12 @@ set_output_delay -min -0.01 -clock MAIN_CLOCK [all_outputs]
 ##############################
 ##### driving cell / load ####
 ##############################
-set_driving_cell -lib_cell PADDI -pin Y -library [get_libs $STD_LIB_slow] [remove_from_collection [all_inputs] [get_ports clk]]
 
+#chip input pins are driven from outside the pad. Assume an external driver
+# with a 0.1 ns transition (same as the clock transition) instead of the
+# PADDI cell, which cannot drive the large pad input load (~2.4 pF).
+set_driving_cell -lib_cell PADDI -pin Y -library [get_libs $STD_LIB_slow] [remove_from_collection [all_inputs] [get_ports clk]]
+#set_input_transition 0.1 [remove_from_collection [all_inputs] [get_ports clk]]
 set_load [load_of PADDO/A] [all_outputs]
 
 ##############################
