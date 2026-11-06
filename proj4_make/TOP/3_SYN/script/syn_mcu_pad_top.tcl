@@ -31,8 +31,10 @@ set LEF_LIST {gsclib045_tech.lef gsclib045_macro.lef giolib045.lef}
 set QRC_LIST {gpdk045.tch}
 
 set RTL_SOURCES "../1_RTL/mcu_pad_top.v \
-		../1_RTL/verilog_smkcow/cmsdk_mcu_clkctrl.v \
-		../1_RTL/verilog_smkcow/cmsdk_mcu_pin_mux.v \
+		../1_RTL/apb_bridge.v \
+		../1_RTL/baud_gen.v \
+		../1_RTL/interrupt_logic \
+		../
 "
 set_db auto_ungroup none
 set_db max_cpus_per_server 2
