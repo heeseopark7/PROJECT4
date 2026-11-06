@@ -1,0 +1,19 @@
+PADVSSIOR pad1();
+PADVDD    pad5();
+PADVSS    pad6();
+PADVDDIOR pad12();
+
+PADVSSIOR pad13();
+PADVDD    pad17();
+PADVSS    pad18();
+PADVDDIOR pad24();
+
+PADVSSIOR pad25();
+PADVDD    pad29();
+PADVSS    pad30();
+PADVDDIOR pad36();
+
+PADVSSIOR pad37();
+PADVDD    pad41();
+PADVSS    pad42();
+PADVDDIOR pad48();

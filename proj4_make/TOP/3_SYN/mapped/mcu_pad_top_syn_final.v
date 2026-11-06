@@ -10303,5 +10303,25 @@ module mcu_pad_top(UARTRXD, UARTTXD, UARTINTR, SPISCLK, SPIMOSI,
   PADDO pad38(.A (out_UARTINTR), .PAD (UARTINTR));
   PADDO pad39(.A (out_SPIINTR), .PAD (SPIINTR));
   PADDO pad40(.A (out_SLVINTR), .PAD (SLVINTR));
+
+PADVSSIOR pad1();
+PADVDD    pad5();
+PADVSS    pad6();
+PADVDDIOR pad12();
+
+PADVSSIOR pad13();
+PADVDD    pad17();
+PADVSS    pad18();
+PADVDDIOR pad24();
+
+PADVSSIOR pad25();
+PADVDD    pad29();
+PADVSS    pad30();
+PADVDDIOR pad36();
+
+PADVSSIOR pad37();
+PADVDD    pad41();
+PADVSS    pad42();
+PADVDDIOR pad48();
 endmodule
 
