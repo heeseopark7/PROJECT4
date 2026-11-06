@@ -231,8 +231,19 @@ APB 영역에 대한 `lw`/`sw`를 2클럭 트랜잭션으로 바꾸고 그동안
 | 파일 | 설명 |
 |---|---|
 | `FUNCTION/run_function.tcl` | xrun으로 RTL 시뮬 (top = `tb_mcu_top`, 소스는 `1_RTL`의 `mcu_top`과 하위 전부) |
-| `TESTBENCH/tb_mcu_top.v` | 자기검증 TB. 프로그램은 ROM에 들어 있어서 TB가 로드하지 않는다 |
+| `TESTBENCH/tb_mcu_top.v` | 자기검증 TB 하나로 RTL, 합성 후(pre-layout), PnR 후(post-layout) 시뮬을 모두 돌린다. 프로그램은 ROM에 들어 있어서 TB가 로드하지 않는다 |
 | `TESTBENCH/tb_spi_master.v`, `tb_spi_slave.v` | SPI master/slave 단독 TB |
+
+### tb_mcu_top 시뮬 종류 (컴파일 스위치)
+| 스위치 | DUT | 시뮬 내용 |
+|---|---|---|
+| `+define+function_sim` | `mcu_top` | RTL (지연 없음) |
+| `+define+sdf_gate` | `mcu_pad_top` | 합성 넷리스트 + SDF (pre-layout) |
+| `+define+sdf_post_wst` | `mcu_pad_top` | PnR 넷리스트 + worst-case SDF (post-layout) |
+| `+define+sdf_post_bst` | `mcu_pad_top` | PnR 넷리스트 + best-case SDF (post-layout) |
+
+- 넷리스트 시뮬은 `-timescale 1ns/1ps`가 필요하다 (넷리스트에 `timescale`이 없다).
+- SDF 경로는 시뮬을 실행하는 폴더 기준이고, post-layout SDF 이름은 5_PNR 결과에 맞춰야 한다.
 
 ### tb_mcu_top 검사 항목
 SPI master 핀과 slave 핀은 TB에서 서로 연결한다.
@@ -241,17 +252,17 @@ SPI master 핀과 slave 핀은 TB에서 서로 연결한다.
 |---|---|---|
 | 칩 핀 (모든 시뮬) | `UARTTXD` 프레임 수, 데이터 | 1프레임, 0x41 |
 | | SPI SCLK 상승 에지, MOSI 바이트, MISO 바이트 | 8회, 0xA5, 0x3C |
-| | 종료 시 `pc` | 0xAC |
 | 내부 (RTL 시뮬 `function_sim`) | `RAM[0..3]` | 0x37, 0x41, 0x3C, 0xA5 |
+| | 종료 시 `pc` | 0xAC |
 | | stall 횟수와 penable 횟수 | 같음 (접근 1회당 1쌍) |
 | | penable 길이, stall과 동시 여부 | 1클럭, 겹치지 않음 |
 
-종료 조건은 `pc==0xAC` 또는 20000클럭 타임아웃이다.
+종료 조건은 RTL 시뮬에서는 `pc==0xAC`, 넷리스트 시뮬에서는 8번째 SPI 클럭 에지(칩에 `pc` 핀이 없다)이고, 둘 다 20000클럭 타임아웃이 있다.
 
 ### 결과
 - iverilog로 RTL 시뮬 결과 `PASS tb_mcu_top` (종료 약 8.6us, APB 접근 204회). `mcu_pad_top`은 컴파일 확인까지 했다.
 - xrun으로 확인해야 한다 (`2_SIM/FUNCTION`에서 `run_function.tcl` 실행).
-- 게이트/PnR 시뮬은 TB의 `sdf_*` 스위치를 쓰며 SDF 파일명은 3_SYN/5_PNR 결과에 맞춰야 한다. 합성 top이 `mcu_pad_top`이면 TB의 DUT도 `mcu_pad_top`으로 바꿔야 하고, 이때 `pc` 등 디버그 포트와 내부 신호 검사(`function_sim` 구간)는 쓸 수 없다.
+- 같은 TB를 네 가지 스위치로 모두 확인했다. 넷리스트 모드는 RTL의 `mcu_pad_top`과 패드 대용 모델로 TB 구조와 핀 검사가 PASS인 것까지 확인했고, 실제 SDF 적용(`$sdf_annotate`)은 xrun에서 확인해야 한다.
 
 ## 12. 구현 현황
 
