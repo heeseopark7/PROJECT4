@@ -17,56 +17,28 @@ init_design
 checkDesign -io -netlist -physicalLibrary -powerGround -tieHilo -timingLibrary -spef -floorplan -place -outdir checkDesign
 
 ##################################################
-## Floorplan :: Below is for CHIP AREA (4030,4030)
+## Floorplan :: Below is for CHIP AREA (1370,1370)
 ##################################################
 #floorPlan -site CoreSite -s 700 700 1425 1425 1425 1425; almost 70%
-floorPlan -site CoreSite -r 1 0.7 1200 1200 1200 1200
+floorPlan -site CoreSite -r 1 0.6  352 352 352 352
 
 ## Move IO Cells (PADVDD, PADVSS)
-selectInst pad46
-placeInstance pad46 0.0 580.0 R270
-selectInst pad47
-placeInstance pad47 0.0 510.0 R270
-selectInst pad36
-placeInstance pad36 0.0 1280.0 R270
-selectInst pad35
-placeInstance pad35 0.0 1350.0 R270
-selectInst pad23
-placeInstance pad23 0.0 2190.0 R270
-selectInst pad22
-placeInstance pad22 0.0 2260.0 R270
-selectInst pad21
-placeInstance pad21 0.0 2330.0 R270
-selectInst pad12
-placeInstance pad12 0.0 2960.0 R270
-selectInst pad11
-placeInstance pad11 0.0 3030.0 R270
-selectInst pad7
-placeInstance pad7 0.0 3310.0 R270
-selectInst pad67
-placeInstance pad67 1420.0 0.0 R0
-selectInst pad68
-placeInstance pad68 1490.0 0.0 R0
-selectInst pad88
-placeInstance pad88 2890.0 0.0 R0
-selectInst pad87
-placeInstance pad87 2820.0 0.0 R0
-selectInst pad118
-placeInstance pad118 3790.0 1490.0 R90
-selectInst pad119
-placeInstance pad119 3790.0 1560.0 R90
-selectInst pad138
-placeInstance pad138 3790.0 2890.0 R90
-selectInst pad139
-placeInstance pad139 3790.0 2960.0 R90
-selectInst pad182
-placeInstance pad182 1560.0 3790.0 R180
-selectInst pad181
-placeInstance pad181 1630.0 3790.0 R180
-selectInst pad161
-placeInstance pad161 3030.0 3790.0 R180
-selectInst pad160
-placeInstance pad160 3100.0 3790.0 R180
+selectInst pad5
+placeInstance pad5 0.0 790.0 R270
+selectInst pad6
+placeInstance pad6 0.0 720.0 R270
+selectInst pad17
+placeInstance pad17 580.0 0.0 R0
+selectInst pad18
+placeInstance pad18 650.0 0.0 R0
+selectInst pad29
+placeInstance pad29 1130.0 580.0 R90
+selectInst pad30
+placeInstance pad30 1130.0 650.0 R90
+selectInst pad41
+placeInstance pad41 790.0 1130.0 R180
+selectInst pad42
+placeInstance pad42 720.0 1130.0 R180
 
 ## IO Filler Insertion
 addIoFiller -cell padIORINGFEED60 padIORINGFEED10 padIORINGFEED5 padIORINGFEED3 padIORINGFEED1 -prefix FILLER -side n
