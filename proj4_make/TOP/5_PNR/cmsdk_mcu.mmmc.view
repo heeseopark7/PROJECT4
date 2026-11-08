@@ -34,22 +34,22 @@ create_rc_corner -name WORST \
 ########## Create Library_Set ##########
 ########################################
 
-   #-si ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/celtic/fast.cdb
-   #-si ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/celtic/slow.cdb
+   #-si /GPDK045/digital/gsclib045_all_v4.4/gsclib045/celtic/fast.cdb
+   #-si /GPDK045/digital/gsclib045_all_v4.4/gsclib045/celtic/slow.cdb
 create_library_set -name FF_Min_1p10v_0c \
    -timing \
     [list \
-	../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib \
-	../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib \
-	../../../GPDK045/digital/giolib045_v3.5/timing/pads_FF_s1vg.lib \
+	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib \
+	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib \
+	/GPDK045/digital/giolib045_v3.5/timing/pads_FF_s1vg.lib \
     ] 
 
 create_library_set -name SS_Max_0p90v_125c \
    -timing \
     [list \
-	../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib \
-	../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib \
-	../../../GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib \
+	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib \
+	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib \
+	/GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib \
     ] 
 
 
@@ -72,7 +72,7 @@ create_delay_corner -name SS_WORST \
 
 
 create_constraint_mode -name FUNC \
-   -sdc_files [list ../SYN/mapped/cmsdk_mcu_syn_final.sdc]
+   -sdc_files [list ../3_SYN/mapped/mcu_pad_top_syn_final.sdc]
 
 
 ############################################
