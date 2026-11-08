@@ -34,7 +34,7 @@ get_verify_drc_mode -ignore_trial_route -quiet
 get_verify_drc_mode -max_wrong_way_halo -quiet
 get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
 get_verify_drc_mode -limit -quiet
-set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report cmsdk_mcu.drc.rpt -limit 1000
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
 verify_drc
 set_verify_drc_mode -area {0 0 0 0}
 
@@ -71,19 +71,19 @@ saveDesign -rc -def ChipFinish_after_ECO
 #####################
 # Write Out Files
 # GDS file : without layermap file for GPDK045
-streamOut cmsdk_mcu.gds -libName DesignLib -units 2000 -mode ALL
+streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL
 
 # Write Out Constraint
-writeTimingCon cmsdk_mcu.sdc
+writeTimingCon mcu_pad_top.sdc
 
 # Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" cmsdk_mcu.v
+saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file
-write_sdf cmsdk_mcu.sdf
+write_sdf mcu_pad_top.sdf
 
 # SDF version 2.1
-write_sdf -version 2.1 cmsdk_mcu.sdf_2.1
+write_sdf -version 2.1 mcu_pad_top.sdf_2.1
 
 exit

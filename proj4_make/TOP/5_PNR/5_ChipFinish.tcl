@@ -29,19 +29,19 @@ saveDesign -rc -def ChipFinish
 # Write Out Files
 
 # Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" cmsdk_mcu.v
+saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file
-write_sdf cmsdk_mcu.sdf
+write_sdf mcu_pad_top.sdf
 
 # SDF version 2.1
-write_sdf -version 2.1 cmsdk_mcu.sdf_2.1
+write_sdf -version 2.1 mcu_pad_top.sdf_2.1
 
 # Write Out Constraint
-writeTimingCon cmsdk_mcu.sdc
+writeTimingCon mcu_pad_top.sdc
 
 # GDS file : without layermap file for GPDK045
-streamOut cmsdk_mcu.gds -libName DesignLib -units 2000 -mode ALL
+streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL
 
 exit

@@ -34,7 +34,7 @@ get_verify_drc_mode -ignore_trial_route -quiet
 get_verify_drc_mode -max_wrong_way_halo -quiet
 get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
 get_verify_drc_mode -limit -quiet
-set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report cmsdk_mcu.drc.rpt -limit 1000
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
 
 verify_drc
 set_verify_drc_mode -area {0 0 0 0}
@@ -116,7 +116,7 @@ set_default_switching_activity -input_activity 0.2 -period 8.0 ;# 8ns operation
 read_activity_file -reset ; 		#If you don't have fsdb or vcd file, reset at here
 set_power -reset
 set_powerup_analysis -reset
-report_power -rail_analysis_format VS -outfile ./run1/cmsdk_mcu.rpt
+report_power -rail_analysis_format VS -outfile ./run1/mcu_pad_top.rpt
 
 ########################
 # Rail IR-DROP Analysis

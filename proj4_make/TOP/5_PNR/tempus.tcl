@@ -6,7 +6,7 @@
 ################
 # If you open design in GUI, just type <RouteDesign_mmmc1> in the window
 # Below is for the tempus shell
-read_design RouteDesign.dat cmsdk_mcu ; #mmmc2 format is for -stylus
+read_design RouteDesign.dat mcu_pad_top ; #mmmc2 format is for -stylus
 
 check_timing ;# Warnings are skipped
 report_annotated_parasitics ; # Check if real net (complete) is 100%
@@ -18,8 +18,8 @@ report_analysis_coverage -check_type data_setup -verbose untested -exclude_untes
 ##################
 #### FILE OUT ####
 ##################
-write_sdf -view FUNC_SS_WORST cmsdk_mcu_post_wst.sdf
-write_sdf -view FUNC_FF_BEST cmsdk_mcu_post_bst.sdf 
+write_sdf -view FUNC_SS_WORST mcu_pad_top_post_wst.sdf
+write_sdf -view FUNC_FF_BEST mcu_pad_top_post_bst.sdf 
 exit
 
 ## Practice 1.
@@ -28,7 +28,7 @@ exit
 ################
 # If you open design in GUI, just type <RouteDesign_mmmc1> in the window
 # Below is for the tempus shell
-#read_design RouteDesign_for_ECO.dat cmsdk_mcu ; #mmmc2 format is for -stylus
+#read_design RouteDesign_for_ECO.dat mcu_pad_top ; #mmmc2 format is for -stylus
 
 #check_timing ;# Warnings are skipped
 #report_annotated_parasitics ; # Check if real net (complete) is 100%
@@ -76,7 +76,7 @@ exit
 ################
 # If you open design in GUI, just type <RouteDesign_mmmc1> in the window
 # Below is for the tempus shell
-#read_design ChipFinish_after_ECO.dat cmsdk_mcu ; #mmmc2 format is for -stylus
+#read_design ChipFinish_after_ECO.dat mcu_pad_top ; #mmmc2 format is for -stylus
 
 #check_timing ;# Warnings are skipped
 #report_annotated_parasitics ; # Check if real net (complete) is 100%
@@ -88,5 +88,5 @@ exit
 ##################
 #### FILE OUT ####
 ##################
-#write_sdf -view FUNC_SS_WORST cmsdk_mcu_post_wst.sdf
-#write_sdf -view FUNC_FF_BEST cmsdk_mcu_post_bst.sdf 
+#write_sdf -view FUNC_SS_WORST mcu_pad_top_post_wst.sdf
+#write_sdf -view FUNC_FF_BEST mcu_pad_top_post_bst.sdf 

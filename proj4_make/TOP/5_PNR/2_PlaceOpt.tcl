@@ -8,7 +8,7 @@ set_db place_global_cong_effort high
 place_design
 
 # Check the Placement Density 
-checkPlace cmsdk_mcu.checkPlace
+checkPlace mcu_pad_top.checkPlace
 
 # Early GlobalRoute :: analisys of Congestion and Timing after Placement 
 setRouteMode -earlyGlobalMinRouteLayer 1 -earlyGlobalMaxRouteLayer 11 -earlyGlobalHonorMsvRouteConstraint false -earlyGlobalRoutePartitionPinGuide true
