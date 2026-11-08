@@ -5,11 +5,11 @@
 
 ## Initialization
 set init_gnd_net VSS
-set init_lef_file {../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045_tech/lef/gsclib045_tech.lef ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_macro.lef ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_multibitsDFF.lef ../../../GPDK045/digital/giolib045_v3.5/lef/giolib045_modify.lef}
-set init_verilog ../SYN/mapped/cmsdk_mcu_syn_final.v
-set init_mmmc_file cmsdk_mcu.mmmc.view
+set init_lef_file {/GPDK045/digital/gsclib045_all_v4.4/gsclib045_tech/lef/gsclib045_tech.lef /GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_macro.lef /GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_multibitsDFF.lef /GPDK045/digital/giolib045_v3.5/lef/giolib045_modify.lef}
+set init_verilog ../3_SYN/mapped/mcu_pad_top_syn_final.v
+set init_mmmc_file mcu_pad_top.mmmc.view
 set init_io_file init.io
-set init_top_cell cmsdk_mcu
+set init_top_cell mcu_pad_top
 set init_pwr_net VDD
 init_design
 
@@ -17,56 +17,28 @@ init_design
 checkDesign -io -netlist -physicalLibrary -powerGround -tieHilo -timingLibrary -spef -floorplan -place -outdir checkDesign
 
 ##################################################
-## Floorplan :: Below is for CHIP AREA (4030,4030)
+## Floorplan :: Below is for CHIP AREA (1370,1370)
 ##################################################
 #floorPlan -site CoreSite -s 700 700 1425 1425 1425 1425; almost 70%
-floorPlan -site CoreSite -r 1 0.7 1200 1200 1200 1200
+floorPlan -site CoreSite -r 1 0.6  352 352 352 352
 
 ## Move IO Cells (PADVDD, PADVSS)
-selectInst pad46
-placeInstance pad46 0.0 580.0 R270
-selectInst pad47
-placeInstance pad47 0.0 510.0 R270
-selectInst pad36
-placeInstance pad36 0.0 1280.0 R270
-selectInst pad35
-placeInstance pad35 0.0 1350.0 R270
-selectInst pad23
-placeInstance pad23 0.0 2190.0 R270
-selectInst pad22
-placeInstance pad22 0.0 2260.0 R270
-selectInst pad21
-placeInstance pad21 0.0 2330.0 R270
-selectInst pad12
-placeInstance pad12 0.0 2960.0 R270
-selectInst pad11
-placeInstance pad11 0.0 3030.0 R270
-selectInst pad7
-placeInstance pad7 0.0 3310.0 R270
-selectInst pad67
-placeInstance pad67 1420.0 0.0 R0
-selectInst pad68
-placeInstance pad68 1490.0 0.0 R0
-selectInst pad88
-placeInstance pad88 2890.0 0.0 R0
-selectInst pad87
-placeInstance pad87 2820.0 0.0 R0
-selectInst pad118
-placeInstance pad118 3790.0 1490.0 R90
-selectInst pad119
-placeInstance pad119 3790.0 1560.0 R90
-selectInst pad138
-placeInstance pad138 3790.0 2890.0 R90
-selectInst pad139
-placeInstance pad139 3790.0 2960.0 R90
-selectInst pad182
-placeInstance pad182 1560.0 3790.0 R180
-selectInst pad181
-placeInstance pad181 1630.0 3790.0 R180
-selectInst pad161
-placeInstance pad161 3030.0 3790.0 R180
-selectInst pad160
-placeInstance pad160 3100.0 3790.0 R180
+selectInst pad5
+placeInstance pad5 0.0 790.0 R270
+selectInst pad6
+placeInstance pad6 0.0 720.0 R270
+selectInst pad17
+placeInstance pad17 580.0 0.0 R0
+selectInst pad18
+placeInstance pad18 650.0 0.0 R0
+selectInst pad29
+placeInstance pad29 1130.0 580.0 R90
+selectInst pad30
+placeInstance pad30 1130.0 650.0 R90
+selectInst pad41
+placeInstance pad41 790.0 1130.0 R180
+selectInst pad42
+placeInstance pad42 720.0 1130.0 R180
 
 ## IO Filler Insertion
 addIoFiller -cell padIORINGFEED60 padIORINGFEED10 padIORINGFEED5 padIORINGFEED3 padIORINGFEED1 -prefix FILLER -side n
@@ -80,13 +52,14 @@ timeDesign -prePlace
 
 ## If there is no error, Save Design
 saveDesign -def InitDesign
+exit
 
 
 ########################################
 # PowerPlan 
 ########################################
 
-#restoreDesign InitDesign.dat
+restoreDesign InitDesign.dat
 
 ## Global Net Connection
 globalNetConnect VDD -type pgpin -pin VDD -instanceBasename *
@@ -115,7 +88,7 @@ addStripe -nets {VDD VSS} -layer Metal10 -direction vertical -width 5 -spacing 5
 ## Make Outer Rectangular Ring
 setAddRingMode -ring_target default -extend_over_row 0 -ignore_rows 0 -avoid_short 0 -skip_crossing_trunks none -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size 1 -orthogonal_only true -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape }
 
-addRing -nets {VDD VSS} -type core_rings -follow core -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} -width {top 5 bottom 5 left 5 right 5} -spacing {top 5 bottom 5 left 5 right 5} -offset {top 1000 bottom 1000 left 1000 right 1000} -center 0 -threshold 0 -jog_distance 0 -snap_wire_center_to_grid None
+addRing -nets {VDD VSS} -type core_rings -follow core -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} -width {top 5 bottom 5 left 5 right 5} -spacing {top 5 bottom 5 left 5 right 5} -offset {top 150 bottom 150 left 150 right 150} -center 0 -threshold 0 -jog_distance 0 -snap_wire_center_to_grid None
 
 ## Connect between Pad and Outer Rectangular Ring
 setSrouteMode -viaConnectToShape { noshape }
@@ -148,7 +121,7 @@ get_verify_drc_mode -ignore_trial_route -quiet
 get_verify_drc_mode -max_wrong_way_halo -quiet
 get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
 get_verify_drc_mode -limit -quiet
-set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report cmsdk_mcu.drc.rpt -limit 1000
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
 
 verify_drc
 setLayerPreference violation -isVisible 1
@@ -163,17 +136,18 @@ violationBrowser -all -no_display_false -displayByLayer
 ## If there is no error, Save Design
 saveDesign -def PowerPlan
 
+exit
 ######################################3
 ## Placement & Optimization
 ######################################3
-#restoreDesign PowerPlan.dat 
+restoreDesign PowerPlan.dat 
 set_db place_global_cong_effort high
 
 # First placement
 place_design
 
 # Check the Placement Density 
-checkPlace cmsdk_mcu.checkPlace
+checkPlace mcu_pad_top.checkPlace
 
 # Early GlobalRoute :: analisys of Congestion and Timing after Placement 
 setRouteMode -earlyGlobalMinRouteLayer 1 -earlyGlobalMaxRouteLayer 11 -earlyGlobalHonorMsvRouteConstraint false -earlyGlobalRoutePartitionPinGuide true
@@ -207,11 +181,12 @@ checkDesign -place
 # If there is no error, Save Design
 saveDesign -def PlaceOpt
 
+exit
 ########################################
 # CTS & Optimization
 ########################################
 
-#restoreDesign PlaceOpt.dat
+restoreDesign PlaceOpt.dat
 # Target about skew
 set_ccopt_property target_skew 0.01  
 
@@ -233,15 +208,17 @@ report_clock_timing -type skew -nworst 5 > reports/clock/skew.rpt
 optDesign -postCTS 	; # Setup/DRV concurrently
 optDesign -postCTS -hold ;# Only for hold violation
 timeDesign -postCTS -outDir reports/timing/postCTS
+timeDesign -postCTS -outDir reports/timing/postCTS -hold
 
 # If there is no error, Save Design
 saveDesign -def PostCTSopt
 
+exit
 ##############
 # Route
 ##############
 
-#restoreDesign PostCTSopt.dat
+restoreDesign PostCTSopt.dat
 
 # Route Auto : To Detail
 setNanoRouteMode -quiet -drouteFixAntenna 1
@@ -273,7 +250,7 @@ get_verify_drc_mode -ignore_trial_route -quiet
 get_verify_drc_mode -max_wrong_way_halo -quiet
 get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
 get_verify_drc_mode -limit -quiet
-set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report cmsdk_mcu.drc.rpt -limit 1000
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
 
 verify_drc
 set_verify_drc_mode -area {0 0 0 0}
@@ -355,7 +332,7 @@ set_default_switching_activity -input_activity 0.2 -period 8.0 ;# 8ns operation
 read_activity_file -reset ; 		#If you don't have fsdb or vcd file, reset at here
 set_power -reset
 set_powerup_analysis -reset
-report_power -rail_analysis_format VS -outfile ./run1/cmsdk_mcu.rpt
+report_power -rail_analysis_format VS -outfile ./run1/mcu_pad_top.rpt
 
 ########################
 # Rail IR-DROP Analysis
@@ -365,11 +342,11 @@ report_power -rail_analysis_format VS -outfile ./run1/cmsdk_mcu.rpt
 # Alternatively, Use Voltus to Anlyze 
 ########################
 
-
+exit
 #######################
 #### Chip Finish ######
 #######################
-#restoreDesign RouteDesign.dat
+restoreDesign RouteDesign.dat
 
 # Add Filler
 getFillerMode -quiet
@@ -397,19 +374,19 @@ saveDesign -rc -def ChipFinish
 # Write Out Files
 
 # Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" cmsdk_mcu.v
+saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file
-write_sdf cmsdk_mcu.sdf
+write_sdf mcu_pad_top.sdf
 
 # SDF version 2.1
-write_sdf -version 2.1 cmsdk_mcu.sdf_2.1
+write_sdf -version 2.1 mcu_pad_top.sdf_2.1
 
 # Write Out Constraint
-writeTimingCon cmsdk_mcu.sdc
+writeTimingCon mcu_pad_top.sdc
 
 # GDS file : without layermap file for GPDK045
-streamOut cmsdk_mcu.gds -libName DesignLib -units 2000 -mode ALL
+streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL
 
 exit
