@@ -16,8 +16,8 @@
 //              VSSIOR | sig sig sig | VDD | VSS | sig sig sig sig sig | VDDIOR
 //            That gives 8 signal slots per side (32 in total, 15 used, the rest
 //            reserved for later signals). The power / ground pads are in the
-//            file "add_pad" (included at the end of this module, commented out
-//            until PnR).
+//            file "add_pad" (5_PNR/add_pad). It is not part of the RTL: the
+//            PnR flow appends those 16 instances to the netlist.
 //
 // Pads in use : 15 signal pads = clk, clrn, UART (RXD, TXD, INTR),
 //               SPI master (SCLK, MOSI, MISO, CSN, INTR) and
