@@ -155,9 +155,4 @@ PADDO pad38 (.A(out_UARTINTR), .PAD(UARTINTR));   // [UART]
 PADDO pad39 (.A(out_SPIINTR),  .PAD(SPIINTR));    // [SPI]
 PADDO pad40 (.A(out_SLVINTR),  .PAD(SLVINTR));    // [SLV]
 
-//------------------------------------------------------------------------------
-// Power / ground pads (all commented out in the file until PnR)
-//------------------------------------------------------------------------------
-`include "add_pad"
-
 endmodule

@@ -3,7 +3,7 @@
 ########################################
 
 create_rc_corner -name BEST \
-   -cap_table "../../../GPDK045/digital/gsclib045_all_v4.4/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl" \
+   -cap_table "/GPDK045/digital/gsclib045_all_v4.4/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl" \
    -preRoute_res {1.0} \
    -preRoute_cap {1.0} \
    -preRoute_clkres {0.0} \
@@ -14,10 +14,10 @@ create_rc_corner -name BEST \
    -postRoute_clkres {0.0} \
    -postRoute_clkcap {0.0} \
    -T 0 \
-   -qx_tech_file ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/qrc/qx/gpdk045.tch
+   -qx_tech_file /GPDK045/digital/gsclib045_all_v4.4/gsclib045/qrc/qx/gpdk045.tch
 
 create_rc_corner -name WORST \
-   -cap_table "../../../GPDK045/digital/gsclib045_all_v4.4/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl" \
+   -cap_table "/GPDK045/digital/gsclib045_all_v4.4/captable/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl" \
    -preRoute_res {1.0} \
    -preRoute_cap {1.0} \
    -preRoute_clkres {0.0} \
@@ -28,7 +28,7 @@ create_rc_corner -name WORST \
    -postRoute_clkres {0.0} \
    -postRoute_clkcap {0.0} \
    -T 125 \
-   -qx_tech_file ../../../GPDK045/digital/gsclib045_all_v4.4/gsclib045/qrc/qx/gpdk045.tch
+   -qx_tech_file /GPDK045/digital/gsclib045_all_v4.4/gsclib045/qrc/qx/gpdk045.tch
 
 ########################################
 ########## Create Library_Set ##########
