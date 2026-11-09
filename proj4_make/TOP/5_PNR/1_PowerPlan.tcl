@@ -74,12 +74,17 @@ violationBrowser -all -no_display_false -displayByLayer
 ## verifyConnectiviy -only Soft PG Connect 
 verifyConnectivity -type all -noOpen -noAntenna -noWeakConnect -noUnConnPin -noUnroutedNet -error 1000 -warning 50
 
+## Check the power / ground wiring including opens and unconnected pins
+## (the check above skips them, so unconnected pad power pins would not show up)
+verifyConnectivity -type special -error 1000 -warning 50 -report mcu_pad_top.pgconn.rpt
+
 setLayerPreference violation -isVisible 1
 violationBrowser -all -no_display_false -displayByLayer
 
 ## If there is no error, Save Design
 saveDesign -def PowerPlan
 
-fit
-gui_dump_picture snap/1_powerplan.png -format PNG
+# Picture needs the GUI; catch keeps the script going (and exit working) without it
+catch {fit}
+catch {gui_dump_picture snap/1_powerplan.png -format PNG}
 exit
