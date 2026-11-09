@@ -1,0 +1,225 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 03:13:35 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+restoreDesign InitDesign.dat
+clearGlobalNets
+globalNetConnect VDD -type pgpin -pin VDD -instanceBasename * -hierarchicalInstance {}
+globalNetConnect VSS -type pgpin -pin VSS -instanceBasename * -hierarchicalInstance {}
+globalNetConnect VDD -type tiehi -instanceBasename * -hierarchicalInstance {}
+globalNetConnect VSS -type tielo -instanceBasename * -hierarchicalInstance {}
+zoomBox 763.10950 435.52400 1533.83200 1125.48500
+fit
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+setAddRingMode -ring_target default -extend_over_row 0 -ignore_rows 0 -avoid_short 0 -skip_crossing_trunks none -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size 1 -orthogonal_only true -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape }
+addRing -nets {VDD VSS} -type core_rings -follow core -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} -width {top 5 bottom 5 left 5 right 5} -spacing {top 5 bottom 5 left 5 right 5} -offset {top 5 bottom 5 left 5 right 5} -center 0 -threshold 0 -jog_distance 0 -snap_wire_center_to_grid None
+gui_select -rect {531.44500 805.11350 642.47850 704.65450}
+gui_select -rect {505.00850 786.60800 655.69700 659.71250}
+zoomBox 520.87050 776.03300 671.55900 667.64350
+uiSetTool ruler
+zoomBox 509.20850 643.38050 686.48900 802.08450
+uiSetTool ruler
+fit
+setSrouteMode -viaConnectToShape { noshape }
+sroute -connect { corePin } -layerChangeRange { Metal1(1) Metal11(11) } -blockPinTarget { nearestTarget } -corePinTarget { firstAfterRowEnd } -allowJogging 1 -crossoverViaLayerRange { Metal1(1) Metal11(11) } -nets { VDD VSS } -allowLayerChange 1 -targetViaLayerRange { Metal1(1) Metal11(11) }
+zoomBox 547.30700 805.11350 626.61650 672.93050
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+set sprCreateIeRingOffset 1.0
+set sprCreateIeRingThreshold 1.0
+set sprCreateIeRingJogDistance 1.0
+set sprCreateIeRingLayers {}
+set sprCreateIeStripeWidth 10.0
+set sprCreateIeStripeThreshold 1.0
+setAddStripeMode -ignore_block_check false -break_at none -route_over_rows_only false -rows_without_stripes_only false -extend_to_closest_target none -stop_at_last_wire_for_area false -partial_set_thru_domain false -ignore_nondefault_domains false -trim_antenna_back_to_shape none -spacing_type edge_to_edge -spacing_from_block 0 -stripe_min_length stripe_width -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size false -split_vias false -orthogonal_only true -allow_jog { padcore_ring  block_ring } -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape   }
+addStripe -nets {VDD VSS} -layer Metal10 -direction vertical -width 5 -spacing 5 -set_to_set_distance 100 -start_from left -start_offset 10 -stop_offset 0 -switch_layer_over_obs false -max_same_layer_jog_length 2 -padcore_ring_top_layer_limit Metal11 -padcore_ring_bottom_layer_limit Metal1 -block_ring_top_layer_limit Metal11 -block_ring_bottom_layer_limit Metal1 -use_wire_group 0 -snap_wire_center_to_grid None
+fit
+zoomBox 520.87050 736.37850 668.91500 596.26450
+fit
+zoomBox 579.03100 707.29800 750.86850 601.55200
+uiSetTool ruler
+zoomBox 626.81000 603.58600 732.34000 698.05800
+fit
+zoomBox 198.93150 220.12100 1265.67550 1175.08450
+zoomBox 262.68750 269.80100 1169.42000 1081.52000
+zoomBox 472.94550 456.51000 946.26600 880.23300
+zoomBox 600.68050 569.93850 810.69650 757.94750
+zoomBox 600.68050 569.93850 810.69650 757.94750
+zoomBox 630.38600 594.29050 782.12250 730.12700
+zoomBox 667.35400 624.59700 746.56150 695.50450
+zoomBox 673.41000 629.56150 740.73650 689.83300
+zoomBox 696.72500 648.67550 718.30850 667.99750
+zoomBox 700.96950 652.15550 714.22500 664.02200
+zoomBox 698.37400 650.02700 716.72150 666.45200
+fit
+zoomBox -131.18750 59.20550 1605.82700 1614.20450
+zoomBox -38.27600 283.06800 1216.71750 1406.55500
+zoomBox 28.85300 444.80850 935.58600 1256.52800
+uiSetTool ruler
+zoomBox 179.23850 564.92100 834.35300 1151.38850
+zoomBox 330.32450 685.59400 732.64750 1045.75900
+zoomBox 366.39250 714.40200 708.36750 1020.54250
+zoomBox 445.26050 777.39450 655.27650 965.40350
+zoomBox 464.08850 792.43250 642.60200 952.24000
+zoomBox 534.10300 839.45100 613.31100 910.35900
+zoomBox 555.65150 853.92250 604.29600 897.46950
+fit
+setAddRingMode -ring_target default -extend_over_row 0 -ignore_rows 0 -avoid_short 0 -skip_crossing_trunks none -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size 1 -orthogonal_only true -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape }
+addRing -nets {VDD VSS} -type core_rings -follow core -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} -width {top 5 bottom 5 left 5 right 5} -spacing {top 5 bottom 5 left 5 right 5} -offset {top 150 bottom 150 left 150 right 150} -center 0 -threshold 0 -jog_distance 0 -snap_wire_center_to_grid None
+setAddRingMode -ring_target default -extend_over_row 0 -ignore_rows 0 -avoid_short 0 -skip_crossing_trunks none -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size 1 -orthogonal_only true -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape }
+addRing -nets {VDD VSS} -type core_rings -follow core -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} -width {top 5 bottom 5 left 5 right 5} -spacing {top 5 bottom 5 left 5 right 5} -offset {top 150 bottom 150 left 150 right 150} -center 0 -threshold 0 -jog_distance 0 -snap_wire_center_to_grid None
+setAddStripeMode -ignore_block_check false -break_at none -route_over_rows_only false -rows_without_stripes_only false -extend_to_closest_target none -stop_at_last_wire_for_area false -partial_set_thru_domain false -ignore_nondefault_domains false -trim_antenna_back_to_shape none -spacing_type edge_to_edge -spacing_from_block 0 -stripe_min_length stripe_width -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size false -split_vias false -orthogonal_only true -allow_jog { padcore_ring  block_ring } -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape   }
+addStripe -nets {VDD VSS} -layer Metal10 -direction vertical -width 5 -spacing 5 -set_to_set_distance 100 -start_from left -start_offset 50 -stop_offset 0 -switch_layer_over_obs false -max_same_layer_jog_length 2 -padcore_ring_top_layer_limit Metal11 -padcore_ring_bottom_layer_limit Metal1 -block_ring_top_layer_limit Metal11 -block_ring_bottom_layer_limit Metal1 -use_wire_group 0 -snap_wire_center_to_grid None
+setAddStripeMode -ignore_block_check false -break_at none -route_over_rows_only false -rows_without_stripes_only false -extend_to_closest_target none -stop_at_last_wire_for_area false -partial_set_thru_domain false -ignore_nondefault_domains false -trim_antenna_back_to_shape none -spacing_type edge_to_edge -spacing_from_block 0 -stripe_min_length stripe_width -stacked_via_top_layer Metal11 -stacked_via_bottom_layer Metal1 -via_using_exact_crossover_size false -split_vias false -orthogonal_only true -allow_jog { padcore_ring  block_ring } -skip_via_on_pin {  standardcell } -skip_via_on_wire_shape {  noshape   }
+addStripe -nets {VDD VSS} -layer Metal11 -direction horizontal -width 5 -spacing 5 -set_to_set_distance 100 -start_from bottom -start_offset 50 -stop_offset 0 -switch_layer_over_obs false -max_same_layer_jog_length 2 -padcore_ring_top_layer_limit Metal11 -padcore_ring_bottom_layer_limit Metal1 -block_ring_top_layer_limit Metal11 -block_ring_bottom_layer_limit Metal1 -use_wire_group 0 -snap_wire_center_to_grid None
+zoomBox 343.74550 1013.96250 528.80150 802.47000
+zoomBox 422.67350 862.67800 457.51450 825.08650
+zoomBox 410.48050 821.35150 468.60050 873.38150
+zoomBox 371.64150 803.72300 502.63050 920.98600
+zoomBox 223.67300 736.56200 632.28050 1102.35300
+zoomBox 140.02500 698.59550 705.57300 1204.88150
+zoomBox 547.54150 1088.55250 644.84800 972.95550
+zoomBox 551.00800 1068.33950 607.63700 1024.74050
+fit
+getMultiCpuUsage -localCpu
+get_verify_drc_mode -disable_rules -quiet
+get_verify_drc_mode -quiet -area
+get_verify_drc_mode -quiet -layer_range
+get_verify_drc_mode -check_ndr_spacing -quiet
+get_verify_drc_mode -check_only -quiet
+get_verify_drc_mode -check_same_via_cell -quiet
+get_verify_drc_mode -exclude_pg_net -quiet
+get_verify_drc_mode -ignore_trial_route -quiet
+get_verify_drc_mode -max_wrong_way_halo -quiet
+get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
+get_verify_drc_mode -limit -quiet
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
+verify_drc
+set_verify_drc_mode -area {0 0 0 0}
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserReport -all -no_display_false -report reports/mcu_pad_top.viols.rpt
+violationBrowserClose
+verifyConnectivity -type all -geomConnect -error 1000 -warning 50
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserClose
+verifyConnectivity -type all -noUnConnPin -noUnroutedNet -geomConnect -error 1000 -warning 50
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserClose
+verifyConnectivity -type all -noOpen -noWeakConnect -noUnConnPin -noUnroutedNet -geomConnect -error 1000 -warning 50
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserReport -all -no_display_false -report reports/mcu_pad_top.viols.rpt
+violationBrowserClose
+saveDesign -def PowerPlan
+fit
+gui_dump_picture snap/1_powerplan.png -format PNG
+fit
+zoomBox 122.24600 233.03300 1598.70850 1554.78200
+zoomBox -21.34450 87.75750 1715.67050 1642.75650
+zoomBox -190.27400 -83.15550 1853.27300 1746.25550
+setLayerPreference node_layer -isVisible 0
+setLayerPreference Metal11 -isVisible 1
+setLayerPreference Metal10 -isVisible 1
+setLayerPreference node_layer -isVisible 1
+zoomBox 51.08450 322.53300 1527.54800 1644.28300
+zoomBox -59.81050 136.13500 1677.20550 1691.13500
+zoomBox -190.27550 -83.15650 1853.27300 1746.25550
+zoomBox -343.76350 -341.14700 2060.41150 1811.10300
+zoomBox -190.27600 -83.15700 1853.27300 1746.25550
+zoomBox -59.81150 136.13400 1677.20550 1691.13500
+zoomBox -190.27600 -83.15750 1853.27350 1746.25550
+zoomBox 85.56350 335.73700 1562.02800 1657.48800
+zoomBox 284.85750 638.38800 1351.60350 1593.35350
+zoomBox 362.68950 756.58550 1269.42400 1568.30650
+zoomBox 495.82250 933.66300 1150.93850 1520.13150
+zoomBox 434.65300 852.30250 1205.37800 1542.26600
+panPage 0 1
+zoomBox 744.73800 1681.45500 887.31700 1371.37050
+zoomBox 664.81600 1398.79400 959.23950 1662.36600
+zoomBox 734.10200 1485.24250 864.73950 1602.19100
+zoomBox 712.87600 1458.75900 893.68950 1620.62550
+zoomBox 683.49800 1422.10400 933.75850 1646.14050
+setLayerPreference node_overlay -isVisible 1
+setLayerPreference congestH -color {#000066 #0000c9 #0053ff #00fcfa #00a953 #53a900 #f9fc00 #ff5300 #ff5858 #ffffff}
+setLayerPreference congestV -color {#000066 #0000c9 #0053ff #00fcfa #00a953 #53a900 #f9fc00 #ff5300 #ff5858 #ffffff}
+fit
+setLayerPreference node_overlay -isVisible 0
+setLayerPreference obsio -isVisible 1
+setLayerPreference obsio -isSelectable 1
+zoomBox 436.49750 587.84300 1503.24200 1542.80700
+zoomBox 726.07550 1013.96600 1282.92400 1512.46450
+setLayerPreference obsoverlap -isVisible 0
+setLayerPreference obsoverlap -isVisible 1
+setLayerPreference obsoverlap -isSelectable 0
+setLayerPreference obsoverlap -isVisible 0
+setLayerPreference obsio -isVisible 0
+setLayerPreference obsio -isVisible 1
+setLayerPreference obsio -isSelectable 0
+setLayerPreference obsio -isVisible 0
+setLayerPreference pinio -isVisible 1
+setLayerPreference pinio -isSelectable 1
+zoomBox 687.55600 934.76700 1342.67250 1521.23600
+panPage 0 1
+panPage -1 0
+zoomBox 769.84800 1680.22650 904.60050 1382.75450
+zoomBox 696.87100 1670.33950 874.83800 1415.85450
+fit
+zoomBox -68.66500 1719.81850 304.09050 1365.56850
+fit
+zoomBox 499.72100 1143.50150 687.42100 934.65250
+zoomBox 556.90200 1106.98300 683.66000 991.09000
+setSrouteMode -viaConnectToShape { noshape }
+sroute -connect { padPin } -layerChangeRange { Metal1(1) Metal11(11) } -blockPinTarget { nearestTarget } -padPinPortConnect { allPort oneGeom } -padPinTarget { nearestTarget } -allowJogging 1 -crossoverViaLayerRange { Metal1(1) Metal11(11) } -nets { VDD VSS } -allowLayerChange 1 -targetViaLayerRange { Metal1(1) Metal11(11) }
+zoomBox 523.77450 972.88600 702.95650 1133.29200
+fit
+zoomBox 65.02450 -32.53550 1541.48700 1289.21350
+zoomBox 164.72850 -12.76700 1419.72200 1110.72000
+zoomBox 434.79000 40.77900 1089.90500 627.24700
+fit
+uiSetTool ruler
+uiSetTool select
