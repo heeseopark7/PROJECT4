@@ -1,0 +1,114 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 05:45:58 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+restoreDesign PowerPlan.dat/
+setPlaceMode -place_global_cong_effort high
+place_design
+zoomBox 708.57000 839.48100 1033.74000 612.12650
+zoomBox 761.57300 812.45950 952.55250 616.01150
+zoomBox 813.48650 789.74850 903.76200 682.15650
+zoomBox 838.48950 765.33800 895.08400 714.03000
+zoomBox 847.76900 753.84550 874.60900 724.41000
+zoomBox 849.76800 747.67750 867.25050 728.32350
+zoomBox 852.87350 742.72700 864.90000 730.98050
+zoomBox 854.65150 739.12850 862.40900 732.15200
+zoomBox 856.06500 737.98950 860.62200 732.63600
+zoomBox 856.42900 736.75150 859.39200 732.58200
+zoomBox 856.68400 735.08250 858.58800 733.22650
+fit
+checkPlace mcu_pad_top.checkPlace
+setRouteMode -earlyGlobalMinRouteLayer 1 -earlyGlobalMaxRouteLayer 11 -earlyGlobalHonorMsvRouteConstraint false -earlyGlobalRoutePartitionPinGuide true
+earlyGlobalRoute
+reportCongestion -hotSpot
+reportCongestion -overflow
+setDrawView place
+setLayerPreference densityMap -isVisible 1
+zoomBox 115.64350 118.58850 1592.10650 1440.33800
+zoomBox 673.59900 482.62800 1230.44650 981.12550
+zoomBox 795.14800 595.56850 1085.82650 855.78800
+setLayerPreference densityMap -isVisible 0
+fit
+setLayerPreference pinDensityMap -isVisible 1
+zoomBox 179.01000 151.47200 1434.00350 1274.95900
+zoomBox -46.72350 8.05000 1690.29200 1563.04950
+setLayerPreference pinDensityMap -isVisible 0
+zoomBox 251.34450 119.66950 1506.33800 1243.15650
+zoomBox -236.27350 -62.93200 1807.27400 1766.47900
+place_opt_design
+earlyGlobalRoute
+reportCongestion -hotSpot
+reportCongestion -overflow
+timeDesign -preCTS -outDir reports/timing/preCTS
+checkDesign -place
+saveDesign -def PlaceOpt
+fit
+gui_dump_picture snap/2_placement.png -format PNG
+zoomBox 305.07800 388.18700 1371.82200 1343.15050
+zoomBox 627.50750 620.79650 1100.82750 1044.51900
+zoomBox 774.31800 724.34700 984.33300 912.35550
+zoomBox 791.88200 736.73600 970.39550 896.54350
+fit
+fit
+highlight 0x7fa0897506c0 -index 1
+highlight 0x7fa089750240 -index 3
+highlight 0x7fa089750900 -index 4
+highlight 0x7fa089751440 -index 5
+highlight 0x7fa0897518c0 -index 6
+highlight 0x7fa0897505a0 -index 8
+highlight 0x7fa0897507e0 -index 9
+fit
+gui_dump_picture snap/2_placement.png -format PNG
+setLayerPreference densityMap -isVisible 1
+zoomBox 111.97600 133.99500 1588.43850 1455.74400
+zoomBox 111.97550 133.99450 1588.43850 1455.74400
+zoomBox 230.01600 218.80050 1485.00950 1342.28750
+zoomBox 415.63450 352.15750 1322.36750 1163.87700
+zoomBox 488.12650 404.23850 1258.85000 1094.20050
+zoomBox 653.97750 618.22500 1056.30050 978.39000
+zoomBox 584.41100 528.46850 1141.25900 1026.96650
+zoomBox 426.89350 325.23550 1333.62850 1136.95700
+zoomBox -84.89600 -335.08900 1958.65700 1494.32700
+zoomBox 270.10700 122.94650 1525.10450 1246.43700
+zoomBox 426.89150 325.23500 1333.62800 1136.95750
+zoomBox 488.12250 404.23700 1258.84850 1094.20150
+zoomBox 584.40800 528.46800 1141.25800 1026.96750
+zoomBox 622.01150 576.98550 1095.33400 1000.71000
+zoomBox 681.14250 653.27850 1023.11850 959.42000
+zoomBox 777.03350 777.00050 906.01000 892.46200
+zoomBox 754.73200 748.22650 933.24600 908.03450
+zoomBox 704.23500 683.07350 994.91550 943.29450
+setDensityMapMode -gridInRow 10 -threshold 0.75
+setLayerPreference densityMap -color {#000066 #00006d #000074 #00007b #000082 #000089 #000090 #000097 #00009e #0000a5 #0000ac #0000b3 #0000bb #0000c2 #0000c9 #0000d0 #0000d7 #0000de #0000e5 #0000ec #0000f3 #0000fa #0005ff #0011ff #001eff #002aff #0037ff #0043ff #0050ff #005cff #0069ff #0076ff #0082ff #008fff #009bff #00a8ff #00b4ff #00c1ff #00cdff #00daff #00e7ff #00f3ff #00fefd #00f8f2 #00f2e6 #00ecda #00e6ce #00e0c2 #00dbb7 #00d5ab #00cf9f #00c993 #00c387 #00bd7c #00b770 #00b164 #00ab58 #00a54c #009f40 #009a35 #009429 #008e1d #008811 #008205 #058200 #118800 #1d8e00 #299400 #359a00 #409f00 #4ca500 #58ab00 #64b100 #70b700 #7cbd00 #87c300 #93c900 #9fcf00 #abd500 #b7db00 #c2e000 #cee600 #daec00 #e6f200 #f2f800 #fdfe00 #fff300 #ffe700 #ffda00 #ffcd00 #ffc100 #ffb400 #ffa800 #ff9b00 #ff8f00 #ff8200 #ff7600 #ff6900 #ff5c00 #ff5000 #ff4300 #ff3700 #ff2a00 #ff1e00 #ff1100 #ff0500 #ff0606 #ff1212 #ff1e1e #ff2a2a #ff3636 #ff4242 #ff4d4d #ff5959 #ff6565 #ff7171 #ff7d7d #ff8888 #ff9494 #ffa0a0 #ffacac #ffb8b8 #ffc3c3 #ffcfcf #ffdbdb #ffe7e7 #fff3f3}
+reportDensityMap
+zoomBox 731.64850 702.19500 978.72700 923.38300
+zoomBox 774.75550 732.26400 953.27000 892.07250
+fit
+highlight 0x7fa0897506c0 -index 1
+highlight 0x7fa089750240 -index 1
+dehighlight -all
+zoomBox 224.20450 390.71450 1290.94800 1345.67750
+zoomBox 376.61900 486.06900 1147.34150 1176.03000
+zoomBox 600.15150 572.25000 1073.47200 995.97300
+zoomBox 736.24650 638.17100 1026.92500 898.39050
+zoomBox 664.17550 573.17700 1066.49900 933.34250
+fit
+zoomBox 695.35200 934.65250 1065.46350 659.71250
+reportCongestion -overflow
+timeDesign -preCTS
+saveDesign -def PlaceOpt
