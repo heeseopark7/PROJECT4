@@ -23,6 +23,11 @@ extractRC
 # If there is no error, save Design
 saveDesign -rc -def ChipFinish
 
+## Snapshot after save (needs the GUI; catch keeps the script running without it)
+file mkdir snap
+catch {fit}
+catch {gui_dump_picture snap/5_chipfinish.png -format PNG}
+
 #####################
 #### Write Out ######
 #####################

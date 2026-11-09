@@ -42,4 +42,9 @@ checkDesign -place
 # If there is no error, Save Design
 saveDesign -def PlaceOpt
 
+## Snapshot after save (needs the GUI; catch keeps the script running without it)
+file mkdir snap
+catch {fit}
+catch {gui_dump_picture snap/2_placement.png -format PNG}
+
 exit

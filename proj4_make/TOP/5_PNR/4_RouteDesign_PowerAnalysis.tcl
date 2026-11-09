@@ -82,6 +82,11 @@ timeDesign -postRoute -hold; # Hold time report
 # option1 : innovus and tempus : It is useful to read design easily in Tempus
 saveDesign -rc -def RouteDesign
 
+## Snapshot after save (needs the GUI; catch keeps the script running without it)
+file mkdir snap
+catch {fit}
+catch {gui_dump_picture snap/4_route.png -format PNG}
+
 # option2 : tempus -stylus
 #saveDesign -rc -mmmc2 RouteDesign_mmmc2
 
