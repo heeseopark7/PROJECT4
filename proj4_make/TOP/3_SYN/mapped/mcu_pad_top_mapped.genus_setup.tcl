@@ -2,7 +2,7 @@
 #
 # Genus(TM) Synthesis Solution setup file
 # Created by Genus(TM) Synthesis Solution 22.17-s071_1
-#   on 11/07/2026 03:29:44
+#   on 11/10/2026 00:24:47
 #
 # This file can only be run in Genus Common UI mode.
 #
@@ -29,7 +29,7 @@ phys::read_script ./mapped/mcu_pad_top_mapped.root.g
 
 # Libraries
 ################################################################################
-::legacy::set_attribute library {/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib /GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib} /
+::legacy::set_attribute library {/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib /GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib} /
 
 ::legacy::set_attribute lef_library {/GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_tech.lef /GPDK045/digital/gsclib045_all_v4.4/gsclib045/lef/gsclib045_macro.lef /GPDK045/digital/giolib045_v3.5/lef/giolib045.lef} /
 ::legacy::set_attribute qrc_tech_file /GPDK045/digital/gsclib045_all_v4.4/gsclib045_tech/qrc/qx/gpdk045.tch /
@@ -62,8 +62,8 @@ set _slk_ [::legacy::get_attribute slack design:mcu_pad_top]
 if {[regexp {^-?[0-9.]+$} $_slk_]} {
   set _slk_ [format %.1f $_slk_]
 }
-if {$_slk_ != "588.7"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden slack: 588.7,  current slack: $_slk_"
+if {$_slk_ != "2.3"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden slack: 2.3,  current slack: $_slk_"
 }
 unset _slk_
 # multi-mode slack
@@ -81,8 +81,8 @@ set _cell_area_ [::legacy::get_attribute cell_area design:mcu_pad_top]
 if {[regexp {^-?[0-9.]+$} $_cell_area_]} {
   set _cell_area_ [format %.0f $_cell_area_]
 }
-if {$_cell_area_ != "236818"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden cell area: 236818,  current cell area: $_cell_area_"
+if {$_cell_area_ != "237856"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden cell area: 237856,  current cell area: $_cell_area_"
 }
 unset _cell_area_
 # net area
@@ -90,7 +90,7 @@ set _net_area_ [::legacy::get_attribute net_area design:mcu_pad_top]
 if {[regexp {^-?[0-9.]+$} $_net_area_]} {
   set _net_area_ [format %.0f $_net_area_]
 }
-if {$_net_area_ != "6677"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden net area: 6677,  current net area: $_net_area_"
+if {$_net_area_ != "6900"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden net area: 6900,  current net area: $_net_area_"
 }
 unset _net_area_

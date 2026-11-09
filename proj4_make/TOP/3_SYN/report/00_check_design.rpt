@@ -27,7 +27,7 @@ Preserved leaf instance(s)                   0
 Preserved hierarchical instance(s)           0
 Feedthrough Modules(s)                       0
 Libcells with no LEF cell                    4
-Physical (LEF) cells with no libcell       107
+Physical (LEF) cells with no libcell        91
 Subdesigns with long module name             0
 Physical only instance(s)                    0
 Logical only instance(s)                     0

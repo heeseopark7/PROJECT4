@@ -44,49 +44,32 @@ xmelab options:
 	worklib.ADDHX2:v
 	worklib.ADDHX4:v
 	worklib.ADDHXL:v
-	worklib.AND2X4:v
-	worklib.AND2X6:v
-	worklib.AND2X8:v
 	worklib.AND2XL:v
-	worklib.AND3X4:v
-	worklib.AND3X6:v
 	worklib.AND3X8:v
-	worklib.AND4X2:v
-	worklib.AND4X4:v
-	worklib.AND4X6:v
 	worklib.AND4X8:v
-	worklib.AND4XL:v
 	worklib.ANTENNA:v
-	worklib.AO21X2:v
-	worklib.AO21X4:v
 	worklib.AO21XL:v
 	worklib.AO22X2:v
 	worklib.AO22X4:v
 	worklib.AO22XL:v
-	worklib.AOI211X1:v
-	worklib.AOI211X2:v
 	worklib.AOI211X4:v
-	worklib.AOI21X2:v
+	worklib.AOI211XL:v
 	worklib.AOI21X4:v
 	worklib.AOI21XL:v
 	worklib.AOI221X2:v
 	worklib.AOI221X4:v
 	worklib.AOI221XL:v
-	worklib.AOI222X2:v
 	worklib.AOI222X4:v
 	worklib.AOI222XL:v
-	worklib.AOI22X2:v
-	worklib.AOI22X4:v
 	worklib.AOI22XL:v
-	worklib.AOI2BB1X2:v
 	worklib.AOI2BB1X4:v
 	worklib.AOI2BB1XL:v
 	worklib.AOI2BB2X2:v
 	worklib.AOI2BB2X4:v
 	worklib.AOI2BB2XL:v
-	worklib.AOI31X2:v
 	worklib.AOI31X4:v
 	worklib.AOI31XL:v
+	worklib.AOI32X1:v
 	worklib.AOI32X2:v
 	worklib.AOI32X4:v
 	worklib.AOI32XL:v
@@ -98,17 +81,13 @@ xmelab options:
 	worklib.BMXIX4:v
 	worklib.BUFX12:v
 	worklib.BUFX16:v
-	worklib.BUFX2:v
 	worklib.BUFX20:v
 	worklib.BUFX3:v
 	worklib.BUFX4:v
 	worklib.BUFX6:v
-	worklib.BUFX8:v
 	worklib.CLKAND2X12:v
 	worklib.CLKAND2X2:v
 	worklib.CLKAND2X3:v
-	worklib.CLKAND2X4:v
-	worklib.CLKAND2X6:v
 	worklib.CLKAND2X8:v
 	worklib.CLKBUFX12:v
 	worklib.CLKBUFX16:v
@@ -120,12 +99,9 @@ xmelab options:
 	worklib.CLKBUFX8:v
 	worklib.CLKINVX1:v
 	worklib.CLKINVX12:v
-	worklib.CLKINVX16:v
 	worklib.CLKINVX2:v
 	worklib.CLKINVX20:v
 	worklib.CLKINVX3:v
-	worklib.CLKINVX4:v
-	worklib.CLKINVX6:v
 	worklib.CLKINVX8:v
 	worklib.CLKMX2X12:v
 	worklib.CLKMX2X2:v
@@ -157,9 +133,7 @@ xmelab options:
 	worklib.DFFQX4:v
 	worklib.DFFQXL:v
 	worklib.DFFRHQX2:v
-	worklib.DFFRHQX4:v
 	worklib.DFFRHQX8:v
-	worklib.DFFRX2:v
 	worklib.DFFRX4:v
 	worklib.DFFRXL:v
 	worklib.DFFSHQX1:v
@@ -202,14 +176,13 @@ xmelab options:
 	worklib.EDFFTRX4:v
 	worklib.EDFFTRXL:v
 	worklib.EDFFX1:v
+	worklib.EDFFX2:v
 	worklib.EDFFX4:v
 	worklib.EDFFXL:v
 	worklib.HOLDX1:v
 	worklib.INVX12:v
 	worklib.INVX16:v
-	worklib.INVX2:v
 	worklib.INVX20:v
-	worklib.INVX3:v
 	worklib.INVX4:v
 	worklib.INVX6:v
 	worklib.INVX8:v
@@ -226,7 +199,6 @@ xmelab options:
 	worklib.MX3X1:v
 	worklib.MX3X2:v
 	worklib.MX3X4:v
-	worklib.MX3XL:v
 	worklib.MX4X1:v
 	worklib.MX4X2:v
 	worklib.MX4X4:v
@@ -244,25 +216,17 @@ xmelab options:
 	worklib.MXI4X2:v
 	worklib.MXI4X4:v
 	worklib.MXI4XL:v
-	worklib.NAND2BX2:v
-	worklib.NAND2BX4:v
 	worklib.NAND2BXL:v
-	worklib.NAND2X2:v
-	worklib.NAND2X4:v
-	worklib.NAND2X6:v
 	worklib.NAND2X8:v
 	worklib.NAND2XL:v
-	worklib.NAND3BX2:v
 	worklib.NAND3BX4:v
-	worklib.NAND3X2:v
-	worklib.NAND3X4:v
-	worklib.NAND3X6:v
-	worklib.NAND3X8:v
+	worklib.NAND3BXL:v
 	worklib.NAND3XL:v
 	worklib.NAND4BBX1:v
 	worklib.NAND4BBX2:v
 	worklib.NAND4BBX4:v
-	worklib.NAND4BX2:v
+	worklib.NAND4BBXL:v
+	worklib.NAND4BX1:v
 	worklib.NAND4BX4:v
 	worklib.NAND4BXL:v
 	worklib.NAND4X1:v
@@ -270,50 +234,38 @@ xmelab options:
 	worklib.NAND4X4:v
 	worklib.NAND4X6:v
 	worklib.NAND4X8:v
+	worklib.NAND4XL:v
 	worklib.NOR2BXL:v
-	worklib.NOR2X6:v
 	worklib.NOR2X8:v
 	worklib.NOR2XL:v
-	worklib.NOR3BX2:v
-	worklib.NOR3BX4:v
 	worklib.NOR3BXL:v
-	worklib.NOR3X4:v
 	worklib.NOR3X6:v
 	worklib.NOR3X8:v
 	worklib.NOR3XL:v
 	worklib.NOR4BBX2:v
 	worklib.NOR4BBX4:v
 	worklib.NOR4BBXL:v
-	worklib.NOR4BX2:v
-	worklib.NOR4BX4:v
 	worklib.NOR4BXL:v
-	worklib.NOR4X2:v
 	worklib.NOR4X4:v
 	worklib.NOR4X6:v
 	worklib.NOR4X8:v
 	worklib.NOR4XL:v
 	worklib.OA21X2:v
-	worklib.OA21X4:v
 	worklib.OA21XL:v
 	worklib.OA22X2:v
 	worklib.OA22X4:v
 	worklib.OA22XL:v
 	worklib.OAI211X2:v
-	worklib.OAI211X4:v
 	worklib.OAI211XL:v
-	worklib.OAI21X2:v
 	worklib.OAI21X4:v
 	worklib.OAI21XL:v
-	worklib.OAI221X2:v
-	worklib.OAI221X4:v
 	worklib.OAI221XL:v
+	worklib.OAI222X1:v
 	worklib.OAI222X2:v
 	worklib.OAI222X4:v
 	worklib.OAI222XL:v
-	worklib.OAI22X2:v
 	worklib.OAI22X4:v
 	worklib.OAI22XL:v
-	worklib.OAI2BB1X2:v
 	worklib.OAI2BB1X4:v
 	worklib.OAI2BB1XL:v
 	worklib.OAI2BB2X1:v
@@ -331,13 +283,11 @@ xmelab options:
 	worklib.OAI33X4:v
 	worklib.OAI33XL:v
 	worklib.OR2X4:v
-	worklib.OR2X6:v
-	worklib.OR2X8:v
 	worklib.OR2XL:v
-	worklib.OR3X4:v
-	worklib.OR3X6:v
+	worklib.OR3X2:v
 	worklib.OR3X8:v
-	worklib.OR4X6:v
+	worklib.OR3XL:v
+	worklib.OR4X2:v
 	worklib.OR4X8:v
 	worklib.OR4XL:v
 	worklib.SDFFHQX1:v
@@ -449,7 +399,6 @@ xmelab options:
 	worklib.XNOR2XL:v
 	worklib.XNOR3X1:v
 	worklib.XNOR3XL:v
-	worklib.XOR2X1:v
 	worklib.XOR2X2:v
 	worklib.XOR2X4:v
 	worklib.XOR2XL:v
@@ -460,25 +409,27 @@ xmelab options:
 	worklib.altos_latch_sr_0:v
 	worklib.altos_latch_sr_1:v
 
+
+Note: Post-reset simulation profiling begins. Pre-reset profiler data has been cleared.
+
 Profiled Intervals: 
  #Id                                PBSR Info               #start                  #stop             #start_CPU          #stop_CPU               #CPS
-[ 1]                                                          0 NS   to           8645 NS                 0.1345            50.4906           171.6772
+[ 1]                                                          0 NS   to           8645 NS                 9.6424            22.1463           691.3835
 
-Memory Usage - 46.8M program + 108.1M data + 2.0M profile = 156.9M total
-CPU Usage - 35.9s system + 14.9s user = 50.8s total (2.1% cpu)
+Memory Usage - 46.8M program + 121.6M data + 2.0M profile = 170.4M total
+CPU Usage - 15.5s system + 6.9s user = 22.4s total (2.3% cpu)
 
-License Acquisition Time - 0.0s
-Snapshot Loading: CPU Usage - 0.0s system + 0.1s user = 0.1s total (5.5s, 2.0% cpu)
+Snapshot Loading (After Reset): CPU Usage - 0.0s system + 0.2s user = 0.2s total (0.2s, 96.8% cpu)
 
-Derived hit_rate: 452 hps
+Derived hit_rate: 454 hps
 
 ------------------------------------------------------------
-Stream Counts (22804 hits total)
+Stream Counts (5687 hits total)
 ------------------------------------------------------------
 %hits #hits  #inst  name
- 98.9 22548 [     ] outside engine
-  0.5   110 [     ] SHM Waveform Dump Setup
-  0.2    57 [     ] SHM Waveform Dump
+ 97.2  5526 [     ] outside engine
+  1.1    61 [     ] SHM Waveform Dump Setup
+  0.8    47 [     ] SHM Waveform Dump
 
 ------------------------------------------------------------
 Most Active Modules (behavioral)
@@ -486,30 +437,26 @@ Most Active Modules (behavioral)
 %hits #hits  #inst  name
 
 ------------------------------------------------------------
-Stream Type Summary Counts (22804 hits total)
+Stream Type Summary Counts (5687 hits total)
 ------------------------------------------------------------
 %hits #hits  #inst  name
- 98.9 22548 [     ] Outside engine 
-  0.7   171 [     ] Waveform Dump 
-  0.1    28 [     ] HDL C interface 
-  0.1    15 [     ] Logic primitives 
-  0.1    15 [     ] IOPATH Delays 
-  0.1    12 [     ] Simulation Engine Time 
-  0.0     5 [     ] User-defined primitives 
-  0.0     3 [     ] TCL Functions 
-  0.0     2 [     ] Timing check support 
-  0.0     2 [     ] Simulation Setup Time 
-  0.0     1 [     ] Engine support 
-  0.0     1 [     ] Timing checks 
+ 97.2  5526 [     ] Outside engine 
+  1.9   110 [     ] Waveform Dump 
+  0.3    17 [     ] Logic primitives 
+  0.2    11 [     ] Simulation Engine Time 
+  0.2    10 [     ] IOPATH Delays 
+  0.1     5 [     ] User-defined primitives 
+  0.1     3 [     ] Support for callbacks (or UI) 
+  0.1     3 [     ] Timing checks 
+  0.0     1 [     ] General tracing support (VCD/SHM/VPI/UI) 
   0.0     1 [     ] User C code (VHDL C Interface) 
 
 ------------------------------------------------------------
-Technology-wise Summary Counts (22804 hits total)
+Technology-wise Summary Counts (5687 hits total)
 ------------------------------------------------------------
 %hits #hits  name
- 98.9 22563 Miscellaneous 
-  0.9   199 Analysis 
-  0.2    38 GLS 
-  0.0     3 TB/SV 
+ 97.4  5537 Miscellaneous 
+  2.0   114 Analysis 
+  0.6    35 GLS 
   0.0     1 VHDL 
 

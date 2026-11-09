@@ -105,6 +105,10 @@ catch {set_db base_cell:TLATX1 .dont_use true}
 catch {set_db base_cell:TLATX2 .dont_use true}
 catch {set_db base_cell:TLATX4 .dont_use true}
 catch {set_db base_cell:TLATXL .dont_use true}
+catch {set_db base_cell:SDFF2RX1 .dont_use true}
+catch {set_db base_cell:SDFF2RX2 .dont_use true}
+catch {set_db base_cell:SDFF4RX1 .dont_use true}
+catch {set_db base_cell:SDFF4RX2 .dont_use true}
 catch {set_db inst:mcu_pad_top/pad2 .dont_touch true}
 catch {set_db inst:mcu_pad_top/pad3 .dont_touch true}
 catch {set_db inst:mcu_pad_top/pad4 .dont_touch true}

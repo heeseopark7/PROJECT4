@@ -80,4 +80,6 @@ violationBrowser -all -no_display_false -displayByLayer
 ## If there is no error, Save Design
 saveDesign -def PowerPlan
 
+fit
+gui_dump_picture snap/1_powerplan.png -format PNG
 exit

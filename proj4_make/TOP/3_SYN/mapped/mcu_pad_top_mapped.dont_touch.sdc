@@ -102,6 +102,10 @@ set_dont_use [get_lib_cells TLATX1]
 set_dont_use [get_lib_cells TLATX2]
 set_dont_use [get_lib_cells TLATX4]
 set_dont_use [get_lib_cells TLATXL]
+set_dont_use [get_lib_cells SDFF2RX1]
+set_dont_use [get_lib_cells SDFF2RX2]
+set_dont_use [get_lib_cells SDFF4RX1]
+set_dont_use [get_lib_cells SDFF4RX2]
 set_dont_touch [get_cells pad2] ; # true
 set_dont_touch [get_cells pad3] ; # true
 set_dont_touch [get_cells pad4] ; # true

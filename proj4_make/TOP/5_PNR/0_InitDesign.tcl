@@ -16,10 +16,9 @@ init_design
 ## Check Design
 checkDesign -io -netlist -physicalLibrary -powerGround -tieHilo -timingLibrary -spef -floorplan -place -outdir checkDesign
 
-##################################################
-## Floorplan :: Below is for CHIP AREA (1370,1370)
-##################################################
-#floorPlan -site CoreSite -s 700 700 1425 1425 1425 1425; almost 70%
+########################################################
+## Floorplan :: Below is for CHIP AREA (1663.0,1663.1)##
+########################################################
 floorPlan -site CoreSite -r 1 0.6  352 352 352 352
 
 ## Move IO Cells (PADVDD, PADVSS)
@@ -32,13 +31,13 @@ placeInstance pad17 580.0 0.0 R0
 selectInst pad18
 placeInstance pad18 650.0 0.0 R0
 selectInst pad29
-placeInstance pad29 1130.0 580.0 R90
+placeInstance pad29 1423.0 580.0 R90
 selectInst pad30
-placeInstance pad30 1130.0 650.0 R90
+placeInstance pad30 1423.0 650.0 R90
 selectInst pad41
-placeInstance pad41 790.0 1130.0 R180
+placeInstance pad41 790.0 1423.1 R180
 selectInst pad42
-placeInstance pad42 720.0 1130.0 R180
+placeInstance pad42 720.0 1423.1 R180
 
 ## IO Filler Insertion
 addIoFiller -cell padIORINGFEED60 padIORINGFEED10 padIORINGFEED5 padIORINGFEED3 padIORINGFEED1 -prefix FILLER -side n
@@ -52,4 +51,7 @@ timeDesign -prePlace
 
 ## If there is no error, Save Design
 saveDesign -def InitDesign
+
+fit
+gui_dump_picture snap/0_floorplan.png -format PNG
 exit

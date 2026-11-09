@@ -11,8 +11,7 @@ _______________________________
      |   |    |
      |   |    + library_sets: default_emulate_libset_max
      |   |        |
-     |   |        + timing: /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib
-                             /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib
+     |   |        + timing: {/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib}
                              /GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib
      |   |
      |   |
@@ -31,6 +30,6 @@ _______________________________
      |   |    |
      |   |    + qx_tech_file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_tech/qrc/qx/gpdk045.tch
      |   |    |
-     |   |    + temperature: 0.0
+     |   |    + temperature: 125.0
      |
      + Constraint Mode: default_emulate_constraint_mode

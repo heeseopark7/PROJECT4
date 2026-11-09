@@ -5,10 +5,10 @@ QoS Summary for mcu_pad_top
 ================================================================================
 Metric                          syn_generic     syn_map         syn_opt        
 ================================================================================
-Slack (ps):                     2,393             790             589
-  R2R (ps):                     2,664             790             589
-  I2R (ps):                     2,393           2,383           2,383
-  R2O (ps):                     3,616           3,562           3,562
+Slack (ps):                     3,486             724               2
+  R2R (ps):                     3,486             724               2
+  I2R (ps):                     7,192           7,127           7,127
+  R2O (ps):                     8,112           7,679           7,637
   I2O (ps):                  no_value        no_value        no_value
   CG  (ps):                  no_value        no_value        no_value
 TNS (ps):                           0               0               0
@@ -18,10 +18,10 @@ TNS (ps):                           0               0               0
   I2O (ps):                  no_value        no_value        no_value
   CG  (ps):                  no_value        no_value        no_value
 Failing Paths:                      0               0               0
-Cell Area:                    216,000         236,864         236,818
-Total Cell Area:              216,000         236,864         236,818
-Leaf Instances:                 8,879           5,072           5,012
-Total Instances:                8,879           5,072           5,012
+Cell Area:                    216,000         238,221         237,856
+Total Cell Area:              216,000         238,221         237,856
+Leaf Instances:                 8,890           5,392           5,256
+Total Instances:                8,890           5,392           5,256
 Utilization (%):                 0.00            0.00            0.00
 Tot. Net Length (um):        no_value        no_value        no_value
 Avg. Net Length (um):        no_value        no_value        no_value
@@ -32,17 +32,17 @@ Norm Cong Hotspot Area:
   Max Cong:                  no_value        no_value        no_value
   Tot Cong:                  no_value        no_value        no_value
 ================================================================================
-CPU  Runtime (h:m:s):        00:02:19        00:01:16        00:00:13
-Real Runtime (h:m:s):        00:02:09        00:00:59        00:00:15
-CPU  Elapsed (h:m:s):        00:02:27        00:03:43        00:03:56
-Real Elapsed (h:m:s):        00:02:13        00:03:12        00:03:27
-Memory (MB):                  1921.55         1922.61         1923.45
+CPU  Runtime (h:m:s):        00:02:15        00:01:25        00:00:24
+Real Runtime (h:m:s):        00:02:06        00:01:07        00:00:23
+CPU  Elapsed (h:m:s):        00:02:23        00:03:48        00:04:11
+Real Elapsed (h:m:s):        00:02:10        00:03:16        00:03:39
+Memory (MB):                  1911.12         1911.01         1911.84
 ================================================================================
 ================================================================================
 Flow Settings:
 ================================================================================
-Total Runtime (h:m:s): 00:03:24
-Total Memory (MB):     1923.45
+Total Runtime (h:m:s): 00:03:36
+Total Memory (MB):     1911.84
 Executable Version:    22.17-s071_1
 ================================================================================
 Total Cell Area =  Cell Area + Physical Cell Area

@@ -30,8 +30,8 @@ set RTL_PATH     "../1_RTL"
 set QRC_FILE_PATH "/GPDK045/digital/gsclib045_all_v4.4/gsclib045_tech/qrc/qx"
 
 #GPDK 045 SVT
-set LIB_LIST {fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib pads_SS_s1vg.lib}
-#set LIB_LIST {slow_vdd1v0_basicCells.lib slow_vdd1v0_multibitsDFF.lib pads_SS_s1vg.lib}
+#set LIB_LIST {fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib pads_SS_s1vg.lib}
+set LIB_LIST {slow_vdd1v0_basicCells.lib slow_vdd1v0_multibitsDFF.lib pads_SS_s1vg.lib}
 set LEF_LIST {gsclib045_tech.lef gsclib045_macro.lef giolib045.lef}
 set QRC_LIST {gpdk045.tch}
 

@@ -28,7 +28,7 @@ reset_design
 # Clock period in ns. The CPU is single-cycle with asynchronous memories
 # (pc -> ROM -> decode -> ALU -> RAM/APB mux -> register file is one path),
 # so start relaxed and tighten it after looking at the timing report.
-set CLK_PERIOD 5
+set CLK_PERIOD 10
 
 create_clock -period $CLK_PERIOD -name MAIN_CLOCK [get_ports clk]
 
