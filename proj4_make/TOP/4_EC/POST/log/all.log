@@ -1,0 +1,145 @@
+//Note: Enable Unified Schematic Viewer usage.
+//Note: Enable buffer/inverter collapsing usage on schematics
+//Note: Enable bus collapsing usage on schematics
+//Note: Enable independent UI styles on each schematics
+//Note: Set schematic traverse max. level to 200 !!!
+//Note: Set schematic traverse max. time to 300(seconds) !!!
+//Note: Enable Schematic concise drawing support
+SETUP> dofile /home/hitech008/PROJ4/proj4_make/TOP/4_EC/POST/script/script.tcl
+// Command: dofile /home/hitech008/PROJ4/proj4_make/TOP/4_EC/POST/script/script.tcl
+// Command: set log file ./log/all.log -replace
+CPU time     : 0.37    seconds
+Elapse time  : 61      seconds
+Memory usage : 80.50   M bytes
+// Command: read library -verilog -both \
+//          	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v \
+//          	/GPDK045/digital/gsclib045_all_v4.4/gsclib045/verilog/fast_vdd1v0_basicCells.v \
+//          	/GPDK045/digital/giolib045_v3.5/vlog/pads_SS_s1vg.v
+// Parsing file /GPDK045/digital/gsclib045_all_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v ...
+// Parsing file /GPDK045/digital/gsclib045_all_v4.4/gsclib045/verilog/fast_vdd1v0_basicCells.v ...
+// Parsing file /GPDK045/digital/giolib045_v3.5/vlog/pads_SS_s1vg.v ...
+// Warning: (RTL14.1) Fanout load of the signal is removed (occurrence:120)
+// Note: (VLG8) Buffer inserted (occurrence:2784)
+// Note: (VLG9.2) The `define macro is used (occurrence:14)
+// Warning: (UDP3.2) Primitive has unspecified term(s) (occurrence:4)
+// Warning: (DIR6.1) Ignored compiler directive is detected (occurrence:986)
+// Warning: (DIR6.2) Supported compiler directive is detected (occurrence:2056)
+// Note: (DIR6.3) Conditional compiler directive clause is effective (occurrence:28)
+// Warning: (IGN3.2) Duplicate modules/entities are detected. Subsequent modules/entities are ignored (occurrence:489)
+// Warning: (HRC1.4) Module/entity is empty (blackboxed) (occurrence:2)
+// Warning: (HRC3.2a) Module/entity has no I/O ports (occurrence:18)
+// Warning: (HRC3.10b) An input port is declared, but it is not used. Module is empty (occurrence:1)
+// Note: Read VERILOG library successfully
+CPU time     : 0.65    seconds
+Elapse time  : 63      seconds
+Memory usage : 106.57  M bytes
+// Command: read design ../../3_SYN/mapped/mcu_pad_top_syn_final.v -verilog -golden
+// Parsing file ../../3_SYN/mapped/mcu_pad_top_syn_final.v ...
+// Golden root module is set to 'mcu_pad_top'
+// Warning: (RTL2.5) Net is referenced without an assignment. Design verification will be based on set_undriven_signal setting (occurrence:221)
+// Warning: (RTL2.13) Undriven pin is detected (occurrence:324)
+// Warning: (RTL14) Signal has input but it has no output (occurrence:341)
+// Warning: (RTL14.1) Fanout load of the signal is removed (occurrence:5)
+// Note: (HRC1.3) Undefined or non-translated modules will be blackboxed (occurrence:4)
+// Warning: (HRC3.2) Component is instantiated without any specified port connections (occurrence:16)
+// Warning: (HRC3.10a) An input port is declared, but it is not completely used in the module (occurrence:221)
+// Warning: Total black box modules referenced in Golden = 4
+// Warning: There are 324 undriven nets in Golden
+// Warning: There are 324 undriven pins in Golden
+// Note: Read VERILOG design successfully
+CPU time     : 0.84    seconds
+Elapse time  : 67      seconds
+Memory usage : 114.02  M bytes
+// Command: read design ../../5_PNR/mcu_pad_top.v -verilog -revised
+// Parsing file ../../5_PNR/mcu_pad_top.v ...
+// Revised root module is set to 'mcu_pad_top'
+// Warning: (RTL14) Signal has input but it has no output (occurrence:22)
+// Warning: (HRC3.16) A wire is declared, but not used in the module (occurrence:663)
+// Note: Read VERILOG design successfully
+CPU time     : 1.19    seconds
+Elapse time  : 69      seconds
+Memory usage : 121.38  M bytes
+// Command: set system mode lec
+// Processing Golden ...
+// Modeling Golden ...
+// (F28) Converted 324 internal output port(s) to inout port(s)
+// Processing Revised ...
+// Modeling Revised ...
+CPU time     : 1.57    seconds
+Elapse time  : 73      seconds
+Memory usage : 151.03  M bytes
+// Warning: Golden and Revised have different numbers of key points:
+// Golden  key points = 1847
+// Revised key points = 1831
+// Mapping key points ...
+================================================================================
+Mapped points: SYSTEM class
+--------------------------------------------------------------------------------
+Mapped points     PI     PO     DFF       Total   
+--------------------------------------------------------------------------------
+Golden            7      8      1816      1831    
+--------------------------------------------------------------------------------
+Revised           7      8      1816      1831    
+================================================================================
+Unmapped points:
+================================================================================
+Golden:
+--------------------------------------------------------------------------------
+Unmapped points   BBOX      Total   
+--------------------------------------------------------------------------------
+Unreachable       16        16      
+================================================================================
+// Command: add compare points -all
+// 1824 compared points added to compare list
+// Command: compare
+================================================================================
+Compared points      PO     DFF       Total   
+--------------------------------------------------------------------------------
+Equivalent           8      1816      1824    
+================================================================================
+// Command: report verification
+================================================================================
+                            Verification Report
+--------------------------------------------------------------------------------
+Category                                                                  Count
+--------------------------------------------------------------------------------
+1. Non-standard modeling options used:                                      0
+--------------------------------------------------------------------------------
+2. Incomplete verification:                                                 0
+--------------------------------------------------------------------------------
+3. User modification to design:                                             0
+--------------------------------------------------------------------------------
+4. Conformal Constraint Designer clock domain crossing checks recommended:  0
+--------------------------------------------------------------------------------
+5. Design ambiguity:                                                        2
+     Duplicate module definition:                              yes
+     Black box due to undefined cells:                         yes
+--------------------------------------------------------------------------------
+6. Compare Results:                                                        PASS
+================================================================================
+// Command: report statistics
+Mapping and compare statistics
+================================================================================
+                     Compare Result       Golden            Revised
+--------------------------------------------------------------------------------
+Root module name                          mcu_pad_top       mcu_pad_top       
+
+Primary inputs                                 7                  7
+   Mapped                                      7                  7
+
+Primary outputs                                8                  8
+   Mapped                                      8                  8
+      Equivalent                  8
+
+Black-box key points                          16                  0
+   Unmapped                                   16                  0
+      Unreachable                             16                  0
+
+State key points                            1816               1816
+   Mapped                                   1816               1816
+      Equivalent               1816
+================================================================================
+LEC> exit
+// Command: exit
+
+

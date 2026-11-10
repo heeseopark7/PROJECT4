@@ -1,0 +1,419 @@
+[11/11 04:38:15      0s] 
+[11/11 04:38:15      0s] Cadence Tempus(TM) Timing Solution.
+[11/11 04:38:15      0s] Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+[11/11 04:38:15      0s] 
+[11/11 04:38:15      0s] Version:	v22.17-s087_1, built Tue Oct 1 11:02:53 PDT 2024
+[11/11 04:38:15      0s] Options:	
+[11/11 04:38:15      0s] Date:		Wed Nov 11 04:38:15 2026
+[11/11 04:38:15      0s] Host:		kopo-seongnam (x86_64 w/Linux 3.10.0-1160.el7.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz 28160KB)
+[11/11 04:38:15      0s] OS:		CentOS Linux 7 (Core)
+[11/11 04:38:15      0s] 
+[11/11 04:38:15      0s] License:
+[11/11 04:38:15      0s] 		[04:38:15.158633] Configured Lic search path (22.01-s003): 5280@localhost
+
+[11/11 04:38:15      0s] 		tpsxl	Tempus Timing Signoff Solution XL	22.1	Denied
+[11/11 04:38:15      0s] 		tpsl	Tempus Timing Signoff Solution L	22.1	checkout succeeded
+[11/11 04:38:15      0s] 		8 CPU jobs allowed with the current license(s). Use set_multi_cpu_usage to set your required CPU count.
+[11/11 04:38:30     14s] Reset Parastics called with the command setExtractRCMode -reset@(#)CDS: Tempus Timing Solution v22.17-s087_1 (64bit) 10/01/2024 11:02 (Linux 3.10.0-693.el7.x86_64)
+[11/11 04:38:36     20s] @(#)CDS: NanoRoute 22.17-s087_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+[11/11 04:38:36     20s] @(#)CDS: AAE 22.17-s014 (64bit) 10/01/2024 (Linux 3.10.0-693.el7.x86_64)
+[11/11 04:38:36     20s] @(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+[11/11 04:38:36     20s] @(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+[11/11 04:38:36     20s] @(#)CDS: CPE v22.17-s051
+[11/11 04:38:36     20s] @(#)CDS: OA 22.60-p095 Wed Apr 17 03:30:14 2024
+[11/11 04:38:36     20s] @(#)CDS: SGN 22.20-d001 (02-Jan-2023) (64 bit executable, TkQt5.9.1)
+[11/11 04:38:36     20s] @(#)CDS: RCDB 11.15.0
+[11/11 04:38:36     20s] @(#)CDS: STYLUS 22.15-s003_1 (04/04/2024 05:58 PDT)
+[11/11 04:38:36     20s] Change the soft stacksize limit to 0.2%RAM (770 mbytes). Set global soft_stack_size_limit to change the value.
+[11/11 04:38:36     20s] **INFO: (TMPDIR-1001): The environment variable TMPDIR is not set.
+Create and set the environment variable TMPDIR to '/tmp/ssv_tmpdir_109738_l8sEsM'.
+environment variable TMPDIR is '/tmp/ssv_tmpdir_109738_l8sEsM'.
+[11/11 04:38:38     22s] <CMD> ::stop_gui -keepDgui
+[11/11 04:39:45     31s] <CMD> read_design RouteDesign.dat mcu_pad_top
+[11/11 04:39:45     31s] # Tempus Timing Solution 22.17-s087_1
+[11/11 04:39:45     31s] # read_design
+[11/11 04:39:45     31s] #  dir RouteDesign.dat mcu_pad_top
+[11/11 04:39:45     31s] Set Default Input Pin Transition as 0.1 ps.
+[11/11 04:39:46     32s] Loading design 'mcu_pad_top' saved by 'Innovus' '22.17-s086_1' on 'Tue Nov 10 21:04:29 2026'.
+[11/11 04:39:46     32s] #% Begin Load MMMC data ... (date=11/11 04:39:46, mem=1285.8M)
+[11/11 04:39:46     32s] **WARN: (UI-638):	The option '-cap_table' to the command 'create_rc_corner' is ignored since it is related to the RC extraction mode which Tempus does not support. Tempus only supports the signoff QRC extraction.
+[11/11 04:39:46     32s] **WARN: (UI-638):	The option '-cap_table' to the command 'create_rc_corner' is ignored since it is related to the RC extraction mode which Tempus does not support. Tempus only supports the signoff QRC extraction.
+[11/11 04:39:46     32s] Number of views requested 1 are allowed with the current licenses... continuing with set_analysis_view.
+[11/11 04:39:46     32s] #% End Load MMMC data ... (date=11/11 04:39:46, total cpu=0:00:00.0, real=0:00:00.0, peak res=1285.8M, current mem=1284.2M)
+[11/11 04:39:46     32s] Reading pin direction from '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_tech.lef' ...
+[11/11 04:39:46     32s] Reading pin direction from '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_macro.lef' ...
+[11/11 04:39:46     32s] Reading pin direction from '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_multibitsDFF.lef' ...
+[11/11 04:39:46     32s] Reading pin direction from '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/giolib045_modify.lef' ...
+[11/11 04:39:46     32s] Loading view definition file from /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/viewDefinition.tcl
+[11/11 04:39:46     32s] Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib' ...
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:46     32s] **WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] Read 489 cells in library 'slow_vdd1v0' 
+[11/11 04:39:47     33s] Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib' ...
+[11/11 04:39:47     33s] Read 16 cells in library 'slow_vdd1v0' 
+[11/11 04:39:47     33s] Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib' ...
+[11/11 04:39:47     33s] Read 8 cells in library 'giolib045' 
+[11/11 04:39:47     33s] Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib' ...
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] **WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+[11/11 04:39:47     33s] Read 489 cells in library 'fast_vdd1v0' 
+[11/11 04:39:47     33s] Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib' ...
+[11/11 04:39:47     33s] Read 16 cells in library 'fast_vdd1v0' 
+[11/11 04:39:47     33s] Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/giolib045_v3.5/timing/pads_FF_s1vg.lib' ...
+[11/11 04:39:47     33s] Read 8 cells in library 'giolib045' 
+[11/11 04:39:47     33s] Ending "PreSetAnalysisView" (total cpu=0:00:01.4, real=0:00:01.0, peak res=1347.0M, current mem=1290.7M)
+[11/11 04:39:47     33s] *** End library_loading (cpu=0.02min, real=0.02min, mem=13.5M, fe_cpu=0.56min, fe_real=1.53min, fe_mem=1569.8M) ***
+[11/11 04:39:47     33s] #% Begin Load netlist data ... (date=11/11 04:39:47, mem=1290.7M)
+[11/11 04:39:48     34s] *** Begin netlist parsing (mem=1569.8M) ***
+[11/11 04:39:48     34s] Reading verilogBinary netlist '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.v.bin'
+[11/11 04:39:48     34s] 
+[11/11 04:39:48     34s] *** Memory Usage v#1 (Current mem = 1917.863M, initial mem = 642.340M) ***
+[11/11 04:39:48     34s] *** End netlist parsing (cpu=0:00:00.0, real=0:00:00.0, mem=1917.9M) ***
+[11/11 04:39:48     34s] #% End Load netlist data ... (date=11/11 04:39:48, total cpu=0:00:00.5, real=0:00:01.0, peak res=1403.3M, current mem=1392.4M)
+[11/11 04:39:48     34s] Reading pin dir info from /tmp/ssv_tmpdir_109738_l8sEsM/.bbx_109738_10de0982-49f3-41e4-ba6f-981e78ad37dd.
+[11/11 04:39:48     34s] Set top cell to mcu_pad_top.
+[11/11 04:39:48     34s] Ending "BindLib:" (total cpu=0:00:00.1, real=0:00:00.0, peak res=1433.9M, current mem=1433.9M)
+[11/11 04:39:48     34s] *** Estimate the number of flat objects and h-objects before Flatten ***
+[11/11 04:39:48     34s] 	flat insts : 6067
+[11/11 04:39:48     34s] 	flat terms : 22822
+[11/11 04:39:48     34s] 	HNets : 8498
+[11/11 04:39:48     34s] 	HInsts : 40
+[11/11 04:39:48     34s] 	HTerms : 1823
+[11/11 04:39:48     34s] 4 empty module found.
+[11/11 04:39:48     34s] Building hierarchical netlist for Cell mcu_pad_top ...
+[11/11 04:39:48     34s] ***** UseNewTieNetMode *****.
+[11/11 04:39:48     34s] *** Netlist is unique.
+[11/11 04:39:48     34s] ** info: there are 1055 modules.
+[11/11 04:39:48     34s] ** info: there are 6052 stdCell insts.
+[11/11 04:39:48     34s] ** info: there are 6052 stdCell insts with at least one signal pin.
+[11/11 04:39:48     34s] ** info: there are 15 Pad insts.
+[11/11 04:39:48     34s] 
+[11/11 04:39:48     34s] *** Memory Usage v#1 (Current mem = 2283.820M, initial mem = 642.340M) ***
+[11/11 04:39:48     34s] Set Default Input Pin Transition as 0.1 ps.
+[11/11 04:39:48     34s] Set Shrink Factor to 0.90000
+[11/11 04:39:48     34s] Loading preference file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/gui.pref.tcl ...
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'MinFPModuleSize' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'MinFlightLineWidth' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'MaxFlightLineNetTerms' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'LevelFlight' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DirectionSink' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DirectionSource' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'ShowNumberBlockConnection' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'StrecthRestriction' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'StretchRectilinear' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'MoveRestriction' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DisplayRelFPlan' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'LegalizeMacro' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DisplayFPlanFlightLine' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DisplayPinName' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'DisplayBusGuideAsLine' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'ExclusiveFlight' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'ShowToUnplace' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'FlightLineInMove' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'ShowConnectionInOutNumber' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (UI-156):	preference name 'ConnectionColorType' is not supported in Tempus Timing Solution.
+[11/11 04:39:48     34s] **WARN: (EMS-27):	Message (UI-156) has exceeded the current message display limit of 20.
+[11/11 04:39:48     34s] To increase the message display limit, refer to the product command reference manual.
+[11/11 04:39:48     34s] **ERROR: (IMPSYC-6373):	Unable to find layer object in the db.
+**ERROR: (IMPSYC-6373):	Unable to find layer object in the db.
+**WARN: (IMPSYC-6134):	Setting analysis mode to hold does not have any impact on timing analysis as simultaneous setup/hold mode analysis is on. Use '-early' option to report hold timing reports.
+[11/11 04:39:48     34s] **WARN: (IMPTCM-77):	Option "-drouteStartIteration" for command setNanoRouteMode is obsolete and will be removed in a future release. The obsolete option still works in this release but to avoid this warning and to ensure compatibility with future releases, remove the obsolete option from your script.
+[11/11 04:39:48     34s] **WARN: (IMPSP-504):	"set_place_mode" cannot be used in timer mode.
+[11/11 04:39:48     34s] addRing command will ignore shorts while creating rings.
+[11/11 04:39:48     34s] addRing command will disallow rings to go over rows.
+[11/11 04:39:48     34s] addRing command will consider rows while creating rings.
+[11/11 04:39:48     34s] The ring targets are set to core/block ring wires.
+[11/11 04:39:48     34s] addStripe will allow jog to connect padcore ring and block ring.
+[11/11 04:39:48     34s] 
+[11/11 04:39:48     34s] Stripes will not extend to closest target.
+[11/11 04:39:48     34s] When breaking rings, the power planner will consider the existence of blocks.
+[11/11 04:39:48     34s] addStripe will break automatically at non-default domains when generating global stripes over the core area or default domain.
+[11/11 04:39:48     34s] The entire stripe set will break at the domain if one of the nets is not in the domain.
+[11/11 04:39:48     34s] Stripes will not be created over regions without power planning wires.
+[11/11 04:39:48     34s] Offset for stripe breaking is set to 0.
+[11/11 04:39:48     34s] Stripes will stop at the boundary of the specified area.
+[11/11 04:39:48     34s] The power planner will set stripe antenna targets to none (no trimming allowed).
+[11/11 04:39:48     34s] **WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMaxRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -topRoutingLayer' instead.
+[11/11 04:39:48     34s] **WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMinRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -bottomRoutingLayer' instead.
+[11/11 04:39:48     34s] **ERROR: (IMPFP-10172):	Cannot find topCell's floorplan data.
+Extraction setup Delayed 
+[11/11 04:39:49     35s] Ending "SetAnalysisView" (total cpu=0:00:00.1, real=0:00:00.0, peak res=1940.3M, current mem=1658.4M)
+[11/11 04:39:49     35s] Tech dependent Parameter, Build TLibAnalyzer for: cellAreaConsiderPadding
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Creating Cell Server ...(0, 1, 1, 1) in restoreDesign Begin ...
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX8 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX4 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX2 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX1 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRXL complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX1 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX8 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX1 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRXL complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX1 complicate code: 30.05
+[11/11 04:39:49     35s] Summary for sequential cells identification: 
+[11/11 04:39:49     35s]   Identified SBFF number: 104
+[11/11 04:39:49     35s]   Identified MBFF number: 16
+[11/11 04:39:49     35s]   Identified SB Latch number: 0
+[11/11 04:39:49     35s]   Identified MB Latch number: 0
+[11/11 04:39:49     35s]   Not identified SBFF number: 16
+[11/11 04:39:49     35s]   Not identified MBFF number: 0
+[11/11 04:39:49     35s]   Not identified SB Latch number: 0
+[11/11 04:39:49     35s]   Not identified MB Latch number: 0
+[11/11 04:39:49     35s]   Number of sequential cells which are not FFs: 32
+[11/11 04:39:49     35s] Total number of combinational cells: 314
+[11/11 04:39:49     35s] Total number of sequential cells: 168
+[11/11 04:39:49     35s] Total number of tristate cells: 10
+[11/11 04:39:49     35s] Total number of level shifter cells: 0
+[11/11 04:39:49     35s] Total number of power gating cells: 0
+[11/11 04:39:49     35s] Total number of isolation cells: 0
+[11/11 04:39:49     35s] Total number of power switch cells: 0
+[11/11 04:39:49     35s] Total number of pulse generator cells: 0
+[11/11 04:39:49     35s] Total number of always on buffers: 0
+[11/11 04:39:49     35s] Total number of retention cells: 0
+[11/11 04:39:49     35s] Total number of physical cells: 0
+[11/11 04:39:49     35s] List of usable buffers: BUFX12 BUFX16 BUFX2 BUFX20 BUFX3 BUFX4 BUFX6 BUFX8 CLKBUFX12 CLKBUFX16 CLKBUFX2 CLKBUFX20 CLKBUFX3 CLKBUFX4 CLKBUFX6 CLKBUFX8
+[11/11 04:39:49     35s] Total number of usable buffers: 16
+[11/11 04:39:49     35s] List of unusable buffers:
+[11/11 04:39:49     35s] Total number of unusable buffers: 0
+[11/11 04:39:49     35s] List of usable inverters: CLKINVX1 CLKINVX12 CLKINVX16 CLKINVX2 CLKINVX20 CLKINVX3 CLKINVX4 CLKINVX6 CLKINVX8 INVX1 INVX12 INVX16 INVX2 INVX20 INVX3 INVX4 INVX6 INVXL INVX8
+[11/11 04:39:49     35s] Total number of usable inverters: 19
+[11/11 04:39:49     35s] List of unusable inverters:
+[11/11 04:39:49     35s] Total number of unusable inverters: 0
+[11/11 04:39:49     35s] List of identified usable delay cells: DLY1X1 DLY1X4 DLY2X1 DLY2X4 DLY3X1 DLY3X4 DLY4X4 DLY4X1
+[11/11 04:39:49     35s] Total number of identified usable delay cells: 8
+[11/11 04:39:49     35s] List of identified unusable delay cells:
+[11/11 04:39:49     35s] Total number of identified unusable delay cells: 0
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Creating Cell Server ...(0, 1, 1, 1) in restoreDesign End ...
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Deleting Cell Server Begin ...
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Deleting Cell Server End ...
+[11/11 04:39:49     35s] Ending "Cell type marking" (total cpu=0:00:00.0, real=0:00:00.0, peak res=1667.3M, current mem=1667.3M)
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Creating Cell Server ...(0, 0, 0, 0) in restoreDesign Begin ...
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX8 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX4 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX2 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SMDFFHQX1 complicate code: 30.1
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRXL complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFTRX1 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX8 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: SEDFFHQX1 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRXL complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX4 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX2 complicate code: 30.05
+[11/11 04:39:49     35s] SBFF Setting to complicate: EDFFTRX1 complicate code: 30.05
+[11/11 04:39:49     35s] Summary for sequential cells identification: 
+[11/11 04:39:49     35s]   Identified SBFF number: 104
+[11/11 04:39:49     35s]   Identified MBFF number: 16
+[11/11 04:39:49     35s]   Identified SB Latch number: 0
+[11/11 04:39:49     35s]   Identified MB Latch number: 0
+[11/11 04:39:49     35s]   Not identified SBFF number: 16
+[11/11 04:39:49     35s]   Not identified MBFF number: 0
+[11/11 04:39:49     35s]   Not identified SB Latch number: 0
+[11/11 04:39:49     35s]   Not identified MB Latch number: 0
+[11/11 04:39:49     35s]   Number of sequential cells which are not FFs: 32
+[11/11 04:39:49     35s]  Visiting view : FUNC_SS_WORST
+[11/11 04:39:49     35s]    : PowerDomain = none : Weighted F : unweighted  = 19.40 (1.000) with rcCorner = 0
+[11/11 04:39:49     35s]    : PowerDomain = none : Weighted F : unweighted  = 19.40 (1.000) with rcCorner = -1
+[11/11 04:39:49     35s]  Visiting view : FUNC_FF_BEST
+[11/11 04:39:49     35s]    : PowerDomain = none : Weighted F : unweighted  = 5.10 (1.000) with rcCorner = 1
+[11/11 04:39:49     35s]    : PowerDomain = none : Weighted F : unweighted  = 5.10 (1.000) with rcCorner = -1
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Creating Cell Server ...(0, 0, 0, 0) in restoreDesign End ...
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Deleting Cell Server Begin ...
+[11/11 04:39:49     35s] 
+[11/11 04:39:49     35s] TimeStamp Deleting Cell Server End ...
+[11/11 04:39:49     35s] #% Begin Load MMMC data post ... (date=11/11 04:39:49, mem=1668.1M)
+[11/11 04:39:49     35s] #% End Load MMMC data post ... (date=11/11 04:39:49, total cpu=0:00:00.0, real=0:00:00.0, peak res=1668.1M, current mem=1668.1M)
+[11/11 04:39:49     35s] #% Begin Load SymbolTable ... (date=11/11 04:39:49, mem=1668.1M)
+[11/11 04:39:49     35s] #% End Load SymbolTable ... (date=11/11 04:39:49, total cpu=0:00:00.0, real=0:00:00.0, peak res=1669.0M, current mem=1669.0M)
+[11/11 04:39:49     35s] Reading property file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.prop
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad5 with DB name ID 6068; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad6 with DB name ID 6069; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad17 with DB name ID 6072; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad18 with DB name ID 6073; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad29 with DB name ID 6076; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad30 with DB name ID 6077; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad41 with DB name ID 6080; (Couldn't find this DB object).
+[11/11 04:39:49     35s] **WARN: (IMPDB-4018):	Skip reading property/annotation on Instance DB object pad42 with DB name ID 6081; (Couldn't find this DB object).
+[11/11 04:39:49     35s] *** Completed restoreProperty (cpu=0:00:00.0 real=0:00:00.0 mem=2232.0M) ***
+[11/11 04:39:49     35s] Set Default Input Pin Transition as 0.1 ps.
+[11/11 04:39:50     36s] eee: Design meta data file: /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/extraction/extractionMetaData.gz doesn't exist
+[11/11 04:39:50     36s] Extraction setup Started 
+[11/11 04:39:50     36s] Summary of Active RC-Corners : 
+[11/11 04:39:50     36s]  
+[11/11 04:39:50     36s]  Analysis View: FUNC_SS_WORST
+[11/11 04:39:50     36s]     RC-Corner Name        : WORST
+[11/11 04:39:50     36s]     RC-Corner Index       : 0
+[11/11 04:39:50     36s]     RC-Corner Temperature : 125 Celsius
+[11/11 04:39:50     36s]     RC-Corner Cap Table   : ''
+[11/11 04:39:50     36s]     RC-Corner PostRoute Res Factor        : 1
+[11/11 04:39:50     36s]     RC-Corner PostRoute Cap Factor        : 1
+[11/11 04:39:50     36s]     RC-Corner PostRoute XCap Factor       : 1
+[11/11 04:39:50     36s]     RC-Corner Technology file: '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+[11/11 04:39:50     36s]  
+[11/11 04:39:50     36s]  Analysis View: FUNC_FF_BEST
+[11/11 04:39:50     36s]     RC-Corner Name        : BEST
+[11/11 04:39:50     36s]     RC-Corner Index       : 1
+[11/11 04:39:50     36s]     RC-Corner Temperature : 0 Celsius
+[11/11 04:39:50     36s]     RC-Corner Cap Table   : ''
+[11/11 04:39:50     36s]     RC-Corner PostRoute Res Factor        : 1
+[11/11 04:39:50     36s]     RC-Corner PostRoute Cap Factor        : 1
+[11/11 04:39:50     36s]     RC-Corner PostRoute XCap Factor       : 1
+[11/11 04:39:50     36s]     RC-Corner Technology file: '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+[11/11 04:39:50     36s] Technology file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch' associated with first view 'FUNC_SS_WORST' will be used as the primary corner for the multi-corner extraction.
+[11/11 04:39:50     36s] Restoring parasitic data from file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' ...
+[11/11 04:39:50     36s] Opening parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' for reading (mem: 2231.961M)
+[11/11 04:39:50     36s] Opening parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' for content verification (mem: 2231.961M)
+[11/11 04:39:50     36s] Closing parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d': 0 access done (mem: 2231.961M)
+[11/11 04:39:50     36s] Closing parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d': 0 access done (mem: 2231.961M)
+[11/11 04:39:50     36s] **WARN: (IMPEXT-3298):	Parasitic database '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' was created in 'postRoute' mode. The current mode of the tool is 'Quantus QRC'. Changing mode to make it similar to parasitic database.
+[11/11 04:39:50     36s] **WARN: (IMPEXT-7000):	The option '-effortLevel low' for setExtractRCMode is ignored because only Quantus QRC extraction mode, that is, '-engine postRoute -effortLevel signoff' is supported in Tempus Timing Solution. To avoid this message, remove this option from your scripts.
+[11/11 04:39:50     36s] Begin read_parasitics... (cpu: 0:00:00.0 real: 0:00:00.0 mem: 2231.961M)
+[11/11 04:39:50     36s] Following multi-corner parasitics specified:
+[11/11 04:39:50     36s] 	/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d (rcdb)
+[11/11 04:39:50     36s] Opening parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' for reading (mem: 2231.961M)
+[11/11 04:39:50     36s] 		Cell mcu_pad_top has rcdb /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d specified
+[11/11 04:39:50     36s] Cell mcu_pad_top, hinst 
+[11/11 04:39:50     36s] processing rcdb (/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d) for hinst (top) of cell (mcu_pad_top);
+[11/11 04:39:50     36s] Closing parasitic data file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d': 0 access done (mem: 2231.961M)
+[11/11 04:39:50     36s] Lumped Parasitic Loading Started (total cpu=0:00:00.0, real=0:00:00.0, current mem=2231.961M)
+[11/11 04:39:50     36s] Opening parasitic data file '/tmp/ssv_tmpdir_109738_l8sEsM/mcu_pad_top_109738_tyDv39.rcdb.d/mcu_pad_top.rcdb.d' for reading (mem: 2231.961M)
+[11/11 04:39:50     36s] Closing parasitic data file '/tmp/ssv_tmpdir_109738_l8sEsM/mcu_pad_top_109738_tyDv39.rcdb.d/mcu_pad_top.rcdb.d': 0 access done (mem: 2239.961M)
+[11/11 04:39:50     36s] Lumped Parasitic Loading Completed (total cpu=0:00:00.1, real=0:00:00.0, current mem=2239.961M)
+[11/11 04:39:50     36s] Done read_parasitics... (cpu: 0:00:00.2 real: 0:00:00.0 mem: 2239.961M)
+[11/11 04:39:50     36s] #% Begin Loading timing constraints ... (date=11/11 04:39:50, mem=1684.4M)
+[11/11 04:39:50     36s] Reading timing constraints file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mmmc/modes/FUNC/FUNC.sdc' ...
+[11/11 04:39:50     36s] Current (total cpu=0:00:36.7, real=0:01:35, peak res=2047.8M, current mem=2047.8M)
+[11/11 04:39:50     36s] INFO (CTE): Constraints read successfully.
+[11/11 04:39:50     36s] Ending "Constraint file reading stats" (total cpu=0:00:00.0, real=0:00:00.0, peak res=2059.8M, current mem=2059.8M)
+[11/11 04:39:50     36s] Current (total cpu=0:00:36.7, real=0:01:35, peak res=2059.8M, current mem=2059.8M)
+[11/11 04:39:50     36s] Reading latency file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mmmc/views/FUNC_SS_WORST/latency.sdc' ...
+[11/11 04:39:50     36s] Reading latency file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mmmc/views/FUNC_FF_BEST/latency.sdc' ...
+[11/11 04:39:50     36s] #% End Loading timing constraints ... (date=11/11 04:39:50, total cpu=0:00:00.4, real=0:00:00.0, peak res=2077.2M, current mem=2077.2M)
+[11/11 04:39:50     36s] #% Begin Load power constraints ... (date=11/11 04:39:50, mem=2077.2M)
+[11/11 04:39:50     36s] #% End Load power constraints ... (date=11/11 04:39:50, total cpu=0:00:00.0, real=0:00:00.0, peak res=2078.0M, current mem=2078.0M)
+[11/11 04:39:50     36s] #% Begin load AAE data ... (date=11/11 04:39:50, mem=2078.0M)
+[11/11 04:39:51     37s] AAE DB initialization (MEM=2710.05 CPU=0:00:00.0 REAL=0:00:00.0) 
+[11/11 04:39:51     37s] #% End load AAE data ... (date=11/11 04:39:51, total cpu=0:00:00.5, real=0:00:01.0, peak res=2084.3M, current mem=2084.3M)
+[11/11 04:39:51     37s] **WARN: (IMPCTE-107):	The following globals have been obsoleted since version (null). They will be removed in the next release. 
+[11/11 04:39:51     37s] timing_enable_separate_device_slew_effect_sensitivities
+[11/11 04:39:51     37s] Ending "read_design" (total cpu=0:00:06.4, real=0:00:06.0, peak res=2085.6M, current mem=1929.6M)
+[11/11 04:39:51     38s] Loading  (mcu_pad_top)
+[11/11 04:39:51     38s] Traverse HInst (mcu_pad_top)
+[11/11 04:40:07     39s] <CMD> check_timing 
+[11/11 04:40:07     40s] AAE_INFO: opIsDesignInPostRouteState() is 0
+[11/11 04:40:07     40s] #################################################################################
+[11/11 04:40:07     40s] # Design Name: mcu_pad_top
+[11/11 04:40:07     40s] # Design Mode: 65nm
+[11/11 04:40:07     40s] # Analysis Mode: MMMC Non-OCV 
+[11/11 04:40:07     40s] # Parasitics Mode: SPEF/RCDB 
+[11/11 04:40:07     40s] # Signoff Settings: SI Off 
+[11/11 04:40:07     40s] #################################################################################
+[11/11 04:40:08     40s] Topological Sorting (REAL = 0:00:00.0, MEM = 2331.6M, InitMEM = 2331.6M)
+[11/11 04:40:08     40s] Start delay calculation (fullDC) (1 T). (MEM=2341.12)
+[11/11 04:40:08     40s] *** Calculating scaling factor for FF_Min_1p10v_0c libraries using the default operating condition of each library.
+[11/11 04:40:08     40s] Start AAE Lib Loading. (MEM=2341.12)
+[11/11 04:40:08     40s] End AAE Lib Loading. (MEM=2561.2 CPU=0:00:00.0 Real=0:00:00.0)
+[11/11 04:40:08     40s] End AAE Lib Interpolated Model. (MEM=2561.2 CPU Time=0:00:00.0, Real Time=0:00:00.0)
+[11/11 04:40:08     40s] Opening parasitic data file '/tmp/ssv_tmpdir_109738_l8sEsM/mcu_pad_top_109738_tyDv39.rcdb.d/mcu_pad_top.rcdb.d' for reading (mem: 2610.816M)
+[11/11 04:40:08     40s] RC Database In Completed (CPU Time= 0:00:00.0  Real Time=0:00:00.0  MEM= 2613.8M)
+[11/11 04:40:08     40s] RC Database In Completed (CPU Time= 0:00:00.0  Real Time=0:00:00.0  MEM= 2600.4M)
+[11/11 04:40:08     40s] RC Database In Completed (CPU Time= 0:00:00.0  Real Time=0:00:00.0  MEM= 2609.9M)
+[11/11 04:40:09     41s] RC Database In Completed (CPU Time= 0:00:00.0  Real Time=0:00:00.0  MEM= 2834.6M)
+[11/11 04:40:10     42s] End Timing Check Calculation. (CPU Time=0:00:00.1, Real Time=0:00:00.0)
+[11/11 04:40:10     43s] End Timing Check Calculation. (CPU Time=0:00:00.1, Real Time=0:00:00.0)
+[11/11 04:40:10     43s] End delay calculation. (MEM=2881.77 CPU=0:00:02.1 REAL=0:00:02.0)
+[11/11 04:40:10     43s] End delay calculation (fullDC). (MEM=2873.77 CPU=0:00:02.5 REAL=0:00:02.0)
+[11/11 04:40:10     43s] *** CDM Built up (cpu=0:00:03.4  real=0:00:03.0  mem= 2873.8M) ***
+[11/11 04:43:32     59s] <CMD> report_annotated_parasitics
+[11/11 04:43:32     59s] ####################################################################
+[11/11 04:43:32     59s] # report_annotated_parasitics: Wed Nov 11 04:43:32 2026
+[11/11 04:43:32     59s] #   view: FUNC_FF_BEST
+[11/11 04:43:32     59s] #   -list_not_annotated
+[11/11 04:43:32     59s] ####################################################################
+[11/11 04:43:32     59s] #
+[11/11 04:43:32     59s] # list syntax: type: net_name [nrCap Cap nrXCap XCap nrRes Res]
+[11/11 04:43:32     59s] # unit: pF, Ohm
+[11/11 04:43:32     59s] 
+[11/11 04:43:32     59s] # Summary of Annotated Parasitics:
+[11/11 04:43:32     59s] +------------------------------------------------------------------------------+
+[11/11 04:43:32     59s] |    Net Type         |    Count   |   Annotated (%)     | Not Annotated (%)   |
+[11/11 04:43:32     59s] +---------------------+------------+---------------------+---------------------+
+[11/11 04:43:32     59s] | total               |       6848 |       6163 90.00%   |        685 10.00%   |
+[11/11 04:43:32     59s] +---------------------+------------+---------------------+---------------------+
+[11/11 04:43:32     59s] | 0-term:floating (*) |        663 |          0  0.00%   |        663 100.00%   |
+[11/11 04:43:32     59s] | 1-term:no load      |         22 |          0  0.00%   |         22 100.00%   |
+[11/11 04:43:32     59s] | real net (complete) |       6163 |       6163 100.00%   |          0  0.00%   |
+[11/11 04:43:32     59s] | real net (broken)   |          0 |          0  0.00%   |          0  0.00%   |
+[11/11 04:43:32     59s] | zero capacitance net|          0 |          0  0.00%   |          0  0.00%   |
+[11/11 04:43:32     59s] +------------------------------------------------------------------------------+
+[11/11 04:43:32     59s] Note for Net Types marked "(*)":  Such nets are never timed, but reported here for informational purpose.
+[11/11 04:43:32     59s] 
+[11/11 04:43:32     59s] +-----------------------------------------------------------------+
+[11/11 04:43:32     59s] | Annotated |    Res (KOhm)   |    Cap (pF)     |    XCap (pF)    |
+[11/11 04:43:32     59s] +-----------+-----------------+-----------------+-----------------+
+[11/11 04:43:32     59s] | Count     |        127749   |        127944   |             0   |
+[11/11 04:43:32     59s] | Value     |      787.5125   |       14.0004   |        0.0000   |
+[11/11 04:43:32     59s] +-----------------------------------------------------------------+
+[11/11 04:44:10     66s] <CMD> report_analysis_coverage 
+[11/11 04:45:46     75s] <CMD> report_analysis_coverage -check_type data_setup -verbose untested -exclude_untested const
+[11/11 04:50:08     97s] <CMD> write_sdf -view FUNC_SS_WORST mcu_pad_top_post_wst.sdf
+[11/11 04:50:08     97s] *Info: outputing delay to SDF file "mcu_pad_top_post_wst.sdf".
+[11/11 04:50:08     97s] **WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+[11/11 04:50:37    100s] <CMD> write_sdf -view FUNC_FF_BEST mcu_pad_top_post_bst.sdf
+[11/11 04:50:37    100s] *Info: outputing delay to SDF file "mcu_pad_top_post_bst.sdf".
+[11/11 04:50:37    100s] **WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+[11/11 04:51:54    108s] <CMD> exit
+[11/11 04:51:54    108s] 
+[11/11 04:51:54    108s] *** Memory Usage v#1 (Current mem = 2816.160M, initial mem = 642.340M) ***
+[11/11 04:51:54    108s] 
+[11/11 04:51:54    108s] *** Summary of all messages that are not suppressed in this session:
+[11/11 04:51:54    108s] Severity  ID               Count  Summary                                  
+[11/11 04:51:54    108s] ERROR     IMPFP-10172          1  Cannot find topCell's floorplan data.    
+[11/11 04:51:54    108s] WARNING   IMPEXT-3298          1  Parasitic database '%s' was created in '...
+[11/11 04:51:54    108s] WARNING   IMPEXT-7000          1  The option '%s %s' for setExtractRCMode ...
+[11/11 04:51:54    108s] WARNING   UI-638               2  The %s to the command '%s' %s ignored si...
+[11/11 04:51:54    108s] WARNING   UI-156             122  preference name '%s' is not supported in...
+[11/11 04:51:54    108s] ERROR     IMPSYC-6373          2  Unable to find %s object in the db.      
+[11/11 04:51:54    108s] WARNING   IMPSYC-6134          1  Setting analysis mode to %s does not hav...
+[11/11 04:51:54    108s] WARNING   IMPDB-4018           8  Skip reading property/annotation on %s D...
+[11/11 04:51:54    108s] WARNING   IMPSP-504            1  "%s" cannot be used in timer mode.       
+[11/11 04:51:54    108s] WARNING   IMPCTE-107           1  The following globals have been obsolete...
+[11/11 04:51:54    108s] WARNING   IMPTCM-77            1  Option "%s" for command %s is obsolete a...
+[11/11 04:51:54    108s] WARNING   IMPPSP-1003          2  Found use of '%s'. This will continue to...
+[11/11 04:51:54    108s] WARNING   SDF-808              2  The software is currently operating in a...
+[11/11 04:51:54    108s] WARNING   TECHLIB-302         20  No function defined for cell '%s'. The c...
+[11/11 04:51:54    108s] *** Message Summary: 162 warning(s), 3 error(s)
+[11/11 04:51:54    108s] 
+[11/11 04:51:54    108s] --- Ending "Tempus Timing Solution" (totcpu=0:01:48, real=0:13:39, mem=2816.2M) ---
