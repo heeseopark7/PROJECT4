@@ -1,0 +1,195 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 19:48:00 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+restoreDesign PostCTSopt.dat/
+fit
+gui_dump_picture snap/3_cts.png -format PNG
+setNanoRouteMode -quiet -drouteFixAntenna 1
+zoomBox -190.27350 -83.15550 1853.27300 1746.25500
+zoomBox -418.87200 -261.36900 1985.30050 1890.87850
+fit
+setNanoRouteMode -quiet -routeInsertAntennaDiode 0
+setNanoRouteMode -quiet -routeWithTimingDriven 1
+setNanoRouteMode -quiet -routeWithEco 0
+setNanoRouteMode -quiet -routeWithLithoDriven 0
+setNanoRouteMode -quiet -droutePostRouteLithoRepair
+getDesignMode -user -bottomRoutingLayer
+getDesignMode -user -topRoutingLayer
+setNanoRouteMode -quiet -drouteFixAntenna 1
+setNanoRouteMode -quiet -routeInsertAntennaDiode 0
+setNanoRouteMode -quiet -routeWithTimingDriven 1
+setNanoRouteMode -quiet -routeWithEco 0
+setNanoRouteMode -quiet -routeWithLithoDriven 0
+setNanoRouteMode -quiet -droutePostRouteLithoRepair 0
+setNanoRouteMode -quiet -routeWithSiDriven 1
+setNanoRouteMode -quiet -routeTdrEffort 8
+setNanoRouteMode -quiet -drouteAutoStop 0
+setNanoRouteMode -quiet -routeSelectedNetOnly 0
+getDesignMode -quiet -topRoutingLayer
+setDesignMode -quiet -topRoutingLayer 11
+getDesignMode -quiet -bottomRoutingLayer
+setDesignMode -quiet -bottomRoutingLayer 1
+setNanoRouteMode -quiet -drouteEndIteration 5
+setNanoRouteMode -quiet -routeWithTimingDriven true
+setNanoRouteMode -quiet -routeWithSiDriven true
+routeDesign -globalDetail
+setLayerPreference node_layer -isVisible 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal3 -isVisible 1
+zoomBox 761.44300 884.42300 1057.53250 498.44950
+zoomBox 799.88700 799.08500 923.15300 680.83850
+zoomBox 809.82950 759.61250 892.70450 699.63500
+zoomBox 810.47300 752.35250 861.82750 699.39000
+zoomBox 821.03400 741.33150 849.19900 717.75850
+zoomBox 829.63300 734.50000 836.41000 726.88500
+gui_select -rect {830.44050 732.99250 833.61000 730.13150}
+zoomBox 831.12300 731.60600 833.83000 728.44750
+zoomBox 830.30800 728.24950 834.45850 731.96500
+zoomBox 827.84000 727.03950 835.79100 734.15750
+panPage 1 0
+setLayerPreference node_route -isSelectable 0
+setLayerPreference node_net -isSelectable 0
+setLayerPreference node_power -isSelectable 1
+setLayerPreference node_power -isSelectable 0
+setLayerPreference node_power -isVisible 1
+setLayerPreference node_partition -isVisible 0
+setLayerPreference node_floorplan -isVisible 1
+setLayerPreference node_row -isVisible 1
+setLayerPreference node_row -isVisible 0
+setLayerPreference node_floorplan -isVisible 0
+setLayerPreference node_blockage -isSelectable 0
+setLayerPreference node_cell -isSelectable 1
+setLayerPreference node_cell -isSelectable 0
+setLayerPreference node_cell -isSelectable 1
+setLayerPreference node_module -isSelectable 0
+setLayerPreference node_module -isSelectable 1
+setLayerPreference node_bump -isVisible 0
+setLayerPreference node_misc -isVisible 1
+setLayerPreference node_misc -isSelectable 0
+setLayerPreference violation -isVisible 0
+setLayerPreference violation -isVisible 1
+setLayerPreference node_layer -isSelectable 0
+setLayerPreference node_layer -isSelectable 1
+setLayerPreference node_layer -isSelectable 0
+setLayerPreference node_layer -isVisible 1
+setLayerPreference node_layer -isVisible 0
+setLayerPreference node_net -isVisible 0
+setLayerPreference node_route -isVisible 0
+setLayerPreference allLayers -isVisible 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal3 -isVisible 1
+zoomBox 827.55000 725.12050 840.49650 736.71050
+zoomBox 821.20000 720.56500 846.00250 742.76850
+setLayerPreference Metal2 -isSelectable 1
+setLayerPreference Via2 -isSelectable 1
+setLayerPreference Metal3 -isSelectable 1
+setLayerPreference allLayers -isVisible 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isSelectable 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal3 -isVisible 1
+setLayerPreference allLayers -isVisible 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isVisible 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isVisible 1
+setLayerPreference node_misc -isVisible 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal2 -isSelectable 1
+setLayerPreference Via2 -isSelectable 1
+setLayerPreference Metal3 -isVisible 1
+setLayerPreference Metal3 -isSelectable 1
+zoomBox 805.01050 714.04200 852.52550 756.57800
+zoomBox 773.99650 701.54600 865.02050 783.03200
+zoomBox 748.89500 691.64100 874.88000 804.42450
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isVisible 1
+setLayerPreference allLayers -isSelectable 1
+setLayerPreference violation -isVisible 1
+setLayerPreference violation -isSelectable 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isVisible 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal3 -isVisible 1
+setLayerPreference violation -isVisible 1
+setLayerPreference violation -isVisible 0
+setLayerPreference allLayers -isVisible 1
+fit
+setLayerPreference node_layer -isVisible 1
+setLayerPreference node_layer -isVisible 0
+setLayerPreference node_layer -isVisible 1
+setLayerPreference node_layer -isSelectable 1
+setLayerPreference node_layer -isSelectable 0
+setLayerPreference node_layer -isSelectable 1
+setLayerPreference allLayers -isVisible 0
+setLayerPreference allLayers -isVisible 1
+zoomBox -800.51900 -285.21650 2027.91850 2246.83900
+fit
+zoomBox 703.28300 813.04450 1052.24550 585.69000
+setLayerPreference violation -isVisible 0
+deselectAll
+fit
+setDrawView fplan
+setDrawView place
+getMultiCpuUsage -localCpu
+get_verify_drc_mode -disable_rules -quiet
+get_verify_drc_mode -quiet -area
+get_verify_drc_mode -quiet -layer_range
+get_verify_drc_mode -check_ndr_spacing -quiet
+get_verify_drc_mode -check_only -quiet
+get_verify_drc_mode -check_same_via_cell -quiet
+get_verify_drc_mode -exclude_pg_net -quiet
+get_verify_drc_mode -ignore_trial_route -quiet
+get_verify_drc_mode -max_wrong_way_halo -quiet
+get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
+get_verify_drc_mode -limit -quiet
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
+verify_drc
+set_verify_drc_mode -area {0 0 0 0}
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+saveDrc reports/mcu_pad_top.viols.drc
+violationBrowserClose
+setAnalysisMode -analysisType onChipVariation
+optDesign -postRoute -drv
+verifyConnectivity -type all -geomConnect -error 1000 -warning 50
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserClose
+extractRC
+verifyConnectivity -type all -noOpen -noWeakConnect -noUnConnPin -noUnroutedNet -geomConnect -error 1000 -warning 50
+setLayerPreference violation -isVisible 1
+violationBrowser -all -no_display_false -displayByLayer
+violationBrowserClose
+setDelayCalMode -SIAware false
+setAnalysisMode -analysisType bcwc -checkType setup
+optDesign -postRoute -setup
+setAnalysisMode -analysisType bcwc -checkType hold
+optDesign -postRoute -hold
+timeDesign -postRoute
+timeDesign -postRoute -hold
+saveDesign -rc -def RouteDesign
+zoomBox -518.24200 -354.26250 2310.19550 2177.79300
+fit

@@ -1,0 +1,117 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 21:28:11 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+panPage 0 1
+panPage 0 1
+encMessage warning 0
+encMessage debug 0
+is_common_ui_mode
+restoreDesign /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat mcu_pad_top
+setDrawView fplan
+encMessage warning 1
+encMessage debug 0
+setDrawView place
+fit
+fit
+fit
+fit
+gui_dump_picture snap/4_route.png -format PNG
+setDrawView place
+setDrawView fplan
+setDrawView place
+zoomBox -31.25700 40.56800 1705.75700 1595.56650
+zoomBox 218.79500 235.12250 1473.78800 1358.60900
+zoomBox -31.25800 40.56750 1705.75700 1595.56650
+zoomBox 103.90550 145.73200 1580.36850 1467.48150
+zoomBox 399.45700 375.68800 1306.19000 1187.40750
+zoomBox 624.29250 550.62200 1097.61350 974.34550
+zoomBox 661.12300 579.27850 1063.44600 939.44350
+zoomBox 791.11650 680.42050 942.85300 816.25700
+zoomBox 741.65550 641.93800 988.73450 863.12650
+zoomBox 760.88150 656.89650 970.89900 844.90700
+zoomBox 821.48800 704.05200 914.67400 787.47350
+zoomBox 848.37850 724.97450 889.72700 761.99000
+zoomBox 854.33100 729.60600 884.20500 756.34950
+zoomBox 862.95200 736.31300 876.20750 748.17950
+zoomBox 866.77650 739.28900 872.65850 744.55450
+zoomBox 868.23400 740.42350 871.30500 743.17250
+zoomBox 868.67600 740.76700 870.89500 742.75350
+setLayerPreference node_layer -isVisible 0
+setLayerPreference Metal2 -isVisible 1
+setLayerPreference Via2 -isVisible 1
+setLayerPreference Metal3 -isVisible 1
+zoomBox 868.42500 740.53750 871.03600 742.87500
+zoomBox 868.12950 740.26800 871.20150 743.01800
+set_power_analysis_mode -reset
+set_power_analysis_mode -method static -analysis_view FUNC_SS_WORST -corner max -create_binary_db true -write_static_currents true -honor_negative_energy true -ignore_control_signals true
+globalNetConnect VDD -type pgpin -pin VDD -instanceBasename *
+globalNetConnect VSS -type pgpin -pin VSS -instanceBasename *
+globalNetConnect VDD -type tiehi -instanceBasename *
+globalNetConnect VSS -type tielo -instanceBasename *
+set_power_output_dir -reset
+set_power_output_dir ./run1
+set_dynamic_power_simulation -reset
+set_default_switching_activity -reset
+set_default_switching_activity -input_activity 0.2 -period 8.0
+read_activity_file -reset
+set_power -reset
+set_powerup_analysis -reset
+report_power -rail_analysis_format VS -outfile ./run1/mcu_pad_top.rpt
+fit
+setLayerPreference node_layer -isVisible 1
+setLayerPreference node_layer -isVisible 0
+setLayerPreference node_layer -isVisible 1
+getFillerMode -quiet
+addFiller -cell FILL1 FILL8 FILL64 FILL4 FILL32 FILL2 FILL16 -prefix FILLER
+zoomBox 424.45850 519.81150 1331.19150 1331.53100
+zoomBox 346.41850 456.67550 1413.16400 1411.64050
+zoomBox 668.74450 726.56950 1071.06800 1086.73500
+zoomBox 698.02050 751.08350 1039.99600 1057.22450
+zoomBox 790.30900 828.35950 942.04600 964.19650
+zoomBox 803.32350 842.11000 932.30000 957.57150
+zoomBox 844.07800 887.01500 901.30650 938.24650
+zoomBox 849.37500 892.05650 898.01950 935.60350
+zoomBox 837.82150 881.08300 905.14950 941.35600
+selectInst FILLER_T_0_13566
+fit
+getMultiCpuUsage -localCpu
+get_verify_drc_mode -disable_rules -quiet
+get_verify_drc_mode -quiet -area
+get_verify_drc_mode -quiet -layer_range
+get_verify_drc_mode -check_ndr_spacing -quiet
+get_verify_drc_mode -check_only -quiet
+get_verify_drc_mode -check_same_via_cell -quiet
+get_verify_drc_mode -exclude_pg_net -quiet
+get_verify_drc_mode -ignore_trial_route -quiet
+get_verify_drc_mode -max_wrong_way_halo -quiet
+get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
+get_verify_drc_mode -limit -quiet
+set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
+verify_drc
+set_verify_drc_mode -area {0 0 0 0}
+verifyConnectivity -type all -noOpen -noWeakConnect -noUnConnPin -noUnroutedNet -geomConnect -error 1000 -warning 50
+extractRC
+saveDesign -rc -def ChipFinish
+fit
+gui_dump_picture snap/5_chipfinish.png -format PNG
+saveNetlist -flat -excludeCellInst {PADVDD PADVSS PADVSSIOR PADVDDIOR} mcu_pad_top.v
+write_sdf mcu_pad_top.sdf
+write_sdf -version 2.1 mcu_pad_top.sdf_2.1
+writeTimingCon mcu_pad_top.sdc
+streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL

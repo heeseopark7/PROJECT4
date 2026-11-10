@@ -30,7 +30,6 @@ timeDesign -postCTS -outDir reports/timing/postCTS -hold
 saveDesign -def PostCTSopt
 
 ## Snapshot after save (needs the GUI; catch keeps the script running without it)
-file mkdir snap
 catch {fit}
 catch {gui_dump_picture snap/3_cts.png -format PNG}
 

@@ -1,0 +1,1350 @@
+
+Cadence Innovus(TM) Implementation System.
+Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+
+Version:	v22.17-s086_1, built Tue Sep 24 10:51:50 PDT 2024
+Options:	
+Date:		Tue Nov 10 21:27:47 2026
+Host:		kopo-seongnam (x86_64 w/Linux 3.10.0-1160.el7.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz 28160KB)
+OS:		CentOS Linux 7 (Core)
+
+License:
+		[21:27:47.158649] Configured Lic search path (22.01-s003): 5280@localhost
+
+		invs	Innovus Implementation System	22.1	Denied
+		invsb	Innovus Implementation System Basic	22.1	checkout succeeded
+		4 CPU jobs allowed with the current license(s). Use setMultiCpuUsage to set your required CPU count.
+Change the soft stacksize limit to 0.2%RAM (770 mbytes). Set global soft_stack_size_limit to change the value.
+
+**INFO:  MMMC transition support version v31-84 
+
+<CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+<CMD> suppressMessage ENCEXT-2799
+<CMD> win
+<CMD> set enc_check_rename_command_name 1
+<CMD> panPage 0 1
+<CMD> panPage 0 1
+<CMD> encMessage warning 0
+Suppress "**WARN ..." messages.
+<CMD> encMessage debug 0
+<CMD> is_common_ui_mode
+<CMD> restoreDesign /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat mcu_pad_top
+#% Begin load design ... (date=11/10 21:28:55, mem=1349.7M)
+Set Default Input Pin Transition as 0.1 ps.
+Loading design 'mcu_pad_top' saved by 'Innovus' '22.17-s086_1' on 'Tue Nov 10 21:04:29 2026'.
+% Begin Load MMMC data ... (date=11/10 21:28:56, mem=1353.7M)
+% End Load MMMC data ... (date=11/10 21:28:56, total cpu=0:00:00.0, real=0:00:00.0, peak res=1354.7M, current mem=1354.7M)
+BEST WORST
+
+Loading LEF file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_tech.lef ...
+Set DBUPerIGU to M2 pitch 400.
+
+Loading LEF file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_macro.lef ...
+
+Loading LEF file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/gsclib045_multibitsDFF.lef ...
+**WARN: (IMPLF-58):	MACRO 'DFF2RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF2RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF2X1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF2X2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF4RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF4RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF4X1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'DFF4X2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SDFF2RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SDFF2RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SDFF4RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SDFF4RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SPDFF2RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SPDFF2RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SPDFF4RX1' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+**WARN: (IMPLF-58):	MACRO 'SPDFF4RX2' has been found in the database. Its content except DENSITY and PIN ANTENNA* data, and certain properties, will be ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-58' for more detail.
+
+Loading LEF file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/lef/giolib045_modify.lef ...
+**WARN: (IMPLF-61):	16 duplicated MACRO definitions have been found in the LEF file(s). Their content except DENSITY and PIN ANTENNA* data, and certain properties, have been ignored.
+Review the LEF files specified in the init_lef_file variable and remove redundant definitions.
+Type 'man IMPLF-61' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDDPAD25' in macro 'padIORINGFEED60' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSSPAD' in macro 'padIORINGFEED60' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDDPAD25' in macro 'padIORINGFEED5' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSSPAD' in macro 'padIORINGFEED5' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDDPAD25' in macro 'padIORINGFEED3' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSSPAD' in macro 'padIORINGFEED3' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDDPAD25' in macro 'padIORINGFEED10' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSSPAD' in macro 'padIORINGFEED10' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDDPAD25' in macro 'padIORINGFEED1' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSSPAD' in macro 'padIORINGFEED1' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VSS25' in macro 'PADVSS25' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'VDD25' in macro 'PADVDD25' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'OEN' in macro 'PADDOZ' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'A' in macro 'PADDOZ' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'PAD' in macro 'PADDOZ' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'A' in macro 'PADDO' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'PAD' in macro 'PADDO' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'PAD' in macro 'PADDI' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'PAD' in macro 'PADDI' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'Y' in macro 'PADDI' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-201):	Pin 'Y' in macro 'PADDB' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'A' in macro 'PADDB' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'OEN' in macro 'PADDB' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-201):	Pin 'PAD' in macro 'PADDB' has no ANTENNADIFFAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-201' for more detail.
+**WARN: (IMPLF-200):	Pin 'PAD' in macro 'PADDB' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (IMPLF-200):	Pin 'AY' in macro 'PADANALOG' has no ANTENNAGATEAREA value defined. The library data is incomplete and some process antenna rules will not be checked correctly.
+Type 'man IMPLF-200' for more detail.
+**WARN: (EMS-27):	Message (IMPLF-200) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+
+##  Check design process and node:  
+##  Both design process and tech node are not set.
+
+Loading view definition file from /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/viewDefinition.tcl
+Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib' ...
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+Read 489 cells in library 'slow_vdd1v0' 
+Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib' ...
+**WARN: (TECHLIB-459):	Appending library 'slow_vdd1v0' to the previously read library of the same name and nominal PVT. Cell definitions from the previously read library will not be overridden. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib)
+Read 16 cells in library 'slow_vdd1v0' 
+Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/giolib045_v3.5/timing/pads_SS_s1vg.lib' ...
+Read 8 cells in library 'giolib045' 
+Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib' ...
+Message <TECHLIB-302> has exceeded the message display limit of '20'. Use 'set_message -no_limit -id list_of_msgIDs' to reset the message limit.
+Read 489 cells in library 'fast_vdd1v0' 
+Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib' ...
+**WARN: (TECHLIB-459):	Appending library 'fast_vdd1v0' to the previously read library of the same name and nominal PVT. Cell definitions from the previously read library will not be overridden. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib)
+Read 16 cells in library 'fast_vdd1v0' 
+Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/giolib045_v3.5/timing/pads_FF_s1vg.lib' ...
+Read 8 cells in library 'giolib045' 
+*** End library_loading (cpu=0.03min, real=0.03min, mem=11.5M, fe_cpu=0.53min, fe_real=1.18min, fe_mem=1637.2M) ***
+% Begin Load netlist data ... (date=11/10 21:28:58, mem=1373.4M)
+*** Begin netlist parsing (mem=1637.2M) ***
+Pin 'VDD' of cell 'SDFF4RX2' is declared as power/ground in timing library but as signal in LEF.  Treat it as power/ground.
+Pin 'VSS' of cell 'SDFF4RX2' is declared as power/ground in timing library but as signal in LEF.  Treat it as power/ground.
+Pin 'VDD' of cell 'SDFF4RX1' is declared as power/ground in timing library but as signal in LEF.  Treat it as power/ground.
+Pin 'VSS' of cell 'SDFF4RX1' is declared as power/ground in timing library but as signal in LEF.  Treat it as power/ground.
+**WARN: (IMPVL-159):	Pin 'VDDIOR' of cell 'PADDOZ' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSSIOR' of cell 'PADDOZ' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'PADDOZ' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'PADDOZ' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDDIOR' of cell 'PADDO' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSSIOR' of cell 'PADDO' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'PADDO' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'PADDO' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDDIOR' of cell 'PADDI' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSSIOR' of cell 'PADDI' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'PADDI' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'PADDI' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDD' of cell 'PADDB' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSS' of cell 'PADDB' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VSSIOR' of cell 'PADDB' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+**WARN: (IMPVL-159):	Pin 'VDDIOR' of cell 'PADDB' is defined in LEF but not in the timing library.
+Type 'man IMPVL-159' for more detail.
+Created 513 new cells from 4 timing libraries.
+Reading netlist ...
+Backslashed names will retain backslash and a trailing blank character.
+Reading verilogBinary netlist '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.v.bin'
+
+*** Memory Usage v#1 (Current mem = 1644.160M, initial mem = 646.371M) ***
+*** End netlist parsing (cpu=0:00:00.0, real=0:00:00.0, mem=1644.2M) ***
+% End Load netlist data ... (date=11/10 21:28:58, total cpu=0:00:00.0, real=0:00:00.0, peak res=1385.2M, current mem=1385.2M)
+Set top cell to mcu_pad_top.
+Hooked 1026 DB cells to tlib cells.
+** Removed 4 unused lib cells.
+Starting recursive module instantiation check.
+No recursion found.
+Building hierarchical netlist for Cell mcu_pad_top ...
+***** UseNewTieNetMode *****.
+*** Netlist is unique.
+** info: there are 1134 modules.
+** info: there are 6060 stdCell insts.
+** info: there are 6052 stdCell insts with at least one signal pin.
+** info: there are 23 Pad insts.
+** info: there are 8 multi-height stdCell insts (2 stdCells)
+
+*** Memory Usage v#1 (Current mem = 1700.586M, initial mem = 646.371M) ***
+*info: set bottom ioPad orient R0
+Reading IO assignment file "/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/iofile/init.io" ...
+**WARN: (IMPFP-3961):	The techSite 'corner' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'pad' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'CornerSite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'IOSite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+Start create_tracks
+Set Shrink Factor to 0.90000
+Loading preference file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/gui.pref.tcl ...
+**WARN: (IMPOPT-3602):	The specified path group name reg2reg is not defined.
+Type 'man IMPOPT-3602' for more detail.
+Effort level <high> specified for reg2reg path_group
+Slack adjustment of -0 applied on reg2reg path_group
+Slack adjustment of -0 applied on <default> path group
+**WARN: (IMPOPT-3602):	The specified path group name tdgp_reg2reg_default is not defined.
+Type 'man IMPOPT-3602' for more detail.
+Effort level <high> specified for tdgp_reg2reg_default path_group
+Slack adjustment of -0 applied on tdgp_reg2reg_default path_group
+**WARN: (IMPTCM-77):	Option "-drouteStartIteration" for command setNanoRouteMode is obsolete and will be removed in a future release. The obsolete option still works in this release but to avoid this warning and to ensure compatibility with future releases, remove the obsolete option from your script.
+addRing command will ignore shorts while creating rings.
+addRing command will disallow rings to go over rows.
+addRing command will consider rows while creating rings.
+The ring targets are set to core/block ring wires.
+addStripe will allow jog to connect padcore ring and block ring.
+
+Stripes will not extend to closest target.
+When breaking rings, the power planner will consider the existence of blocks.
+addStripe will break automatically at non-default domains when generating global stripes over the core area or default domain.
+The entire stripe set will break at the domain if one of the nets is not in the domain.
+Stripes will not be created over regions without power planning wires.
+Offset for stripe breaking is set to 0.
+Stripes will stop at the boundary of the specified area.
+The power planner will set stripe antenna targets to none (no trimming allowed).
+**WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMaxRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -topRoutingLayer' instead.
+**WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMinRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -bottomRoutingLayer' instead.
+Change floorplan default-technical-site to 'CoreSite'.
+*Info: initialize multi-corner CTS.
+Total number of combinational cells: 318
+Total number of sequential cells: 168
+Total number of tristate cells: 10
+Total number of level shifter cells: 0
+Total number of power gating cells: 0
+Total number of isolation cells: 0
+Total number of power switch cells: 0
+Total number of pulse generator cells: 0
+Total number of always on buffers: 0
+Total number of retention cells: 0
+Total number of physical cells: 9
+List of usable buffers: BUFX2 BUFX12 BUFX16 BUFX20 CLKBUFX2 BUFX3 BUFX4 BUFX6 BUFX8 CLKBUFX12 CLKBUFX16 CLKBUFX20 CLKBUFX3 CLKBUFX4 CLKBUFX6 CLKBUFX8
+Total number of usable buffers: 16
+List of unusable buffers:
+Total number of unusable buffers: 0
+List of usable inverters: CLKINVX1 CLKINVX2 CLKINVX12 CLKINVX16 CLKINVX20 CLKINVX4 CLKINVX3 CLKINVX6 CLKINVX8 INVX1 INVX2 INVX12 INVX16 INVX20 INVXL INVX3 INVX4 INVX6 INVX8
+Total number of usable inverters: 19
+List of unusable inverters:
+Total number of unusable inverters: 0
+List of identified usable delay cells: DLY1X1 DLY1X4 DLY2X1 DLY2X4 DLY3X1 DLY3X4 DLY4X1 DLY4X4
+Total number of identified usable delay cells: 8
+List of identified unusable delay cells:
+Total number of identified unusable delay cells: 0
+% Begin Load MMMC data post ... (date=11/10 21:28:59, mem=1696.2M)
+% End Load MMMC data post ... (date=11/10 21:28:59, total cpu=0:00:00.0, real=0:00:00.0, peak res=1696.2M, current mem=1695.3M)
+**WARN: (IMPSYC-2):	Timing information is not defined for cell PADVSSIOR; Check the timing library (.lib) file and make sure the timing information exists for the cell and you can run the checkTimingLibrary command to verify if the timing library has complete information after the design is loaded.
+Type 'man IMPSYC-2' for more detail.
+**WARN: (IMPSYC-2):	Timing information is not defined for cell PADVDDIOR; Check the timing library (.lib) file and make sure the timing information exists for the cell and you can run the checkTimingLibrary command to verify if the timing library has complete information after the design is loaded.
+Type 'man IMPSYC-2' for more detail.
+Reading floorplan file - /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.fp.gz (mem = 1955.7M).
+% Begin Load floorplan data ... (date=11/10 21:28:59, mem=1695.5M)
+*info: reset 6850 existing net BottomPreferredLayer and AvoidDetour
+Deleting old partition specification.
+Set FPlanBox to (0 0 3326000 3326200)
+**WARN: (IMPFP-3961):	The techSite 'corner' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'pad' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'CornerSite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+**WARN: (IMPFP-3961):	The techSite 'IOSite' has no related standard cells in the LEF/OA library. The calculations for this site type cannot be made unless standard cell models of this type exist in the LEF/OA library. Ignore this warning if the SITE is not used by the library. Alternatively, remove the SITE definition for the LEF/OA library to avoid this message.
+Type 'man IMPFP-3961' for more detail.
+Start create_tracks
+ ... processed partition successfully.
+Reading binary special route file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.fp.spr.gz (Created by Innovus v22.17-s086_1 on Tue Nov 10 21:04:27 2026, version: 1)
+Ending "Read special route file" (total cpu=0:00:00.0, real=0:00:00.0, peak res=1696.2M, current mem=1696.2M)
+Reading AreaIo file "/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.fp.areaio.gz" ...
+There are 135 io inst loaded
+There are 179 nets with weight being set
+There are 179 nets with bottomPreferredRoutingLayer being set
+There are 179 nets with avoidDetour being set
+Extracting standard cell pins and blockage ...... 
+Pin and blockage extraction finished
+% End Load floorplan data ... (date=11/10 21:29:00, total cpu=0:00:00.2, real=0:00:01.0, peak res=1697.9M, current mem=1697.9M)
+Reading congestion map file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.route.congmap.gz ...
+% Begin Load SymbolTable ... (date=11/10 21:29:00, mem=1698.3M)
+Un-suppress "**WARN ..." messages.
+% End Load SymbolTable ... (date=11/10 21:29:00, total cpu=0:00:00.1, real=0:00:00.0, peak res=1722.1M, current mem=1722.0M)
+Loading place ...
+% Begin Load placement data ... (date=11/10 21:29:00, mem=1722.0M)
+Reading placement file - /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.place.gz.
+** Reading stdCellPlacement_binary (Created by Innovus v22.17-s086_1 on Tue Nov 10 21:04:27 2026, version# 2) ...
+Read Views for adaptive view pruning ...
+Read 0 views from Binary DB for adaptive view pruning
+*** Completed restorePlace (cpu=0:00:00.1 real=0:00:00.0 mem=1983.0M) ***
+Total net length = 9.528e+04 (5.002e+04 4.526e+04) (ext = 0.000e+00)
+% End Load placement data ... (date=11/10 21:29:00, total cpu=0:00:00.1, real=0:00:00.0, peak res=1723.7M, current mem=1723.5M)
+Reading PG file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.pg.gz, version#2, (Created by Innovus v22.17-s086_1 on       Tue Nov 10 21:04:27 2026)
+*** Completed restorePGFile (cpu=0:00:00.0 real=0:00:00.0 mem=1980.0M) ***
+% Begin Load routing data ... (date=11/10 21:29:00, mem=1723.9M)
+Reading routing file - /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.route.gz.
+Reading Innovus routing data (Created by Innovus v22.17-s086_1 on Tue Nov 10 21:04:27 2026 Format: 20.1) ...
+*** Total 6187 nets are successfully restored.
+*** Completed restoreRoute (cpu=0:00:00.1 real=0:00:00.0 mem=1989.0M) ***
+% End Load routing data ... (date=11/10 21:29:00, total cpu=0:00:00.1, real=0:00:00.0, peak res=1734.0M, current mem=1733.0M)
+TAT_INFO: restoreCongMap REAL = 0 : CPU = 0 : MEM = 0.
+Reading property file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.prop
+*** Completed restoreProperty (cpu=0:00:00.0 real=0:00:01.0 mem=1993.0M) ***
+Reading dirtyarea snapshot file /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.db.da.gz (Create by Innovus v22.17-s086_1 on Tue Nov 10 21:04:28 2026, version: 7).
+Set Default Input Pin Transition as 0.1 ps.
+Extraction setup Started 
+Initializing multi-corner RC extraction with 2 active RC Corners ...
+**WARN: (IMPEXT-6202):	In addition to the technology file, the capacitance table file is specified for all the RC corners. If the technology file  is already specified for all the RC corners, the capacitance table file is not required for preRoute and postRoute extraction. In a new session, the capacitance table files can be removed from the create_rc_corner command to enable the technology file to be used for preRoute and postRoute (effort level medium/high/signoff) extraction engines.
+Type 'man IMPEXT-6202' for more detail.
+Reading Capacitance Table File /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl ...
+Cap table was created using Encounter 10.10-b056_1.
+Process name: cln28hpl_1p10m+alrdl_5x2yu2yz_typical.
+Set Shrink Factor to 0.90000
+Reading Capacitance Table File /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl ...
+Cap table was created using Encounter 10.10-b056_1.
+Process name: cln28hpl_1p10m+alrdl_5x2yu2yz_typical.
+Set Shrink Factor to 0.90000
+Importing multi-corner RC tables ... 
+Summary of Active RC-Corners : 
+ 
+ Analysis View: FUNC_SS_WORST
+    RC-Corner Name        : WORST
+    RC-Corner Index       : 0
+    RC-Corner Temperature : 125 Celsius
+    RC-Corner Cap Table   : '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl'
+    RC-Corner PreRoute Res Factor         : 1
+    RC-Corner PreRoute Cap Factor         : 1
+    RC-Corner PostRoute Res Factor        : 1 {1 1 1}
+    RC-Corner PostRoute Cap Factor        : 1 {1 1 1}
+    RC-Corner PostRoute XCap Factor       : 1 {1 1 1}
+    RC-Corner PreRoute Clock Res Factor   : 1	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PreRoute Clock Cap Factor   : 1	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Cap Factor  : 1 {1 1 1} 	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Res Factor  : 1 {1 1 1} 	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PostRoute Clock coupling capacitance Factor : 1 {1 1 1} 
+    RC-Corner Technology file: '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+ 
+ Analysis View: FUNC_FF_BEST
+    RC-Corner Name        : BEST
+    RC-Corner Index       : 1
+    RC-Corner Temperature : 0 Celsius
+    RC-Corner Cap Table   : '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/cln28hpl_1p10m+alrdl_5x2yu2yz_typical.capTbl'
+    RC-Corner PreRoute Res Factor         : 1
+    RC-Corner PreRoute Cap Factor         : 1
+    RC-Corner PostRoute Res Factor        : 1 {1 1 1}
+    RC-Corner PostRoute Cap Factor        : 1 {1 1 1}
+    RC-Corner PostRoute XCap Factor       : 1 {1 1 1}
+    RC-Corner PreRoute Clock Res Factor   : 1	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PreRoute Clock Cap Factor   : 1	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Cap Factor  : 1 {1 1 1} 	[Derived from postRoute_cap (effortLevel low)]
+    RC-Corner PostRoute Clock Res Factor  : 1 {1 1 1} 	[Derived from postRoute_res (effortLevel low)]
+    RC-Corner PostRoute Clock coupling capacitance Factor : 1 {1 1 1} 
+    RC-Corner Technology file: '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+Initializing multi-corner capacitance tables ... 
+Initializing multi-corner resistance tables ...
+Creating RPSQ from WeeR and WRes ...
+Creating RPSQ from WeeR and WRes ...
+Restoring parasitic data from file '/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d' ...
+Begin read_parasitics... (cpu: 0:00:00.0 real: 0:00:00.0 mem: 2005.992M)
+Following multi-corner parasitics specified:
+	/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d (rcdb)
+		Cell mcu_pad_top has rcdb /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mcu_pad_top.rcdb.d specified
+Cell mcu_pad_top, hinst 
+Done read_parasitics... (cpu: 0:00:00.1 real: 0:00:00.0 mem: 2007.992M)
+Start generating vias ..
+#Skip building auto via since it is not turned on.
+Extracting standard cell pins and blockage ...... 
+Pin and blockage extraction finished
+Via generation completed.
+% Begin Load power constraints ... (date=11/10 21:29:02, mem=1756.5M)
+'set_default_switching_activity' finished successfully.
+% End Load power constraints ... (date=11/10 21:29:02, total cpu=0:00:00.0, real=0:00:00.0, peak res=1762.2M, current mem=1762.2M)
+FF_BEST SS_WORST
+% Begin load AAE data ... (date=11/10 21:29:02, mem=1784.7M)
+**WARN: (IMPESI-3505):	setDelayCalMode -eng_enablePrePlacedFlow false (default=false) will be obsoleted along with its sgs2set equivalent.  This parameter will continue to be supported in the current release, but will be removed in the next major release of the software.
+AAE DB initialization (MEM=2081.55 CPU=0:00:00.0 REAL=0:00:00.0) 
+% End load AAE data ... (date=11/10 21:29:02, total cpu=0:00:00.6, real=0:00:00.0, peak res=1791.1M, current mem=1791.1M)
+Restoring CCOpt config...
+  Extracting original clock gating for MAIN_CLOCK...
+    clock_tree MAIN_CLOCK contains 1816 sinks and 0 clock gates.
+  Extracting original clock gating for MAIN_CLOCK done.
+  The skew group MAIN_CLOCK/FUNC was created. It contains 1816 sinks and 1 sources.
+  The skew group MAIN_CLOCK/FUNC was created. It contains 1816 sinks and 1 sources.
+**WARN: (IMPCCOPT-2332):	The property locked_originally is deprecated. It still works, but it may be removed in a future release.
+Restoring CCOpt config done.
+Total number of combinational cells: 318
+Total number of sequential cells: 168
+Total number of tristate cells: 10
+Total number of level shifter cells: 0
+Total number of power gating cells: 0
+Total number of isolation cells: 0
+Total number of power switch cells: 0
+Total number of pulse generator cells: 0
+Total number of always on buffers: 0
+Total number of retention cells: 0
+Total number of physical cells: 9
+List of usable buffers: BUFX2 BUFX12 BUFX16 BUFX20 CLKBUFX2 BUFX3 BUFX4 BUFX6 BUFX8 CLKBUFX12 CLKBUFX16 CLKBUFX20 CLKBUFX3 CLKBUFX4 CLKBUFX6 CLKBUFX8
+Total number of usable buffers: 16
+List of unusable buffers:
+Total number of unusable buffers: 0
+List of usable inverters: CLKINVX1 CLKINVX2 CLKINVX12 CLKINVX16 CLKINVX20 CLKINVX4 CLKINVX3 CLKINVX6 CLKINVX8 INVX1 INVX2 INVX12 INVX16 INVX20 INVXL INVX3 INVX4 INVX6 INVX8
+Total number of usable inverters: 19
+List of unusable inverters:
+Total number of unusable inverters: 0
+List of identified usable delay cells:
+Total number of identified usable delay cells: 0
+List of identified unusable delay cells: DLY1X1 DLY1X4 DLY2X1 DLY2X4 DLY3X1 DLY3X4 DLY4X1 DLY4X4
+Total number of identified unusable delay cells: 8
+All delay cells are dont_use. Buffers will be used to fix hold violations.
+**WARN: (IMPCTE-107):	The following globals have been obsoleted since version (null). They will be removed in the next release. 
+timing_enable_separate_device_slew_effect_sensitivities
+#% End load design ... (date=11/10 21:29:03, total cpu=0:00:06.3, real=0:00:08.0, peak res=1815.2M, current mem=1801.0M)
+
+*** Summary of all messages that are not suppressed in this session:
+Severity  ID               Count  Summary                                  
+WARNING   IMPLF-58            16  MACRO '%s' has been found in the databas...
+WARNING   IMPLF-61             1  %d duplicated MACRO definitions have bee...
+WARNING   IMPLF-200           25  Pin '%s' in macro '%s' has no ANTENNAGAT...
+WARNING   IMPLF-201            6  Pin '%s' in macro '%s' has no ANTENNADIF...
+WARNING   IMPFP-3961           8  The techSite '%s' has no related standar...
+WARNING   IMPEXT-6202          1  In addition to the technology file, the ...
+WARNING   IMPSYC-2             2  Timing information is not defined for ce...
+WARNING   IMPVL-159           16  Pin '%s' of cell '%s' is defined in LEF ...
+WARNING   IMPESI-3505          1  setDelayCalMode -eng_%s (default=%s) wil...
+WARNING   IMPOPT-3602          2  The specified path group name %s is not ...
+WARNING   IMPCCOPT-2332        1  The property %s is deprecated. It still ...
+WARNING   IMPCTE-107           1  The following globals have been obsolete...
+WARNING   IMPTCM-77            1  Option "%s" for command %s is obsolete a...
+WARNING   IMPPSP-1003          2  Found use of '%s'. This will continue to...
+WARNING   TECHLIB-302         40  No function defined for cell '%s'. The c...
+WARNING   TECHLIB-459          2  Appending library '%s' to the previously...
+*** Message Summary: 125 warning(s), 0 error(s)
+
+<CMD> setDrawView fplan
+<CMD> encMessage warning 1
+<CMD> encMessage debug 0
+<CMD> setDrawView place
+<CMD> fit
+<CMD> fit
+<CMD> fit
+<CMD> fit
+<CMD> gui_dump_picture snap/4_route.png -format PNG
+<CMD> setDrawView place
+<CMD> setDrawView fplan
+<CMD> setDrawView place
+<CMD> zoomBox -31.25700 40.56800 1705.75700 1595.56650
+<CMD> zoomBox 218.79500 235.12250 1473.78800 1358.60900
+<CMD> zoomBox -31.25800 40.56750 1705.75700 1595.56650
+<CMD> zoomBox 103.90550 145.73200 1580.36850 1467.48150
+<CMD> zoomBox 399.45700 375.68800 1306.19000 1187.40750
+<CMD> zoomBox 624.29250 550.62200 1097.61350 974.34550
+<CMD> zoomBox 661.12300 579.27850 1063.44600 939.44350
+<CMD> zoomBox 791.11650 680.42050 942.85300 816.25700
+<CMD> zoomBox 741.65550 641.93800 988.73450 863.12650
+<CMD> zoomBox 760.88150 656.89650 970.89900 844.90700
+<CMD> zoomBox 821.48800 704.05200 914.67400 787.47350
+<CMD> zoomBox 848.37850 724.97450 889.72700 761.99000
+<CMD> zoomBox 854.33100 729.60600 884.20500 756.34950
+<CMD> zoomBox 862.95200 736.31300 876.20750 748.17950
+<CMD> zoomBox 866.77650 739.28900 872.65850 744.55450
+<CMD> zoomBox 868.23400 740.42350 871.30500 743.17250
+<CMD> zoomBox 868.67600 740.76700 870.89500 742.75350
+<CMD> setLayerPreference node_layer -isVisible 0
+<CMD> setLayerPreference Metal2 -isVisible 1
+<CMD> setLayerPreference Via2 -isVisible 1
+<CMD> setLayerPreference Metal3 -isVisible 1
+<CMD> zoomBox 868.42500 740.53750 871.03600 742.87500
+<CMD> zoomBox 868.12950 740.26800 871.20150 743.01800
+<CMD> set_power_analysis_mode -reset
+<CMD> set_power_analysis_mode -method static -analysis_view FUNC_SS_WORST -corner max -create_binary_db true -write_static_currents true -honor_negative_energy true -ignore_control_signals true
+** WARN:  (VOLTUS_POWR-3212): The 'set_power_analysis_mode -leakage_power_view |-dynamic_power_view|-analysis_view' will be obsolete in 18.20 release. Use 'set_analysis_view -leakage <> | -dynamic <>' to set leakage and dynamic power views.
+
+<CMD> globalNetConnect VDD -type pgpin -pin VDD -instanceBasename *
+<CMD> globalNetConnect VSS -type pgpin -pin VSS -instanceBasename *
+<CMD> globalNetConnect VDD -type tiehi -instanceBasename *
+<CMD> globalNetConnect VSS -type tielo -instanceBasename *
+<CMD> set_power_output_dir -reset
+<CMD> set_power_output_dir ./run1
+<CMD> set_dynamic_power_simulation -reset
+<CMD> set_default_switching_activity -reset
+<CMD> set_default_switching_activity -input_activity 0.2 -period 8.0
+** INFO:  (VOLTUS_POWR-3229): Using user defined default frequency 125MHz for power calculation.
+
+'set_default_switching_activity' finished successfully.
+<CMD> read_activity_file -reset
+<CMD> set_power -reset
+<CMD> set_powerup_analysis -reset
+<CMD> report_power -rail_analysis_format VS -outfile ./run1/mcu_pad_top.rpt
+env CDS_WORKAREA is set to /home/hah013/PROJ4/proj4_make/TOP/5_PNR
+Update analysis mode checkType setup to match with power corner max.
+
+Power Net Detected:
+        Voltage	    Name
+             0V	    VSS
+           0.9V	    VDD
+Using Power View: FUNC_SS_WORST.
+AAE_INFO: opIsDesignInPostRouteState() is 1
+#################################################################################
+# Design Stage: PostRoute
+# Design Name: mcu_pad_top
+# Design Mode: 90nm
+# Analysis Mode: MMMC Non-OCV 
+# Parasitics Mode: SPEF/RCDB 
+# Signoff Settings: SI Off 
+#################################################################################
+Calculate delays in BcWc mode...
+Start delay calculation (fullDC) (1 T). (MEM=2898.62)
+*** Calculating scaling factor for SS_Max_0p90v_125c libraries using the default operating condition of each library.
+Total number of fetched objects 6185
+End delay calculation. (MEM=3375.13 CPU=0:00:00.9 REAL=0:00:01.0)
+End delay calculation (fullDC). (MEM=3067.13 CPU=0:00:01.4 REAL=0:00:02.0)
+
+Begin Power Analysis
+
+             0V	    VSS
+           0.9V	    VDD
+
+Begin Processing Timing Library for Power Calculation
+
+Ended Processing Timing Library for Power Calculation: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2185.51MB/4825.17MB/2185.58MB)
+
+
+
+Begin Processing Power Net/Grid for Power Calculation
+
+Ended Processing Power Net/Grid for Power Calculation: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2185.60MB/4825.17MB/2185.61MB)
+
+Begin Processing Timing Window Data for Power Calculation
+
+MAIN_CLOCK(100MHz) Ended Processing Timing Window Data for Power Calculation: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2185.72MB/4825.17MB/2185.73MB)
+
+Begin Processing User Attributes
+
+Ended Processing User Attributes: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2185.80MB/4825.17MB/2185.80MB)
+
+Begin Processing Signal Activity
+
+
+Starting Levelizing
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT)
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 10%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 20%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 30%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 40%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 50%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 60%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 70%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 80%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 90%
+
+Finished Levelizing
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT)
+
+Starting Activity Propagation
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT)
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 10%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 20%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 30%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 40%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 50%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 60%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 70%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 80%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 90%
+
+Finished Activity Propagation
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT)
+Ended Processing Signal Activity: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2186.40MB/4825.17MB/2186.40MB)
+
+Begin Power Computation
+
+      ----------------------------------------------------------
+      # of cell(s) missing both power/leakage table: 0
+      # of cell(s) missing power table: 0
+      # of cell(s) missing leakage table: 0
+      ----------------------------------------------------------
+
+
+
+Starting Calculating power
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT)
+ ... Calculating switching power
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 10%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 20%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 30%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 40%
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 50%
+ ... Calculating internal and leakage power
+2026-Nov-10 21:40:55 (2026-Nov-10 12:40:55 GMT): 60%
+2026-Nov-10 21:40:56 (2026-Nov-10 12:40:56 GMT): 70%
+2026-Nov-10 21:40:56 (2026-Nov-10 12:40:56 GMT): 80%
+2026-Nov-10 21:40:56 (2026-Nov-10 12:40:56 GMT): 90%
+
+Finished Calculating power
+2026-Nov-10 21:40:56 (2026-Nov-10 12:40:56 GMT)
+      # of MSMV cell(s) missing power_level: 0
+Ended Power Computation: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2187.33MB/4825.17MB/2187.33MB)
+
+Begin Processing User Attributes
+
+Begin Processing set_power
+Ended Processing set_power: (cpu=0:00:00, real=0:00:00,
+mem(process/total/peak)=2187.33MB/4825.17MB/2187.39MB)
+Ended Processing User Attributes: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2187.39MB/4825.17MB/2187.39MB)
+
+Ended Power Analysis: (cpu=0:00:00, real=0:00:00, mem(process/total/peak)=2187.39MB/4825.17MB/2187.40MB)
+
+Begin Boundary Leakage Calculation
+Ended Boundary Leakage Calculation: (cpu=0:00:00, real=0:00:00,
+mem(process/total/peak)=2187.47MB/4825.17MB/2187.47MB)
+Begin Static Power Report Generation
+  16 instances have no static power
+** WARN:  (VOLTUS_POWR-2152): Instance pad1 (PADVSSIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad5 (PADVDD) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad6 (PADVSS) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad12 (PADVDDIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad13 (PADVSSIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad17 (PADVDD) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad18 (PADVSS) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad24 (PADVDDIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad25 (PADVSSIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad29 (PADVDD) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad30 (PADVSS) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad36 (PADVDDIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad37 (PADVSSIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad41 (PADVDD) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad42 (PADVSS) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+** WARN:  (VOLTUS_POWR-2152): Instance pad48 (PADVDDIOR) has no static power. This might be because either the duty cycle and activity of all the connected nets
+is 0 or the instance is connected to power off rails. If this is not the expected behaviour and static power is required, ensure that the instance is connected
+to power on rails and that the duty cycle and activity of at least one net is not 0.
+
+*
+
+
+
+Total Power
+-----------------------------------------------------------------------------------------
+Total Internal Power:        4.52019894 	   84.2887%
+Total Switching Power:       0.23053407 	    4.2988%
+Total Leakage Power:         0.61202164 	   11.4124%
+Total Power:                 5.36275465
+-----------------------------------------------------------------------------------------
+** WARN:  (VOLTUS_POWR-3424): Cell AOI21X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AO22X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AOI2BB1X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AND2X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell OA21X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell DFFRX1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell NOR4BBX1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AO22X2 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AOI31X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell OAI211X4 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell CLKBUFX16 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell CLKINVX8 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell OAI2BB1X1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell NOR2BX1 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AOI221X2 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell OR2X2 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell NAND2BX2 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell NAND3XL has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AND3X4 has no power pin defined in LEF/PGV.
+
+** WARN:  (VOLTUS_POWR-3424): Cell AOI22XL has no power pin defined in LEF/PGV.
+
+** WARN:  (EMS-27): Message (VOLTUS_POWR-3424) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+
+Ended Static Power Report Generation: (cpu=0:00:00, real=0:00:00,
+mem(process/total/peak)=2189.18MB/4825.17MB/2189.23MB)
+
+Begin Creating Binary Database
+Ended Creating Binary Database: (cpu=0:00:00, real=0:00:00,
+mem(process/total/peak)=2705.94MB/6363.59MB/2705.94MB)
+
+Output file is ./run1/mcu_pad_top.rpt.
+<CMD> fit
+<CMD> setLayerPreference node_layer -isVisible 1
+<CMD> setLayerPreference node_layer -isVisible 0
+<CMD> setLayerPreference node_layer -isVisible 1
+invalid command name "addFillerMode"
+<CMD> getFillerMode -quiet
+<CMD> addFiller -cell FILL1 FILL8 FILL64 FILL4 FILL32 FILL2 FILL16 -prefix FILLER
+**WARN: (IMPSP-5217):	addFiller command is running on a postRoute database. It is recommended to be followed by ecoRoute -target command to make the DRC clean.
+Type 'man IMPSP-5217' for more detail.
+**Info: (IMPSP-2055): Transparent Filler Flow is OFF !
+
+INFO: No filler could be restored
+Estimated cell power/ground rail width = 0.160 um
+*INFO: Adding fillers to top-module.
+*INFO:   Added 9014 filler insts (cell FILL64 / prefix FILLER).
+*INFO:   Added 182 filler insts (cell FILL32 / prefix FILLER).
+*INFO:   Added 372 filler insts (cell FILL16 / prefix FILLER).
+*INFO:   Added 552 filler insts (cell FILL8 / prefix FILLER).
+*INFO:   Added 1037 filler insts (cell FILL4 / prefix FILLER).
+*INFO:   Added 1939 filler insts (cell FILL2 / prefix FILLER).
+*INFO:   Added 2049 filler insts (cell FILL1 / prefix FILLER).
+*INFO: Total 15145 filler insts added - prefix FILLER (CPU: 0:00:00.6).
+For 15145 new insts, <CMD> zoomBox 424.45850 519.81150 1331.19150 1331.53100
+<CMD> zoomBox 346.41850 456.67550 1413.16400 1411.64050
+<CMD> zoomBox 668.74450 726.56950 1071.06800 1086.73500
+<CMD> zoomBox 698.02050 751.08350 1039.99600 1057.22450
+<CMD> zoomBox 790.30900 828.35950 942.04600 964.19650
+<CMD> zoomBox 803.32350 842.11000 932.30000 957.57150
+<CMD> zoomBox 844.07800 887.01500 901.30650 938.24650
+<CMD> zoomBox 849.37500 892.05650 898.01950 935.60350
+<CMD> zoomBox 837.82150 881.08300 905.14950 941.35600
+<CMD> selectInst FILLER_T_0_13566
+<CMD> fit
+<CMD> getMultiCpuUsage -localCpu
+<CMD> get_verify_drc_mode -disable_rules -quiet
+<CMD> get_verify_drc_mode -quiet -area
+<CMD> get_verify_drc_mode -quiet -layer_range
+<CMD> get_verify_drc_mode -check_ndr_spacing -quiet
+<CMD> get_verify_drc_mode -check_only -quiet
+<CMD> get_verify_drc_mode -check_same_via_cell -quiet
+<CMD> get_verify_drc_mode -exclude_pg_net -quiet
+<CMD> get_verify_drc_mode -ignore_trial_route -quiet
+<CMD> get_verify_drc_mode -max_wrong_way_halo -quiet
+<CMD> get_verify_drc_mode -use_min_spacing_on_block_obs -quiet
+<CMD> get_verify_drc_mode -limit -quiet
+<CMD> set_verify_drc_mode -disable_rules {} -check_ndr_spacing auto -check_only default -check_same_via_cell true -exclude_pg_net false -ignore_trial_route false -ignore_cell_blockage false -use_min_spacing_on_block_obs auto -report mcu_pad_top.drc.rpt -limit 1000
+<CMD> verify_drc
+#-check_ndr_spacing auto                 # enums={true false auto}, default=auto,  user setting
+#-check_same_via_cell true               # bool, default=false, user setting
+#-report mcu_pad_top.drc.rpt             # string, default="", user setting
+ *** Starting Verify DRC (MEM: 3146.7) ***
+
+  VERIFY DRC ...... Starting Verification
+  VERIFY DRC ...... Initializing
+  VERIFY DRC ...... Deleting Existing Violations
+  VERIFY DRC ...... Creating Sub-Areas
+  VERIFY DRC ...... Using new threading
+
+  Verification Complete : 0 Viols.
+
+ *** End Verify DRC (CPU TIME: 0:00:04.8  ELAPSED TIME: 0:00:05.0  MEM: 320.1M) ***
+
+<CMD> set_verify_drc_mode -area {0 0 0 0}
+<CMD> verifyConnectivity -type all -noOpen -noWeakConnect -noUnConnPin -noUnroutedNet -geomConnect -error 1000 -warning 50
+VERIFY_CONNECTIVITY use new engine.
+
+******** Start: VERIFY CONNECTIVITY ********
+Start Time: Tue Nov 10 21:52:16 2026
+
+Design Name: mcu_pad_top
+Database Units: 2000
+Design Boundary: (0.0000, 0.0000) (1663.0000, 1663.1000)
+Error Limit = 1000; Warning Limit = 50
+Check all nets
+**** 21:52:16 **** Processed 5000 nets.
+
+Begin Summary 
+  Found no problems or warnings.
+End Summary
+
+End Time: Tue Nov 10 21:52:16 2026
+Time Elapsed: 0:00:00.0
+
+******** End: VERIFY CONNECTIVITY ********
+  Verification Complete : 0 Viols.  0 Wrngs.
+  (CPU Time: 0:00:00.5  MEM: 0.000M)
+
+<CMD> extractRC
+Extraction called for design 'mcu_pad_top' of instances=21332 and nets=6850 using extraction engine 'postRoute' at effort level 'low' .
+**WARN: (IMPEXT-3530):	The process node is not set. Use the command setDesignMode -process <process node> prior to extraction for maximum accuracy and optimal automatic threshold setting.
+Type 'man IMPEXT-3530' for more detail.
+PostRoute (effortLevel low) RC Extraction called for design mcu_pad_top.
+RC Extraction called in multi-corner(2) mode.
+Process corner(s) are loaded.
+ Corner: WORST
+ Corner: BEST
+Metal density calculation for erosion effect completed (CPU=0:00:00.1  MEM=3474.8M)
+extractDetailRC Option : -outfile /home/hah013/PROJ4/proj4_make/TOP/5_PNR/innovus_temp_262932_c3a61e41-f95d-4e10-8bca-92359f94c6cc_kopo-seongnam_hah013_F93mXb/mcu_pad_top_262932_pwRXWz.rcdb.d  -extended
+RC Mode: PostRoute -effortLevel low [Extended CapTable, RC Table Resistances]
+      RC Corner Indexes            0       1   
+Capacitance Scaling Factor   : 1.00000 1.00000 
+Coupling Cap. Scaling Factor : 1.00000 1.00000 
+Resistance Scaling Factor    : 1.00000 1.00000 
+Clock Cap. Scaling Factor    : 1.00000 1.00000 
+Clock Res. Scaling Factor    : 1.00000 1.00000 
+Shrink Factor                : 0.90000
+Initializing multi-corner capacitance tables ... 
+Initializing multi-corner resistance tables ...
+Creating RPSQ from WeeR and WRes ...
+Creating RPSQ from WeeR and WRes ...
+Checking LVS Completed (CPU Time= 0:00:00.0  MEM= 3223.8M)
+Extracted 10.0028% (CPU Time= 0:00:00.8  MEM= 3373.6M)
+Extracted 20.0028% (CPU Time= 0:00:00.8  MEM= 3373.6M)
+Extracted 30.0028% (CPU Time= 0:00:00.9  MEM= 3373.6M)
+Extracted 40.0028% (CPU Time= 0:00:00.9  MEM= 3373.6M)
+Extracted 50.0028% (CPU Time= 0:00:01.0  MEM= 3373.6M)
+Extracted 60.0028% (CPU Time= 0:00:01.0  MEM= 3373.6M)
+Extracted 70.0028% (CPU Time= 0:00:01.1  MEM= 3373.6M)
+Extracted 80.0028% (CPU Time= 0:00:01.2  MEM= 3373.6M)
+Extracted 90.0028% (CPU Time= 0:00:01.3  MEM= 3373.6M)
+Extracted 100% (CPU Time= 0:00:01.6  MEM= 3373.6M)
+Number of Extracted Resistors     : 127749
+Number of Extracted Ground Cap.   : 127914
+Number of Extracted Coupling Cap. : 0
+PostRoute (effortLevel low) RC Extraction DONE (CPU Time: 0:00:01.9  Real Time: 0:00:01.0  MEM: 3357.617M)
+<CMD> saveDesign -rc -def ChipFinish
+#% Begin save design ... (date=11/10 21:54:01, mem=2246.9M)
+% Begin Save ccopt configuration ... (date=11/10 21:54:01, mem=2246.9M)
+% End Save ccopt configuration ... (date=11/10 21:54:01, total cpu=0:00:00.1, real=0:00:00.0, peak res=2246.9M, current mem=2245.4M)
+% Begin Save netlist data ... (date=11/10 21:54:01, mem=2262.8M)
+Writing Binary DB to ChipFinish.dat/mcu_pad_top.v.bin in single-threaded mode...
+% End Save netlist data ... (date=11/10 21:54:01, total cpu=0:00:00.0, real=0:00:01.0, peak res=2262.9M, current mem=2262.9M)
+Saving symbol-table file ...
+Saving congestion map file ChipFinish.dat/mcu_pad_top.route.congmap.gz ...
+% Begin Save AAE data ... (date=11/10 21:54:02, mem=2263.2M)
+Saving AAE Data ...
+% End Save AAE data ... (date=11/10 21:54:02, total cpu=0:00:00.2, real=0:00:00.0, peak res=2263.2M, current mem=2262.3M)
+Saving preference file ChipFinish.dat/gui.pref.tcl ...
+Saving mode setting ...
+Saving global file ...
+% Begin Save floorplan data ... (date=11/10 21:54:02, mem=2264.0M)
+Saving floorplan file ...
+Convert 0 swires and 0 svias from compressed groups
+Dumping Area IO Rows of cell mcu_pad_top to file ChipFinish.dat/mcu_pad_top.fp.areaio.gz
+Dumping Area IO Instances of cell mcu_pad_top to file ChipFinish.dat/mcu_pad_top.fp.areaio.gz
+% End Save floorplan data ... (date=11/10 21:54:02, total cpu=0:00:00.1, real=0:00:00.0, peak res=2264.5M, current mem=2264.5M)
+Saving PG file ChipFinish.dat/mcu_pad_top.pg.gz, version#2, (Created by Innovus v22.17-s086_1 on Tue Nov 10 21:54:02 2026)
+*** Completed savePGFile (cpu=0:00:00.0 real=0:00:00.0 mem=3216.7M) ***
+Saving Drc markers ...
+... No Drc file written since there is no markers found.
+% Begin Save placement data ... (date=11/10 21:54:02, mem=2264.6M)
+** Saving stdCellPlacement_binary (version# 2) ...
+Save Adaptive View Pruning View Names to Binary file
+% End Save placement data ... (date=11/10 21:54:02, total cpu=0:00:00.1, real=0:00:01.0, peak res=2264.6M, current mem=2264.6M)
+% Begin Save routing data ... (date=11/10 21:54:03, mem=2264.6M)
+Saving route file ...
+*** Completed saveRoute (cpu=0:00:00.1 real=0:00:00.0 mem=3216.7M) ***
+% End Save routing data ... (date=11/10 21:54:03, total cpu=0:00:00.2, real=0:00:00.0, peak res=2264.8M, current mem=2264.8M)
+Saving Def ...
+Writing DEF file 'ChipFinish.dat/mcu_pad_top.def.gz', current time is Tue Nov 10 21:54:03 2026 ...
+unitPerMicron=2000, dbgMicronPerDBU=0.000500, unitPerDBU=1.000000
+DEF file 'ChipFinish.dat/mcu_pad_top.def.gz' is written, current time is Tue Nov 10 21:54:03 2026 ...
+Saving property file ChipFinish.dat/mcu_pad_top.prop
+*** Completed saveProperty (cpu=0:00:00.0 real=0:00:00.0 mem=3219.7M) ***
+#Saving pin access data to file ChipFinish.dat/mcu_pad_top.apa ...
+Saving parasitic data in file 'ChipFinish.dat/mcu_pad_top.rcdb.d' ...
+% Begin Save power constraints data ... (date=11/10 21:54:03, mem=2266.2M)
+% End Save power constraints data ... (date=11/10 21:54:03, total cpu=0:00:00.0, real=0:00:00.0, peak res=2266.2M, current mem=2266.2M)
+BEST WORST
+BEST WORST
+BEST WORST
+BEST WORST
+BEST WORST
+Generated self-contained design ChipFinish.dat
+SS_Max_0p90v_125c FF_Min_1p10v_0c
+BEST WORST
+FUNC
+/home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat/mmmc/modes/FUNC/FUNC.sdc
+#% End save design ... (date=11/10 21:54:04, total cpu=0:00:02.2, real=0:00:03.0, peak res=2267.5M, current mem=2267.5M)
+*** Message Summary: 0 warning(s), 0 error(s)
+
+<CMD> fit
+<CMD> gui_dump_picture snap/5_chipfinish.png -format PNG
+<CMD> saveNetlist -flat -excludeCellInst {PADVDD PADVSS PADVSSIOR PADVDDIOR} mcu_pad_top.v
+Writing Netlist "mcu_pad_top.v" ...
+<CMD> write_sdf mcu_pad_top.sdf
+**WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+AAE_INFO: opIsDesignInPostRouteState() is 1
+#################################################################################
+# Design Stage: PostRoute
+# Design Name: mcu_pad_top
+# Design Mode: 90nm
+# Analysis Mode: MMMC Non-OCV 
+# Parasitics Mode: SPEF/RCDB 
+# Signoff Settings: SI Off 
+#################################################################################
+Start delay calculation (fullDC) (1 T). (MEM=3290.52)
+Initializing multi-corner capacitance tables ... 
+Initializing multi-corner resistance tables ...
+Creating RPSQ from WeeR and WRes ...
+Creating RPSQ from WeeR and WRes ...
+Total number of fetched objects 6185
+Total number of fetched objects 6185
+End delay calculation. (MEM=3351.82 CPU=0:00:02.2 REAL=0:00:02.0)
+End delay calculation (fullDC). (MEM=3351.82 CPU=0:00:03.1 REAL=0:00:03.0)
+<CMD> write_sdf -version 2.1 mcu_pad_top.sdf_2.1
+**WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+AAE_INFO: opIsDesignInPostRouteState() is 1
+#################################################################################
+# Design Stage: PostRoute
+# Design Name: mcu_pad_top
+# Design Mode: 90nm
+# Analysis Mode: MMMC Non-OCV 
+# Parasitics Mode: SPEF/RCDB 
+# Signoff Settings: SI Off 
+#################################################################################
+Start delay calculation (fullDC) (1 T). (MEM=3340.21)
+Total number of fetched objects 6185
+Total number of fetched objects 6185
+End delay calculation. (MEM=3356.34 CPU=0:00:02.2 REAL=0:00:02.0)
+End delay calculation (fullDC). (MEM=3356.34 CPU=0:00:02.6 REAL=0:00:02.0)
+<CMD> writeTimingCon mcu_pad_top.sdc
+<CMD> streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL
+Parse flat map file 'streamOut.map'
+Writing GDSII file ...
+	****** db unit per micron = 2000 ******
+	****** output gds2 file unit per micron = 2000 ******
+	****** unit scaling factor = 1 ******
+Output for instance
+Output for bump
+Output for physical terminals
+Output for logical terminals
+Output for regular nets
+Output for special nets and metal fills
+Convert 0 swires and 0 svias from compressed groups
+Output for via structure generation total number 68
+Statistics for GDS generated (version 3)
+----------------------------------------
+Stream Out Layer Mapping Information:
+GDS Layer Number          GDS Layer Name
+----------------------------------------
+    233                             COMP
+    234                          DIEAREA
+    223                          Metal11
+    221                          Metal11
+    220                          Metal11
+    219                          Metal11
+    218                          Metal11
+    217                            Via10
+    216                            Via10
+    212                            Via10
+    202                          Metal10
+    200                          Metal10
+    199                          Metal10
+    198                          Metal10
+    197                          Metal10
+    196                             Via9
+    195                             Via9
+    191                             Via9
+    181                           Metal9
+    179                           Metal9
+    178                           Metal9
+    177                           Metal9
+    176                           Metal9
+    175                             Via8
+    174                             Via8
+    170                             Via8
+    160                           Metal8
+    158                           Metal8
+    157                           Metal8
+    156                           Metal8
+    155                           Metal8
+    154                             Via7
+    153                             Via7
+    149                             Via7
+    139                           Metal7
+    137                           Metal7
+    136                           Metal7
+    135                           Metal7
+    134                           Metal7
+    133                             Via6
+    132                             Via6
+    131                             Via6
+    130                             Via6
+    129                             Via6
+    128                             Via6
+    127                             Via6
+    122                           Metal6
+    121                           Metal6
+    120                           Metal6
+    119                           Metal6
+    118                           Metal6
+    53                            Metal3
+    52                            Metal3
+    185                           Metal9
+    48                              Via2
+    29                            Metal2
+    180                           Metal9
+    47                              Via2
+    182                           Metal9
+    44                              Via2
+    43                              Via2
+    172                             Via8
+    38                            Metal2
+    95                            Metal5
+    36                            Metal2
+    93                            Metal5
+    112                             Via5
+    194                             Via9
+    55                            Metal3
+    113                           Metal6
+    32                            Metal2
+    54                            Metal3
+    31                            Metal2
+    107                             Via5
+    30                            Metal2
+    49                              Via2
+    106                             Via5
+    33                            Metal2
+    109                             Via5
+    10                            Metal1
+    224                          Metal11
+    86                              Via4
+    50                            Metal3
+    206                          Metal10
+    69                              Via3
+    143                           Metal7
+    6                               Cont
+    169                             Via8
+    35                            Metal2
+    8                             Metal1
+    164                           Metal8
+    27                              Via1
+    141                           Metal7
+    3                               Cont
+    51                            Metal3
+    70                              Via3
+    7                               Cont
+    64                              Via3
+    173                             Via8
+    34                            Metal2
+    92                            Metal5
+    111                             Via5
+    11                            Metal1
+    142                           Metal7
+    4                               Cont
+    9                             Metal1
+    28                              Via1
+    85                              Via4
+    138                           Metal7
+    5                               Cont
+    12                            Metal1
+    226                          Metal11
+    88                              Via4
+    183                           Metal9
+    45                              Via2
+    22                              Via1
+    152                             Via7
+    13                            Metal1
+    71                            Metal4
+    227                          Metal11
+    90                              Via4
+    184                           Metal9
+    46                              Via2
+    161                           Metal8
+    23                              Via1
+    171                             Via8
+    37                            Metal2
+    94                            Metal5
+    148                             Via7
+    14                            Metal1
+    15                            Metal1
+    72                            Metal4
+    91                              Via4
+    150                             Via7
+    16                            Metal1
+    73                            Metal4
+    159                           Metal8
+    26                              Via1
+    151                             Via7
+    17                            Metal1
+    74                            Metal4
+    1                               Cont
+    162                           Metal8
+    24                              Via1
+    140                           Metal7
+    2                               Cont
+    163                           Metal8
+    25                              Via1
+    190                             Via9
+    56                            Metal3
+    57                            Metal3
+    114                           Metal6
+    192                             Via9
+    58                            Metal3
+    115                           Metal6
+    193                             Via9
+    59                            Metal3
+    116                           Metal6
+    203                          Metal10
+    65                              Via3
+    204                          Metal10
+    66                              Via3
+    205                          Metal10
+    67                              Via3
+    201                          Metal10
+    68                              Via3
+    75                            Metal4
+    215                            Via10
+    76                            Metal4
+    211                            Via10
+    77                            Metal4
+    78                            Metal4
+    213                            Via10
+    79                            Metal4
+    214                            Via10
+    80                            Metal4
+    225                          Metal11
+    87                              Via4
+    222                          Metal11
+    89                              Via4
+    96                            Metal5
+    97                            Metal5
+    98                            Metal5
+    99                            Metal5
+    100                           Metal5
+    101                           Metal5
+    108                             Via5
+    110                             Via5
+    117                           Metal6
+    231                          Metal11
+    230                          Metal11
+    229                          Metal11
+    228                          Metal11
+    210                          Metal10
+    209                          Metal10
+    208                          Metal10
+    207                          Metal10
+    189                           Metal9
+    188                           Metal9
+    187                           Metal9
+    186                           Metal9
+    168                           Metal8
+    167                           Metal8
+    166                           Metal8
+    165                           Metal8
+    147                           Metal7
+    146                           Metal7
+    145                           Metal7
+    144                           Metal7
+    63                            Metal3
+    62                            Metal3
+    39                            Metal2
+    105                           Metal5
+    103                           Metal5
+    123                           Metal6
+    42                            Metal2
+    41                            Metal2
+    40                            Metal2
+    20                            Metal1
+    60                            Metal3
+    18                            Metal1
+    61                            Metal3
+    102                           Metal5
+    21                            Metal1
+    19                            Metal1
+    81                            Metal4
+    104                           Metal5
+    82                            Metal4
+    83                            Metal4
+    84                            Metal4
+    124                           Metal6
+    125                           Metal6
+    126                           Metal6
+
+
+Stream Out Information Processed for GDS version 3:
+Units: 2000 DBU
+
+Object                             Count
+----------------------------------------
+Instances                          21332
+
+Ports/Pins                             0
+
+Nets                               77331
+    metal layer Metal1              2370
+    metal layer Metal2             36994
+    metal layer Metal3             25939
+    metal layer Metal4              9621
+    metal layer Metal5              2172
+    metal layer Metal6               233
+    metal layer Metal7                 2
+
+    Via Instances                  50439
+
+Special Nets                         913
+    metal layer Metal1               843
+    metal layer Metal2                 4
+    metal layer Metal3                 4
+    metal layer Metal10               36
+    metal layer Metal11               26
+
+    Via Instances                  30724
+
+Metal Fills                            0
+
+    Via Instances                      0
+
+Metal FillOPCs                         0
+
+    Via Instances                      0
+
+Metal FillDRCs                         0
+
+    Via Instances                      0
+
+Text                                6166
+    metal layer Metal1               404
+    metal layer Metal2              3899
+    metal layer Metal3              1618
+    metal layer Metal4               196
+    metal layer Metal5                28
+    metal layer Metal6                 4
+    metal layer Metal11               17
+
+
+Blockages                              0
+
+
+Custom Text                            0
+
+
+Custom Box                             0
+
+Trim Metal                             0
+
+######Streamout is finished!
+
+*** Memory Usage v#1 (Current mem = 3271.734M, initial mem = 646.371M) ***
+*** Message Summary: 129 warning(s), 0 error(s)
+
+--- Ending "Innovus" (totcpu=0:03:26, real=0:31:32, mem=3271.7M) ---

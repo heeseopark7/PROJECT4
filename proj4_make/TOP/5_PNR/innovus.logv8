@@ -1,0 +1,38 @@
+[11/10 18:23:34      0s] 
+[11/10 18:23:34      0s] Cadence Innovus(TM) Implementation System.
+[11/10 18:23:34      0s] Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+[11/10 18:23:34      0s] 
+[11/10 18:23:34      0s] Version:	v22.17-s086_1, built Tue Sep 24 10:51:50 PDT 2024
+[11/10 18:23:34      0s] Options:	
+[11/10 18:23:34      0s] Date:		Tue Nov 10 18:23:34 2026
+[11/10 18:23:34      0s] Host:		kopo-seongnam (x86_64 w/Linux 3.10.0-1160.el7.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz 28160KB)
+[11/10 18:23:34      0s] OS:		CentOS Linux 7 (Core)
+[11/10 18:23:34      0s] 
+[11/10 18:23:34      0s] License:
+[11/10 18:23:34      0s] 		[18:23:34.158633] Configured Lic search path (22.01-s003): 5280@localhost
+
+[11/10 18:23:34      0s] 		invs	Innovus Implementation System	22.1	Denied
+[11/10 18:23:34      0s] 		invsb	Innovus Implementation System Basic	22.1	checkout succeeded
+[11/10 18:23:34      0s] 		4 CPU jobs allowed with the current license(s). Use setMultiCpuUsage to set your required CPU count.
+[11/10 18:23:54     18s] Reset Parastics called with the command setExtractRCMode -reset@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+[11/10 18:23:56     21s] @(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+[11/10 18:23:56     21s] @(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+[11/10 18:23:56     21s] @(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+[11/10 18:23:56     21s] @(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+[11/10 18:23:56     21s] @(#)CDS: CPE v22.17-s051
+[11/10 18:23:56     21s] @(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+[11/10 18:23:56     21s] @(#)CDS: OA 22.60-p095 Wed Apr 17 03:30:14 2024
+[11/10 18:23:56     21s] @(#)CDS: SGN 22.20-d001 (02-Jan-2023) (64 bit executable, TkQt5.9.1)
+[11/10 18:23:56     21s] @(#)CDS: RCDB 11.15.0
+[11/10 18:23:56     21s] @(#)CDS: STYLUS 22.15-s003_1 (04/04/2024 05:58 PDT)
+[11/10 18:23:56     21s] @(#)CDS: IntegrityPlanner-22.17-15746 (22.17) (2024-07-03 11:16:10+0800)
+[11/10 18:23:56     21s] Create and set the environment variable TMPDIR to /home/hah013/PROJ4/proj4_make/TOP/5_PNR/innovus_temp_155853_2ae7c4e4-4a27-4ec8-9570-b2ef8b4c2e7f_kopo-seongnam_hah013_fqhCUN.
+
+[11/10 18:23:56     21s] Change the soft stacksize limit to 0.2%RAM (770 mbytes). Set global soft_stack_size_limit to change the value.
+[11/10 18:23:59     23s] 
+[11/10 18:23:59     23s] **INFO:  MMMC transition support version v31-84 
+[11/10 18:23:59     23s] 
+[11/10 18:23:59     23s] <CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+[11/10 18:23:59     23s] <CMD> suppressMessage ENCEXT-2799
+[11/10 18:23:59     23s] <CMD> win
+[11/10 18:23:59     23s] <CMD> set enc_check_rename_command_name 1

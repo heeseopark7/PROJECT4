@@ -1,0 +1,59 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 21:22:49 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+encMessage warning 0
+encMessage debug 0
+is_common_ui_mode
+restoreDesign /home/hah013/PROJ4/proj4_make/TOP/5_PNR/PostCTSopt.dat mcu_pad_top
+setDrawView fplan
+encMessage warning 1
+encMessage debug 0
+getDesignMode -user -bottomRoutingLayer
+getDesignMode -user -topRoutingLayer
+setNanoRouteMode -quiet -drouteFixAntenna 1
+setNanoRouteMode -quiet -routeInsertAntennaDiode 0
+setNanoRouteMode -quiet -routeWithTimingDriven 1
+setNanoRouteMode -quiet -routeWithEco 0
+setNanoRouteMode -quiet -routeWithLithoDriven 0
+setNanoRouteMode -quiet -droutePostRouteLithoRepair 0
+setNanoRouteMode -quiet -routeWithSiDriven 1
+setNanoRouteMode -quiet -routeTdrEffort 8
+setNanoRouteMode -quiet -drouteAutoStop 0
+setNanoRouteMode -quiet -routeSelectedNetOnly 0
+getDesignMode -quiet -topRoutingLayer
+setDesignMode -quiet -topRoutingLayer 11
+getDesignMode -quiet -bottomRoutingLayer
+setDesignMode -quiet -bottomRoutingLayer 1
+setNanoRouteMode -quiet -drouteEndIteration 5
+setNanoRouteMode -quiet -routeWithTimingDriven true
+setNanoRouteMode -quiet -routeWithSiDriven true
+routeDesign -globalDetail
+zoomBox 420.61550 30.45950 1191.33900 720.42150
+zoomBox 420.61550 30.45900 1191.33950 720.42150
+zoomBox 488.95650 50.93350 1045.80450 549.43150
+zoomBox 586.73600 85.79750 833.81300 306.98400
+zoomBox 457.93450 39.87100 1113.05500 626.34350
+fit
+setDrawView place
+setDrawView fplan
+setDrawView fplan
+setDrawView place
+setDrawView fplan
+setDrawView fplan
+setDrawView place

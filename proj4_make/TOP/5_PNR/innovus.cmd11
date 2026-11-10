@@ -1,0 +1,55 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 21:05:44 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+encMessage warning 0
+encMessage debug 0
+is_common_ui_mode
+restoreDesign /home/hah013/PROJ4/proj4_make/TOP/5_PNR/RouteDesign.dat mcu_pad_top
+setDrawView fplan
+encMessage warning 1
+encMessage debug 0
+zoomBox 460.06650 926.72150 1131.55500 538.10400
+zoomBox 732.83150 867.05800 1048.16200 649.01950
+zoomBox 862.55350 868.99550 948.21900 680.53150
+zoomBox 860.58500 836.85850 952.91050 745.07750
+zoomBox 874.18650 825.45200 929.49400 763.91100
+zoomBox 884.45400 817.09250 925.98550 760.79850
+zoomBox 881.26200 812.53700 923.97100 772.75700
+zoomBox 892.12500 804.89150 921.21250 783.44950
+fit
+zoomBox -1611.25950 -744.02250 2303.53400 2760.55350
+zoomBox -4333.42150 -2010.03650 3166.09300 4703.63000
+fit
+zoomBox -1535.95250 -1266.42450 3069.68700 2856.60600
+zoomBox -909.32050 -672.86000 2418.25400 2306.02950
+zoomBox -279.76500 -76.52600 1763.78150 1752.88450
+zoomBox -129.47400 65.83450 1607.54150 1620.83400
+zoomBox 146.99500 280.57000 1401.98950 1404.05800
+zoomBox 636.75700 661.12900 1039.07950 1021.29350
+zoomBox 814.32100 799.10050 907.50600 882.52100
+zoomBox 822.34950 805.33900 901.55700 876.24650
+zoomBox 822.34900 805.33850 901.55700 876.24650
+zoomBox 844.09500 822.23550 885.44250 859.25050
+fit
+zoomBox 125.91450 189.01600 1602.37700 1510.76500
+zoomBox 584.93400 583.22050 1240.04850 1169.68800
+zoomBox 867.10100 824.81550 1018.83700 960.65150
+zoomBox 888.49700 907.06300 940.90800 853.47450
+zoomBox 901.26650 895.13700 933.94650 862.99950
+fit

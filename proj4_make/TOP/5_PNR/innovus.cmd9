@@ -1,0 +1,75 @@
+#######################################################
+#                                                     
+#  Innovus Command Logging File                     
+#  Created on Tue Nov 10 18:56:03 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Innovus v22.17-s086_1 (64bit) 09/24/2024 10:51 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s086_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s013 (64bit) 09/24/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+#@(#)CDS: IQuantus/TQuantus 21.2.2-s369 (64bit) Tue May 7 14:30:42 PDT 2024 (Linux 3.10.0-693.el7.x86_64)
+
+set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+suppressMessage ENCEXT-2799
+win
+set enc_check_rename_command_name 1
+setLayerPreference allM5 -isVisible 0
+setLayerPreference allM2Cont -isVisible 1
+setLayerPreference allM3Cont -isVisible 1
+setLayerPreference allM4Cont -isVisible 1
+setLayerPreference allM5Cont -isVisible 0
+setLayerPreference allM6Cont -isVisible 0
+setLayerPreference allM7Cont -isVisible 1
+setLayerPreference allM8Cont -isVisible 1
+setLayerPreference allM9Cont -isVisible 1
+setLayerPreference allM10Cont -isVisible 1
+setLayerPreference allM11Cont -isVisible 1
+setLayerPreference allM12Cont -isVisible 1
+setLayerPreference allM13Cont -isVisible 1
+setLayerPreference allM14Cont -isVisible 1
+setLayerPreference allM15Cont -isVisible 1
+setLayerPreference allM16Cont -isVisible 1
+setLayerPreference allM17Cont -isVisible 1
+setLayerPreference allM18Cont -isVisible 1
+setLayerPreference allM19Cont -isVisible 1
+setLayerPreference allM20Cont -isVisible 1
+setLayerPreference allM21Cont -isVisible 1
+setLayerPreference allM22Cont -isVisible 1
+setLayerPreference allM23Cont -isVisible 1
+setLayerPreference allM24Cont -isVisible 1
+setLayerPreference allM25Cont -isVisible 1
+setLayerPreference allM26Cont -isVisible 1
+setLayerPreference allM27Cont -isVisible 1
+setLayerPreference allM28Cont -isVisible 1
+setLayerPreference allM29Cont -isVisible 1
+setLayerPreference allM30Cont -isVisible 1
+setLayerPreference allM31Cont -isVisible 1
+restoreDesign PlaceOpt.dat/
+set_ccopt_property target_skew 0.01
+create_ccopt_clock_tree_spec
+zoomBox -695.93450 -348.17050 2132.50350 2183.88550
+zoomBox -190.27350 -83.15550 1853.27300 1746.25500
+ccopt_design
+zoomBox 193.29200 240.22300 1448.28500 1363.70950
+zoomBox -41.17150 42.55050 1695.84350 1597.54950
+all_constraint_modes -active
+set_interactive_constraint_modes [all_constraint_modes -active]
+set_propagated_clock [all_clocks ]
+timeDesign -postCTS -out
+timeDesign -postCTS -outDir reports/timing/postCTS
+zoomBox -500.32850 -412.29100 1903.84450 1739.95700
+report_ccopt_clock_trees -file reports/clock/clock_trees.rpt
+report_ccopt_clock_trees -file reports/clock/clock_trees.rpt
+report_ccopt_skew_groups -file reports/clock/skew_groups.rpt
+report_clock_timing -type skew -nworst 5 > reports/clock//skew.rpt
+zoomBox -500.32950 -412.29200 1903.84450 1739.95700
+ctd_win -side none -id ctd_window
+optDesign -postCTS
+optDesign -postCTS -hold
+timeDesign -postCTS -outDir reports/timing/postCTS/
+timeDesign -postCTS -outDir reports/timing/postCTS -hold
+saveDesign -def PostCTSopt
