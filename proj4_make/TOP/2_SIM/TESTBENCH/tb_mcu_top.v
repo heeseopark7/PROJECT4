@@ -262,13 +262,13 @@ initial begin
 `endif
 
 `ifdef sdf_post_wst
-    $sdf_annotate("../../5_PNR/mcu_pad_top_post_wst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_wst.log", "MAXIMUM");
+    $sdf_annotate("./mcu_pad_top_post_wst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_wst.log", "MAXIMUM");
     $shm_open("./dump/tb_mcu_top_sdf_post_wst");
     $shm_probe(tb_mcu_top, "AC");
 `endif
 
 `ifdef sdf_post_bst
-    $sdf_annotate("../../5_PNR/mcu_pad_top_post_bst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_bst.log", "MINIMUM");
+    $sdf_annotate("./mcu_pad_top_post_bst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_bst.log", "MINIMUM");
     $shm_open("./dump/tb_mcu_top_sdf_post_bst");
     $shm_probe(tb_mcu_top, "AC");
 `endif
