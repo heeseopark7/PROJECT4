@@ -1,0 +1,37 @@
+Version: 22.10-s300 (29-Aug-2022) (64 bit executable)
+System: Linux 3.10.0-1160.119.1.el7.x86_64 #1 SMP Tue May 14 11:55:25 EDT 2024
+
+Number of ECO gate allocated:   0
+Number of FL  gate allocated:   0
+PP: module <null>
+PP: module <null>
+PP: module <null>
+PP: module <null>
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x22ec3e7]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x22ee170]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x14266f0]
+/lib64/libc.so.6(+0x36400) [0x2b24133de400]
+/lib64/libc.so.6(gsignal+0x37) [0x2b24133de387]
+/lib64/libc.so.6(abort+0x148) [0x2b24133dfa78]
+/lib64/libc.so.6(+0x78f67) [0x2b2413420f67]
+/lib64/libc.so.6(+0x80c37) [0x2b2413428c37]
+/lib64/libc.so.6(+0x82135) [0x2b241342a135]
+/lib64/libc.so.6(__libc_malloc+0x4c) [0x2b241342d78c]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec(malloc+0x71) [0x2304bb1]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x861262]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x863775]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x87f161]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x88398d]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x7f5457]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x7f7617]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x7f7ff3]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x4b36b98]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x4a9698d]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x4a9a06c]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x4a9a42c]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x8b80e7]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x8b832f]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x14349c4]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x5bd5dd]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x2b24133ca555]
+/opt/tools/cadence/CONFRML221/tools.lnx86/cfm/bin/64bit/lec() [0x5ee8e7]
