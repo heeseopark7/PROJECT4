@@ -1,7 +1,7 @@
 ###############
 #### ECO ######
 ###############
-restoreDesign RouteDesign_for_ECO.dat
+restoreDesign RouteDesign_ECO.dat
 source innovus.eco
 
 # After inserting repeat cells, 
@@ -71,19 +71,19 @@ saveDesign -rc -def ChipFinish_after_ECO
 #####################
 # Write Out Files
 # GDS file : without layermap file for GPDK045
-streamOut mcu_pad_top.gds -libName DesignLib -units 2000 -mode ALL
+streamOut mcu_pad_top_ECO.gds -libName DesignLib -units 2000 -mode ALL
 
 # Write Out Constraint
-writeTimingCon mcu_pad_top.sdc
+writeTimingCon mcu_pad_top_ECO.sdc
 
-# Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
+#OA Netlist  file : NO -flat option (hierarchical netlist, instance names match the SDF)
+saveNetlist -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top_ECO.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file
-write_sdf mcu_pad_top.sdf
+write_sdf mcu_pad_top_ECO.sdf
 
 # SDF version 2.1
-write_sdf -version 2.1 mcu_pad_top.sdf_2.1
+write_sdf -version 2.1 mcu_pad_top_ECO.sdf_2.1
 
 exit
