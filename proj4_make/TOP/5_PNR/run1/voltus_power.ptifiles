@@ -1,2 +1,4 @@
 VDD	./run1/static_VDD.ptiavg
 VSS	./run1/static_VSS.ptiavg
+VDD	./run1/static_VDD.ptiavg
+VSS	./run1/static_VSS.ptiavg
