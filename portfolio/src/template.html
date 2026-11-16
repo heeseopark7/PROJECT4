@@ -1,0 +1,387 @@
+<title>MCU RTL to GDS2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: single reading column, flow strip on top, one section per tool stage, tables for numbers, screenshots as figures */
+:root{
+  --bg:#f3f6f7; --surface:#ffffff; --fg:#13202a; --muted:#5a6b76; --line:#d5dde1;
+  --accent:#0a7a74; --accent-soft:#dff1ef; --warn:#a8510a; --warn-soft:#fbe9d8; --ok:#1d7a3c; --ok-soft:#e0f2e6;
+  --fig:#0d1418;
+  --f-display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --f-body:'Inter','Segoe UI','Malgun Gothic',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',Consolas,'D2Coding',monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1317; --surface:#131d23; --fg:#e4ecef; --muted:#93a4ad; --line:#263640;
+  --accent:#44c9bf; --accent-soft:#12302f; --warn:#f0a35c; --warn-soft:#33220f; --ok:#6fd08c; --ok-soft:#14301d; --fig:#05090b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1317; --surface:#131d23; --fg:#e4ecef; --muted:#93a4ad; --line:#263640;
+  --accent:#44c9bf; --accent-soft:#12302f; --warn:#f0a35c; --warn-soft:#33220f; --ok:#6fd08c; --ok-soft:#14301d; --fig:#05090b; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.7;
+  padding-block:0 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(30px,5.5vw,48px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(22px,3.4vw,28px);font-weight:600;letter-spacing:-.01em}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+header.top{padding-block:56px 36px;display:grid;gap:18px}
+header.top .sub{color:var(--muted);max-width:62ch;font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--f-mono);font-size:12.5px;padding:3px 10px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--fg)}
+
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-block:8px 0}
+.results div{background:var(--surface);padding:14px 16px;display:grid;gap:2px;min-width:0}
+.results b{font-family:var(--f-mono);font-size:20px;font-weight:500;color:var(--accent)}
+.results span{font-size:13px;color:var(--muted)}
+
+nav.flow{margin-block:28px 8px;overflow-x:auto}
+.flow ol{list-style:none;margin:0;padding:0;display:flex;gap:0;min-width:max-content}
+.flow li{flex:1;min-width:104px;border-top:3px solid var(--accent);padding:8px 10px 0 0}
+.flow li.redo{border-top-color:var(--warn)}
+.flow li b{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500}
+.flow li span{display:block;font-size:13px;font-weight:600;line-height:1.35}
+.flow li em{display:block;font-style:normal;font-size:12px;color:var(--muted)}
+.flow a{color:inherit;text-decoration:none}
+
+section{padding-block:40px 8px;border-top:1px solid var(--line);margin-top:32px;display:grid;gap:16px}
+section>.head{display:grid;gap:6px}
+.tool{font-family:var(--f-mono);font-size:12.5px;color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;align-items:start}
+.grid2>*{min-width:0}
+ul.pts{margin:0;padding-left:1.1em;display:grid;gap:6px}
+ul.pts li::marker{color:var(--accent)}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 4px 4px 0;font-size:14px}
+.note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.pass{font-family:var(--f-mono);font-size:12px;background:var(--ok-soft);color:var(--ok);padding:1px 8px;border-radius:3px;white-space:nowrap}
+.fail{font-family:var(--f-mono);font-size:12px;background:var(--warn-soft);color:var(--warn);padding:1px 8px;border-radius:3px;white-space:nowrap}
+
+figure{margin:0;display:grid;gap:6px;min-width:0}
+figure .img{background:var(--fig);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;justify-content:center}
+figure img{display:block;max-width:100%;height:auto}
+figcaption{font-size:13px;color:var(--muted)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.neg td.n.hl{color:var(--warn)}
+
+.story{display:grid;gap:14px}
+.story article{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px;display:grid;gap:8px}
+.story article h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:0;font-size:14px}
+dt{color:var(--muted)} dd{margin:0;min-width:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="label">Physical Implementation 포트폴리오</div>
+  <h1>MCU RTL to GDS2</h1>
+  <p class="sub">단일 사이클 MIPS CPU, APB 브리지, UART와 SPI 2개를 담은 MCU를 RTL 시뮬레이션에서 합성, 등가성 검사, P&amp;R, STA, post-layout 시뮬레이션까지 끌고 가서 GDS2를 만든 기록이다. 각 단계의 판단과 수치를 단계별 로그 캡처와 함께 정리했다.</p>
+  <p class="note">RTL은 Claude의 도움을 받아 작성했고, 코드 구조는 설명할 수 있는 수준으로 이해했다. RTL 시뮬레이션, 합성, 등가성 검사, P&amp;R, STA, post-layout 시뮬레이션은 직접 수행했다.</p>
+  <div class="chips">
+    <span class="chip">GPDK045</span><span class="chip">Genus 22.17</span><span class="chip">Conformal</span><span class="chip">Innovus 22.17</span><span class="chip">Tempus 22.17</span><span class="chip">xrun</span><span class="chip">mcu_pad_top</span>
+  </div>
+  <div class="results">
+    <div><b>10 ns</b><span>최종 클럭 (100 MHz)</span></div>
+    <div><b>+0.441 / +0.053 ns</b><span>post-route setup / hold WNS</span></div>
+    <div><b>0 viol.</b><span>verify_drc, verifyConnectivity (필러 삽입 후)</span></div>
+    <div><b>PASS 2회</b><span>Conformal 등가성 (RTL↔합성, 합성↔PnR)</span></div>
+  </div>
+</header>
+
+<section id="solved" style="margin-top:8px;padding-top:24px">
+  <div class="head"><div class="label">이 프로젝트에서 해결한 문제</div></div>
+  <div class="story"><article>
+    <dl>
+      <dt>1. 합성 위반</dt><dd>2.5 ns에서 WNS −107 ps가 났고, 원인이 CPU가 아니라 입력 구동 SDC 모델임을 가려내 RTL 수정 없이 해결했다. (STEP 2)</dd>
+      <dt>2. PnR 진입 위반</dt><dd>5 ns 넷리스트가 init에서 WNS −6.2 ns로 나와 10 ns로 재합성하고 PnR을 처음부터 다시 진행했다. (STEP 4)</dd>
+      <dt>3. SDF 적용 오류</dt><dd>post-layout 시뮬이 PASS였지만 SDF가 0.17%만 적용된 것을 로그로 발견하고, 넷리스트 저장 방식을 고쳐 91.99%로 올린 뒤에야 검증으로 인정했다. (STEP 9)</dd>
+    </dl>
+  </article></div>
+</section>
+
+<nav class="flow" aria-label="플로우 단계">
+  <ol>
+    <li><a href="#s1"><b>1</b><span>기능 시뮬</span><em>RTL, xrun</em></a></li>
+    <li><a href="#s2"><b>2</b><span>합성</span><em>Genus</em></a></li>
+    <li><a href="#s3"><b>3</b><span>등가성 검사</span><em>RTL ↔ SYN</em></a></li>
+    <li class="redo"><a href="#s4"><b>4</b><span>PnR 위반, 재합성</span><em>5 ns → 10 ns</em></a></li>
+    <li><a href="#s5"><b>5</b><span>Pre-layout 시뮬</span><em>합성 넷리스트 + SDF</em></a></li>
+    <li><a href="#s6"><b>6</b><span>P&amp;R</span><em>Innovus</em></a></li>
+    <li><a href="#s7"><b>7</b><span>등가성 검사</span><em>SYN ↔ PnR</em></a></li>
+    <li><a href="#s8"><b>8</b><span>STA</span><em>Tempus</em></a></li>
+    <li class="redo"><a href="#s9"><b>9</b><span>Post-layout 시뮬</span><em>SDF 적용 오류 수정</em></a></li>
+  </ol>
+</nav>
+
+<section id="design">
+  <div class="head"><div class="label">대상 설계</div><h2>mcu_pad_top</h2></div>
+  <div class="grid2">
+    <ul class="pts">
+      <li>32bit 단일 사이클 MIPS CPU, 정수 명령어 20개. fetch부터 writeback까지 한 사이클에 수행한다.</li>
+      <li>명령어 ROM 256 word(case 표, 합성 시 일반 게이트), 데이터 RAM 32 word. 프로그램이 RTL에 들어 있어 RTL, 게이트, PnR 시뮬이 같은 프로그램을 돈다.</li>
+      <li>APB 브리지가 APB 영역 접근을 2클럭으로 늘리고 그동안 CPU를 stall 시킨다. 슬레이브는 UART, SPI master, SPI slave 3개.</li>
+      <li>칩 top은 코어에 GPDK045 I/O 패드를 씌운 <code>mcu_pad_top</code>. 48슬롯 패드 링에 신호 패드 15개, 전원 패드 16개를 두고 나머지 17슬롯은 예약이다.</li>
+    </ul>
+    <div class="tablewrap"><table>
+      <thead><tr><th>주소</th><th>대상</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">0x0000_0000 ~ 007F</td><td>데이터 RAM</td></tr>
+        <tr><td class="mono">0x4000_0xxx</td><td>UART (slot 0)</td></tr>
+        <tr><td class="mono">0x4000_1xxx</td><td>SPI master (slot 1)</td></tr>
+        <tr><td class="mono">0x4000_2xxx</td><td>SPI slave (slot 2)</td></tr>
+      </tbody></table></div>
+  </div>
+  <p>내장 프로그램은 네 구간이다. 1~10 합계 루프(RAM[0]=0x37), UART 루프백으로 0x41 송수신(RAM[1]), SPI master가 0xA5를 보내고 slave가 0x3C로 응답(RAM[2], RAM[3]), 마지막에 <code>pc=0xAC</code>에서 자기 자신으로 점프해 종료한다. 이 프로그램이 모든 단계의 같은 합격 기준이 된다.</p>
+</section>
+
+<section id="s1">
+  <div class="head"><div class="tool">STEP 1 · xrun</div><h2>RTL 기능 시뮬레이션 <span class="pass">PASS</span></h2></div>
+  <p>자기검증 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다.</p>
+  <figure><div class="img"><img src="assets/rtl_wave.jpg" alt="RTL 시뮬레이션 전체 파형"></div>
+    <figcaption>8645 ns에 pc=0xAC로 종료. RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지고 err=0.</figcaption></figure>
+</section>
+
+<section id="s2">
+  <div class="head"><div class="tool">STEP 2 · Genus, GPDK045 slow 코너</div><h2>논리 합성</h2></div>
+  <p>top을 <code>mcu_pad_top</code>으로 두고 패드 15개는 <code>dont_touch</code>로 보존했다. 클럭 목표를 바꿔가며 합성해 이 설계가 어느 주기까지 버티는지 먼저 보았다.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>클럭</th><th class="n">Slack</th><th class="n">인스턴스</th><th class="n">코어 면적 (µm²)</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">20 ns</td><td class="n">+15.59 ns</td><td class="n">5,102</td><td class="n">21,129</td><td>패드 15개가 칩 셀 면적 237,129 µm²의 약 91%</td></tr>
+      <tr><td class="mono">10 ns</td><td class="n">+2.3 ps</td><td class="n">5,256</td><td class="n">21,856</td><td>PnR 최종 투입값 (STEP 4에서 재합성)</td></tr>
+      <tr><td class="mono">5 ns</td><td class="n">+588.7 ps</td><td class="n">5,012</td><td class="n">20,818</td><td>처음 PnR에 넣었다가 위반이 난 값 (STEP 4)</td></tr>
+      <tr><td class="mono">4 ns</td><td class="n">+0.2 ps</td><td class="n">6,327</td><td class="n">24,807</td><td>5 ns 대비 코어 면적 약 19% 증가</td></tr>
+      <tr class="neg"><td class="mono">2.5 ns</td><td class="n hl">−107.3 ps</td><td class="n">5,221</td><td class="n">21,227</td><td>위반 6개, 모두 입력 핀에서 2-FF 동기화기로 가는 경로</td></tr>
+      <tr><td class="mono">2.5 ns, SDC 수정 후</td><td class="n">+0.7 ps</td><td class="n">-</td><td class="n">21,166</td><td>위반 0개</td></tr>
+    </tbody></table></div>
+  <div class="grid2">
+    <ul class="pts">
+      <li>최악 경로는 모든 클럭 목표에서 같은 모양이다. PC 레지스터, 명령어 ROM, CPU 디코드, 32비트 ripple-carry 가산기(약 1.67 ns), 주소 디코드, UART TX FIFO 쓰기 enable. 20 ns에서 4.25 ns, 4 ns에서 3.84 ns였다.</li>
+      <li>20 ns에서는 면적이 작은 ripple-carry를 툴이 골랐다. 가산기가 가장 큰 병목이라는 점은 4 ns에서도 그대로다.</li>
+      <li>5 ns 합성 전력은 총 11.17 mW이고 패드가 8.79 mW(78.7%)다. 20 ns의 3.29 mW와 비교하면 동적 전력이 주파수에 거의 비례한다.</li>
+    </ul>
+    <figure><div class="img"><img src="assets/syn_chip.jpg" alt="합성 후 칩 레벨 스키매틱"></div>
+      <figcaption>합성 후 칩 레벨. 입력 PADDI 7개, 출력 PADDO 8개가 mcu_top을 감싼다. 디버그 출력 4개는 의도적으로 열려 있다.</figcaption></figure>
+  </div>
+  <div class="story"><article>
+    <h3>판단: 2.5 ns 위반의 원인은 CPU가 아니라 SDC 모델이었다</h3>
+    <dl>
+      <dt>증상</dt><dd>WNS −107 ps, max_capacitance 위반 5개. 시작점이 모두 입력 핀이었고 CPU 경로는 통과했다.</dd>
+      <dt>원인</dt><dd>입력 구동을 약한 PADDI 셀로 가정해서 패드 입력 부하(2,385 fF, 허용 888 fF)를 구동하게 되었고, 입력 패드 지연이 1.3 ns까지 늘었다.</dd>
+      <dt>조치</dt><dd>입력은 칩 밖에서 구동되므로 <code>set_input_transition 0.1</code>로 모델을 교체했다. 설계(RTL)는 건드리지 않았다.</dd>
+      <dt>결과</dt><dd>setup 위반 6개, max_cap 위반 5개가 모두 사라졌고 코어 면적은 거의 그대로였다.</dd>
+    </dl>
+  </article></div>
+  <figure><div class="img"><img src="assets/syn_sdcfix.jpg" alt="수정한 SDC"></div><figcaption>수정한 SDC. 입력 구동 가정을 외부 기울기 0.1 ns로 바꿨다.</figcaption></figure>
+  <p class="note">합성 로그는 3분 39초, 최대 메모리 약 1.1 GB로 에러 없이 끝났다. <code>check_design</code>에서 unresolved reference, undriven, multidriven이 모두 0이었다.</p>
+</section>
+
+<section id="s3">
+  <div class="head"><div class="tool">STEP 3 · Conformal</div><h2>등가성 검사 1: RTL ↔ 합성 넷리스트 <span class="pass">PASS</span></h2></div>
+  <p>Golden은 RTL 21개 파일, Revised는 <code>mcu_pad_top_syn_final.v</code>다. 입력 7개, 출력 8개, 플립플롭 1816개가 모두 매핑되어 Equivalent이다. 불완전 검증, 비표준 모델링 옵션, 사용자 수정은 모두 0이다.</p>
+  <p class="note">RTL에만 있는 플립플롭 792개는 프로그램이 쓰지 않는 CPU 레지스터와 관찰되지 않는 PC 비트다. 출력에 영향이 없어 합성에서 지워졌고, 이 차이를 등가성 결과가 영향 없음으로 확인했다.</p>
+</section>
+
+<section id="s4">
+  <div class="head"><div class="tool">STEP 4 · Innovus init → Genus 재합성</div><h2>PnR 진입 직후 위반, 10 ns로 재합성 <span class="fail">REDO</span></h2></div>
+  <p>5 ns 넷리스트로 PnR을 시작하자 init 단계의 <code>timeDesign</code>에서 바로 큰 위반이 나왔다. 합성 때 slack +0.59 ns였던 경로가 같은 경로(<code>r_pc_reg_2</code>에서 UART FIFO <code>r_mem_reg_7_6/E</code>)인데 Innovus에서는 arrival 11.2 ns로 보고되었다.</p>
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/pnr5_summary.jpg" alt="init 단계 timeDesign 요약"></div>
+      <figcaption>init 단계(5 ns): WNS −6.213 ns, TNS −7,645.5 ns, 위반 경로 1,486개(전체 3,640).</figcaption></figure>
+    <figure><div class="img"><img src="assets/pnr5_path.jpg" alt="최악 경로 리포트"></div>
+      <figcaption>최악 경로. Required 5.001 ns, Arrival 11.214 ns, Slack −6.213 ns.</figcaption></figure>
+  </div>
+  <p>클럭 제약을 10 ns로 완화해 다시 합성하고 PnR을 처음부터 다시 진행했다. 재합성은 <code>check_design</code>, <code>check_timing_intent</code>, constraint, QoR 등 같은 리포트 묶음으로 다시 확인했고, 이후 모든 단계의 기준 클럭이 10 ns가 되었다.</p>
+  <h3>10 ns 재합성 결과 (Genus)</h3>
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/syn10_qor.jpg" alt="10ns 합성 QoR"></div>
+      <figcaption>QoR. 클럭 10,000 ps에서 Critical Path Slack +2.3 ps, TNS 0, 위반 경로 0. 인스턴스 5,256개(순차 1,816, 조합 3,440), 셀 면적 237,855 µm².</figcaption></figure>
+    <figure><div class="img"><img src="assets/syn10_path.jpg" alt="10ns 합성 최악 경로"></div>
+      <figcaption>최악 setup 경로는 <code>r_pc_reg_4</code>에서 UART 보레이트 카운터 <code>r_count_reg_4/D</code>로 가는 경로이고 slack 2 ps(MET), 데이터 경로 9,789 ps다.</figcaption></figure>
+  </div>
+  <figure><div class="img"><img src="assets/syn10_area.jpg" alt="10ns 합성 계층별 면적"></div>
+    <figcaption>계층별 면적. 코어 mcu_top 21,856 µm² 중 데이터 RAM(scdatamem)이 10,493 µm², UART 5,157 µm², CPU(sccpu) 4,279 µm². RTL과 같은 계층이 유지되고 있다.</figcaption></figure>
+  <p class="note">10 ns 합성에서는 경로가 거의 주기만큼(9.79 ns) 늘어난 채 slack이 2 ps다. 5 ns 합성에서 4.25 ns였던 CPU 경로와 달리, 느슨한 제약에서는 타이밍을 맞추는 선에서 면적 쪽으로 최적화한 결과로 보인다. 5 ns 대비 코어 면적은 20,818에서 21,856 µm²로 늘었고 이 차이의 원인은 따로 확인하지 않았다.</p>
+</section>
+
+<section id="s5">
+  <div class="head"><div class="tool">STEP 5 · xrun, 합성 SDF</div><h2>Pre-layout 시뮬레이션 <span class="pass">PASS</span></h2></div>
+  <p>합성 넷리스트에 SDF(최대 지연)를 걸어 칩 핀에서 UART 프레임 1개(0x41), SPI SCLK 8개와 MOSI 0xA5, MISO 0x3C를 검사했다. RAM과 pc 같은 내부 신호는 칩 핀에서 볼 수 없어 RTL 시뮬에서만 검사한다.</p>
+  <ul class="pts">
+    <li>첫 UARTTXD 하강이 RTL(525 ns)보다 1.77 ns 늦다. 셀과 패드 지연이 반영된 것이다. 프레임 길이는 5760.185 ns로 RTL(5760 ns)과 사실상 같다.</li>
+    <li>SDF 적용 로그에서 적용되지 않은 488개는 모두 비동기 리셋 플립플롭의 REMOVAL 검사다(셀 시뮬 모델에 정의되지 않음). 에러는 없다.</li>
+  </ul>
+</section>
+
+<section id="s6">
+  <div class="head"><div class="tool">STEP 6 · Innovus, 클럭 10 ns</div><h2>Place and Route</h2></div>
+  <p>Floorplan, power plan, place, CTS, route, filler 순서로 단계마다 스크립트를 나누고, 단계가 끝날 때마다 <code>saveDesign</code>과 타이밍, DRC, 연결성 검증을 남겼다.</p>
+
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/fp.jpg" alt="플로어플랜"></div>
+      <figcaption><b>Floorplan.</b> die 1663 × 1663.1 µm, 코어 약 479 × 479 µm. 패드 48슬롯 링과 코너 셀 4개를 놓고 빈 슬롯 17개는 IO 필러로 채웠다. 배치 전 타이밍은 WNS +3.342 ns, 위반 0.</figcaption></figure>
+    <figure><div class="img"><img src="assets/pg.jpg" alt="파워 플랜"></div>
+      <figcaption><b>Power plan.</b> 바깥 링과 안쪽 링(Metal10/11), 스트라이프, 4면의 전원 패드 8개를 sroute로 링에 연결. verify_drc와 verifyConnectivity(5000 net) 모두 0건.</figcaption></figure>
+    <figure><div class="img"><img src="assets/place.jpg" alt="배치 결과"></div>
+      <figcaption><b>Place.</b> 표준 셀 5,242개를 코어 중앙에 배치. checkPlace 위반 0, 미배치 0. preCTS 타이밍은 WNS −0.352 ns, 위반 3개, max_tran 위반 33 net이 남아 CTS 이후로 넘겼다.</figcaption></figure>
+    <figure><div class="img"><img src="assets/cong.jpg" alt="혼잡도 맵"></div>
+      <figcaption><b>혼잡도.</b> Early Global Route overflow 0%(H, V). 셀이 중앙에 모여 국소 밀도는 0.9 안팎까지 오르지만 배선은 막히지 않았다.</figcaption></figure>
+    <figure><div class="img"><img src="assets/cts_tree.jpg" alt="클럭 트리"></div>
+      <figcaption><b>CTS.</b> 클럭 버퍼 176개가 플립플롭 1,816개(posedge 1,799, negedge 17)에 분배. 최대 leaf fanout 20, 삽입 지연 평균 약 1.82 ns. 스큐는 setup 코너 0.165 ns, hold 코너 0.044 ns.</figcaption></figure>
+    <figure><div class="img"><img src="assets/route.jpg" alt="라우팅 결과"></div>
+      <figcaption><b>Route.</b> 신호는 Metal1~9, 전원은 Metal10/11. verify_drc 0건, verifyConnectivity 0건.</figcaption></figure>
+  </div>
+
+  <h3>단계별 타이밍</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>시점</th><th class="n">Setup WNS</th><th class="n">Hold WNS</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>prePlace</td><td class="n">+3.342 ns</td><td class="n">-</td><td>3,640 경로 (reg2reg 3,140, IO 502)</td></tr>
+      <tr class="neg"><td>preCTS</td><td class="n hl">−0.352 ns</td><td class="n">-</td><td>위반 3개, max_tran 33 net</td></tr>
+      <tr><td>postCTS</td><td class="n">+0.099 ns</td><td class="n">-</td><td>max_tran 위반 해소</td></tr>
+      <tr><td>postCTS 최적화 후</td><td class="n">+0.148 ns</td><td class="n">+0.052 ns</td><td>setup은 SS_WORST, hold는 FF_BEST</td></tr>
+      <tr><td>postRoute</td><td class="n">+0.441 ns</td><td class="n">+0.053 ns</td><td>max_tran, max_cap 위반 없음</td></tr>
+    </tbody></table></div>
+
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/filler.jpg" alt="필러 삽입 후 칩"></div>
+      <figcaption><b>Filler.</b> FILL1~FILL64 필러 15,145개 삽입(FILL64가 9,014개). 삽입 후 DRC 0건, 연결성 0건.</figcaption></figure>
+    <ul class="pts">
+      <li>산출물: 넷리스트 <code>mcu_pad_top.v</code>(1.3 MB), SDF 2종(각 3.8 MB), SDC, <b>레이아웃 <code>mcu_pad_top.gds</code>(10.7 MB)</b>.</li>
+      <li>post-route 정적 전력은 5.36 mW(내부 84.3%, 스위칭 4.3%, 누설 11.4%, 입력 활동도 0.2 가정).</li>
+      <li>클럭 스큐 0.165 ns는 스크립트 목표(0.01 ns)보다 크다. 10 ns 주기의 약 1.7%이고 hold와 setup 모두 통과해서 그대로 두었다.</li>
+    </ul>
+  </div>
+  <h3>GDS 생성 로그 (streamOut)</h3>
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/gds_stream.jpg" alt="streamOut 요약"></div>
+      <figcaption><code>Streamout is finished!</code>로 끝났고 GDS version 3, 단위 2000 DBU로 기록되었다. 인스턴스 21,332개, 신호 net 77,331개(Metal1~7)와 비아 50,439개, 전원 net 913개(Metal1, 2, 3, 10, 11)와 비아 30,724개가 들어갔다. 메시지 요약은 129 warning, 0 error이고, 이 경고 수는 streamOut만이 아니라 세션 누적 값이다.</figcaption></figure>
+    <figure><div class="img"><img src="assets/gds_warn.jpg" alt="세션 로그의 경고 종류"></div>
+      <figcaption>세션 로그(<code>innovus.log14</code>)의 경고를 종류별로 센 결과. 메시지 원문 기준으로 아래처럼 읽었다.</figcaption></figure>
+  </div>
+  <ul class="pts">
+    <li><b>IMPFP-3961</b>: LEF의 패드와 코너용 사이트(<code>pad</code>, <code>corner</code>, <code>IOSite</code>, <code>CornerSite</code>)에 대응하는 표준 셀이 없다는 안내다. 메시지가 "사이트를 쓰지 않으면 무시"라고 안내하고, 이 설계에서는 표준 셀 사이트만 쓴다.</li>
+    <li><b>SDF-808</b>: SDF 생성 모드 안내다. 메시지가 이 설정을 기능 시뮬레이션용 SDF에 권장되는 설정이라고 설명한다. 이 SDF가 post-layout 시뮬에 쓰였다.</li>
+    <li><b>TECHLIB-302 (40건)</b>: 라이브러리의 <code>DECAP2</code>~<code>DECAP10</code>과 <code>ANTENNA</code> 셀에 논리 함수 정의가 없다는 경고다. basicCells와 multibitsDFF 라이브러리에서 각각 나와 20건씩이다. 이 셀들은 디커플링 캐패시터와 안테나 다이오드 같은 물리 셀이라 함수가 없는 것이 정상이고, 메시지도 "분석에만 쓰인다"고 안내한다.</li>
+    <li><b>IMPVL-159(16건), IMPSYC-2(2건), TECHLIB-459, IMPTCM-77</b>: LEF 핀 정의, 타이밍 정보 누락, 라이브러리 추가, 구버전 옵션에 대한 안내성 경고다. 셀 이름까지는 확인하지 않았고, 모든 단계에서 DRC 0, 연결성 0, 타이밍 위반 0으로 결과에는 영향이 없었다.</li>
+  </ul></section>
+
+<section id="s7">
+  <div class="head"><div class="tool">STEP 7 · Conformal</div><h2>등가성 검사 2: 합성 ↔ PnR 넷리스트 <span class="pass">PASS</span></h2></div>
+  <p>Golden은 합성 넷리스트, Revised는 PnR 후 넷리스트다. 출력 8개와 플립플롭 1,816개, 합계 1,824개 비교점이 모두 Equivalent이다. Revised에는 CTS와 최적화 단계에서 들어온 클럭 버퍼와 <code>FE_OFC*</code> 버퍼가 있고, Golden의 전원 패드 16개는 신호 포트가 없는 black box라 비교 대상이 아니다.</p>
+  <figure><div class="img"><img src="assets/ec2.jpg" alt="Conformal 설계 읽기"></div><figcaption>Revised 쪽 라이브러리 셀이 6,007개로 늘어난 것은 PnR 중 삽입된 버퍼 때문이다.</figcaption></figure>
+</section>
+
+<section id="s8">
+  <div class="head"><div class="tool">STEP 8 · Tempus</div><h2>Post-layout STA <span class="pass">PASS</span></h2></div>
+  <div class="grid2">
+    <ul class="pts">
+      <li><code>check_timing</code> 경고는 입력 구동 셀 미지정(no_drive) 2건뿐이고 분석에는 영향이 없다.</li>
+      <li>실제 신호 net 6,163개가 RC 100% annotated. 연결 없는 net 685개는 타이밍 대상이 아니다.</li>
+      <li>분석 커버리지: setup 3,144개, hold 3,144개 검사가 모두 Met, 위반 0.</li>
+      <li>미검증 데이터 검사(DataCheck 17개)는 상수 경로를 제외하면 남는 항목이 없다.</li>
+      <li>post-layout 시뮬용 SDF를 worst(FUNC_SS_WORST)와 best(FUNC_FF_BEST) 두 코너로 각각 추출했다.</li>
+    </ul>
+    <figure><div class="img"><img src="assets/sta_check.jpg" alt="Tempus check_timing"></div><figcaption>Tempus <code>check_timing</code>. 파라시틱은 SPEF/RCDB를 사용한다.</figcaption></figure>
+  </div>
+  <h3>Tempus 최악 경로</h3>
+  <p>코너마다 최악 경로 하나씩을 <code>report_timing</code>으로 뽑았다. 두 값은 Innovus postRoute 결과(setup +0.441 ns, hold +0.053 ns)와 정확히 같아서, 두 툴의 결과가 서로 맞는다.</p>
+  <figure><div class="img"><img src="assets/sta_setup.jpg" alt="Tempus setup 최악 경로"></div>
+    <figcaption><b>Setup, FUNC_SS_WORST, slack +0.441 ns.</b> 시작점은 <code>r_pc_reg_7</code>, 끝점은 UART TX FIFO의 쓰기 enable(<code>uut5/uut2/r_mem_reg_13_3/E</code>). Required 10.040 ns, Arrival 9.599 ns. 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로가 배선 후에도 그대로 최악 경로다.</figcaption></figure>
+  <figure><div class="img"><img src="assets/sta_hold.jpg" alt="Tempus hold 최악 경로"></div>
+    <figcaption><b>Hold, FUNC_FF_BEST, slack +0.053 ns.</b> SPI slave의 2-FF 동기화기(<code>r_mosi_s_reg_0</code>에서 <code>r_mosi_s_reg_1</code>) 경로다. 두 플립플롭이 직결이라 slack은 CK→Q 0.057 ns에서 hold 시간 0.004 ns를 뺀 값이 된다.</figcaption></figure>
+  <ul class="pts">
+    <li>setup 경로는 약 50단 셀을 지나고, 그중 CPU 가산기 계열 셀(<code>sub_158_49_Y_add_166_49_*</code>)이 약 3.6 ns부터 6.8 ns 구간을 차지한다. 합성 때 약 1.67 ns로 보였던 가산기 구간이 배선 후에는 훨씬 길어졌다.</li>
+    <li>hold의 +53 ps는 얇아 보이지만, 플립플롭끼리 직결된 경로의 구조적 최소값에 가깝다. 동기화기 경로에서는 로직이 없어 이 값이 거의 CK→Q 지연으로 정해진다.</li>
+  </ul></section>
+
+<section id="s9">
+  <div class="head"><div class="tool">STEP 9 · xrun, PnR 넷리스트 + Tempus SDF (worst, best 두 코너)</div><h2>Post-layout 시뮬레이션 <span class="pass">PASS</span></h2></div>
+  <div class="story"><article>
+    <h3>첫 시도: PASS였지만 지연이 반영되지 않아 검증으로 인정하지 않았다 <span class="fail">REDO</span></h3>
+    <dl>
+      <dt>발견</dt><dd><code>xmelab</code> 로그의 SDF statistics에서 경로 지연 16,097개 중 28개(0.17%), 타이밍 체크 12,687개 중 0개(0%)만 적용되었다.</dd>
+      <dt>원인</dt><dd><code>SDFINF: Instance u_mcu_top not found</code>. PnR 넷리스트를 평탄(<code>-flat</code>)하게 저장해 셀 이름이 <code>\u_mcu_top/uut2/g3066</code>처럼 한 덩어리가 되었는데, SDF는 <code>u_mcu_top/uut2/g3066</code>처럼 계층 경로를 써서 시뮬레이터가 셀을 찾지 못했다.</dd>
+      <dt>조치</dt><dd>넷리스트를 계층 구조로 저장하도록 <code>-flat</code>을 뺐다.</dd>
+      <dt>결과</dt><dd>경로 지연 14,808개(91.99%), 타이밍 체크 10,442개(82.30%)가 적용되었다. <code>Instance not found</code> 경고는 사라졌다.</dd>
+    </dl>
+  </article></div>
+  <figure><div class="img"><img src="assets/sdf_stats.jpg" alt="수정 후 SDF statistics"></div>
+    <figcaption>수정 후 SDF statistics. 적용되지 않은 <code>$hold</code>(595개)와 <code>$recovery</code>(595개)는 셀 모델에 해당 체크가 없어서다. 남은 SDFNET 경고는 recovery/removal 체크 지정에 대한 안내이고 결과에는 영향이 없다.</figcaption></figure>
+
+  <p>수정 후 worst 코너(FUNC_SS_WORST)와 best 코너(FUNC_FF_BEST, 1.1 V, 0°C)를 각각 돌렸고, 두 경우 모두 UARTTXD 프레임 1개(0x41), SCLK 상승 에지 8개, MOSI 0xA5, MISO 0x3C가 기대값과 일치해 <code>PASS tb_mcu_top</code>으로 끝났다.</p>
+  <div class="grid2">
+    <figure><div class="img"><img src="assets/post_wst.jpg" alt="worst 코너 post-layout 파형"></div>
+      <figcaption><b>Worst (SS).</b> 첫 UARTTXD 하강이 RTL(525 ns)보다 3.46 ns 늦은 528.46 ns. 클럭 트리, CK→Q, 경로, 출력 패드 지연의 합이다.</figcaption></figure>
+    <figure><div class="img"><img src="assets/post_bst.jpg" alt="best 코너 post-layout 파형"></div>
+      <figcaption><b>Best (FF).</b> 같은 에지가 1.02 ns 늦은 526.02 ns. 두 코너 모두 파형의 순서와 구간은 RTL과 같다.</figcaption></figure>
+  </div>
+
+  <h3>코너 비교</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>항목</th><th class="n">RTL</th><th class="n">Pre-layout</th><th class="n">Post WST</th><th class="n">Post BST</th></tr></thead>
+    <tbody>
+      <tr><td>첫 UARTTXD 하강 지연</td><td class="n">0</td><td class="n">+1.773 ns</td><td class="n">+3.458 ns</td><td class="n">+1.022 ns</td></tr>
+      <tr><td>UARTTXD 상승 지연</td><td class="n">0</td><td class="n">+1.958 ns</td><td class="n">+3.503 ns</td><td class="n">+1.020 ns</td></tr>
+      <tr><td>UART 프레임 길이</td><td class="n">5760 ns</td><td class="n">5760.185 ns</td><td class="n">5760.045 ns</td><td class="n">5759.998 ns</td></tr>
+      <tr><td>첫 SCLK 상승 지연</td><td class="n">0</td><td class="n">+1.392 ns</td><td class="n">+3.202 ns</td><td class="n">+0.950 ns</td></tr>
+      <tr><td>SCLK 7주기 간격</td><td class="n">1.12 µs</td><td class="n">1.12 µs</td><td class="n">1.12 µs</td><td class="n">1.12 µs</td></tr>
+      <tr><td>SDF 적용률 (경로 지연)</td><td class="n">-</td><td class="n">-</td><td class="n">91.99%</td><td class="n">91.99%</td></tr>
+      <tr><td>결과</td><td class="n">PASS</td><td class="n">PASS</td><td class="n">PASS</td><td class="n">PASS</td></tr>
+    </tbody></table></div>
+  <ul class="pts">
+    <li>post-layout worst의 지연(+3.46 ns)이 pre-layout(+1.77 ns)보다 크다. 합성 SDF에는 없던 클럭 트리와 배선 지연이 들어갔기 때문이다.</li>
+    <li>best 코너는 지연이 가장 작다(+1.02 ns). 코너마다 지연은 달라도 SCLK 주기 160 ns와 UART 프레임 길이는 유지되어 기능은 지연에 영향을 받지 않는다.</li>
+  </ul>
+</section>
+
+<section id="summary">
+  <div class="head"><div class="label">최종 산출물</div><h2>10 ns 기준 최종 수치</h2></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>항목</th><th>값</th></tr></thead>
+    <tbody>
+      <tr><td>Die / Core</td><td class="mono">1663 × 1663.1 µm / 약 479 × 479 µm</td></tr>
+      <tr><td>배치 셀 / 밀도</td><td class="mono">5,242개 / 9.52%</td></tr>
+      <tr><td>플립플롭 / 클럭 버퍼</td><td class="mono">1,816개 / 176개</td></tr>
+      <tr><td>Setup / Hold WNS (postRoute)</td><td class="mono">+0.441 ns / +0.053 ns (Tempus 동일)</td></tr>
+      <tr><td>DRC / Connectivity</td><td class="mono">0 viol. / 0 viol. (5,000 net)</td></tr>
+      <tr><td>전력 (post-route, 활동도 0.2)</td><td class="mono">5.36 mW</td></tr>
+      <tr><td>등가성</td><td>RTL↔합성, 합성↔PnR 모두 PASS</td></tr>
+      <tr><td>시뮬레이션</td><td>RTL, pre-layout, post-layout(worst, best) 모두 PASS</td></tr>
+      <tr><td>GDS2</td><td class="mono">mcu_pad_top.gds (10.7 MB)</td></tr>
+    </tbody></table></div>
+
+  <h3>이 프로젝트에서 배운 것</h3>
+  <ul class="pts">
+    <li>합성 slack이 좋아도 PnR에서 달라질 수 있다. 그래서 목표 주기는 합성이 아니라 PnR 입구에서 확인해야 한다.</li>
+    <li>위반이 나오면 설계와 제약 중 어느 쪽 문제인지부터 가른다. 2.5 ns의 위반은 입력 구동 모델링 문제였고 RTL은 그대로였다.</li>
+    <li>시뮬 PASS만으로는 부족하다. SDF가 실제로 몇 개 적용되었는지 로그로 확인해야 지연이 반영된 검증이 된다. 이 프로젝트에서는 0.17%에서 91.99%로 올린 뒤에야 결과를 인정했다.</li>
+    <li>단계마다 등가성과 시뮬로 이전 단계와 같은 기능인지 확인해, 문제가 생기면 어느 단계에서 생겼는지 좁힐 수 있다.</li>
+  </ul>
+
+  <h3>한계와 다음 단계</h3>
+  <ul class="pts">
+    <li>코어 밀도가 9.5%로 낮다. die 크기를 패드 링이 정하는 pad-limited 구조라서 면적 최적화 실험의 대상이 아니다.</li>
+    <li>이 기록은 타이밍 여유가 충분한 10 ns 기준이라 hold 위반이 나오지 않았다. 다음 단계로 교수님 권유에 따라 hold ECO 실험을 계획했다. 최종 STA에서 fast(FF) 코너 하나만으로 분석해 hold 위반을 확인하고, 위반 경로에 지연 버퍼를 추가한 뒤 STA를 다시 돌려 전후를 비교한다. 아직 수행하지 않았다.</li>
+    <li>10 ns 이후 5 ns로 다시 합성하고 P&amp;R을 진행한 시도는 합성 SDC 조건이 첫 시도와 같은지 확인하지 못해 이 기록의 근거에서 제외했다.</li>
+    <li>최종 클럭을 10 ns로 낮춘 이유는 5 ns 위반이다. init 단계 arrival이 합성 때보다 크게 나온 구체적 원인 분석은 이 기록에 없다.</li>
+    <li>GDS 서명용 검증(Calibre 등의 DRC, LVS)은 이 흐름에 포함하지 않았다. Innovus의 verify_drc와 verifyConnectivity까지 확인했다.</li>
+    <li>CPU 경로의 32비트 ripple-carry 가산기가 병목으로 남아 있다. 가산기 구조 변형(RCA, CLA, Kogge-Stone)을 같은 조건으로 합성해 비교하는 것이 다음 실험이다.</li>
+  </ul>
+</section>
+
+<footer>원본 기록: MCU_DESIGN, 1~9번 단계별 문서, IO_Cell_Map_mcu_pad_top. 수치는 각 단계 리포트와 로그 캡처 기준이다.</footer>
+</div>

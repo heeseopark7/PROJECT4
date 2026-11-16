@@ -1,0 +1,250 @@
+{
+"slides": [
+{ "kind":"title", "els":[
+  {"t":"text","x":60,"y":120,"w":840,"h":24,"s":14,"c":"5FD6CB","b":true,"text":"Physical Implementation 포트폴리오"},
+  {"t":"text","x":60,"y":250,"w":780,"h":110,"s":18,"c":"C9D6DB","text":"단일 사이클 MIPS CPU, APB 브리지, UART와 SPI 2개를 담은 MCU를 RTL 시뮬레이션부터 합성, 등가성 검사, P&R, STA, post-layout 시뮬레이션까지 진행해 GDS2를 만든 기록이다."},
+  {"t":"text","x":60,"y":400,"w":840,"h":24,"s":14,"c":"5FD6CB","text":"GPDK045  ·  Genus 22.17  ·  Conformal  ·  Innovus 22.17  ·  Tempus 22.17  ·  xrun"}
+]},
+{ "title":"핵심 결과", "tag":"SUMMARY", "els":[
+  {"t":"stat","x":40,"y":105,"w":205,"h":110,"v":"10 ns","l":"최종 클럭 (100 MHz)"},
+  {"t":"stat","x":265,"y":105,"w":205,"h":110,"v":"+0.441 ns","l":"post-route setup WNS (hold +0.053 ns)"},
+  {"t":"stat","x":490,"y":105,"w":205,"h":110,"v":"0 viol.","l":"verify_drc, verifyConnectivity"},
+  {"t":"stat","x":715,"y":105,"w":205,"h":110,"v":"PASS 2회","l":"Conformal 등가성 (RTL↔합성, 합성↔PnR)"},
+  {"t":"bul","x":40,"y":245,"w":880,"h":250,"s":16,"items":[
+    "2.5 ns 합성 위반||: 원인이 CPU가 아니라 입력 구동 SDC 모델임을 가려내 RTL 수정 없이 해결했다.",
+    "post-layout 시뮬||: SDF가 0.17%만 적용된 것을 로그로 발견하고, 넷리스트 저장 방식을 고쳐 91.99%로 올린 뒤에야 검증으로 인정했다.",
+    "5 ns 넷리스트의 PnR 위반||: init에서 WNS −6.2 ns가 나와 10 ns로 재합성하고 PnR을 처음부터 다시 진행했다.",
+    "산출물||: 합성 넷리스트, SDF 2종(worst, best), SDC, 레이아웃 mcu_pad_top.gds (10.7 MB)"
+  ]}
+]},
+{ "title":"전체 플로우 9단계", "tag":"FLOW", "els":[
+  {"t":"card","x":40,"y":105,"w":280,"h":115,"head":"1  기능 시뮬레이션","sub":"RTL, xrun"},
+  {"t":"card","x":340,"y":105,"w":280,"h":115,"head":"2  논리 합성","sub":"Genus, GPDK045 slow"},
+  {"t":"card","x":640,"y":105,"w":280,"h":115,"head":"3  등가성 검사","sub":"Conformal, RTL ↔ 합성"},
+  {"t":"card","x":40,"y":240,"w":280,"h":115,"head":"4  PnR 위반, 재합성","sub":"5 ns → 10 ns","redo":true},
+  {"t":"card","x":340,"y":240,"w":280,"h":115,"head":"5  Pre-layout 시뮬","sub":"합성 넷리스트 + SDF"},
+  {"t":"card","x":640,"y":240,"w":280,"h":115,"head":"6  Place and Route","sub":"Innovus"},
+  {"t":"card","x":40,"y":375,"w":280,"h":115,"head":"7  등가성 검사","sub":"Conformal, 합성 ↔ PnR"},
+  {"t":"card","x":340,"y":375,"w":280,"h":115,"head":"8  Post-layout STA","sub":"Tempus"},
+  {"t":"card","x":640,"y":375,"w":280,"h":115,"head":"9  Post-layout 시뮬","sub":"SDF 적용 오류 수정","redo":true}
+]},
+{ "title":"대상 설계: mcu_pad_top", "tag":"DESIGN", "els":[
+  {"t":"bul","x":40,"y":105,"w":520,"h":390,"s":15,"items":[
+    "CPU||: 32bit 단일 사이클 MIPS, 정수 명령어 20개. 한 사이클에 fetch부터 writeback까지 수행한다.",
+    "메모리||: 명령어 ROM 256 word(합성 시 일반 게이트), 데이터 RAM 32 word. 프로그램이 RTL에 들어 있어 모든 단계가 같은 프로그램을 돈다.",
+    "APB 브리지||: APB 접근을 2클럭으로 늘리고 그동안 CPU를 stall 시킨다. 슬레이브는 UART, SPI master, SPI slave.",
+    "칩 top||: 코어에 GPDK045 I/O 패드를 씌웠다. 48슬롯 패드 링에 신호 패드 15개, 전원 패드 16개, 예약 17슬롯."
+  ]},
+  {"t":"tbl","x":590,"y":110,"w":330,"cols":[190,140],"s":13,"al":["l","l"],"rows":[["주소","대상"],["0x0000_0000 ~ 007F","데이터 RAM"],["0x4000_0xxx","UART (slot 0)"],["0x4000_1xxx","SPI master (slot 1)"],["0x4000_2xxx","SPI slave (slot 2)"]]},
+  {"t":"text","x":590,"y":330,"w":330,"h":150,"s":13,"c":"5A6B76","text":"내장 프로그램: 1~10 합계 루프, UART 루프백(0x41), SPI master 0xA5 송신과 slave 0x3C 응답, 마지막에 pc=0xAC에서 자기 자신으로 점프해 종료. 이 프로그램이 모든 단계의 같은 합격 기준이다."}
+]},
+{ "title":"내 역할", "tag":"ROLE", "els":[
+  {"t":"tbl","x":40,"y":105,"w":880,"cols":[330,550],"s":16,"al":["l","l"],"rows":[
+    ["단계","담당"],
+    ["MCU RTL 작성","Claude의 도움을 받아 작성, 코드 구조는 설명할 수 있는 수준으로 이해"],
+    ["RTL 기능 시뮬레이션","직접 수행"],
+    ["논리 합성 (Genus)","직접 수행"],
+    ["등가성 검사 (Conformal)","직접 수행"],
+    ["P&R (Innovus), STA (Tempus)","직접 수행"],
+    ["Pre-layout, post-layout 시뮬레이션","직접 수행"]
+  ]},
+  {"t":"text","x":40,"y":360,"w":880,"h":60,"s":15,"c":"5A6B76","text":"이 프로젝트의 초점은 RTL 설계가 아니라 주어진 RTL을 제약과 구조로 다루는 Physical Implementation 흐름이다."}
+]},
+{ "title":"RTL 기능 시뮬레이션  PASS", "tag":"STEP 1 · xrun", "els":[
+  {"t":"text","x":40,"y":100,"w":880,"h":70,"s":16,"c":"13202A","text":"자기검증 테스트벤치(tb_mcu_top)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오는지도 검사한다."},
+  {"t":"img","f":"rtl_wave","x":40,"y":195,"w":880,"h":160,"alt":"RTL 시뮬레이션 전체 파형"},
+  {"t":"text","x":40,"y":375,"w":880,"h":60,"s":13,"c":"5A6B76","text":"8645 ns에 pc=0xAC로 종료. RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지고 err=0."}
+]},
+{ "title":"논리 합성: 클럭 목표별 비교", "tag":"STEP 2 · Genus, GPDK045 slow", "els":[
+  {"t":"tbl","x":40,"y":100,"w":880,"cols":[150,110,100,150,370],"s":13,"al":["l","r","r","r","l"],"hl":[5],"rows":[
+    ["클럭","Slack","인스턴스","코어 면적 (µm²)","메모"],
+    ["20 ns","+15.59 ns","5,102","21,129","패드 15개가 칩 셀 면적의 약 91%"],
+    ["10 ns","+2.3 ps","5,256","21,856","PnR 최종 투입값 (STEP 4에서 재합성)"],
+    ["5 ns","+588.7 ps","5,012","20,818","처음 PnR에 넣었다가 위반이 난 값"],
+    ["4 ns","+0.2 ps","6,327","24,807","5 ns 대비 코어 면적 약 19% 증가"],
+    ["2.5 ns","−107.3 ps","5,221","21,227","위반 6개, 모두 입력 핀 → 2-FF 동기화기"],
+    ["2.5 ns, SDC 수정 후","+0.7 ps","-","21,166","위반 0개"]
+  ]},
+  {"t":"bul","x":40,"y":340,"w":880,"h":160,"s":15,"items":[
+    "최악 경로는 모든 목표에서 같은 모양||: PC → 명령어 ROM → CPU 디코드 → 32비트 ripple-carry 가산기(약 1.67 ns) → 주소 디코드 → UART TX FIFO 쓰기 enable.",
+    "20 ns에서는 면적이 작은 ripple-carry를 툴이 골랐다||. 가산기가 가장 큰 병목이라는 점은 4 ns에서도 그대로다.",
+    "5 ns 합성 전력은 11.17 mW||이고 패드가 8.79 mW(78.7%)다. 20 ns의 3.29 mW와 비교하면 동적 전력이 주파수에 거의 비례한다."
+  ]}
+]},
+{ "title":"판단: 위반 원인은 SDC 모델", "tag":"STEP 2 · 2.5 ns 위반 분석", "els":[
+  {"t":"bul","x":40,"y":100,"w":880,"h":240,"s":16,"items":[
+    "증상||: WNS −107 ps, max_capacitance 위반 5개. 시작점이 모두 입력 핀이었고 CPU 경로는 통과했다.",
+    "원인||: 입력 구동을 약한 PADDI 셀로 가정해서 패드 입력 부하(2,385 fF, 허용 888 fF)를 구동하게 되었고, 입력 패드 지연이 1.3 ns까지 늘었다.",
+    "조치||: 입력은 칩 밖에서 구동되므로 set_input_transition 0.1로 모델을 교체했다. RTL은 건드리지 않았다.",
+    "결과||: setup 위반 6개, max_cap 위반 5개가 모두 사라졌고 코어 면적은 거의 그대로였다."
+  ]},
+  {"t":"img","f":"syn_sdcfix","x":40,"y":360,"w":600,"h":105,"alt":"수정한 SDC"},
+  {"t":"text","x":40,"y":470,"w":880,"h":30,"s":12,"c":"5A6B76","text":"수정한 SDC. 입력 구동 가정을 외부 기울기 0.1 ns로 바꿨다. check_design은 unresolved, undriven, multidriven 모두 0."}
+]},
+{ "title":"등가성 검사 1: RTL ↔ 합성  PASS", "tag":"STEP 3 · Conformal", "els":[
+  {"t":"stat","x":40,"y":105,"w":280,"h":105,"v":"Equivalent","l":"입력 7, 출력 8, 플립플롭 1,816 전부 매핑"},
+  {"t":"stat","x":340,"y":105,"w":280,"h":105,"v":"0","l":"불완전 검증, 비표준 모델링 옵션, 사용자 수정"},
+  {"t":"stat","x":640,"y":105,"w":280,"h":105,"v":"792개","l":"RTL에만 있는 플립플롭 (합성에서 제거)"},
+  {"t":"bul","x":40,"y":240,"w":880,"h":250,"s":16,"items":[
+    "Golden||은 RTL 21개 파일, Revised는 mcu_pad_top_syn_final.v이다.",
+    "RTL에만 있는 792개||는 프로그램이 쓰지 않는 CPU 레지스터와 관찰되지 않는 PC 비트라서 출력에 영향이 없고, 합성에서 지워졌다.",
+    "이 차이가 영향 없음으로 확인||되어 등가성 결과는 PASS다."
+  ]}
+]},
+{ "title":"PnR 진입 직후 위반", "tag":"STEP 4 · Innovus init, 5 ns", "redo":true, "els":[
+  {"t":"img","f":"pnr5_summary","x":40,"y":105,"w":400,"h":175,"alt":"init 단계 timeDesign 요약"},
+  {"t":"text","x":40,"y":285,"w":400,"h":50,"s":12,"c":"5A6B76","text":"init 단계(5 ns): WNS −6.213 ns, TNS −7,645.5 ns, 위반 경로 1,486개(전체 3,640)."},
+  {"t":"img","f":"pnr5_path","x":470,"y":105,"w":450,"h":335,"alt":"최악 경로 리포트"},
+  {"t":"text","x":470,"y":445,"w":450,"h":50,"s":12,"c":"5A6B76","text":"최악 경로. Required 5.001 ns, Arrival 11.214 ns, Slack −6.213 ns."},
+  {"t":"bul","x":40,"y":345,"w":400,"h":160,"s":14,"items":[
+    "합성 slack +0.59 ns였던 같은 경로(r_pc_reg_2 → UART FIFO r_mem_reg_7_6/E)가 Innovus에서는 arrival 11.2 ns로 나왔다.",
+    "클럭을 10 ns로 완화해 재합성하고 PnR을 처음부터 다시 진행했다."
+  ]}
+]},
+{ "title":"10 ns 재합성 결과", "tag":"STEP 4 · Genus", "els":[
+  {"t":"img","f":"syn10_qor","x":40,"y":100,"w":290,"h":395,"alt":"10ns 합성 QoR"},
+  {"t":"img","f":"syn10_path","x":355,"y":100,"w":565,"h":215,"alt":"10ns 합성 최악 경로"},
+  {"t":"bul","x":355,"y":330,"w":565,"h":170,"s":14,"items":[
+    "QoR||: 클럭 10,000 ps에서 slack +2.3 ps, TNS 0, 위반 경로 0. 인스턴스 5,256개(순차 1,816, 조합 3,440).",
+    "최악 경로||: r_pc_reg_4 → UART 보레이트 카운터 r_count_reg_4/D, 데이터 경로 9,789 ps. 느슨한 제약에서는 면적 쪽으로 최적화한 결과로 보인다.",
+    "계층 면적||: 코어 21,856 µm² 중 데이터 RAM 10,493, UART 5,157, CPU 4,279."
+  ]}
+]},
+{ "title":"Pre-layout 시뮬레이션  PASS", "tag":"STEP 5 · xrun, 합성 SDF", "els":[
+  {"t":"stat","x":40,"y":105,"w":280,"h":105,"v":"+1.77 ns","l":"첫 UARTTXD 하강 (RTL 525 ns 대비)"},
+  {"t":"stat","x":340,"y":105,"w":280,"h":105,"v":"5760.185 ns","l":"UART 프레임 길이 (RTL 5760 ns)"},
+  {"t":"stat","x":640,"y":105,"w":280,"h":105,"v":"PASS","l":"UART 0x41, SCLK 8개, MOSI 0xA5, MISO 0x3C"},
+  {"t":"bul","x":40,"y":240,"w":880,"h":250,"s":16,"items":[
+    "검사 대상||: 합성 넷리스트에 SDF(최대 지연)를 걸어 칩 핀에서 보이는 신호만 본다. RAM과 pc 같은 내부 신호는 RTL 시뮬에서만 검사한다.",
+    "지연 반영||: 셀과 패드 지연이 들어가 RTL보다 늦지만, 프레임 길이는 RTL과 사실상 같다.",
+    "미적용 488개||는 모두 비동기 리셋 플립플롭의 REMOVAL 검사다(셀 시뮬 모델에 정의되지 않음). 에러는 없다."
+  ]}
+]},
+{ "title":"Place and Route (1)", "tag":"STEP 6 · Innovus, 클럭 10 ns", "els":[
+  {"t":"img","f":"fp","x":40,"y":100,"w":205,"h":185,"alt":"플로어플랜"},
+  {"t":"img","f":"pg","x":265,"y":100,"w":205,"h":185,"alt":"파워 플랜"},
+  {"t":"img","f":"place","x":490,"y":100,"w":205,"h":185,"alt":"배치 결과"},
+  {"t":"img","f":"cts_tree","x":715,"y":100,"w":205,"h":185,"alt":"클럭 트리"},
+  {"t":"text","x":40,"y":295,"w":205,"h":205,"s":12,"c":"13202A","text":"Floorplan\ndie 1663 × 1663.1 µm, 코어 약 479 × 479 µm. 패드 48슬롯 링과 코너 셀 4개. 배치 전 WNS +3.342 ns."},
+  {"t":"text","x":265,"y":295,"w":205,"h":205,"s":12,"c":"13202A","text":"Power plan\n링(Metal10/11), 스트라이프, 전원 패드 8개를 sroute로 연결. verify_drc, verifyConnectivity 0건."},
+  {"t":"text","x":490,"y":295,"w":205,"h":205,"s":12,"c":"13202A","text":"Place\n표준 셀 5,242개 배치. preCTS WNS −0.352 ns, 위반 3개, max_tran 33 net은 CTS 이후로 넘겼다."},
+  {"t":"text","x":715,"y":295,"w":205,"h":205,"s":12,"c":"13202A","text":"CTS\n클럭 버퍼 176개, 플립플롭 1,816개. 삽입 지연 평균 약 1.82 ns. 스큐 setup 0.165 ns, hold 0.044 ns."}
+]},
+{ "title":"Place and Route (2)", "tag":"STEP 6 · Innovus, 클럭 10 ns", "els":[
+  {"t":"img","f":"cong","x":40,"y":100,"w":280,"h":260,"alt":"혼잡도 맵"},
+  {"t":"img","f":"route","x":340,"y":100,"w":280,"h":260,"alt":"라우팅 결과"},
+  {"t":"img","f":"filler","x":640,"y":100,"w":280,"h":260,"alt":"필러 삽입 후 칩"},
+  {"t":"text","x":40,"y":372,"w":280,"h":130,"s":13,"c":"13202A","text":"혼잡도\nEarly Global Route overflow 0%(H, V). 셀이 중앙에 모여 국소 밀도는 0.9 안팎이지만 배선은 막히지 않았다."},
+  {"t":"text","x":340,"y":372,"w":280,"h":130,"s":13,"c":"13202A","text":"Route\n신호는 Metal1~9, 전원은 Metal10/11. verify_drc 0건, verifyConnectivity 0건."},
+  {"t":"text","x":640,"y":372,"w":280,"h":130,"s":13,"c":"13202A","text":"Filler\nFILL1~FILL64 필러 15,145개 삽입. 삽입 후 DRC 0건, 연결성 0건."}
+]},
+{ "title":"단계별 타이밍", "tag":"STEP 6 · Innovus timeDesign", "els":[
+  {"t":"tbl","x":40,"y":100,"w":880,"cols":[190,150,150,390],"s":14,"al":["l","r","r","l"],"hl":[2],"rows":[
+    ["시점","Setup WNS","Hold WNS","비고"],
+    ["prePlace","+3.342 ns","-","3,640 경로 (reg2reg 3,140, IO 502)"],
+    ["preCTS","−0.352 ns","-","위반 3개, max_tran 33 net"],
+    ["postCTS","+0.099 ns","-","max_tran 위반 해소"],
+    ["postCTS 최적화 후","+0.148 ns","+0.052 ns","setup은 SS_WORST, hold는 FF_BEST"],
+    ["postRoute","+0.441 ns","+0.053 ns","max_tran, max_cap 위반 없음"]
+  ]},
+  {"t":"bul","x":40,"y":330,"w":880,"h":170,"s":15,"items":[
+    "산출물||: 넷리스트 mcu_pad_top.v(1.3 MB), SDF 2종(각 3.8 MB), SDC, 레이아웃 mcu_pad_top.gds(10.7 MB).",
+    "post-route 정적 전력||은 5.36 mW(내부 84.3%, 스위칭 4.3%, 누설 11.4%, 입력 활동도 0.2 가정).",
+    "클럭 스큐 0.165 ns||는 스크립트 목표(0.01 ns)보다 크지만 주기의 약 1.7%이고 setup, hold 모두 통과해서 그대로 두었다."
+  ]}
+]},
+{ "title":"GDS 생성 로그 (streamOut)", "tag":"STEP 6 · Innovus", "els":[
+  {"t":"img","f":"gds_stream","x":40,"y":100,"w":290,"h":400,"alt":"streamOut 요약"},
+  {"t":"img","f":"gds_warn","x":355,"y":100,"w":565,"h":120,"alt":"세션 로그의 경고 종류"},
+  {"t":"bul","x":355,"y":232,"w":565,"h":270,"s":12,"items":[
+    "Streamout is finished!||로 끝났다. 인스턴스 21,332개, 신호 net 77,331개와 비아 50,439개가 들어갔다. 129 warning, 0 error이고 경고 수는 세션 누적 값이다.",
+    "TECHLIB-302 (40건)||: DECAP2~10과 ANTENNA 셀에 논리 함수가 없다는 경고. 물리 셀이라 정상이다.",
+    "IMPFP-3961, SDF-808||: 사용하지 않는 사이트와 SDF 생성 모드에 대한 안내다.",
+    "IMPVL-159 외||: 안내성 경고이고 셀 이름까지는 확인하지 않았다. 모든 단계의 DRC, 연결성, 타이밍 위반은 0이었다."
+  ]}
+]},
+{ "title":"등가성 검사 2: 합성 ↔ PnR  PASS", "tag":"STEP 7 · Conformal", "els":[
+  {"t":"img","f":"ec2","x":40,"y":100,"w":420,"h":400,"alt":"Conformal 설계 읽기"},
+  {"t":"bul","x":490,"y":105,"w":430,"h":390,"s":15,"items":[
+    "비교점||: 출력 8개와 플립플롭 1,816개, 합계 1,824개가 모두 Equivalent다.",
+    "Revised 쪽 차이||: CTS와 최적화 단계에서 들어온 클럭 버퍼와 FE_OFC* 버퍼가 있다. 라이브러리 셀이 6,007개로 늘어난 이유다.",
+    "Golden의 전원 패드 16개||는 신호 포트가 없는 black box라 비교 대상이 아니다."
+  ]}
+]},
+{ "title":"Post-layout STA  PASS", "tag":"STEP 8 · Tempus, 10 ns", "els":[
+  {"t":"img","f":"sta_setup","x":40,"y":100,"w":290,"h":400,"alt":"Tempus setup 최악 경로"},
+  {"t":"img","f":"sta_hold","x":355,"y":100,"w":565,"h":190,"alt":"Tempus hold 최악 경로"},
+  {"t":"bul","x":355,"y":300,"w":565,"h":205,"s":12,"items":[
+    "Setup +0.441 ns (SS_WORST)||: r_pc_reg_7 → UART TX FIFO 쓰기 enable. 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로가 배선 후에도 최악이다.",
+    "Hold +0.053 ns (FF_BEST)||: SPI slave 2-FF 동기화기 직결 경로. 로직이 없어 CK→Q 0.057 ns에서 hold 0.004 ns를 뺀 값이 된다.",
+    "Innovus postRoute와 동일||: 두 툴의 결과가 서로 맞는다.",
+    "커버리지||: setup 3,144개, hold 3,144개 검사 모두 Met. 신호 net 6,163개 RC 100% annotated."
+  ]}
+]},
+{ "title":"Post-layout 시뮬: 첫 시도는 인정하지 않았다", "tag":"STEP 9 · xrun, SDF 적용 오류 수정", "redo":true, "els":[
+  {"t":"bul","x":40,"y":100,"w":880,"h":250,"s":15,"items":[
+    "발견||: xmelab 로그의 SDF statistics에서 경로 지연 16,097개 중 28개(0.17%), 타이밍 체크 12,687개 중 0개만 적용되었다. 시뮬은 PASS였지만 지연이 반영되지 않았다.",
+    "원인||: SDFINF: Instance u_mcu_top not found. PnR 넷리스트를 평탄(-flat)하게 저장해 셀 이름이 u_mcu_top/uut2/g3066 전체가 한 덩어리인 이스케이프 이름이 되었고, SDF의 계층 경로와 맞지 않았다.",
+    "조치||: 넷리스트를 계층 구조로 저장하도록 -flat을 뺐다.",
+    "결과||: 경로 지연 14,808개(91.99%), 타이밍 체크 10,442개(82.30%)가 적용되었고 Instance not found 경고는 사라졌다."
+  ]},
+  {"t":"img","f":"sdf_stats","x":40,"y":365,"w":560,"h":105,"alt":"수정 후 SDF statistics"},
+  {"t":"text","x":40,"y":474,"w":880,"h":40,"s":12,"c":"5A6B76","text":"수정 후 SDF statistics. 적용되지 않은 $hold, $recovery 595개씩은 셀 모델에 해당 체크가 없어서다."}
+]},
+{ "title":"Post-layout 시뮬  PASS (worst, best)", "tag":"STEP 9 · xrun, Tempus SDF 2코너", "els":[
+  {"t":"text","x":40,"y":100,"w":880,"h":24,"s":14,"c":"0A7A74","b":true,"text":"Worst (FUNC_SS_WORST)"},
+  {"t":"img","f":"post_wst","x":40,"y":128,"w":880,"h":70,"alt":"worst 코너 post-layout 파형"},
+  {"t":"text","x":40,"y":202,"w":880,"h":24,"s":12,"c":"5A6B76","text":"첫 UARTTXD 하강이 RTL(525 ns)보다 3.46 ns 늦은 528.46 ns. 클럭 트리, CK→Q, 경로, 출력 패드 지연의 합이다."},
+  {"t":"text","x":40,"y":245,"w":880,"h":24,"s":14,"c":"0A7A74","b":true,"text":"Best (FUNC_FF_BEST, 1.1 V, 0°C)"},
+  {"t":"img","f":"post_bst","x":40,"y":273,"w":880,"h":70,"alt":"best 코너 post-layout 파형"},
+  {"t":"text","x":40,"y":347,"w":880,"h":24,"s":12,"c":"5A6B76","text":"같은 에지가 1.02 ns 늦은 526.02 ns. 두 코너 모두 파형의 순서와 구간은 RTL과 같다."},
+  {"t":"bul","x":40,"y":395,"w":880,"h":110,"s":15,"items":[
+    "두 코너 모두||: UARTTXD 프레임 1개(0x41), SCLK 상승 에지 8개, MOSI 0xA5, MISO 0x3C가 기대값과 일치해 PASS tb_mcu_top으로 끝났다.",
+    "지연은 코너마다 달라도||: SCLK 주기 160 ns와 UART 프레임 길이는 유지되어 기능은 지연에 영향을 받지 않는다."
+  ]}
+]},
+{ "title":"시뮬레이션 코너 비교", "tag":"STEP 9", "els":[
+  {"t":"tbl","x":40,"y":105,"w":880,"cols":[260,150,150,160,160],"s":14,"al":["l","r","r","r","r"],"rows":[
+    ["항목","RTL","Pre-layout","Post WST","Post BST"],
+    ["첫 UARTTXD 하강 지연","0","+1.773 ns","+3.458 ns","+1.022 ns"],
+    ["UARTTXD 상승 지연","0","+1.958 ns","+3.503 ns","+1.020 ns"],
+    ["UART 프레임 길이","5760 ns","5760.185 ns","5760.045 ns","5759.998 ns"],
+    ["첫 SCLK 상승 지연","0","+1.392 ns","+3.202 ns","+0.950 ns"],
+    ["SCLK 7주기 간격","1.12 µs","1.12 µs","1.12 µs","1.12 µs"],
+    ["SDF 적용률 (경로 지연)","-","-","91.99%","91.99%"],
+    ["결과","PASS","PASS","PASS","PASS"]
+  ]},
+  {"t":"text","x":40,"y":410,"w":880,"h":80,"s":14,"c":"5A6B76","text":"post-layout worst의 지연(+3.46 ns)이 pre-layout(+1.77 ns)보다 큰 것은 합성 SDF에 없던 클럭 트리와 배선 지연이 들어갔기 때문이다. best 코너는 지연이 가장 작다."}
+]},
+{ "title":"10 ns 기준 최종 수치", "tag":"SUMMARY", "els":[
+  {"t":"tbl","x":40,"y":100,"w":880,"cols":[330,550],"s":14,"al":["l","l"],"rows":[
+    ["항목","값"],
+    ["Die / Core","1663 × 1663.1 µm / 약 479 × 479 µm"],
+    ["배치 셀 / 밀도","5,242개 / 9.52%"],
+    ["플립플롭 / 클럭 버퍼","1,816개 / 176개"],
+    ["Setup / Hold WNS (postRoute)","+0.441 ns / +0.053 ns (Tempus 동일)"],
+    ["DRC / Connectivity","0 viol. / 0 viol. (5,000 net)"],
+    ["전력 (post-route, 활동도 0.2)","5.36 mW"],
+    ["등가성","RTL↔합성, 합성↔PnR 모두 PASS"],
+    ["시뮬레이션","RTL, pre-layout, post-layout(worst, best) 모두 PASS"],
+    ["GDS2","mcu_pad_top.gds (10.7 MB)"]
+  ]}
+]},
+{ "title":"배운 것과 한계", "tag":"LESSONS", "els":[
+  {"t":"text","x":40,"y":98,"w":430,"h":26,"s":18,"c":"0A7A74","b":true,"text":"배운 것"},
+  {"t":"bul","x":40,"y":128,"w":430,"h":380,"s":14,"items":[
+    "합성 slack이 좋아도 PnR에서 달라질 수 있다. 목표 주기는 합성이 아니라 PnR 입구에서 확인해야 한다.",
+    "위반이 나오면 설계와 제약 중 어느 쪽 문제인지부터 가른다. 2.5 ns 위반은 입력 구동 모델링 문제였고 RTL은 그대로였다.",
+    "시뮬 PASS만으로는 부족하다. SDF가 몇 개 적용되었는지 로그로 확인해야 지연이 반영된 검증이 된다 (0.17% → 91.99%).",
+    "단계마다 등가성과 시뮬로 확인해 문제가 생긴 단계를 좁힐 수 있다."
+  ]},
+  {"t":"text","x":500,"y":98,"w":420,"h":26,"s":18,"c":"A8510A","b":true,"text":"한계와 다음 단계"},
+  {"t":"bul","x":500,"y":128,"w":420,"h":380,"s":14,"items":[
+    "같은 경로의 지연이 Genus와 Innovus에서 크게 달랐다(ADDFX1 체인 단당 약 51 ps vs 185 ps). 원인은 확인하지 못했다.",
+    "다음 단계: hold ECO. 교수님 권유에 따라 최종 STA를 fast(FF) 코너 하나로 분석해 hold 위반을 확인하고, 지연 버퍼를 추가한 뒤 다시 STA를 돌려 전후를 비교한다. 아직 수행하지 않았다.",
+    "GDS 서명용 DRC, LVS(Calibre 등)는 이 흐름에 포함하지 않았다. verify_drc와 verifyConnectivity까지 확인했다.",
+    "CPU 경로의 32비트 ripple-carry 가산기가 병목이다. 가산기 구조(RCA, CLA, Kogge-Stone)를 같은 조건으로 합성해 비교하는 것이 다음 실험이다."
+  ]}
+]}
+]
+}

@@ -34,11 +34,17 @@
 | `claude/affectionate-curie-41wkx3` | 48-pad ring(패드당 12개/변), `add_pad` 갱신, `run_function` 수정. 별도 이력, 통째 merge 금지 |
 - 위 3개는 main 이전 상태에서 갈라진 것이라 diff가 수천 파일(대부분 로그 삭제)로 나온다. 필요한 변경만 골라 cherry-pick/수동 반영한다.
 
-### 포트폴리오 산출물 (이 repo에는 없음, 사용자 PC에만 있음)
-`MCU_RTL_to_GDS2_portfolio.html`, `.pptx`(23장), `assets/*.jpg`, `src/template.html`, `src/deck.json`, `src/build.ps1`, `evidence_5ns_rerun/`.
+### 포트폴리오 산출물
+repo의 `portfolio/`에 있는 것:
+- `portfolio/MCU_RTL_to_GDS2_portfolio.pptx` (23장)
+- `portfolio/src/template.html` (HTML 편집용 원본, 이미지는 `src="assets/<이름>.jpg"`)
+- `portfolio/src/deck.json` (PPT 슬라이드 내용, UTF-8)
+- `portfolio/src/build.ps1` (deck.json → PPTX, PowerPoint COM 필요)
+
+repo에 **없는 것**(사용자 PC에만 있음): `assets/*.jpg` 증거 캡처, 완성본 `MCU_RTL_to_GDS2_portfolio.html`(base64 포함), `evidence_5ns_rerun/`. 이미지가 없으면 HTML 재빌드와 PPT 재생성은 불가하다. 필요하면 사용자에게 assets를 받아 `portfolio/assets/`에 넣는다.
 - HTML artifact: https://claude.ai/artifact/VLxxP3w3Fqs9oW5d4DHmgR (7번째 버전)
-- HTML 빌드: `src/template.html`의 `src="assets/xxx.jpg"`를 `data:image/jpeg;base64,...`로 치환 → UTF-8(BOM 없음)로 저장 → artifact 같은 URL로 재게시.
-- PPT 빌드: `src/build.ps1`을 `powershell -NoProfile -ExecutionPolicy Bypass -File`로 실행. 스크립트 안의 `$base`를 `src` 폴더 경로로 바꿔야 함(PNG 내보내기도 `$base\png`). PowerShell 5.1에서 BOM 없는 한글 .ps1은 깨지므로 한글은 `deck.json`에만 두고 .ps1은 ASCII 유지.
+- HTML 빌드: `template.html`의 `src="assets/xxx.jpg"`를 `data:image/jpeg;base64,...`로 치환 → UTF-8(BOM 없음)로 저장 → artifact 같은 URL로 재게시.
+- PPT 빌드: `build.ps1`을 `powershell -NoProfile -ExecutionPolicy Bypass -File`로 실행. **`$base`가 예전 임시 폴더(scratchpad), `$assets`/`$out`이 `C:\Users\user\Downloads\PROJECT4\portfolio\...`로 하드코딩**되어 있어 `$base`를 `src` 폴더로 바꿔야 한다(PNG 내보내기도 `$base\png`). PowerShell 5.1에서 BOM 없는 한글 .ps1은 깨지므로 한글은 `deck.json`에만 두고 .ps1은 ASCII 유지.
 
 ## 3. 프로젝트 사실 (수치는 증거 캡처 기준)
 - 설계: `mcu_pad_top`. 32bit 단일 사이클 MIPS, APB 브리지, UART, SPI master/slave. GPDK045.
