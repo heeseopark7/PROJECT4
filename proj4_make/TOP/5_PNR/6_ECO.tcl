@@ -76,8 +76,8 @@ streamOut mcu_pad_top_ECO.gds -libName DesignLib -units 2000 -mode ALL
 # Write Out Constraint
 writeTimingCon mcu_pad_top_ECO.sdc
 
-#OA Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top_ECO.v
+#OA Netlist  file : NO -flat option (hierarchical netlist, instance names match the SDF)
+saveNetlist -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top_ECO.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file

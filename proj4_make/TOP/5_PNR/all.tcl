@@ -373,8 +373,9 @@ saveDesign -rc -def ChipFinish
 #####################
 # Write Out Files
 
-# Netlist  file : -flat options is useful to next tool stages
-saveNetlist -flat -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
+# Netlist  file : NO -flat option. A hierarchical netlist keeps the instance names the same as the SDF (hierarchy divider "/"),
+#                 so the SDF can be back-annotated in the post-layout simulation.
+saveNetlist -excludeCellInst "PADVDD PADVSS PADVSSIOR PADVDDIOR" mcu_pad_top.v
 
 # SDF OUT, but I recommend to use sdf file which is from Tempus tool
 # SDF version 3.0 :: RECREM included in the SDF file
