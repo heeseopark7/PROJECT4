@@ -1,0 +1,864 @@
+#Version: 22.10-s300 (29-Aug-2022) (64 bit executable)
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.revised.fm.tree.f1.hlist
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.revised.fm.tree.f1.hlist
+ guiWinConfig . 1108 930 256 44 
+tixNoteBook:MouseDown .a.pane.f1.middle.nb 1060 28
+tixNoteBook:MouseDown .a.pane.f1.middle.nb 1060 28
+tixNoteBook:MouseUp .a.pane.f1.middle.nb 1060 28
+ guiWinConfig . 1108 930 1419 139 
+         if { [ .icon.find cget -state ] == "normal" } {
+            .icon.find configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.find
+ .icon.find configure -relief flat 
+     tk::ButtonLeave .icon.find
+         if { [ .icon.refresh cget -state ] == "normal" } {
+            .icon.refresh configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.refresh
+ .icon.refresh configure -relief flat 
+     tk::ButtonLeave .icon.refresh
+         if { [ .icon.comp cget -state ] == "normal" } {
+            .icon.comp configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.comp
+ .icon.comp configure -relief flat 
+     tk::ButtonLeave .icon.comp
+         if { [ .icon.modelmgr cget -state ] == "normal" } {
+            .icon.modelmgr configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.modelmgr
+ .icon.modelmgr configure -relief flat 
+     tk::ButtonLeave .icon.modelmgr
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(2)===>(Text).a.pane.f3.command.text.text <Button-1> 1.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 2:  (Text) <Button-1>\
+ 1.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 1 1];set y [guiGetTextY .a.pane.f3.command.text.text 1 1] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(3)===>(Text).a.pane.f3.command.text.text <Button-1> 1.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 3:  (Text) <Button-1>\
+ 1.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 1 1];set y [guiGetTextY .a.pane.f3.command.text.text 1 1] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 92
+    set tk::Priv(y) 19
+    tk::TextSelectTo .a.pane.f3.command.text.text 92 19
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 92 19
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text
+ guiWinConfig . 1108 930 256 44 
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig . 1108 930 1419 139 
+ 
+ guiMainWinKeyReturn .a.pane.f3.command.text.text 
+ guiWinConfig .a.pane.f3.command.text.text.promt2 60 19 1 20 
+ guiWinConfig . 1108 930 1419 139 
+ guiTextKeyPress .a.pane.f3.command.text.text {}
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(9)===>(Text).a.pane.f3.command.text.text <Button-1> 2.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 9:  (Text) <Button-1>\
+ 2.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 2 1];set y [guiGetTextY .a.pane.f3.command.text.text 2 1] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(10)===>(Text).a.pane.f3.command.text.text <Button-1> 2.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 10:  (Text) <Button-1>\
+ 2.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 2 1];set y [guiGetTextY .a.pane.f3.command.text.text 2 1] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 134
+    set tk::Priv(y) 41
+    tk::TextSelectTo .a.pane.f3.command.text.text 134 41
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+   tk_popup .a.pane.f3.command.text.text.clr.menu 1551 993
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig . 1108 930 1419 139 
+     set tk::Priv(window) .a.pane.f3.command.text.text.clr.menu
+    if {[.a.pane.f3.command.text.text.clr.menu cget -type] eq "tearoff"} {
+	if {"NotifyUngrab" ne "NotifyUngrab"} {
+	    if {[tk windowingsystem] eq "x11"} {
+		tk_menuSetFocus .a.pane.f3.command.text.text.clr.menu
+	    }
+	}
+    }
+    tk::MenuMotion .a.pane.f3.command.text.text.clr.menu 0 0 1024
+    tk::MenuInvoke .a.pane.f3.command.text.text.clr.menu 1
+#Gui Step(14)===>(Menu).a.pane.f3.command.text.text.clr.menu <Button> (menu-button)
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 14:  (Menu) <Button>\
+ (menu-button)} .a.pane.f3.command.text.text.clr.menu } 
+     tk::MenuButtonDown .a.pane.f3.command.text.text.clr.menu
+    tk::MenuInvoke .a.pane.f3.command.text.text.clr.menu 1
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 76 25
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text
+ guiWinConfig .b.frame.lab 180 21 1 1 
+ guiWinConfig .b.frame.lab 228 21 1 1 
+ 
+ guiWinConfig . 1108 930 1419 139 
+ guiTextKeyPress .a.pane.f3.command.text.text {}
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(18)===>(Text).a.pane.f3.command.text.text <Button-1> 3.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 18:  (Text) <Button-1>\
+ 3.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 3 1];set y [guiGetTextY .a.pane.f3.command.text.text 3 1] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(19)===>(Text).a.pane.f3.command.text.text <Button-1> 3.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 19:  (Text) <Button-1>\
+ 3.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 3 1];set y [guiGetTextY .a.pane.f3.command.text.text 3 1] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 339
+    set tk::Priv(y) 52
+    tk::TextSelectTo .a.pane.f3.command.text.text 339 52
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+   _textRight .a.pane.f3.command.text.text
+ 
+ guiWinConfig .a.pane.f3.command.text.text.promt3 60 19 1 39 
+   _textRight .a.pane.f3.command.text.text
+ 
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 89 54
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text
+ 
+ 	if {!$tk_strictMotif} {
+	    .a.pane.f3.command.text.text yview scroll 50 pixels
+	}
+    
+ 	if {!$tk_strictMotif} {
+	    .a.pane.f3.command.text.text yview scroll 50 pixels
+	}
+    
+ 	if {!$tk_strictMotif} {
+	    .a.pane.f3.command.text.text yview scroll 50 pixels
+	}
+    
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   _textRight .a.pane.f3.command.text.text
+ 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 58 
+   _textRight .a.pane.f3.command.text.text
+ 
+ guiMainWinKeyReturn .a.pane.f3.command.text.text 
+ guiWinConfig .a.pane.f3.command.text.text.promt1 60 19 1 -15 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 42 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 61 
+ guiWinConfig .a.pane.f3.command.text.text.promt2 60 19 1 4 
+ guiWinConfig .a.pane.f3.command.text.text.promt3 60 19 1 23 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+ guiTextKeyPress .a.pane.f3.command.text.text {}
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(25)===>(Text).a.pane.f3.command.text.text <Button-1> 5.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 25:  (Text) <Button-1>\
+ 5.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 5 1];set y [guiGetTextY .a.pane.f3.command.text.text 5 1] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(26)===>(Text).a.pane.f3.command.text.text <Button-1> 5.1
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 26:  (Text) <Button-1>\
+ 5.1} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 5 1];set y [guiGetTextY .a.pane.f3.command.text.text 5 1] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 91
+    set tk::Priv(y) 71
+    tk::TextSelectTo .a.pane.f3.command.text.text 91 71
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+   tk_popup .a.pane.f3.command.text.text.clr.menu 1511 1027
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig . 1108 930 1419 139 
+     set tk::Priv(window) .a.pane.f3.command.text.text.clr.menu
+    if {[.a.pane.f3.command.text.text.clr.menu cget -type] eq "tearoff"} {
+	if {"NotifyUngrab" ne "NotifyUngrab"} {
+	    if {[tk windowingsystem] eq "x11"} {
+		tk_menuSetFocus .a.pane.f3.command.text.text.clr.menu
+	    }
+	}
+    }
+    tk::MenuMotion .a.pane.f3.command.text.text.clr.menu 0 0 1024
+    tk::MenuInvoke .a.pane.f3.command.text.text.clr.menu 1
+#Gui Step(30)===>(Menu).a.pane.f3.command.text.text.clr.menu <Button> (menu-button)
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 30:  (Menu) <Button>\
+ (menu-button)} .a.pane.f3.command.text.text.clr.menu } 
+     tk::MenuButtonDown .a.pane.f3.command.text.text.clr.menu
+    tk::MenuInvoke .a.pane.f3.command.text.text.clr.menu 1
+#Gui Step(31)===>(Menu).a.pane.f3.command.text.text.clr.menu <Button> (menu-button)
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 31:  (Menu) <Button>\
+ (menu-button)} .a.pane.f3.command.text.text.clr.menu } 
+     tk::MenuButtonDown .a.pane.f3.command.text.text.clr.menu
+    tk::MenuInvoke .a.pane.f3.command.text.text.clr.menu 1
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 66 65
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text
+ guiWinConfig .a.pane.f3.command.text.text.promt2 60 19 1 -11 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 46 
+ guiWinConfig .a.pane.f3.command.text.text.promt3 60 19 1 8 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 27 
+ guiWinConfig .b.frame.lab 168 21 1 1 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.revised.fm.tree.f1.hlist
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+ guiWinConfig .b.frame.lab 229 21 1 1 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.hsb 1 13 0 1 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.hsb 1 13 0 1 
+ guiWinConfig . 1108 930 1419 139 
+ guiTextKeyPress .a.pane.f3.command.text.text {}
+ 
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(35)===>(Text).a.pane.f3.command.text.text <Button-1> 5.598
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 35:  (Text) <Button-1>\
+ 5.598} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 5 598];set y [guiGetTextY .a.pane.f3.command.text.text 5 598] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(36)===>(Text).a.pane.f3.command.text.text <Button-1> 5.598
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 36:  (Text) <Button-1>\
+ 5.598} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 5 598];set y [guiGetTextY .a.pane.f3.command.text.text 5 598] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 137
+    set tk::Priv(y) 60
+    tk::TextSelectTo .a.pane.f3.command.text.text 137 60
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   _textRight .a.pane.f3.command.text.text
+ 
+ guiWinConfig .a.pane.f3.command.text.text.promt2 60 19 1 -15 
+ guiWinConfig .a.pane.f3.command.text.text.promt3 60 19 1 4 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 23 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 42 
+ guiWinConfig .a.pane.f3.command.text.text.promt6 60 19 1 61 
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   _textRight .a.pane.f3.command.text.text
+ 
+   global cmd_status
+   if {[.a.pane.f3.command.text.text tag nextrange sel 1.0 end] != ""} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+   if {$cmd_status == 0} {
+      #CCMPR01202506, CCMPR01185591
+      #return
+      break
+  }
+  
+  callback Gui_cmd_history 1
+  
+  #CCMPR01202506, CCMPR01185591
+  break
+   _textRight .a.pane.f3.command.text.text
+ 
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 89 62
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text
+ 
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig . 1108 930 1419 139 
+ guiMainWinKeyReturn .a.pane.f3.command.text.text 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+     tk::MbEnter .v_menu.ltx
+     tk::MbLeave .v_menu.ltx
+     tk::MbEnter .v_menu.tool
+     tk::MbLeave .v_menu.tool
+         if { [ .icon.hierCmp cget -state ] == "normal" } {
+            .icon.hierCmp configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.hierCmp
+ .icon.hierCmp configure -relief flat 
+     tk::ButtonLeave .icon.hierCmp
+ guiWinConfig .b.frame.lab 172 21 1 1 
+ guiWinConfig .b.frame.lab 229 21 1 1 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.hsb 1 13 0 1 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.hsb 1 13 0 1 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe 1106 463 0 0 
+tixVStack:ClientGeomProc .a.pane.f1.middle.nb -configure .a.pane.f1.middle.nb.nbframe.hier
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.hier 1090 408 8 47 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1 1108 465 0 0 
+ guiWinConfig .a.pane.f2 1108 279 0 465 
+ guiWinConfig .a.pane.f3 1108 83 0 744 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_r.list.hsb 1 13 0 1 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.listbox 1 1 0 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.vsb 13 1 1 0 
+ guiWinConfig .a.pane.f1.middle.nb.nbframe.design.sw1.bkd_g.list.hsb 1 13 0 1 
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.revised.fm.tree.f1.hlist
+         if { [ .v_menu.logo cget -state ] == "normal" } {
+            .v_menu.logo configure -relief groove
+        }
+    
+     tk::ButtonEnter .v_menu.logo
+ .v_menu.logo configure -relief flat 
+     tk::ButtonLeave .v_menu.logo
+     tk::ButtonEnter .icon.mode.frame.arrow
+     tk::ButtonLeave .icon.mode.frame.arrow
+     tk::ButtonEnter .icon.mode.frame.arrow
+ guiWinConfig .a.pane.f3.command.text.text.promt3 60 19 1 -15 
+ guiWinConfig .a.pane.f3.command.text.text.promt7 60 19 1 61 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 4 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 23 
+ guiWinConfig .a.pane.f3.command.text.text.promt6 60 19 1 42 
+     tk::ButtonLeave .icon.mode.frame.arrow
+     tk::ButtonEnter .icon.mode.frame.arrow
+     tk::ButtonLeave .icon.mode.frame.arrow
+     tk::ButtonEnter .icon.mode.frame.arrow
+_tixRecordFlags <1> % 52982 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 0 571239781 ?? 7 11 ?? ?? 0 ?? ?? 0x0000f3 00000000 4 .icon.mode.frame.arrow 2512 193; 
+	tixComboBox:ArrowDown [tixGetMegaWidget .icon.mode.frame.arrow TixComboBox]
+    ; _tixDeleteFlags;
+_tixRecordFlags <FocusIn> % 52998 ?? ?? ?? NotifyNonlinearVirtual ?? ?? ?? NotifyNormal ?? ?? ?? ?? ?? ?? ?? ?? ?? 0 ?? ?? ?? ?? 9 .icon.mode ?? ??; 
+	if {"NotifyNonlinearVirtual" eq "NotifyNonlinear" || "NotifyNonlinearVirtual" eq "NotifyNonlinearVirtual"} {
+	    focus [.icon.mode subwidget entry]
+ 	    # CYGNUS: Setting the selection if there is no data
+	    # causes backspace to misbehave.
+	    if {[[set .icon.mode(w:entry)] get] ne ""} {
+  		[set .icon.mode(w:entry)] selection from 0
+  		[set .icon.mode(w:entry)] selection to end
+  	    }
+ 	}
+    ; _tixDeleteFlags;
+_tixRecordFlags <ButtonRelease-1> % 53191 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 256 571239859 ?? 7 11 ?? ?? 0 ?? ?? 0x0000f3 00000000 5 .icon.mode.frame.arrow 2512 193; 
+	tixComboBox:ArrowUp   [tixGetMegaWidget .icon.mode.frame.arrow TixComboBox]
+    ; _tixDeleteFlags;
+     tk::ButtonUp .icon.mode.frame.arrow
+     tk::ButtonDown .icon.mode.frame.arrow
+     tk::ButtonLeave .icon.mode.frame.arrow
+     set tk::Priv(window) .icon.mode.shell
+    if {[.icon.mode.shell cget -type] eq "tearoff"} {
+	if {"NotifyNormal" ne "NotifyUngrab"} {
+	    if {[tk windowingsystem] eq "x11"} {
+		tk_menuSetFocus .icon.mode.shell
+	    }
+	}
+    }
+    tk::MenuMotion .icon.mode.shell 82 0 0
+_tixRecordFlags <1> % 53327 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 0 571240781 ?? 34 29 ?? ?? 0 ?? ?? 0x0000f3 00000000 4 .icon.mode.shell.slistbox.listbox 2453 239; 
+	if {[set [tixGetMegaWidget .icon.mode.shell.slistbox.listbox](-state)] eq "disabled"} {
+	    break
+	}
+    ; _tixDeleteFlags;
+set x [guiGetListBoxEntryX .icon.mode.shell.slistbox.listbox 1];set y [guiGetListBoxEntryY .icon.mode.shell.slistbox.listbox 1] 
+     if {[winfo exists .icon.mode.shell.slistbox.listbox]} {
+	tk::ListboxBeginSelect .icon.mode.shell.slistbox.listbox [.icon.mode.shell.slistbox.listbox index  @$x,$y] 1
+    }
+#Gui Step(48)===>(Listbox).icon.mode.shell.slistbox.listbox <Button-1> LEC
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 48:  (Listbox) <Button-1>\
+ LEC} .icon.mode.shell.slistbox.listbox } 
+_tixRecordFlags <1> % 53327 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 0 571240781 ?? 34 29 ?? ?? 0 ?? ?? 0x0000f3 00000000 4 .icon.mode.shell.slistbox.listbox 2453 239; 
+	if {[string is true -strict [.icon.mode.shell.slistbox.listbox cget -takefocus]]} {
+	    focus .icon.mode.shell.slistbox.listbox
+	}
+	tixScrolledListBox:Browse [tixGetMegaWidget .icon.mode.shell.slistbox.listbox]
+    ; _tixDeleteFlags;
+_tixRecordFlags <FocusOut> % 53327 ?? ?? ?? NotifyNonlinearVirtual ?? ?? ?? NotifyNormal ?? ?? ?? ?? ?? ?? ?? ?? ?? 0 ?? ?? ?? ?? 10 .icon.mode ?? ??; 
+	if {[string equal NotifyNonlinearVirtual NotifyNonlinear] ||
+	    [string equal NotifyNonlinearVirtual NotifyNonlinearVirtual]} {
+ 	    if {[info exists .icon.mode(cancelTab)]} {
+		unset .icon.mode(cancelTab)
+	    } else {
+		if {[set .icon.mode(-state)] ne "disabled"} {
+		    if {[set .icon.mode(-selection)] ne [set .icon.mode(-value)]} {
+			tixComboBox:Invoke .icon.mode
+		    }
+		}
+	    }
+	}
+    ; _tixDeleteFlags;
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 -11 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 8 
+ guiWinConfig .a.pane.f3.command.text.text.promt6 60 19 1 27 
+ guiWinConfig .a.pane.f3.command.text.text.promt7 60 19 1 46 
+focus .icon.mode.shell.slistbox.listbox
+#Gui Step(49)===>(Listbox).icon.mode.shell.slistbox.listbox <ButtonRelease-1> LEC
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 49:  (Listbox) <ButtonRelease-1>\
+ LEC} .icon.mode.shell.slistbox.listbox } 
+_tixRecordFlags <ButtonRelease-1> % 53988 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 256 571240859 ?? 34 29 ?? ?? 0 ?? ?? 0x0000f3 00000000 5 .icon.mode.shell.slistbox.listbox 2453 239; 
+	if {[set [tixGetMegaWidget .icon.mode.shell.slistbox.listbox](-state)] eq "disabled"} {
+	    break
+	}
+    ; _tixDeleteFlags;
+#Gui Step(50)===>(Listbox).icon.mode.shell.slistbox.listbox <ButtonRelease-1> LEC
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 50:  (Listbox) <ButtonRelease-1>\
+ LEC} .icon.mode.shell.slistbox.listbox } 
+     tk::CancelRepeat
+    .icon.mode.shell.slistbox.listbox activate @34,29
+#Gui Step(51)===>(Listbox).icon.mode.shell.slistbox.listbox <ButtonRelease-1> LEC
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 51:  (Listbox) <ButtonRelease-1>\
+ LEC} .icon.mode.shell.slistbox.listbox } 
+_tixRecordFlags <ButtonRelease-1> % 53988 ?? 1 ?? ?? ?? ?? ?? ?? ?? ?? 256 571240859 ?? 34 29 ?? ?? 0 ?? ?? 0x0000f3 00000000 5 .icon.mode.shell.slistbox.listbox 2453 239; 
+	tixScrolledListBox:Browse [tixGetMegaWidget .icon.mode.shell.slistbox.listbox]
+    ; _tixDeleteFlags;
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.revised.fm.tree.f1.hlist
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+         if { [ .icon.diag cget -state ] == "normal" } {
+            .icon.diag configure -relief groove
+        }
+    
+     tk::ButtonEnter .icon.diag
+ .icon.diag configure -relief flat 
+     tk::ButtonLeave .icon.diag
+callback Gui_hlist_leave .a.pane.f1.middle.nb.nbframe.hier.golden.fm.tree.f1.hlist
+ guiWinConfig .b.frame.lab 140 21 1 1 
+ guiWinConfig .b.met 203 23 901 4 
+ guiWinConfig .b.frame 889 23 4 4 
+ guiWinConfig .b.met.canvas 201 21 1 1 
+ guiWinConfig .b.frame.lab 130 21 1 1 
+ guiWinConfig .b.frame.lab 147 21 1 1 
+ guiWinConfig .b.frame.lab 146 21 1 1 
+ guiWinConfig .b.frame.lab 136 21 1 1 
+ guiWinConfig .b.frame.lab 147 21 1 1 
+ guiWinConfig . 1108 930 1419 139 
+ guiWinConfig .b.frame.lab 148 21 1 1 
+ guiWinConfig .b.frame.lab 219 21 1 1 
+ guiWinConfig .a.pane.f3.command.text.text.promt4 60 19 1 -15 
+ guiWinConfig .a.pane.f3.command.text.text.promt8 44 19 1 61 
+ guiWinConfig .a.pane.f3.command.text.text.promt5 60 19 1 4 
+ guiWinConfig .a.pane.f3.command.text.text.promt6 60 19 1 23 
+ guiWinConfig .a.pane.f3.command.text.text.promt7 60 19 1 42 
+ guiWinConfig .a.pane.f3.command.text.text.promt9 44 19 45 61 
+ guiWinConfig . 1108 930 1419 139 
+#Gui Step(52)===>(Text).a.pane.f3.command.text.text <Button-1> 8.2
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 52:  (Text) <Button-1>\
+ 8.2} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 8 2];set y [guiGetTextY .a.pane.f3.command.text.text 8 2] 
+   tkTextButton1 .a.pane.f3.command.text.text $x $y
+  .a.pane.f3.command.text.text tag remove sel 0.0 end
+#Gui Step(53)===>(Text).a.pane.f3.command.text.text <Button-1> 8.2
+global guiReplayPause
+if {[info exists guiReplayPause] && $guiReplayPause == 1} { guiReplayBreakMsg {Step 53:  (Text) <Button-1>\
+ 8.2} .a.pane.f3.command.text.text } 
+set x [guiGetTextX .a.pane.f3.command.text.text 8 2];set y [guiGetTextY .a.pane.f3.command.text.text 8 2] 
+     tk::TextButton1 .a.pane.f3.command.text.text $x $y
+    .a.pane.f3.command.text.text tag remove sel 0.0 end
+     set tk::Priv(x) 218
+    set tk::Priv(y) 76
+    tk::TextSelectTo .a.pane.f3.command.text.text 218 76
+ guiMainWinButtonRelease-1 .a.pane.f3.command.text.text
+     tk::CancelRepeat
+     if {!$tk_strictMotif} {
+	tk::TextScanMark .a.pane.f3.command.text.text 111 59
+    }
+   global cmd_ret_string
+   set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set last_pos [.a.pane.f3.command.text.text index end]
+  set last_row [lindex [split $last_pos .] 0]  
+  if {$row != [expr $last_row -1]} {
+     return
+  }
+  set _last_pos {end - 1 chars}
+  catch { set sel_string [selection get] }
+  if {[info exist sel_string] == 0} { return }
+  if {$sel_string == ""} { return }
+  #.a.pane.f3.command.text.text mark set insert $_last_pos
+  set pos [.a.pane.f3.command.text.text index insert]
+  set row [lindex [split $pos .] 0]
+  set column [lindex [split $pos .] 1]
+  set com_string [.a.pane.f3.command.text.text get $row.1 $row.end]
+  set cmd_ret_string ""        
+  callback Gui_select_command $row $column $com_string $sel_string
+  if {$cmd_ret_string != ""} {
+    $guiMainCmdW insert $pos $cmd_ret_string
+  }
+  .a.pane.f3.command.text.text mark set insert $row.[expr $column + [string length $sel_string]]
+  .a.pane.f3.command.text.text see insert
+  focus .a.pane.f3.command.text.text

@@ -34,7 +34,7 @@ create_clock -period 10 -name MAIN_CLOCK [get_ports clk]
 set_clock_latency -source -max 0.2 [get_clocks MAIN_CLOCK]
 set_clock_latency -max 0.2 [get_clocks MAIN_CLOCK]
 
-# 60ps skew (+300ps and -300ps)
+# 60ps skew (+30ps and -30ps)
 # 20ps jitter
 # 20ps setup margin;
 # This equals 0.1 ns of total uncertainty.
