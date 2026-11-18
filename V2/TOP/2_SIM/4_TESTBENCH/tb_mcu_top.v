@@ -256,7 +256,7 @@ initial begin
 `endif
 
 `ifdef sdf_gate
-    $sdf_annotate("../../3_SYN/mapped/mcu_pad_top_delays.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_gate.log", "MAXIMUM");
+    $sdf_annotate("../../3_SYN/mapped/mcu_core_top_delays.sdf", tb_mcu_top.u_mcu_core_top, , "sdf_gate.log", "MAXIMUM");
     $shm_open("./dump/tb_mcu_top_sdf_gate");
     $shm_probe(tb_mcu_top, "AC");
 `endif
