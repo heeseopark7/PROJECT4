@@ -1,0 +1,15 @@
+# simulator / tool artifacts
+xcelium.d/
+.simvision/
+waves.shm/
+dump/
+*.trn
+xrun.key
+xmprof.out
+*.history
+*.db
+cds_syn_runtime/
+.stats.dat
+.rs_*.tstamp
+pm.ob
+*.X
