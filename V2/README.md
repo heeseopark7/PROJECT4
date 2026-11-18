@@ -17,6 +17,7 @@
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
 ## 문서
+- `docs/SYN_CAPTURE_GUIDE.md`: 합성 결과 캡처 목록, 기대값, 캡션 템플릿 (V1 캡처 문서 기준)
 - `docs/SYN_SCRIPT_COMPARISON.md`: Cadence 템플릿(이미지) vs V1 `script/*.tcl` 2개 vs V2 스크립트의 Tcl 수준 비교, cost group/mmmc 차이
 - `docs/SYN_FLOW_COMPARISON.md`: Genus 기본 플로우(PDF) vs V1 vs V2 합성 플로우/SDC 상세 비교, 합성 전 체크리스트
 
