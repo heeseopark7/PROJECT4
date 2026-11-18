@@ -1,6 +1,6 @@
 # ####################################################################
 
-#  Created by Genus(TM) Synthesis Solution 22.17-s071_1 on Fri Nov 13 01:36:43 KST 2026
+#  Created by Genus(TM) Synthesis Solution 22.17-s071_1 on Thu Nov 19 00:20:28 KST 2026
 
 # ####################################################################
 
@@ -12,7 +12,7 @@ set_units -time 1000ps
 # Set the current design
 current_design mcu_pad_top
 
-create_clock -name "MAIN_CLOCK" -period 5.0 -waveform {0.0 2.5} [get_ports clk]
+create_clock -name "MAIN_CLOCK" -period 10.0 -waveform {0.0 5.0} [get_ports clk]
 set_clock_transition 0.1 [get_clocks MAIN_CLOCK]
 set_load -pin_load 0.003 [get_ports UARTTXD]
 set_load -pin_load 0.003 [get_ports UARTINTR]
@@ -58,23 +58,23 @@ set_driving_cell -lib_cell PADDI -library giolib045 -pin "Y" [get_ports SLVSCLK]
 set_driving_cell -lib_cell PADDI -library giolib045 -pin "Y" [get_ports SLVMOSI]
 set_driving_cell -lib_cell PADDI -library giolib045 -pin "Y" [get_ports SLVCSN]
 set_driving_cell -lib_cell PADDI -library giolib045 -pin "Y" [get_ports clrn]
-#set_ideal_network [get_ports clk]
-#set_ideal_network [get_ports clrn]
-#set_dont_touch [get_cells pad2]
-#set_dont_touch [get_cells pad3]
-#set_dont_touch [get_cells pad4]
-#set_dont_touch [get_cells pad7]
-#set_dont_touch [get_cells pad14]
-#set_dont_touch [get_cells pad15]
-#set_dont_touch [get_cells pad16]
-#set_dont_touch [get_cells pad19]
-#set_dont_touch [get_cells pad26]
-#set_dont_touch [get_cells pad27]
-#set_dont_touch [get_cells pad28]
-#set_dont_touch [get_cells pad31]
-#set_dont_touch [get_cells pad38]
-#set_dont_touch [get_cells pad39]
-#set_dont_touch [get_cells pad40]
+set_ideal_network [get_ports clk]
+set_ideal_network [get_ports clrn]
+set_dont_touch [get_cells pad2]
+set_dont_touch [get_cells pad3]
+set_dont_touch [get_cells pad4]
+set_dont_touch [get_cells pad7]
+set_dont_touch [get_cells pad14]
+set_dont_touch [get_cells pad15]
+set_dont_touch [get_cells pad16]
+set_dont_touch [get_cells pad19]
+set_dont_touch [get_cells pad26]
+set_dont_touch [get_cells pad27]
+set_dont_touch [get_cells pad28]
+set_dont_touch [get_cells pad31]
+set_dont_touch [get_cells pad38]
+set_dont_touch [get_cells pad39]
+set_dont_touch [get_cells pad40]
 set_dont_use true [get_lib_cells slow_vdd1v0/ANTENNA]
 set_dont_use true [get_lib_cells slow_vdd1v0/DFFSHQX1]
 set_dont_use true [get_lib_cells slow_vdd1v0/DFFSHQX2]

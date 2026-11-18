@@ -28,7 +28,7 @@ reset_design
 # Clock period in ns. The CPU is single-cycle with asynchronous memories
 # (pc -> ROM -> decode -> ALU -> RAM/APB mux -> register file is one path),
 # so start relaxed and tighten it after looking at the timing report.
-create_clock -period 5 -name MAIN_CLOCK [get_ports clk]
+create_clock -period 10 -name MAIN_CLOCK [get_ports clk]
 
 # External clock source and network latency is 0.2ns
 set_clock_latency -source -max 0.2 [get_clocks MAIN_CLOCK]
