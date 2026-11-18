@@ -23,6 +23,6 @@
 
 RTL 회귀:
 ```
-iverilog -g2012 -o tb.vvp -s tb_mcu_top TOP/1_RTL/*.v TOP/2_SIM/TESTBENCH/tb_mcu_top.v && vvp tb.vvp
+iverilog -g2012 -o tb.vvp -s tb_mcu_top $(ls TOP/1_RTL/*.v | grep -v pad_top) TOP/2_SIM/4_TESTBENCH/tb_mcu_top.v && vvp tb.vvp
 ```
 PASS tb_mcu_top 이 8645000 ps(8645 ns)에서 나와야 한다.
