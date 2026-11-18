@@ -83,7 +83,7 @@ end
 assign  spimiso = slvmiso;
 
 `ifdef GATE_SIM
-mcu_pad_top u_mcu_pad_top (
+mcu_core_top u_mcu_core_top (
                 .clk            (clk         )   ,
                 .clrn           (clrn        )   ,
                 .UARTRXD        (uartrxd     )   ,
@@ -196,7 +196,7 @@ integer             cyc = 0                             ;
 
 initial begin
 `ifdef GATE_SIM
-    $display("INFO : netlist simulation (mcu_pad_top + SDF)");
+    $display("INFO : netlist simulation (mcu_core_top + SDF)");
 `else
     $display("INFO : RTL simulation (mcu_top)");
 `endif

@@ -20,7 +20,7 @@ xrun -64bit \
      -gui \
      +libext+.v \
      ../4_TESTBENCH/tb_mcu_top.v \
-     mcu_pad_core_syn_final.v \
+     mcu_core_top_syn_final.v \
      /GPDK045/digital/giolib045_v3.5/vlog/pads_FF_s1vg.v \
      /GPDK045/digital//gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v \
      -l pre_sim.log
