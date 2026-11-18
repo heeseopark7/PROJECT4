@@ -4,6 +4,8 @@
 V2는 **10 ns 한 번만** 합성했으므로 V1 문서의 20 / 4 / 2.5 / 5 ns 비교 섹션은 만들지 않는다.
 저장 위치: `V2/docs/captures/` , 파일명은 아래 표의 번호를 앞에 붙인다. 모든 캡처에는 터미널/에디터 창 제목이나 경로가 보이게 한다.
 
+> 주의: SDC가 수정되었다(I/O delay를 V1 값으로 복구). 이전 값(1.0 ns)으로 돌린 합성은 기준선이 아니므로, **수정된 SDC로 합성을 다시 돌린 뒤에 캡처한다.**
+
 ## 0. 캡처 전 확인 (수치 먼저 보고, 다르면 캡처 전에 알려줘)
 
 | 확인 | 어디서 | 기대값 | 다르면 |
@@ -22,7 +24,7 @@ V2는 **10 ns 한 번만** 합성했으므로 V1 문서의 20 / 4 / 2.5 / 5 ns �
 
 | # | 캡처 | 파일 / 방법 | 보여야 할 것 | V1 대비 바뀌는 점 |
 |---|---|---|---|---|
-| 01 | 제약, 소스 | 에디터에서 `cons/mcu_core_top.sdc` (CLK_PERIOD, create_clock, I/O 지연, `set_input_transition`, `set_load`)와 `script/syn_mcu_core_top.tcl`의 `TOP_DESIGN`, `RTL_SOURCES`를 한 화면에 | top = `mcu_core_top`, 10 ns, 입출력 delay 1.0/0.1 ns, 패드 `dont_touch` 없음 | 패드 15개 dont_touch가 사라짐 |
+| 01 | 제약, 소스 | 에디터에서 `cons/mcu_core_top.sdc` (CLK_PERIOD, create_clock, I/O 지연, `set_input_transition`, `set_load`)와 `script/syn_mcu_core_top.tcl`의 `TOP_DESIGN`, `RTL_SOURCES`를 한 화면에 | top = `mcu_core_top`, 10 ns, 입출력 delay V1과 동일(0.1/0.01, 0.1/-0.01), 패드 `dont_touch` 없음 | 패드 15개 dont_touch가 사라짐 |
 | 02 | 최상위 스키매틱 | Genus GUI에서 `mcu_core_top` 스키매틱 (V1 칩 레벨 캡처와 같은 방법) | 입력 7 / 출력 8 핀이 `u_mcu_top`에 직접 연결, 패드 셀 없음, 디버그 출력 4개 열림 | PADDI/PADDO가 없음 |
 | 03 | 코어 내부 스키매틱 | `u_mcu_top` 내부 | 서브모듈 7개, 가운데 읽기 mux/주소 디코더 | V1과 동일해야 함 |
 | 04 | check_design | `report/00_check_design.rpt` | Unresolved, Empty modules, Undriven, Multidriven 모두 0 | - |
@@ -47,7 +49,7 @@ V2는 **10 ns 한 번만** 합성했으므로 V1 문서의 20 / 4 / 2.5 / 5 ns �
 
 값은 실제 리포트에서 읽어서 채운다. 괄호 안 값은 예상치이므로 그대로 복사하지 않는다.
 
-- **01 제약/소스:** `mcu_core_top 합성 제약과 소스. top은 mcu_core_top, 클럭 주기 10 ns, 입력 delay max 1.0 / min 0.1 ns, 출력 delay max 1.0 / min 0.0 ns, 입력 transition 0.1 ns, 출력 load 20 fF. 패드가 없어 dont_touch 항목이 없다.`
+- **01 제약/소스:** `mcu_core_top 합성 제약과 소스. top은 mcu_core_top, 클럭 주기 10 ns, 입력 delay max 0.1 / min 0.01 ns, 출력 delay max 0.1 / min -0.01 ns(V1과 동일), 입력 transition 0.1 ns, 출력 load [PADDO/A 값 확정 후 기입]. 패드가 없어 dont_touch 항목이 없다.`
 - **02 최상위 스키매틱:** `mcu_core_top 합성 후 스키매틱(코어 단독). 패드 없이 핀 15개(입력 7, 출력 8)가 mcu_top에 직접 연결된다. mcu_top의 디버그 출력(pc, inst, aluout, memout)은 연결하지 않아 열려 있다.`
 - **06 QoR:** `mcu_core_top 합성 QoR(Genus, GPDK045 slow 코너): 클럭 10 ns에서 Critical Path Slack [값] ps, TNS 0, 위반 경로 0. 순차 소자 [값]개, 조합 소자 [값]개, 셀 면적 [값] µm².`
 - **11 전력:** `합성 후 전력 추정(slow 코너, 클럭 10 ns, 기본 활동도 가정): 총 [값] mW. 플립플롭 [값], 로직 [값], 클럭 [값] mW.` (패드가 없어서 V1 pad 결과와 직접 비교하지 않는다. 문서 4장 원칙)

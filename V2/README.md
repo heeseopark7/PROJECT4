@@ -9,7 +9,8 @@
 
 ## 현재 진행 상태
 - [x] 코어 래퍼 `TOP/1_RTL/mcu_core_top.v` (디버그 출력 미연결)
-- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc` (입력 delay 1.0/0.1, 출력 delay 1.0/0.0, 입력 transition 0.1, 출력 load 20 fF. 사용자 확인 필요)
+- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> 임시 20 fF). **TODO: `load_of PADDO/A` 실제 값으로 교체** (사용자가 V1 lib에서 확인)
+- [ ] 위 SDC 수정 후 합성 재실행 필요 (이전 합성은 I/O delay 1.0 ns 값이 들어간 SDC로 돌았음, 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
 - [ ] 합성 실행, 가산기 실제 구조 확인 (체크리스트 1번)
@@ -22,6 +23,7 @@
 - `docs/SYN_FLOW_COMPARISON.md`: Genus 기본 플로우(PDF) vs V1 vs V2 합성 플로우/SDC 상세 비교, 합성 전 체크리스트
 
 ## 규칙
+- **V2 SDC/스크립트는 V1과 패드 관련 부분만 다르게 한다. 그 외 값(delay, uncertainty, 옵션 등)은 임의로 바꾸지 않는다.**
 - 모든 실험은 같은 SDC, 같은 스크립트. 바꾸는 것은 한 번에 하나.
 - 수치는 로그 원본과 대조하기 전에는 "확인됨"으로 쓰지 않는다.
 - 이 README와 아래 원문 계획서에 어긋나는 작업(범위 밖 RTL 변경 등)은 하기 전에 사용자에게 먼저 묻는다.

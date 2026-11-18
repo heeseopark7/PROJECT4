@@ -1,7 +1,7 @@
 #==============================================================================
 # SDC : mcu_core_top (core-only track, NO pads)
-#   Frozen for all versions (v1-core, v2, v3 ...). Only the clock period
-#   (CLK_PERIOD) may change, and only for the clock sweep.
+#   Identical to V1 (mcu_pad_top.sdc) except the pad-related lines.
+#   Frozen for all versions; only the clock period may change (clock sweep).
 #   clock : clk, reset : clrn (async, active-low)
 #==============================================================================
 
@@ -14,8 +14,7 @@ set_units -time 1000.0ps
 #############################
 reset_design
 #############################
-set CLK_PERIOD 10
-create_clock -period $CLK_PERIOD -name MAIN_CLOCK [get_ports clk]
+create_clock -period 10 -name MAIN_CLOCK [get_ports clk]
 
 # Same clock model as the pad track (source/network latency 0.2 ns,
 # uncertainty 0.1 ns, transition 0.1 ns)
@@ -27,24 +26,26 @@ set_clock_transition 0.1 [get_clocks MAIN_CLOCK]
 ##############################
 ##### input, output delay ####
 ##############################
-# Port-based I/O timing (no pad cells). Fixed absolute values so that the
-# clock sweep changes only the period. All 7 inputs except clk are async to
-# the core (2-FF synchronizers), so these only bound the synchronizer paths.
-set IN_DLY_MAX  1.0
-set IN_DLY_MIN  0.1
-set OUT_DLY_MAX 1.0
-set OUT_DLY_MIN 0.0
+# Same as V1 (mcu_pad_top.sdc).
+set_input_delay -max 0.1 -clock MAIN_CLOCK [all_inputs]
+set_input_delay -min 0.01 -clock MAIN_CLOCK [all_inputs]
 
-set_input_delay  -max $IN_DLY_MAX  -clock MAIN_CLOCK [remove_from_collection [all_inputs] [get_ports clk]]
-set_input_delay  -min $IN_DLY_MIN  -clock MAIN_CLOCK [remove_from_collection [all_inputs] [get_ports clk]]
-set_output_delay -max $OUT_DLY_MAX -clock MAIN_CLOCK [all_outputs]
-set_output_delay -min $OUT_DLY_MIN -clock MAIN_CLOCK [all_outputs]
+remove_input_delay [get_ports "clk"]
+
+set_output_delay -max 0.1 -clock MAIN_CLOCK [all_outputs]
+set_output_delay -min -0.01 -clock MAIN_CLOCK [all_outputs]
 
 ##############################
 ##### driving cell / load ####
 ##############################
-# Inputs come from outside the chip: external transition 0.1 ns
-# (same fix as the 2.5 ns pad-track SDC). Outputs: fixed 20 fF load.
+# PAD-RELATED (the only part that cannot be identical to V1):
+#   V1 : set_driving_cell -lib_cell PADDI ... (active line; V1 comment says an
+#        external 0.1 ns transition was intended) and set_load [load_of PADDO/A]
+#   V2 : no pad cells and the pad library is not read, so PADDI/PADDO cannot be
+#        referenced.
+# Inputs: external transition 0.1 ns (the value V1's own comment describes).
+# Outputs: PLACEHOLDER 20 fF. TODO: replace with the real value of load_of PADDO/A
+#          from the V1 pad library so the output load matches V1.
 set_input_transition 0.1 [remove_from_collection [all_inputs] [get_ports clk]]
 set_load 0.02 [all_outputs]
 
