@@ -10,11 +10,12 @@
 ## 현재 진행 상태
 - [x] 코어 래퍼 `TOP/1_RTL/mcu_core_top.v` (디버그 출력 미연결)
 - [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 추정이므로 합성 후 `report_port -load`로 확인)
-- [ ] 위 SDC 수정 후 합성 재실행 필요 (이전 합성은 I/O delay 1.0 ns, 출력 load 20 fF가 들어간 SDC로 돌았음, 기준선으로 쓰지 않음)
+- [x] SDC 수정 후 합성 재실행 완료 (이전 I/O delay 1.0 ns, load 20 fF 합성은 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
 - [x] 합성 실행 (10 ns, slack +1.2 ps, FF 1,816, 셀 면적 21,819 µm², 출력 load 3.0 확인). 캡처 완료
-- [ ] 가산기 구조 확인(ADDF/ADDH 셀 수), 합성 전력 이상(0.644 mW, V1 보간 약 1.2 mW) 원인 확인
+- [ ] 가산기 구조 확인: 최악 경로상 ADDFX1 체인이 아니라 AOI2BB1 계열 게이트열로 보임(약 15단, 단당 약 180 ps). `13_..._gate.rpt`의 ADDF/ADDH 셀 수로 최종 확인 필요
+- [x] 합성 전력 0.644 mW: V1 10ns(코어 약 0.80 mW)와 register/logic은 거의 같고 clock 행만 다름(V1 0.19 mW, V2 0.0006 mW, ideal network 때문으로 추정). 합성 전력은 비교에 쓰지 않고 Innovus 결과로 비교
 - [x] EC (RTL ↔ 합성) PASS, V1과 동일한 결과 (입력 7 / 출력 8 / FF 1,816 equivalent, RTL만 있는 792개 = Extra 32 + Unreachable 760, Design ambiguity 1건 동일). 캡처 완료: `TOP/4_EC/script/script.tcl` (V1 스크립트에서 패드 lib 제거, golden `mcu_core_top.v`, revised `mapped/mcu_core_top_syn_final.v`)
 - [x] pre-layout 게이트 시뮬 PASS (SDF 적용 확인: scope `tb_mcu_top.u_mcu_core_top`, 미적용 488건 모두 REMOVAL, 에러 0). 첫 UARTTXD 하강 +0.83 ns(V1 +1.773), 첫 SCLK 상승 +0.36 ns(V1 +1.392). 캡처 완료
 - [ ] floorplan 스크립트 수정 후 PnR
