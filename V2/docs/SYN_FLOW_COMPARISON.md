@@ -71,7 +71,7 @@ PDF에는 `syn_opt`, 단계별 snapshot, SDF 출력, 계층 유지, dont_use 설
 | 입력 delay | - | max 0.1, min 0.01 ns (clk 제외) | 동일 (수정됨: 처음에 1.0/0.1로 잘못 바꿨다가 V1 값으로 복구) |
 | 출력 delay | - | max 0.1, min -0.01 ns | 동일 (같은 이유로 복구) |
 | 입력 구동 | - | `set_driving_cell -lib_cell PADDI -pin Y` (활성), `set_input_transition 0.1`은 주석 처리 | **`set_input_transition 0.1`** |
-| 출력 부하 | - | `set_load [load_of PADDO/A]` (패드 셀 입력 용량) | 임시 `set_load 0.02` (20 fF). **TODO: PADDO/A 실제 값으로 교체** |
+| 출력 부하 | - | `set_load [load_of PADDO/A]` (패드 셀 입력 용량) | `set_load 0.003` (3.0 fF, V1 `02_report_port.rpt` External Loads 값) |
 | 동작 조건 | - | `set_operating_conditions` max=slow 0.9V 125C, min=fast 1.1V 0C (min은 위 경고 때문에 적용 안 됨) | 동일 |
 | ideal network | - | `set_ideal_network [get_ports "clk clrn"]` | 동일 |
 | dont_touch | - | `set_dont_touch pad2 ... pad40` (패드 15개) | 제거 (패드가 없음) |
@@ -80,7 +80,7 @@ PDF에는 `syn_opt`, 단계별 snapshot, SDF 출력, 계층 유지, dont_use 설
 **V2에서 바꾼 값의 근거와 주의 (정정: 패드 관련만 변경)**
 - 정정: 이 문서의 이전 버전은 입출력 delay를 1.0 ns로 바꿨다고 적었다. 범위 밖 변경이어서 V1 값(0.1 / 0.01 / 0.1 / -0.01 ns)으로 되돌렸다. 아래 첫 항목은 이전 설명이라 무시한다.
 - 입출력 delay 1.0 ns는 내가 정한 값이다. V1은 패드 모델 안에서 0.1 ns였다. 코어 단독 트랙에서는 포트가 곧 코어 경계라 더 현실적인 값을 썼다. 입력 7개 중 clk, clrn 외에는 모두 2-FF 동기화기로 들어가므로 이 값이 최악 경로에 영향을 주지 않을 것으로 예상하지만, 합성 결과로 확인해야 한다. **사용자 확인 필요.**
-- 패드를 제거했으니 `PADDI` 구동 셀, `PADDO/A` 부하는 의미가 없다. 대신 외부 transition 0.1 ns, 부하 20 fF로 대체했다.
+- 패드를 제거했으니 `PADDI` 구동 셀, `PADDO/A` 부하는 의미가 없다. 대신 외부 transition 0.1 ns, 부하 3.0 fF(V1 `02_report_port.rpt`의 PADDO/A 값)로 대체했다.
 - **V1 자체의 불일치 [확인, 검증 필요]:** PPT 12번 슬라이드는 "입력 구동 가정을 `set_input_transition 0.1`로 교체했다"고 쓰여 있지만, 현재 V1 SDC에서는 `set_driving_cell PADDI`가 활성이고 `set_input_transition`이 주석이다. SDC 주석에도 "instead of the PADDI cell"이라고 적혀 있어 실제 상태와 모순된다. 10 ns 합성이 어느 SDC로 돌았는지 확인하고, PPT 서술을 현재 SDC와 맞추거나 그 반대로 정리해야 한다. V2는 `set_input_transition` 쪽이라 이 문제와 무관하다.
 - V1 `02_report_port.rpt`에서 입력 delay가 100 ps(= 0.1 ns)로 적용된 것을 확인했다 [확인].
 
@@ -140,13 +140,13 @@ PDF에는 `syn_opt`, 단계별 snapshot, SDF 출력, 계층 유지, dont_use 설
 | 파일 | 변경 | 이유 |
 |---|---|---|
 | `script/syn_mcu_core_top.tcl` | `TOP_DESIGN`, 첫 RTL 파일, IO 경로/라이브러리/LEF에서 패드 항목 제거, SDC 파일명 | 패드 제거 |
-| `cons/mcu_core_top.sdc` | 패드 dont_touch 제거, 입출력 delay 0.1→1.0 ns, driving cell→input_transition, load→20 fF 고정, `CLK_PERIOD` 변수화 | 코어 단독 트랙 |
+| `cons/mcu_core_top.sdc` | 패드 dont_touch 제거, driving cell→`set_input_transition 0.1`, load→`set_load 0.003`(3.0 fF). 그 외(I/O delay, 클럭)는 V1과 동일 | 코어 단독 트랙 (패드 관련만 변경) |
 | `cons/dont_use_45nm.tcl` | 변경 없음 | 비교 조건 유지 |
 | 그 외 (effort, ungroup, merge_flops, 리포트, 출력) | 변경 없음 | 비교 조건 유지 |
 
 ## 4. 합성 전 확인할 것
 
-1. 입출력 delay 1.0 ns, 출력 부하 20 fF를 사용자가 승인하는지 (미승인 시 값 수정 후 동결).
+1. (해결) 입출력 delay는 V1 값, 출력 부하는 V1 리포트 값 3.0 fF로 확정. 합성 후 `report_port -load`로 3.0이 나오는지 확인.
 2. V1 SDC와 PPT 12번의 `set_driving_cell` / `set_input_transition` 불일치 정리.
 3. 합성 로그에서 SDC-208(fast 라이브러리 없음) 경고는 V1과 같게 나오는지 확인 (새로운 에러 없는지).
 4. 합성 후: `check_design` 결과(unresolved, undriven, multidriven 0), `Interconnect mode`, 계층 구조(`uut1~uut7`)가 V1과 같은지.

@@ -43,11 +43,12 @@ set_output_delay -min -0.01 -clock MAIN_CLOCK [all_outputs]
 #        external 0.1 ns transition was intended) and set_load [load_of PADDO/A]
 #   V2 : no pad cells and the pad library is not read, so PADDI/PADDO cannot be
 #        referenced.
-# Inputs: external transition 0.1 ns (the value V1's own comment describes).
-# Outputs: PLACEHOLDER 20 fF. TODO: replace with the real value of load_of PADDO/A
-#          from the V1 pad library so the output load matches V1.
+# Inputs : external transition 0.1 ns (the value V1's own comment describes).
+# Outputs: 3.0 fF = pin cap of PADDO/A as reported by V1
+#          (V1/TOP/3_SYN/report/02_report_port.rpt, External Loads: 3.0 for all
+#          8 outputs; unit assumed fF, set_units -capacitance is 1000fF = 1 pF).
 set_input_transition 0.1 [remove_from_collection [all_inputs] [get_ports clk]]
-set_load 0.02 [all_outputs]
+set_load 0.003 [all_outputs]
 
 ##############################
 ##### Operating Condition ####

@@ -9,8 +9,8 @@
 
 ## 현재 진행 상태
 - [x] 코어 래퍼 `TOP/1_RTL/mcu_core_top.v` (디버그 출력 미연결)
-- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> 임시 20 fF). **TODO: `load_of PADDO/A` 실제 값으로 교체** (사용자가 V1 lib에서 확인)
-- [ ] 위 SDC 수정 후 합성 재실행 필요 (이전 합성은 I/O delay 1.0 ns 값이 들어간 SDC로 돌았음, 기준선으로 쓰지 않음)
+- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 추정이므로 합성 후 `report_port -load`로 확인)
+- [ ] 위 SDC 수정 후 합성 재실행 필요 (이전 합성은 I/O delay 1.0 ns, 출력 load 20 fF가 들어간 SDC로 돌았음, 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
 - [ ] 합성 실행, 가산기 실제 구조 확인 (체크리스트 1번)
