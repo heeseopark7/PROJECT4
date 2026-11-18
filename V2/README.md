@@ -13,7 +13,10 @@
 - [ ] 위 SDC 수정 후 합성 재실행 필요 (이전 합성은 I/O delay 1.0 ns, 출력 load 20 fF가 들어간 SDC로 돌았음, 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
-- [ ] 합성 실행, 가산기 실제 구조 확인 (체크리스트 1번)
+- [x] 합성 실행 (10 ns, slack +1.2 ps, FF 1,816, 셀 면적 21,819 µm², 출력 load 3.0 확인). 캡처 완료
+- [ ] 가산기 구조 확인(ADDF/ADDH 셀 수), 합성 전력 이상(0.644 mW, V1 보간 약 1.2 mW) 원인 확인
+- [ ] EC (RTL ↔ 합성): `TOP/4_EC/script/script.tcl` (V1 스크립트에서 패드 lib 제거, golden `mcu_core_top.v`, revised `mapped/mcu_core_top_syn_final.v`)
+- [ ] pre-layout 게이트 시뮬 (SDF), 테스트벤치 인스턴스를 `mcu_core_top`으로
 - [ ] floorplan 스크립트 수정 후 PnR
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
