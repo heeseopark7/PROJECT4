@@ -404,25 +404,75 @@ xmelab options:
 
 Profiled Intervals: 
  #Id                                PBSR Info               #start                  #stop             #start_CPU          #stop_CPU               #CPS
-[ 1]                                                          0 NS   to           8645 NS                 0.1772            28.4457           305.8178
+[ 1]                                                          0 NS   to           8645 NS                 0.1680             1.8348          5186.5073
 
-Memory Usage - 46.8M program + 114.9M data + 2.0M profile = 163.6M total
-CPU Usage - 21.0s system + 7.7s user = 28.7s total (2.6% cpu)
+Memory Usage - 46.8M program + 99.8M data + 2.0M profile = 148.6M total
+CPU Usage - 0.8s system + 1.3s user = 2.1s total (1.8% cpu)
 
 License Acquisition Time - 0.0s
-Snapshot Loading: CPU Usage - 0.1s system + 0.1s user = 0.2s total (7.7s, 2.0% cpu)
+Snapshot Loading: CPU Usage - 0.1s system + 0.1s user = 0.1s total (6.4s, 2.2% cpu)
 
-Derived hit_rate: 472 hps
+Derived hit_rate: 449 hps
 
 ------------------------------------------------------------
-Stream Counts (13353 hits total)
+Stream Counts (749 hits total)
 ------------------------------------------------------------
 %hits #hits  #inst  name
- 97.2 12982 [     ] outside engine
-  0.8   112 [     ] SHM Waveform Dump Setup
-  0.8   105 [     ] SHM Waveform Dump
-  0.2    24 [     ] Method SSS_KM_FINDRFT (method)
-  0.2    21 [     ] Method SSS_KM_CL2TA (method)
+ 58.3   437 [     ] outside engine
+ 14.3   107 [     ] SHM Waveform Dump Setup
+ 12.7    95 [     ] SHM Waveform Dump
+  1.6    12 [     ] Method SSS_KM_CL2TA (method)
+  1.5    11 [     ] Method SSS_KM_FINDRFT (method)
+  1.2     9 [     ] Method SSS_MT_DU_BYTE (method)
+  0.8     6 [     ] Logic primitive 'timing output', Module 'worklib.CLKINVX8:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 2526), Port 'Y', 1 Timing Inputs (process)
+  0.7     5 [     ] Waveform Dump Internal
+  0.5     4 [     ] Stream multi tcheck (process)
+  0.5     4 [     ] User-defined primitive 'worklib.altos_dff:v' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 13684) input 'clk' (zero delay) (method)
+  0.4     3 [     ] Stream tcheck pre net2 (2:5) (method)
+  0.4     3 [     ] Logic primitive 'timing output', Module 'worklib.NOR4X1:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 7679), Port 'Y', 4 Timing Inputs (process)
+  0.3     2 [     ] simulation setup time 
+  0.3     2 [     ] Method process nonpost tcheck timestamps (1:6) (method)
+  0.3     2 [     ] Logic primitive 'timing output', Module 'worklib.NAND3X1:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 6579), Port 'Y', 3 Timing Inputs (process)
+  0.3     2 [     ] Supergate output 'Y' input 'A1N' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 8519) (zero delay) (method)
+  0.3     2 [     ] Supergate output 'Y' input 'S0' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 5379) (zero delay) (method)
+  0.3     2 [     ] User-defined primitive 'worklib.altos_dff_err:v' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 13669) input 'clk' (zero delay) (method)
+  0.3     2 [     ] Logic primitive 'not' (1 outputs) (zero delay) (method)
+  0.3     2 [     ] Method SSS_MT_PERSISTENT_MINNOW (method)
+  0.3     2 [     ] ssslib eottracelist handler
+  0.3     2 [     ] Verilog: Design Traversal
+  0.1     1 [     ] Stream tcheck pre net2 (1:6) (method)
+  0.1     1 [     ] Stream tcheck net glob2 (method)
+  0.1     1 [     ] Stream process post tcheck (method)
+  0.1     1 [     ] Logic primitive 'timing output', Module 'worklib.AOI221X1:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 1098), Port 'Y', 5 Timing Inputs (process)
+  0.1     1 [     ] Logic primitive 'timing output', Module 'worklib.MX2X1:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 5369), Port 'Y', 4 Timing Inputs (process)
+  0.1     1 [     ] Logic primitive 'timing output', Module 'worklib.NAND2X1:v', (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 6361), Port 'Y', 2 Timing Inputs (process)
+  0.1     1 [     ] Logic primitive 'xor' (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'B0' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 823) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'A1N' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 8519) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'A' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 6631) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'A' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 6369) (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'or' (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'xor' (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'A1' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 823) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'AN' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 7054) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'S0' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 5379) (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'B' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 6369) (zero delay) (method)
+  0.1     1 [     ] User-defined primitive 'worklib.altos_dff:v' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 13684) input 'clk' (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'buf' (1 outputs) (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'buf' (1 outputs) (zero delay) (method)
+  0.1     1 [     ] User-defined primitive 'worklib.altos_dff_err:v' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 13669) input 'clk' (zero delay) (method)
+  0.1     1 [     ] User-defined primitive 'worklib.altos_dff_r_err:v' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 13712) input 'clk' (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'and' (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'and' (zero delay) (method)
+  0.1     1 [     ] Supergate output 'Y' input 'B' (file: /GPDK045/digital/gsclib045_all_v4.4/gsclib045_svt_v4.4/gsclib045/verilog/slow_vdd1v0_basicCells.v, line: 5379) (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'buf' (1 outputs) (zero delay) (method)
+  0.1     1 [     ] Logic primitive 'not' (1 outputs) (zero delay) (method)
+  0.1     1 [     ] Method SSS_MT_DU_BYTENFW (method)
+  0.1     1 [     ] Method SSS_MT_RETURN_BYTE (method)
+  0.1     1 [     ] Verilog: Fetch String Attributes
+  0.1     1 [     ] Verilog: Fetch HDL Object
+  0.1     1 [     ] Verilog: Object Name Resolution
+  0.1     1 [     ] Verilog: Design Traversal Support
 
 ------------------------------------------------------------
 Most Active Modules (behavioral)
@@ -430,30 +480,26 @@ Most Active Modules (behavioral)
 %hits #hits  #inst  name
 
 ------------------------------------------------------------
-Stream Type Summary Counts (13353 hits total)
+Stream Type Summary Counts (749 hits total)
 ------------------------------------------------------------
 %hits #hits  #inst  name
- 97.2 12982 [     ] Outside engine 
-  1.7   227 [     ] Waveform Dump 
-  0.4    56 [     ] Simulation Engine Time 
-  0.2    26 [     ] HDL C interface 
-  0.2    22 [     ] Logic primitives 
-  0.1    11 [     ] IOPATH Delays 
-  0.1    10 [     ] User-defined primitives 
-  0.1     9 [     ] Timing checks 
-  0.0     3 [     ] Timing check support 
-  0.0     2 [     ] General tracing support (VCD/SHM/VPI/UI) 
-  0.0     2 [     ] Simulation Setup Time 
-  0.0     1 [     ] Support for callbacks (or UI) 
-  0.0     1 [     ] Interconnect Delay 
-  0.0     1 [     ] TCL Functions 
+ 58.3   437 [     ] Outside engine 
+ 27.6   207 [     ] Waveform Dump 
+  5.1    38 [     ] Simulation Engine Time 
+  3.2    24 [     ] Logic primitives 
+  1.9    14 [     ] IOPATH Delays 
+  1.2     9 [     ] User-defined primitives 
+  0.8     6 [     ] HDL C interface 
+  0.7     5 [     ] Timing checks 
+  0.7     5 [     ] Timing check support 
+  0.3     2 [     ] General tracing support (VCD/SHM/VPI/UI) 
+  0.3     2 [     ] Simulation Setup Time 
 
 ------------------------------------------------------------
-Technology-wise Summary Counts (13353 hits total)
+Technology-wise Summary Counts (749 hits total)
 ------------------------------------------------------------
 %hits #hits  name
- 97.7 13040 Miscellaneous 
-  1.9   256 Analysis 
-  0.4    56 GLS 
-  0.0     1 TB/SV 
+ 63.7   477 Miscellaneous 
+ 28.7   215 Analysis 
+  7.6    57 GLS 
 
