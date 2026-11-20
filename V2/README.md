@@ -9,7 +9,7 @@
 
 ## 현재 진행 상태
 - [x] 코어 래퍼 `TOP/1_RTL/mcu_core_top.v` (디버그 출력 미연결)
-- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 추정이므로 합성 후 `report_port -load`로 확인)
+- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 확인됨: V1/V2 합성 SDC 출력에 `set_load -pin_load 0.003`으로 동일하게 나옴)
 - [x] SDC 수정 후 합성 재실행 완료 (이전 I/O delay 1.0 ns, load 20 fF 합성은 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
@@ -20,7 +20,8 @@
 - [x] pre-layout 게이트 시뮬 PASS (SDF 적용 확인: scope `tb_mcu_top.u_mcu_core_top`, 미적용 488건 모두 REMOVAL, 에러 0). 첫 UARTTXD 하강 +0.83 ns(V1 +1.773), 첫 SCLK 상승 +0.36 ns(V1 +1.392). 캡처 완료
 - [x] PnR 스크립트 작성 `TOP/5_PNR/` (V1 0~6번 스크립트에서 이름/패드 관련만 변경: 0~5, 4_..._ECO, 6_ECO, tempus, clean, mmmc.view. all.tcl 제외). 아직 실행 전
 - [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행하는 선택 단계. **사용자 결정으로 이번에는 실행하지 않음**, 스크립트만 보관)
-- [ ] PnR 실행 (0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
+- [x] PnR 0단계(0_InitDesign) 완료: die 251.6 x 249.85 um, core 191.6 x 189.81 um (util 0.6 정확히 일치), 핀 15개 4변 배치 정상, prePlace Density 59.996%, WNS +3.138 ns. 캡처 완료
+- [ ] PnR 실행 (1_PowerPlan 이후: 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
 ## 문서
