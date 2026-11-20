@@ -19,7 +19,7 @@
 - [x] EC (RTL ↔ 합성) PASS, V1과 동일한 결과 (입력 7 / 출력 8 / FF 1,816 equivalent, RTL만 있는 792개 = Extra 32 + Unreachable 760, Design ambiguity 1건 동일). 캡처 완료: `TOP/4_EC/script/script.tcl` (V1 스크립트에서 패드 lib 제거, golden `mcu_core_top.v`, revised `mapped/mcu_core_top_syn_final.v`)
 - [x] pre-layout 게이트 시뮬 PASS (SDF 적용 확인: scope `tb_mcu_top.u_mcu_core_top`, 미적용 488건 모두 REMOVAL, 에러 0). 첫 UARTTXD 하강 +0.83 ns(V1 +1.773), 첫 SCLK 상승 +0.36 ns(V1 +1.392). 캡처 완료
 - [x] PnR 스크립트 작성 `TOP/5_PNR/` (V1 스크립트에서 이름/패드 관련만 변경, ECO와 all.tcl 제외). 아직 실행 전
-- [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행, 선택 단계, 아직 실행 전)
+- [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행하는 선택 단계. **사용자 결정으로 이번에는 실행하지 않음**, 스크립트만 보관)
 - [ ] PnR 실행 (0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
