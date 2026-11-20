@@ -22,7 +22,7 @@
 - [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행하는 선택 단계. **사용자 결정으로 이번에는 실행하지 않음**, 스크립트만 보관)
 - [x] PnR 0단계(0_InitDesign) 완료: die 251.6 x 249.85 um, core 191.6 x 189.81 um (util 0.6 정확히 일치), 핀 15개 4변 배치 정상, prePlace Density 59.996%, WNS +3.138 ns. 캡처 완료
 - [x] PnR 1단계(1_PowerPlan) 완료: 코어 링(VSS 바깥/VDD 안쪽)+스트라이프, verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, saveDesign 0 warning 0 error. 캡처 완료
-- [x] PnR 2단계(2_PlaceOpt) 완료(저장 로그 0 warning 0 error): 배치 인스턴스 5,223개, 밀도 59.94%(place_design 직후)/60.475%(place_opt 후), 혼잡도 Overflow 0(Usage 2.1%H 3.9%V), preCTS setup WNS +0.397 ns, TNS 0, DRV 모두 0 (V1은 -0.352 ns, 위반 3개, max_tran 33 net)
+- [x] PnR 2단계(2_PlaceOpt) 완료(저장 로그 0 warning 0 error): 배치 인스턴스 5,223개, 밀도 59.94%(place_design 직후)/60.475%(place_opt 후), 혼잡도 Overflow 0(Usage 2.1%H 3.9%V), preCTS setup WNS +0.399 ns, TNS 0, DRV 모두 0, Density 60.603% (PnR용 SDC로 0~2단계 재실행한 최종값. 최초 실행은 +0.397 ns / 60.475%) (V1은 -0.352 ns, 위반 3개, max_tran 33 net)
 - [x] **PnR용 SDC 분리(패드 제거에 따른 불가피한 변경, 사용자 결정)**: V2는 clk/clrn 포트 net이 곧 FF를 구동하는 net이라 합성 SDC의 `set_ideal_network`(clk, clrn)가 있으면 CTS가 버퍼링하지 않음(V1은 패드 뒤 net이라 해당 없음). `TOP/5_PNR/mcu_core_top_pnr.sdc` = 합성 SDC에서 이 두 줄만 삭제한 복사본, `mcu_core_top.mmmc.view`가 이 파일을 읽음. 합성/EC/pre-layout 시뮬은 영향 없음. 이 변경 이후 PnR 0단계부터 재실행 필요(clean.tcl은 `sh clean.tcl`). 재실행 후 `clock_trees.rpt`의 Bufs(V1 176)로 확인
 - [ ] PnR 실행 (3_PostCTSopt 이후: 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
