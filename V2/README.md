@@ -32,6 +32,19 @@
 - `docs/SYN_SCRIPT_COMPARISON.md`: Cadence 템플릿(이미지) vs V1 `script/*.tcl` 2개 vs V2 스크립트의 Tcl 수준 비교, cost group/mmmc 차이
 - `docs/SYN_FLOW_COMPARISON.md`: Genus 기본 플로우(PDF) vs V1 vs V2 합성 플로우/SDC 상세 비교, 합성 전 체크리스트
 
+## V1 대비 의도된 차이 목록 (패드 제거로 인한 것만, 이 외는 V1과 동일해야 함)
+| 영역 | V1 | V2 | 구분 |
+|---|---|---|---|
+| RTL | mcu_pad_top = 패드 + mcu_top | mcu_core_top = mcu_top (패드 없음, 디버그 출력 미연결) | 패드 제거 |
+| 합성 SDC | 패드 dont_touch 15줄, `set_driving_cell PADDI`, `set_load [load_of PADDO/A]` | dont_touch 제거, `set_input_transition 0.1`, `set_load 0.003`(V1 값과 동일) | 패드 관련 대체 |
+| 합성 스크립트/EC/pre-layout 시뮬 | 패드 lib/모델 포함 | 패드 lib 제거, 이름 변경, TB DUT를 mcu_core_top으로 | 패드 제거 |
+| floorplan | 패드 링 기준 die 1663 um, 여백 352 | 코어 기준 여백 30 um(링 폭에 맞춤), utilization 0.6은 V1과 동일 | 패드 제거 |
+| 핀 | 패드(init.io) | `editPin`으로 4변 배치(V1 패드 변 기준) | 패드 제거 |
+| 전원 | 안쪽 링 + 바깥 링 + 패드 연결 + 스트라이프 | 코어 링 + 스트라이프(바깥 링, 패드 연결 제거) | 패드 제거 |
+| PnR SDC | 합성 SDC 그대로 (ideal network 포트가 패드에 연결) | 합성 SDC에서 `set_ideal_network`(clk, clrn) 2줄 제거한 복사본 | 패드 제거의 결과(clk은 필수, clrn은 V1과 같은 조건으로 맞춘 판단) |
+| mmmc view | 패드 lib 포함 | 패드 lib 제거, SDC 경로 변경 | 패드 제거 |
+| 그대로 둔 것 | CTS target_skew 0.01, 라우팅/최적화 옵션, 전력 `-period 8.0` 등 | 동일 | - |
+
 ## 규칙
 - **V2 SDC/스크립트는 V1과 패드 관련 부분만 다르게 한다. 그 외 값(delay, uncertainty, 옵션 등)은 임의로 바꾸지 않는다.**
 - 모든 실험은 같은 SDC, 같은 스크립트. 바꾸는 것은 한 번에 하나.
