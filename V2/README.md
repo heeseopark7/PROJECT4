@@ -21,7 +21,8 @@
 - [x] PnR 스크립트 작성 `TOP/5_PNR/` (V1 0~6번 스크립트에서 이름/패드 관련만 변경: 0~5, 4_..._ECO, 6_ECO, tempus, clean, mmmc.view. all.tcl 제외). 아직 실행 전
 - [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행하는 선택 단계. **사용자 결정으로 이번에는 실행하지 않음**, 스크립트만 보관)
 - [x] PnR 0단계(0_InitDesign) 완료: die 251.6 x 249.85 um, core 191.6 x 189.81 um (util 0.6 정확히 일치), 핀 15개 4변 배치 정상, prePlace Density 59.996%, WNS +3.138 ns. 캡처 완료
-- [ ] PnR 실행 (1_PowerPlan 이후: 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
+- [x] PnR 1단계(1_PowerPlan) 완료: 코어 링(VSS 바깥/VDD 안쪽)+스트라이프, verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, saveDesign 0 warning 0 error. 캡처 완료
+- [ ] PnR 실행 (2_PlaceOpt 이후: 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
 ## 문서
