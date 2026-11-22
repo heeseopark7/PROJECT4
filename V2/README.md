@@ -32,7 +32,7 @@
 - [x] post-layout 시뮬 완료(worst/best 둘 다 PASS): SDF 적용률 경로 지연 91.56%(14,529/15,868), 타이밍 체크 82.30%(10,442/12,687), 에러 0, 미적용은 RECREM(로그 표시 500건)뿐(셀 모델 DFFRX1은 리셋 핀에 별도의 $recovery/$hold 체크(한계 0)를 두고 있고 SDF는 RECREM 결합 항목으로 제공해 매핑되지 않음. 모델 소스로 확인함. 해당 체크는 Tempus에서 위반 0). 첫 UARTTXD 하강 지연 worst +0.941 ns / best +0.241 ns, 첫 SCLK 상승 worst +0.891 / best +0.22 ns. best 로그 헤더(MTM MINIMUM) 확인 완료. V2(v1-core) 캡처 전부 완료
 - [x] (이전 항목) post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
 - [x] PnR 0~5단계, post-route Tempus 실행과 캡처 전부 완료
-- [x] 비교표(v1-core 열) 작성, git 태그 `v1-core` 원격 푸시 완료. `v1-pad` 태그는 원격에 아직 없음(V1 완성본 시점 커밋 4010c09)
+- [x] 비교표(v1-core 열) 작성, 태그 이름은 폴더 번호 기준으로 `v2-core`(V2, 커밋 9f594fc)와 `v1-pad`(V1, 커밋 4010c09)로 정함. 원격에는 아직 옛 이름 `v1-core`만 올라가 있음(이 작업 환경에서는 태그 푸시가 막혀 있어 사용자 로컬에서 이름 변경 필요)
 
 ## 다음 계획 (우선순위: 툴이 필요한 작업 먼저, 툴 없이 되는 작업은 나중)
 1. [툴 필요] 문서 5장 v2(가산기 교체): 별도 폴더(V3)에서 `sccpu.v`의 가산/감산 한 가지만 변경. 근거: v1-core 최악 경로 9.43 ns 중 가산기 구간 약 3.2 ns(34%), 구조는 AOI2BB1 게이트열.
