@@ -11,6 +11,8 @@
 # The test program is written inside tb_mcu_top.v (no HEX file is needed).
 # The RTL files are in ../../1_RTL. UART, SPI master and SPI slave are
 # connected in mcu_top.v, so their files are listed below.
+mkdir ./dump
+
 xrun -64bit \
      +max_err_count+50 \
      +define+function_sim \
