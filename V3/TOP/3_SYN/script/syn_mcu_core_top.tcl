@@ -56,6 +56,7 @@ set RTL_SOURCES "../1_RTL/mcu_core_top.v \
 		../1_RTL/spi_slave_apb_top.v \
 		../1_RTL/spis_regs.v \
 		../1_RTL/spi_slave.v \
+		../1_RTL/add32_ks.v \
 "
 set_db auto_ungroup none
 set_db max_cpus_per_server 2
