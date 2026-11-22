@@ -7,7 +7,7 @@
 # +libext : library extention
 # +libext+.v -y : xrun would compile .v files automatically in the specific folder decribed with -y option
 
-# Target : mcu_top (CPU + memories + APB bridge) with ../TESTBENCH/tb_mcu_top.v
+# Target : mcu_top (CPU + memories + APB bridge) with ../4_TESTBENCH/tb_mcu_top.v
 # The test program is written inside tb_mcu_top.v (no HEX file is needed).
 # The RTL files are in ../../1_RTL. UART, SPI master and SPI slave are
 # connected in mcu_top.v, so their files are listed below.
@@ -20,11 +20,12 @@ xrun -64bit \
      -gui \
      +libext+.v \
      -incdir ../../1_RTL \
-     -incdir ../TESTBENCH \
+     -incdir ../4_TESTBENCH \
      -top tb_mcu_top \
-     ../TESTBENCH/tb_mcu_top.v \
+     ../4_TESTBENCH/tb_mcu_top.v \
      ../../1_RTL/mcu_top.v \
      ../../1_RTL/sccpu.v \
+     ../../1_RTL/add32_ks.v \
      ../../1_RTL/scinstmem.v \
      ../../1_RTL/scdatamem.v \
      ../../1_RTL/apb_bridge.v \
