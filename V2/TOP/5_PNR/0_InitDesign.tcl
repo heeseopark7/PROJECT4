@@ -38,4 +38,4 @@ saveDesign -def InitDesign
 
 fit
 gui_dump_picture snap/0_floorplan.png -format PNG
-exit
+#exit

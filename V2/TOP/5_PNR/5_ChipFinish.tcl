@@ -1,7 +1,7 @@
 #######################
 #### Chip Finish ######
 #######################
-restoreDesign RouteDesign.dat
+#restoreDesign RouteDesign.dat
 
 # Add Filler
 getFillerMode -quiet
@@ -50,4 +50,4 @@ writeTimingCon mcu_core_top.sdc
 # GDS file : without layermap file for GPDK045
 streamOut mcu_core_top.gds -libName DesignLib -units 2000 -mode ALL
 
-exit
+#exit

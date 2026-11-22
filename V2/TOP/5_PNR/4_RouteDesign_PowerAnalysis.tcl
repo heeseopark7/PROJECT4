@@ -2,7 +2,7 @@
 # Route
 ##############
 
-restoreDesign PostCTSopt.dat
+#restoreDesign PostCTSopt.dat
 
 # Route Auto : To Detail
 setNanoRouteMode -quiet -drouteFixAntenna 1
@@ -131,4 +131,4 @@ report_power -rail_analysis_format VS -outfile ./run1/mcu_core_top.rpt
 # Alternatively, Use Voltus to Anlyze 
 ########################
 
-exit
+#exit

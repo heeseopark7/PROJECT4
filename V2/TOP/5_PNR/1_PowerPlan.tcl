@@ -3,7 +3,7 @@
 # PowerPlan 
 ########################################
 
-restoreDesign InitDesign.dat
+#restoreDesign InitDesign.dat
 
 ## Global Net Connection
 globalNetConnect VDD -type pgpin -pin VDD -instanceBasename *
@@ -76,4 +76,4 @@ saveDesign -def PowerPlan
 # Picture needs the GUI; catch keeps the script going (and exit working) without it
 catch {fit}
 catch {gui_dump_picture snap/1_powerplan.png -format PNG}
-exit
+#exit

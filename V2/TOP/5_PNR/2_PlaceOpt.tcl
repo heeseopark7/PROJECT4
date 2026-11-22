@@ -1,7 +1,7 @@
 ######################################3
 ## Placement & Optimization
 ######################################3
-restoreDesign PowerPlan.dat 
+#restoreDesign PowerPlan.dat 
 set_db place_global_cong_effort high
 
 # First placement
@@ -47,4 +47,4 @@ file mkdir snap
 catch {fit}
 catch {gui_dump_picture snap/2_placement.png -format PNG}
 
-exit
+#exit

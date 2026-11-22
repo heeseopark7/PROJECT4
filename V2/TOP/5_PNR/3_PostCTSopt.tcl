@@ -2,7 +2,7 @@
 # CTS & Optimization
 ########################################
 
-restoreDesign PlaceOpt.dat
+#restoreDesign PlaceOpt.dat
 # Target about skew
 set_ccopt_property target_skew 0.01  
 
@@ -33,4 +33,4 @@ saveDesign -def PostCTSopt
 catch {fit}
 catch {gui_dump_picture snap/3_cts.png -format PNG}
 
-exit
+#exit
