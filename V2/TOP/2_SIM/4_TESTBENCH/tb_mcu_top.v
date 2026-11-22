@@ -5,9 +5,9 @@
 //               switch (+define+...)  DUT              what is simulated
 //               --------------------  ---------------  ---------------------------
 //               function_sim          mcu_top          RTL, no delays   (1_RTL)
-//               sdf_gate              mcu_pad_top      pre-layout netlist + SDF (3_SYN)
-//               sdf_post_wst          mcu_pad_top      post-layout netlist + worst-case SDF (5_PNR)
-//               sdf_post_bst          mcu_pad_top      post-layout netlist + best-case SDF  (5_PNR)
+//               sdf_gate              mcu_core_top     pre-layout netlist + SDF (3_SYN)
+//               sdf_post_wst          mcu_core_top     post-layout netlist + worst-case SDF (5_PNR)
+//               sdf_post_bst          mcu_core_top     post-layout netlist + best-case SDF  (5_PNR)
 //               (nothing)             mcu_top          same as function_sim, no waveform dump
 //
 //             The program is inside scinstmem (1_RTL), so it is part of the RTL
@@ -27,7 +27,7 @@
 //               stall pulses = penable pulses (one pair per APB access)
 //               penable is never high together with stall (SETUP / ACCESS)
 //               penable is high for exactly 1 clock per access
-//             The chip (mcu_pad_top) has no pc / inst / aluout / memout pins, so a
+//             The chip (mcu_core_top) has no pc / inst / aluout / memout pins, so a
 //             netlist run ends when the 8th SPI clock edge has been seen.
 //==============================================================================
 
@@ -77,7 +77,7 @@ end
 //------------------------------------------------------------------------------
 // DUT
 //   RTL     : mcu_top     (CPU + memories + APB bridge + UART + SPI master + SPI slave)
-//   netlist : mcu_pad_top (the same core inside the pad ring)
+//   netlist : mcu_core_top (the same core, no pad ring)
 //   SPI master pins are connected straight to the SPI slave pins.
 //------------------------------------------------------------------------------
 assign  spimiso = slvmiso;
@@ -262,13 +262,13 @@ initial begin
 `endif
 
 `ifdef sdf_post_wst
-    $sdf_annotate("./mcu_pad_top_post_wst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_wst.log", "MAXIMUM");
+    $sdf_annotate("./mcu_core_top_post_wst.sdf", tb_mcu_top.u_mcu_core_top, , "sdf_post_wst.log", "MAXIMUM");
     $shm_open("./dump/tb_mcu_top_sdf_post_wst");
     $shm_probe(tb_mcu_top, "AC");
 `endif
 
 `ifdef sdf_post_bst
-    $sdf_annotate("./mcu_pad_top_post_bst.sdf", tb_mcu_top.u_mcu_pad_top, , "sdf_post_bst.log", "MINIMUM");
+    $sdf_annotate("./mcu_core_top_post_bst.sdf", tb_mcu_top.u_mcu_core_top, , "sdf_post_bst.log", "MINIMUM");
     $shm_open("./dump/tb_mcu_top_sdf_post_bst");
     $shm_probe(tb_mcu_top, "AC");
 `endif

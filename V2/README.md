@@ -28,7 +28,9 @@
 - [x] PnR 4단계(4_RouteDesign_PowerAnalysis) 완료: verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, postRoute setup WNS +0.348 ns(reg2reg +0.348, IO +8.203), hold WNS +0.011 ns(reg2reg +0.054, IO +0.011), DRV 0, Density 61.839%, 정적 전력 0.765 mW(내부 71.6%/스위칭 28.3%/누설 0.06%, 활동 계산 주기 8 ns로 V1과 동일 조건). 배선 상세 확대 캡처 완료. 4단계 완료
 - [x] PnR 5단계(ChipFinish) 완료: 필러 총 7,384개(FILL1 2,262/FILL2 2,289/FILL4 1,495/FILL8 668/FILL16 327/FILL32 149/FILL64 194), 필러 후 verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, 산출물 .v 0.62 MB/.sdf 3.75 MB/.sdf_2.1 3.72 MB/.sdc 5 KB/.gds 8.1 MB, streamOut 완료(인스턴스 13,198, 핀 15, net 68,073, via 44,191). 캡처 완료
 - [x] EC 2회차(합성 vs PnR) PASS: 비교점 PO 8 + DFF 1,816 = 1,824 모두 Equivalent, 입력 7/7, Design ambiguity 1건(V1과 동일), Revised 쪽에만 라이브러리 셀 추가(최상위 22개, u_mcu_top 144개 vs Golden 58개). 캡처 완료
-- [ ] 다음: post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
+- [x] post-route Tempus 완료: setup WNS +0.347 ns(r_pc_reg_7 -> uut5/uut2 tx_fifo r_count_reg_4, Innovus +0.348과 일치), hold WNS +0.011 ns(UARTRXD -> r_rxd_s1_reg, 지연 버퍼 FE_PHC* 7개), 3,144/3,144 Met, 실제 net 5,906개 100% annotated, no_drive 14건(입력 7개 x2), SDF worst/best 생성. Design Mode 65nm 표시(V1과 동일 조건, 한계로 기록)
+- [ ] 다음: post-layout 시뮬 `TOP/2_SIM/3_POST/max|min/run_post_*.tcl`(준비됨, TB의 post SDF 경로/인스턴스 수정 완료), SDF 적용률 로그 확인
+- [x] (이전 항목) post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
 - [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
