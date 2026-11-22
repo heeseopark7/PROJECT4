@@ -26,7 +26,8 @@
 - [x] **PnR용 SDC 분리(패드 제거에 따른 불가피한 변경, 사용자 결정)**: V2는 clk/clrn 포트 net이 곧 FF를 구동하는 net이라 합성 SDC의 `set_ideal_network`(clk, clrn)가 있으면 CTS가 버퍼링하지 않음(V1은 패드 뒤 net이라 해당 없음). `TOP/5_PNR/mcu_core_top_pnr.sdc` = 합성 SDC에서 이 두 줄만 삭제한 복사본, `mcu_core_top.mmmc.view`가 이 파일을 읽음. 합성/EC/pre-layout 시뮬은 영향 없음. 이 변경 이후 PnR 0단계부터 재실행 필요(clean.tcl은 `sh clean.tcl`). 재실행 후 `clock_trees.rpt`의 Bufs(V1 176)로 확인
 - [x] PnR 3단계(CTS) 완료: 클럭 버퍼 138개(V1 176, ideal 제거 효과 확인), CTS 직후 setup WNS +0.034 ns(Density 61.588%), 최적화 후 setup WNS +0.275 ns(Density 61.828%), DRV 0. 최적화 후 hold WNS +0.001 ns(reg2reg +0.053, IO +0.001, 여유 매우 얇음: postRoute에서 재확인), 클럭 트리 Bufs 138/Invs 1/FF 1,816(1,799+17), 스큐 setup 0.097/hold 0.039 ns, 삽입 지연 평균 0.477 ns. Clock Tree Debugger GUI 캡처 완료(루트 -> 비말단 버퍼 22개 -> 말단 버퍼 약 116개 -> FF 1,816개, 3단). 3단계 완료
 - [x] PnR 4단계(4_RouteDesign_PowerAnalysis) 완료: verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, postRoute setup WNS +0.348 ns(reg2reg +0.348, IO +8.203), hold WNS +0.011 ns(reg2reg +0.054, IO +0.011), DRV 0, Density 61.839%, 정적 전력 0.765 mW(내부 71.6%/스위칭 28.3%/누설 0.06%, 활동 계산 주기 8 ns로 V1과 동일 조건). 배선 상세 확대 캡처 완료. 4단계 완료
-- [ ] PnR 실행 (5_ChipFinish 이후:  0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
+- [ ] 5단계(ChipFinish) 진행 중: 필러 삽입 GUI 확인. 필러 개수, DRC/연결성, 산출물 캡처 남음. EC 2회차 스크립트 준비됨 `TOP/4_EC/POST/script/script.tcl` (golden 합성 넷리스트, revised `5_PNR/mcu_core_top.v`, V1 POST 스크립트에서 이름만 변경)
+- [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
 ## 문서
