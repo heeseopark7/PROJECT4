@@ -88,6 +88,8 @@ wire    [31:0]      w_qb                                ;   // register read por
 wire    [31:0]      w_imm_ext                           ;   // extended immediate
 wire    [31:0]      w_a                                 ;   // ALU input A
 wire    [31:0]      w_b                                 ;   // ALU input B
+wire    [31:0]      w_bx                                ;   // adder input B (inverted for sub)
+wire    [31:0]      w_sum                               ;   // adder output (add and sub)
 wire    [31:0]      w_p4                                ;   // PC + 4
 wire                w_take_br                           ;   // branch taken
 wire    [31:0]      w_br_target                         ;   // branch target
@@ -154,8 +156,12 @@ assign  w_imm_ext = w_zext ? {16'd0, w_imm} : {{16{w_imm[15]}}, w_imm} ;
 assign  w_a       = w_shift ? {27'd0, w_sa} : w_qa          ;
 assign  w_b       = w_alu_r ? w_qb : w_imm_ext              ;
 
+// V3: add/sub share one Kogge-Stone adder. sub = a + ~b + 1
+assign  w_bx      = w_sub ? ~w_b : w_b                      ;
+add32_ks u_add (.a(w_a), .b(w_bx), .cin(w_sub), .sum(w_sum));
+
 always @(*) begin
-    if      (w_sub)             r_alu   =   w_a - w_b               ;
+    if      (w_sub)             r_alu   =   w_sum                   ;
     else if (w_and | w_andi)    r_alu   =   w_a & w_b               ;
     else if (w_or  | w_ori )    r_alu   =   w_a | w_b               ;
     else if (w_xor | w_xori)    r_alu   =   w_a ^ w_b               ;
@@ -163,7 +169,7 @@ always @(*) begin
     else if (w_srl)             r_alu   =   w_qb >> w_sa            ;
     else if (w_sra)             r_alu   =   $signed(w_qb) >>> w_sa  ;
     else if (w_lui)             r_alu   =   {w_imm, 16'd0}          ;
-    else                        r_alu   =   w_a + w_b               ;   // add, addi, lw, sw
+    else                        r_alu   =   w_sum                   ;   // add, addi, lw, sw
 end
 
 assign  o_aluout = r_alu        ;
