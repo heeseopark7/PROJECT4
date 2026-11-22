@@ -31,8 +31,14 @@
 - [x] post-route Tempus 완료: setup WNS +0.347 ns(r_pc_reg_7 -> uut5/uut2 tx_fifo r_count_reg_4, Innovus +0.348과 일치), hold WNS +0.011 ns(UARTRXD -> r_rxd_s1_reg, 지연 버퍼 FE_PHC* 7개), 3,144/3,144 Met, 실제 net 5,906개 100% annotated, no_drive 14건(입력 7개 x2), SDF worst/best 생성. Design Mode 65nm 표시(V1과 동일 조건, 한계로 기록)
 - [x] post-layout 시뮬 완료(worst/best 둘 다 PASS): SDF 적용률 경로 지연 91.56%(14,529/15,868), 타이밍 체크 82.30%(10,442/12,687), 에러 0, 미적용은 RECREM(로그 표시 500건)뿐(셀 모델 DFFRX1은 리셋 핀에 별도의 $recovery/$hold 체크(한계 0)를 두고 있고 SDF는 RECREM 결합 항목으로 제공해 매핑되지 않음. 모델 소스로 확인함. 해당 체크는 Tempus에서 위반 0). 첫 UARTTXD 하강 지연 worst +0.941 ns / best +0.241 ns, 첫 SCLK 상승 worst +0.891 / best +0.22 ns. best 로그 헤더(MTM MINIMUM) 확인 완료. V2(v1-core) 캡처 전부 완료
 - [x] (이전 항목) post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
-- [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
-- [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
+- [x] PnR 0~5단계, post-route Tempus 실행과 캡처 전부 완료
+- [x] 비교표(v1-core 열) 작성, git 태그 `v1-core` 원격 푸시 완료. `v1-pad` 태그는 원격에 아직 없음(V1 완성본 시점 커밋 4010c09)
+
+## 다음 계획 (우선순위: 툴이 필요한 작업 먼저, 툴 없이 되는 작업은 나중)
+1. [툴 필요] 문서 5장 v2(가산기 교체): 별도 폴더(V3)에서 `sccpu.v`의 가산/감산 한 가지만 변경. 근거: v1-core 최악 경로 9.43 ns 중 가산기 구간 약 3.2 ns(34%), 구조는 AOI2BB1 게이트열.
+2. [툴 필요] 클럭 sweep 10 -> 8 -> 7 ns: v1-core와 v2를 같은 SDC(주기만 변경)로 합성부터 비교, 깨지는 지점 기록. 10 ns에서는 툴이 slack을 0까지 채워 면적을 줄이므로 차이는 더 빠른 클럭에서 드러남.
+3. [툴 없이 가능] v1-core 버전 페이지(가설/변경/결과/해석/한계), README 첫 화면, 슬랙 그래프(sweep 데이터 필요), V1 PPT 정정, 공개 전 점검.
+4. [선택] v3(주소 디코드 레지스터화), v4(전력/CTS 옵션), Genus/Innovus 지연 차이 원인(setDesignMode -process, ple) 실험.
 
 ## 문서
 - `docs/SYN_SCRIPT_COMPARISON.md`: Cadence 템플릿(이미지) vs V1 `script/*.tcl` 2개 vs V2 스크립트의 Tcl 수준 비교, cost group/mmmc 차이
