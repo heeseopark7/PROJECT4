@@ -20,9 +20,9 @@ xrun -64bit \
      -gui \
      +libext+.v \
      -incdir ../../1_RTL \
-     -incdir ../TESTBENCH \
+     -incdir ../4_TESTBENCH \
      -top tb_mcu_top \
-     ../TESTBENCH/tb_mcu_top.v \
+     ../4_TESTBENCH/tb_mcu_top.v \
      ../../1_RTL/mcu_top.v \
      ../../1_RTL/sccpu.v \
      ../../1_RTL/scinstmem.v \
