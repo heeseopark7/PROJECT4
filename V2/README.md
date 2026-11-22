@@ -29,7 +29,7 @@
 - [x] PnR 5단계(ChipFinish) 완료: 필러 총 7,384개(FILL1 2,262/FILL2 2,289/FILL4 1,495/FILL8 668/FILL16 327/FILL32 149/FILL64 194), 필러 후 verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, 산출물 .v 0.62 MB/.sdf 3.75 MB/.sdf_2.1 3.72 MB/.sdc 5 KB/.gds 8.1 MB, streamOut 완료(인스턴스 13,198, 핀 15, net 68,073, via 44,191). 캡처 완료
 - [x] EC 2회차(합성 vs PnR) PASS: 비교점 PO 8 + DFF 1,816 = 1,824 모두 Equivalent, 입력 7/7, Design ambiguity 1건(V1과 동일), Revised 쪽에만 라이브러리 셀 추가(최상위 22개, u_mcu_top 144개 vs Golden 58개). 캡처 완료
 - [x] post-route Tempus 완료: setup WNS +0.347 ns(r_pc_reg_7 -> uut5/uut2 tx_fifo r_count_reg_4, Innovus +0.348과 일치), hold WNS +0.011 ns(UARTRXD -> r_rxd_s1_reg, 지연 버퍼 FE_PHC* 7개), 3,144/3,144 Met, 실제 net 5,906개 100% annotated, no_drive 14건(입력 7개 x2), SDF worst/best 생성. Design Mode 65nm 표시(V1과 동일 조건, 한계로 기록)
-- [ ] 다음: post-layout 시뮬 `TOP/2_SIM/3_POST/max|min/run_post_*.tcl`(준비됨, TB의 post SDF 경로/인스턴스 수정 완료), SDF 적용률 로그 확인
+- [x] post-layout 시뮬 완료(worst/best 둘 다 PASS): SDF 적용률 경로 지연 91.56%(14,529/15,868), 타이밍 체크 82.30%(10,442/12,687), 에러 0, 미적용은 RECREM(로그 표시 500건)뿐. 첫 UARTTXD 하강 지연 worst +0.941 ns / best +0.241 ns, 첫 SCLK 상승 worst +0.891 / best +0.22 ns. best의 sdf_post_bst.log 헤더(MINIMUM) 캡처 남음
 - [x] (이전 항목) post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
 - [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
@@ -50,6 +50,21 @@
 | PnR SDC | 합성 SDC 그대로 (ideal network 포트가 패드에 연결) | 합성 SDC에서 `set_ideal_network`(clk, clrn) 2줄 제거한 복사본 | 패드 제거의 결과(clk은 필수, clrn은 V1과 같은 조건으로 맞춘 판단) |
 | mmmc view | 패드 lib 포함 | 패드 lib 제거, SDC 경로 변경 | 패드 제거 |
 | 그대로 둔 것 | CTS target_skew 0.01, 라우팅/최적화 옵션, 전력 `-period 8.0` 등 | 동일 | - |
+
+## 공통 지표 비교표: v1-core 열 (V2 기준선, 로그 대조 완료 항목만)
+| 지표 | v1-core (V2) |
+|---|---|
+| setup WNS / TNS (postRoute) | +0.348 ns / 0 (Tempus +0.347) |
+| hold WNS / TNS (postRoute) | +0.011 ns / 0 (reg2reg +0.054, IO +0.011: 입력 지연 버퍼 FE_PHC* 7개로 수정) |
+| 합성 면적 (셀) | 21,819 um2 (RAM 10,495 / UART 5,160 / CPU 4,275 / ROM 315) |
+| PnR 면적 / utilization | 코어 191.6 x 189.81 um = 36,368 um2, die 251.6 x 249.85 um, 목표 0.6, 최종 Density 61.839% (필러 전) |
+| 전력 | 정적 0.765 mW (활동 0.2, 계산 주기 8 ns 기준, 설계 클럭 10 ns): 내부 0.548 / 스위칭 0.216 / 누설 0.0005 mW |
+| 클럭 트리 sink / skew / latency | sink 1,816 (1,799+17), 버퍼 138, skew setup 0.097 / hold 0.039 ns, 삽입 지연 평균 0.477 ns |
+| DRC | verify_drc 0 Viols (필러 후 포함), verifyConnectivity 0 Viols 0 Wrngs |
+| 등가성(EC) | RTL<->합성 PASS, 합성<->PnR PASS (비교점 1,824 모두 Equivalent) |
+| RTL / 게이트 시뮬 | RTL PASS, pre-layout PASS, post-layout worst/best PASS |
+| 총 실행 클럭 | 843 (V1과 동일 RTL/프로그램, V2에서 재측정하지 않음) |
+| 도달한 최소 클럭 주기 | 미측정 (10 ns만 수행, sweep은 v2 이후) |
 
 ## 규칙
 - **V2 SDC/스크립트는 V1과 패드 관련 부분만 다르게 한다. 그 외 값(delay, uncertainty, 옵션 등)은 임의로 바꾸지 않는다.**
