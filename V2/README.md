@@ -9,7 +9,7 @@
 
 ## 현재 진행 상태
 - [x] 코어 래퍼 `TOP/1_RTL/mcu_core_top.v` (디버그 출력 미연결)
-- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 추정이므로 합성 후 `report_port -load`로 확인)
+- [x] SDC `TOP/3_SYN/cons/mcu_core_top.sdc`: **V1과 동일, 패드 관련 줄만 변경** (패드 dont_touch 15줄 제거, `set_driving_cell PADDI` -> `set_input_transition 0.1`, `set_load [load_of PADDO/A]` -> `set_load 0.003` = 3.0 fF, 근거: V1 `02_report_port.rpt` External Loads 3.0, 단위 fF는 확인됨: V1/V2 합성 SDC 출력에 `set_load -pin_load 0.003`으로 동일하게 나옴)
 - [x] SDC 수정 후 합성 재실행 완료 (이전 I/O delay 1.0 ns, load 20 fF 합성은 기준선으로 쓰지 않음)
 - [x] 합성 스크립트 `TOP/3_SYN/script/syn_mcu_core_top.tcl`
 - [x] RTL 회귀 PASS (iverilog, 8645 ns 종료)
@@ -20,12 +20,51 @@
 - [x] pre-layout 게이트 시뮬 PASS (SDF 적용 확인: scope `tb_mcu_top.u_mcu_core_top`, 미적용 488건 모두 REMOVAL, 에러 0). 첫 UARTTXD 하강 +0.83 ns(V1 +1.773), 첫 SCLK 상승 +0.36 ns(V1 +1.392). 캡처 완료
 - [x] PnR 스크립트 작성 `TOP/5_PNR/` (V1 0~6번 스크립트에서 이름/패드 관련만 변경: 0~5, 4_..._ECO, 6_ECO, tempus, clean, mmmc.view. all.tcl 제외). 아직 실행 전
 - [x] 합성 후 Tempus 스크립트 작성 `TOP/3_SYN/script/tempus_syn.tcl` + `cons/mcu_core_top_tempus.mmmc.view` (3_SYN에서 실행하는 선택 단계. **사용자 결정으로 이번에는 실행하지 않음**, 스크립트만 보관)
-- [ ] PnR 실행 (0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
+- [x] PnR 0단계(0_InitDesign) 완료: die 251.6 x 249.85 um, core 191.6 x 189.81 um (util 0.6 정확히 일치), 핀 15개 4변 배치 정상, prePlace Density 59.996%, WNS +3.138 ns. 캡처 완료
+- [x] PnR 1단계(1_PowerPlan) 완료: 코어 링(VSS 바깥/VDD 안쪽)+스트라이프, verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, saveDesign 0 warning 0 error. 캡처 완료
+- [x] PnR 2단계(2_PlaceOpt) 완료(저장 로그 0 warning 0 error): 배치 인스턴스 5,223개, 밀도 59.94%(place_design 직후)/60.475%(place_opt 후), 혼잡도 Overflow 0(Usage 2.1%H 3.9%V), preCTS setup WNS +0.399 ns, TNS 0, DRV 모두 0, Density 60.603% (PnR용 SDC로 0~2단계 재실행한 최종값. 최초 실행은 +0.397 ns / 60.475%) (V1은 -0.352 ns, 위반 3개, max_tran 33 net)
+- [x] **PnR용 SDC 분리(패드 제거에 따른 불가피한 변경, 사용자 결정)**: V2는 clk/clrn 포트 net이 곧 FF를 구동하는 net이라 합성 SDC의 `set_ideal_network`(clk, clrn)가 있으면 CTS가 버퍼링하지 않음(V1은 패드 뒤 net이라 해당 없음). `TOP/5_PNR/mcu_core_top_pnr.sdc` = 합성 SDC에서 이 두 줄만 삭제한 복사본, `mcu_core_top.mmmc.view`가 이 파일을 읽음. 합성/EC/pre-layout 시뮬은 영향 없음. 이 변경 이후 PnR 0단계부터 재실행 필요(clean.tcl은 `sh clean.tcl`). 재실행 후 `clock_trees.rpt`의 Bufs(V1 176)로 확인
+- [x] PnR 3단계(CTS) 완료: 클럭 버퍼 138개(V1 176, ideal 제거 효과 확인), CTS 직후 setup WNS +0.034 ns(Density 61.588%), 최적화 후 setup WNS +0.275 ns(Density 61.828%), DRV 0. 최적화 후 hold WNS +0.001 ns(reg2reg +0.053, IO +0.001, 여유 매우 얇음: postRoute에서 재확인), 클럭 트리 Bufs 138/Invs 1/FF 1,816(1,799+17), 스큐 setup 0.097/hold 0.039 ns, 삽입 지연 평균 0.477 ns. Clock Tree Debugger GUI 캡처 완료(루트 -> 비말단 버퍼 22개 -> 말단 버퍼 약 116개 -> FF 1,816개, 3단). 3단계 완료
+- [x] PnR 4단계(4_RouteDesign_PowerAnalysis) 완료: verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, postRoute setup WNS +0.348 ns(reg2reg +0.348, IO +8.203), hold WNS +0.011 ns(reg2reg +0.054, IO +0.011), DRV 0, Density 61.839%, 정적 전력 0.765 mW(내부 71.6%/스위칭 28.3%/누설 0.06%, 활동 계산 주기 8 ns로 V1과 동일 조건). 배선 상세 확대 캡처 완료. 4단계 완료
+- [x] PnR 5단계(ChipFinish) 완료: 필러 총 7,384개(FILL1 2,262/FILL2 2,289/FILL4 1,495/FILL8 668/FILL16 327/FILL32 149/FILL64 194), 필러 후 verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, 산출물 .v 0.62 MB/.sdf 3.75 MB/.sdf_2.1 3.72 MB/.sdc 5 KB/.gds 8.1 MB, streamOut 완료(인스턴스 13,198, 핀 15, net 68,073, via 44,191). 캡처 완료
+- [x] EC 2회차(합성 vs PnR) PASS: 비교점 PO 8 + DFF 1,816 = 1,824 모두 Equivalent, 입력 7/7, Design ambiguity 1건(V1과 동일), Revised 쪽에만 라이브러리 셀 추가(최상위 22개, u_mcu_top 144개 vs Golden 58개). 캡처 완료
+- [x] post-route Tempus 완료: setup WNS +0.347 ns(r_pc_reg_7 -> uut5/uut2 tx_fifo r_count_reg_4, Innovus +0.348과 일치), hold WNS +0.011 ns(UARTRXD -> r_rxd_s1_reg, 지연 버퍼 FE_PHC* 7개), 3,144/3,144 Met, 실제 net 5,906개 100% annotated, no_drive 14건(입력 7개 x2), SDF worst/best 생성. Design Mode 65nm 표시(V1과 동일 조건, 한계로 기록)
+- [x] post-layout 시뮬 완료(worst/best 둘 다 PASS): SDF 적용률 경로 지연 91.56%(14,529/15,868), 타이밍 체크 82.30%(10,442/12,687), 에러 0, 미적용은 RECREM(로그 표시 500건)뿐(셀 모델 DFFRX1은 리셋 핀에 별도의 $recovery/$hold 체크(한계 0)를 두고 있고 SDF는 RECREM 결합 항목으로 제공해 매핑되지 않음. 모델 소스로 확인함. 해당 체크는 Tempus에서 위반 0). 첫 UARTTXD 하강 지연 worst +0.941 ns / best +0.241 ns, 첫 SCLK 상승 worst +0.891 / best +0.22 ns. best 로그 헤더(MTM MINIMUM) 확인 완료. V2(v1-core) 캡처 전부 완료
+- [x] (이전 항목) post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
+- [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
 ## 문서
 - `docs/SYN_SCRIPT_COMPARISON.md`: Cadence 템플릿(이미지) vs V1 `script/*.tcl` 2개 vs V2 스크립트의 Tcl 수준 비교, cost group/mmmc 차이
 - `docs/SYN_FLOW_COMPARISON.md`: Genus 기본 플로우(PDF) vs V1 vs V2 합성 플로우/SDC 상세 비교, 합성 전 체크리스트
+
+## V1 대비 의도된 차이 목록 (패드 제거로 인한 것만, 이 외는 V1과 동일해야 함)
+| 영역 | V1 | V2 | 구분 |
+|---|---|---|---|
+| RTL | mcu_pad_top = 패드 + mcu_top | mcu_core_top = mcu_top (패드 없음, 디버그 출력 미연결) | 패드 제거 |
+| 합성 SDC | 패드 dont_touch 15줄, `set_driving_cell PADDI`, `set_load [load_of PADDO/A]` | dont_touch 제거, `set_input_transition 0.1`, `set_load 0.003`(V1 값과 동일) | 패드 관련 대체 |
+| 합성 스크립트/EC/pre-layout 시뮬 | 패드 lib/모델 포함 | 패드 lib 제거, 이름 변경, TB DUT를 mcu_core_top으로 | 패드 제거 |
+| floorplan | 패드 링 기준 die 1663 um, 여백 352 | 코어 기준 여백 30 um(링 폭에 맞춤), utilization 0.6은 V1과 동일 | 패드 제거 |
+| 핀 | 패드(init.io) | `editPin`으로 4변 배치(V1 패드 변 기준) | 패드 제거 |
+| 전원 | 안쪽 링 + 바깥 링 + 패드 연결 + 스트라이프 | 코어 링 + 스트라이프(바깥 링, 패드 연결 제거) | 패드 제거 |
+| PnR SDC | 합성 SDC 그대로 (ideal network 포트가 패드에 연결) | 합성 SDC에서 `set_ideal_network`(clk, clrn) 2줄 제거한 복사본 | 패드 제거의 결과(clk은 필수, clrn은 V1과 같은 조건으로 맞춘 판단) |
+| mmmc view | 패드 lib 포함 | 패드 lib 제거, SDC 경로 변경 | 패드 제거 |
+| 그대로 둔 것 | CTS target_skew 0.01, 라우팅/최적화 옵션, 전력 `-period 8.0` 등 | 동일 | - |
+
+## 공통 지표 비교표: v1-core 열 (V2 기준선, 로그 대조 완료 항목만)
+| 지표 | v1-core (V2) |
+|---|---|
+| setup WNS / TNS (postRoute) | +0.348 ns / 0 (Tempus +0.347) |
+| hold WNS / TNS (postRoute) | +0.011 ns / 0 (reg2reg +0.054, IO +0.011: 입력 지연 버퍼 FE_PHC* 7개로 수정) |
+| 합성 면적 (셀) | 21,819 um2 (RAM 10,495 / UART 5,160 / CPU 4,275 / ROM 315) |
+| PnR 면적 / utilization | 코어 191.6 x 189.81 um = 36,368 um2, die 251.6 x 249.85 um, 목표 0.6, 최종 Density 61.839% (필러 전) |
+| 전력 | 정적 0.765 mW (활동 0.2, 계산 주기 8 ns 기준, 설계 클럭 10 ns): 내부 0.548 / 스위칭 0.216 / 누설 0.0005 mW |
+| 클럭 트리 sink / skew / latency | sink 1,816 (1,799+17), 버퍼 138, skew setup 0.097 / hold 0.039 ns, 삽입 지연 평균 0.477 ns |
+| DRC | verify_drc 0 Viols (필러 후 포함), verifyConnectivity 0 Viols 0 Wrngs |
+| 등가성(EC) | RTL<->합성 PASS, 합성<->PnR PASS (비교점 1,824 모두 Equivalent) |
+| RTL / 게이트 시뮬 | RTL PASS, pre-layout PASS, post-layout worst/best PASS |
+| 총 실행 클럭 | 843 (V1과 동일 RTL/프로그램, V2에서 재측정하지 않음) |
+| 도달한 최소 클럭 주기 | 미측정 (10 ns만 수행, sweep은 v2 이후) |
 
 ## 규칙
 - **V2 SDC/스크립트는 V1과 패드 관련 부분만 다르게 한다. 그 외 값(delay, uncertainty, 옵션 등)은 임의로 바꾸지 않는다.**

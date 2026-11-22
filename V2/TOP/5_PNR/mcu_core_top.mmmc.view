@@ -70,7 +70,7 @@ create_delay_corner -name SS_WORST \
 
 
 create_constraint_mode -name FUNC \
-   -sdc_files [list ../3_SYN/mapped/mcu_core_top_syn_final.sdc]
+   -sdc_files [list ./mcu_core_top_pnr.sdc]
 
 
 ############################################
