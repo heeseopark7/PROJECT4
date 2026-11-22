@@ -27,7 +27,8 @@
 - [x] PnR 3단계(CTS) 완료: 클럭 버퍼 138개(V1 176, ideal 제거 효과 확인), CTS 직후 setup WNS +0.034 ns(Density 61.588%), 최적화 후 setup WNS +0.275 ns(Density 61.828%), DRV 0. 최적화 후 hold WNS +0.001 ns(reg2reg +0.053, IO +0.001, 여유 매우 얇음: postRoute에서 재확인), 클럭 트리 Bufs 138/Invs 1/FF 1,816(1,799+17), 스큐 setup 0.097/hold 0.039 ns, 삽입 지연 평균 0.477 ns. Clock Tree Debugger GUI 캡처 완료(루트 -> 비말단 버퍼 22개 -> 말단 버퍼 약 116개 -> FF 1,816개, 3단). 3단계 완료
 - [x] PnR 4단계(4_RouteDesign_PowerAnalysis) 완료: verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, postRoute setup WNS +0.348 ns(reg2reg +0.348, IO +8.203), hold WNS +0.011 ns(reg2reg +0.054, IO +0.011), DRV 0, Density 61.839%, 정적 전력 0.765 mW(내부 71.6%/스위칭 28.3%/누설 0.06%, 활동 계산 주기 8 ns로 V1과 동일 조건). 배선 상세 확대 캡처 완료. 4단계 완료
 - [x] PnR 5단계(ChipFinish) 완료: 필러 총 7,384개(FILL1 2,262/FILL2 2,289/FILL4 1,495/FILL8 668/FILL16 327/FILL32 149/FILL64 194), 필러 후 verify_drc 0 Viols, verifyConnectivity 0 Viols 0 Wrngs, 산출물 .v 0.62 MB/.sdf 3.75 MB/.sdf_2.1 3.72 MB/.sdc 5 KB/.gds 8.1 MB, streamOut 완료(인스턴스 13,198, 핀 15, net 68,073, via 44,191). 캡처 완료
-- [ ] 다음: EC 2회차(합성 vs PnR) `TOP/4_EC/POST/script/script.tcl`(준비됨), post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
+- [x] EC 2회차(합성 vs PnR) PASS: 비교점 PO 8 + DFF 1,816 = 1,824 모두 Equivalent, 입력 7/7, Design ambiguity 1건(V1과 동일), Revised 쪽에만 라이브러리 셀 추가(최상위 22개, u_mcu_top 144개 vs Golden 58개). 캡처 완료
+- [ ] 다음: post-route Tempus `5_PNR/tempus.tcl`, post-layout 시뮬(worst/best SDF)
 - [ ] PnR 실행 ( 0_InitDesign -> 1_PowerPlan -> 2_PlaceOpt -> 3_PostCTSopt -> 4_RouteDesign_PowerAnalysis -> 5_ChipFinish -> tempus.tcl), 리포트와 캡처
 - [ ] 리포트 저장, 비교표 채우기, git 태그 `v1-core`
 
