@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""Revise MCU_V1_portfolio.pdf: replace pages 1, 7, 13, patch pages 8, 12, 14-16, 18, 19,
-and append appendix S1-S4 (full scripts, SDC, MMMC) taken verbatim from V1/TOP.
+"""Build the FE and BE portfolios from the original single portfolio PDF.
+FE = new cover + original pages 2-12 (+ appendix S1, S2); BE = new cover + original 13-22 (+ appendix D, E).
+Pages 7 and 13 are rewritten, pages 8, 12, 14-16, 18, 19 are patched, dark script/log captures are
+inverted to high contrast, and the appendices are taken verbatim from the V1/TOP files.
 
-usage: python3 build_rev.py <V1/TOP dir> <original pdf> <output pdf> <work dir>
+usage: python3 build_portfolio.py <V1/TOP dir> <original pdf> <output dir> <work dir>
 needs: pypdf, pypdfium2, node + playwright (chromium)
 """
 import html, pathlib, subprocess, sys
 import pypdf, pypdfium2
 
-TOP, ORIG, OUT, WORK = map(pathlib.Path, sys.argv[1:5])
+TOP, ORIG, OUTDIR, WORK = map(pathlib.Path, sys.argv[1:5])
+PROJ = "Park Heeseo_project"
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from invert import invert_hc
 SRC = pathlib.Path(__file__).resolve().parent
 FONTS = (SRC / "fonts").as_uri()
 WORK.mkdir(parents=True, exist_ok=True)
@@ -70,7 +75,7 @@ def code_file(rel, note=None):
     n = t.count("\n") + 1
     nt = f'<div class="fn" style="margin:3pt 0 4pt">{note}</div>' if note else ""
     return (f'<div style="break-inside: avoid-page; break-after: auto"></div>'
-            f'<div class="fh"><span>V1/TOP/{rel}</span><span>{n} lines</span></div>'
+            f'<div class="fh"><span>{PROJ}/TOP/{rel}</span><span>{n} lines</span></div>'
             f'<pre class="code">{html.escape(t)}</pre>{nt}')
 
 def lines(rel, a, b):
@@ -92,7 +97,7 @@ def render(html_text, name, margin=None):
     return pypdf.PdfReader(str(out))
 
 # ---------------------------------------------------------------- appendix (rendered first: page numbers go into the TOC)
-appx = f"""
+appx_fe = f"""
 <div class="bar">부록 S1 · 합성 실행 스크립트 원문 (3-c-i)</div>
 <p>10 ns 최종 합성(11/19 00:16~00:21, <code>3_SYN/log/all.log</code>)에 쓴 파일을 그대로 옮겼다. <code>3_SYN</code>에서 <code>./run_synthesis</code>를 실행하면 Genus가 <code>syn_mcu_pad_top.tcl</code>을 처음부터 끝까지 실행한다.
 같은 폴더의 <code>syn_mcu_pad_top_mmmc.tcl</code>은 다른 설계용 수업 템플릿으로, 실행에 쓰지 않았다.</p>
@@ -105,8 +110,9 @@ appx = f"""
 파일 위쪽 주석("instead of the PADDI cell")은 2.5 ns 실험 때의 설명으로, 실제로 켜진 줄과 맞지 않는다.</p>
 {code_file("3_SYN/cons/mcu_pad_top.sdc")}
 {code_file("3_SYN/cons/dont_use_45nm.tcl", "SDC 바로 뒤에 source한다. 지연, 홀드, 타이, 스캔 플립플롭 셀을 합성에서 쓰지 않게 막는다.")}
-<div style="break-before: page"></div>
-<div class="bar">부록 S3 · APR 스크립트 원문 (4-a)</div>
+"""
+appx_be = f"""
+<div class="bar">부록 D · APR 스크립트 원문 (4-a)</div>
 <p>Innovus 22.17-s086_1에서 단계별로 실행했다. 각 스크립트는 앞 단계 DB를 <code>restoreDesign</code>으로 열고 <code>saveDesign</code>으로 다음 DB를 남긴다.
 실행 기록(<code>innovus.cmd*</code>)과 대조해 일치함을 확인했다. 실행 뒤 바뀐 곳은 3_PostCTSopt.tcl의 <code>file mkdir snap</code> 삭제와 5_ChipFinish.tcl의 <code>saveNetlist -flat</code>에서 <code>-flat</code> 제거(post-layout 시뮬 SDF 적용 문제 해결, 부록 A) 두 곳이다.</p>
 {code_file("5_PNR/0_InitDesign.tcl")}
@@ -117,62 +123,77 @@ appx = f"""
 {code_file("5_PNR/4_RouteDesign_PowerAnalysis.tcl")}
 {code_file("5_PNR/5_ChipFinish.tcl")}
 <div style="break-before: page"></div>
-<div class="bar">부록 S4 · Import 설정 원문 (4-b)</div>
+<div class="bar">부록 E · Import 설정 원문 (4-b)</div>
 <p><code>0_InitDesign.tcl</code>의 <code>init_mmmc_file</code>이다. setup은 FUNC_SS_WORST, hold는 FUNC_FF_BEST로 본다. 첫 실행 로그(<code>5_PNR/innovus.log</code>)에서 아래 파일을 모두 읽은 것을 확인했다.</p>
 {code_file("5_PNR/mcu_pad_top.mmmc.view")}
 {code_file("5_PNR/add_pad", "P&amp;R에 넣은 넷리스트는 11/10 합성 출력의 endmodule 앞에 이 전원 패드 16개를 붙인 파일이다. 현재 3_SYN/mapped의 넷리스트(11/19 재합성)에는 이 16줄이 없으므로, 0_InitDesign.tcl을 다시 돌릴 때는 다시 붙여야 한다.")}
 """
-appx_pdf = render(doc(appx, "body{background:#fff}"), "appendix",
-                  {"top": "53.33px", "bottom": "45.33px", "left": "49px", "right": "48.67px"})
 orig = pypdf.PdfReader(str(ORIG))
-N0 = len(orig.pages)
+FE_ORIG = list(range(2, 13))     # original pages in the FE book (after its cover)
+BE_ORIG = list(range(13, 23))    # original pages in the BE book
 
-def find_page(reader_path, needle):
-    d = pypdfium2.PdfDocument(str(reader_path))
+def find_page(path, needle):
+    d = pypdfium2.PdfDocument(str(path))
     for i in range(len(d)):
         if needle in d[i].get_textpage().get_text_range():
             return i
     raise SystemExit(f"not found: {needle}")
 
-ap = WORK / "appendix.pdf"
-S = {k: N0 + 1 + find_page(ap, t) for k, t in
-     {"S1": "부록 S1", "S2": "부록 S2", "S3": "부록 S3", "S4": "부록 S4"}.items()}
+M = {"top": "53.33px", "bottom": "45.33px", "left": "49px", "right": "48.67px"}
+afe = render(doc(appx_fe, "body{background:#fff}"), "appendix_fe", M)
+abe = render(doc(appx_be, "body{background:#fff}"), "appendix_be", M)
+FE0 = 1 + len(FE_ORIG)
+BE0 = 1 + len(BE_ORIG)
+S = {"S1": FE0 + 1 + find_page(WORK / "appendix_fe.pdf", "부록 S1"),
+     "S2": FE0 + 1 + find_page(WORK / "appendix_fe.pdf", "부록 S2"),
+     "D": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 D"),
+     "E": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 E")}
+bp = lambda k: k - 11            # original page k -> page number in the BE book
 
 # ---------------------------------------------------------------- page 1 (cover)
-cover = f"""
+def tile(v, cap):
+    return (f'<td style="padding:8pt 9pt"><div class="mono" style="background:none;padding:0;font-size:12pt;font-weight:700">{v}</div>'
+            f'<div class="cap">{cap}</div></td>')
+
+def cover(part, part_ko, lead, tiles, rows, flow):
+    tr = "".join(f'<tr><td>{a}</td><td>{b}</td></tr>' for a, b in rows)
+    return f"""
 <div class="page" style="padding-top:120pt">
- <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">Physical Implementation 포트폴리오 · V1 (패드 포함 mcu_pad_top)</div>
- <div style="font-size:27pt;font-weight:700;margin:6pt 0 6pt;letter-spacing:-0.6pt">MCU RTL to GDS2</div>
- <p style="font-size:11.8pt;line-height:1.65;color:#3f4b52">단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL 시뮬레이션부터 합성, 등가성 검사, P&amp;R, STA, post-layout 시뮬레이션까지 진행해 GDS2를 만든 기록이다. 클럭 10 ns(100 MHz) 기준, 공정은 GPDK045.</p>
+ <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">Physical Implementation 포트폴리오 · {part} (패드 포함 mcu_pad_top)</div>
+ <div style="font-size:27pt;font-weight:700;margin:6pt 0 0;letter-spacing:-0.6pt">{PROJ}</div>
+ <div style="font-size:13pt;font-weight:600;color:var(--teal);margin:0 0 8pt">MCU RTL to GDS2 · {part_ko}</div>
+ <p style="font-size:11.4pt;line-height:1.65;color:#3f4b52">{lead}</p>
  <div class="note" style="font-size:9pt">RTL은 Claude의 도움을 받아 작성했고 코드 구조는 설명할 수 있는 수준으로 이해했다. RTL 시뮬레이션, 합성, P&amp;R은 직접 수행했다.</div>
- <table style="table-layout:fixed;margin:6pt 0 16pt"><tr>
-  <td style="padding:8pt 9pt"><div class="mono" style="background:none;padding:0;font-size:12pt;font-weight:700">10 ns</div><div class="cap">최종 클럭 (100 MHz)</div></td>
-  <td style="padding:8pt 9pt"><div class="mono" style="background:none;padding:0;font-size:12pt;font-weight:700">+0.441 / +0.053 ns</div><div class="cap">postRoute setup / hold WNS</div></td>
-  <td style="padding:8pt 9pt"><div class="mono" style="background:none;padding:0;font-size:12pt;font-weight:700">0 viol.</div><div class="cap">verify_drc, verifyConnectivity (필러 후)</div></td>
-  <td style="padding:8pt 9pt"><div class="mono" style="background:none;padding:0;font-size:12pt;font-weight:700">PASS</div><div class="cap">RTL·pre·post 시뮬, 등가성 2회</div></td>
- </tr></table>
+ <table style="table-layout:fixed;margin:6pt 0 16pt"><tr>{"".join(tile(*t) for t in tiles)}</tr></table>
  <h3 style="margin-top:0">구성</h3>
- <table>
-  <tr><th style="width:17%">Part</th><th>항목</th><th style="width:9%">쪽</th></tr>
-  <tr><td rowspan="4">FE</td><td>3-a 설계 논리 다이어그램과 스펙</td><td>2</td></tr>
-  <tr><td>3-b 기능 시뮬레이션 (파형)</td><td>6</td></tr>
-  <tr><td>3-c 합성 (실행 스크립트, 제약, setup 타이밍 리포트)</td><td>7</td></tr>
-  <tr><td>3-d Pre-layout 시뮬레이션 (3-b와 동일 검증, 타이밍으로 생긴 차이)</td><td>11</td></tr>
-  <tr><td rowspan="7">BE</td><td>4-a APR 전 과정 스크립트 · 4-b Import 파일 정리</td><td>13</td></tr>
-  <tr><td>4-c 단계별 캡처 (고대비, 음영 반전)</td><td>14</td></tr>
-  <tr><td>4-d NanoRoute 후 타이밍 리포트 (Setup + Hold)</td><td>17</td></tr>
-  <tr><td>4-e STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)</td><td>17</td></tr>
-  <tr><td>4-f ECO 수행 과정</td><td>19</td></tr>
-  <tr><td>4-g 최종 타이밍 리포트 (Setup + Hold)</td><td>19</td></tr>
-  <tr><td>(4-a 원문 부록 S3, 4-b 원문 부록 S4)</td><td>{S['S3']}</td></tr>
-  <tr><td rowspan="5">부록</td><td>A~C post-layout 시뮬레이션, 등가성 검사, 한계</td><td>21</td></tr>
-  <tr><td>S1 합성 실행 스크립트 원문 (run_synthesis, syn_mcu_pad_top.tcl)</td><td>{S['S1']}</td></tr>
-  <tr><td>S2 10 ns 최종 SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)</td><td>{S['S2']}</td></tr>
-  <tr><td>S3 APR 스크립트 원문 (0_InitDesign.tcl ~ 5_ChipFinish.tcl, init.io)</td><td>{S['S3']}</td></tr>
-  <tr><td>S4 Import 설정 원문 (mcu_pad_top.mmmc.view, add_pad)</td><td>{S['S4']}</td></tr>
- </table>
- <p style="font-size:10.6pt;color:#3f4b52;margin-top:10pt">플로우: xrun(RTL 시뮬) → Genus(합성) → Conformal(RTL↔합성) → xrun(pre-layout) → Innovus(P&amp;R) → Conformal(합성↔PnR) → Tempus(STA) → xrun(post-layout, worst/best).</p>
+ <table><tr><th>항목</th><th style="width:9%">쪽</th></tr>{tr}</table>
+ <p style="font-size:10.4pt;color:#3f4b52;margin-top:10pt">{flow}</p>
 </div>"""
+
+LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL 시뮬레이션부터 합성, 등가성 검사, "
+        "P&amp;R, STA, post-layout 시뮬레이션까지 진행해 GDS2를 만든 기록이다. 클럭 10 ns(100 MHz) 기준, 공정은 GPDK045. ")
+cover_fe = cover("Front-End", "Front-End (FE) 포트폴리오",
+    LEAD + "이 권은 설계 스펙부터 합성, 등가성 검사, pre-layout 시뮬레이션까지(가이드라인 3)를 다룬다. P&amp;R 이후는 BE 포트폴리오에 있다.",
+    [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
+     ("PASS", "Conformal RTL ↔ 합성"), ("PASS", "RTL · pre-layout 시뮬")],
+    [("3-a 설계 논리 다이어그램과 스펙", 2), ("3-b 기능 시뮬레이션 (파형)", 6),
+     ("3-c 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", 7),
+     ("3-d Pre-layout 시뮬레이션 (3-b와 동일 검증, 타이밍으로 생긴 차이)", 11),
+     ("부록 S1 합성 실행 스크립트 원문 (run_synthesis, syn_mcu_pad_top.tcl)", S["S1"]),
+     ("부록 S2 10 ns 최종 SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)", S["S2"])],
+    "FE 플로우: xrun(RTL 시뮬) → Genus(합성) → Conformal(RTL↔합성) → xrun(pre-layout, 합성 SDF).")
+cover_be = cover("Back-End", "Back-End (BE) 포트폴리오",
+    LEAD + "이 권은 P&amp;R부터 STA, post-layout 시뮬레이션까지(가이드라인 4)를 다룬다. 입력은 FE 포트폴리오의 10 ns 합성 넷리스트와 SDC다.",
+    [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
+     ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("PASS", "post-layout 시뮬, 합성↔PnR 등가성")],
+    [("4-a APR 전 과정 스크립트 · 4-b Import 파일 정리", bp(13)), ("4-c 단계별 캡처 (고대비, 음영 반전)", bp(14)),
+     ("4-d NanoRoute 후 타이밍 리포트 (Setup + Hold)", bp(17)),
+     ("4-e STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)", bp(17)),
+     ("4-f ECO 수행 과정", bp(19)), ("4-g 최종 타이밍 리포트 (Setup + Hold)", bp(19)),
+     ("부록 A~C post-layout 시뮬레이션, 등가성 검사, 한계", bp(21)),
+     ("부록 D APR 스크립트 원문 (0_InitDesign.tcl ~ 5_ChipFinish.tcl, init.io)", S["D"]),
+     ("부록 E Import 설정 원문 (mcu_pad_top.mmmc.view, add_pad)", S["E"])],
+    "BE 플로우: Innovus(P&amp;R) → Conformal(합성↔PnR) → Tempus(STA) → xrun(post-layout, worst/best).")
 
 # ---------------------------------------------------------------- page 7 (3-c-i)
 syn_excerpt = lines("3_SYN/script/syn_mcu_pad_top.tcl", 25, 36)
@@ -220,7 +241,7 @@ p13 = f"""
   <tr><td><code>4_RouteDesign_</code><br><code>PowerAnalysis.tcl</code></td><td>PostCTSopt → RouteDesign</td><td>NanoRoute <code>routeDesign -globalDetail</code>, <code>optDesign -postRoute -drv/-setup/-hold</code>(bcwc), <code>extractRC</code>, <code>report_power</code></td></tr>
   <tr><td><code>5_ChipFinish.tcl</code></td><td>RouteDesign → ChipFinish</td><td><code>addFiller</code>, <code>verify_drc</code>, <code>verifyConnectivity</code>, <code>saveNetlist</code>, <code>write_sdf</code>, <code>writeTimingCon</code>, <code>streamOut</code></td></tr>
  </table>
- <div class="note"><b class="l">원문 수록.</b> 6개 스크립트와 init.io 원문은 부록 S3(p.{S['S3']})에 있다. 실행 기록(<code>innovus.cmd*</code>)과 대조해 floorplan 값, 패드 좌표, 링 offset, CTS 목표 스큐, postRoute 분석 모드가 일치함을 확인했다.</div>
+ <div class="note"><b class="l">원문 수록.</b> 6개 스크립트와 init.io 원문은 부록 D(p.{S['D']})에 있다. 실행 기록(<code>innovus.cmd*</code>)과 대조해 floorplan 값, 패드 좌표, 링 offset, CTS 목표 스큐, postRoute 분석 모드가 일치함을 확인했다.</div>
  <h3>4-b Import 파일 (init 단계에서 실제로 읽은 파일, <code>innovus.log</code> 기준)</h3>
  <table>
   <tr><th style="width:17%">종류</th><th style="width:47%">파일</th><th>출처 / 비고</th></tr>
@@ -231,13 +252,13 @@ p13 = f"""
   <tr><td>타이밍 lib (FF)</td><td><code>fast_vdd1v0_basicCells.lib</code>, <code>fast_vdd1v0_multibitsDFF.lib</code>, <code>pads_FF_s1vg.lib</code></td><td>hold, FUNC_FF_BEST (1.1 V, 0°C)</td></tr>
   <tr><td>LEF</td><td><code>gsclib045_tech.lef</code>(gsclib045_tech/lef), <code>gsclib045_macro.lef</code>, <code>gsclib045_multibitsDFF.lef</code>, <code>giolib045_modify.lef</code></td><td>GPDK045 gsclib045 v4.4, giolib045 v3.5</td></tr>
   <tr><td>RC</td><td><code>gpdk045.tch</code>(gsclib045/qrc/qx) + cap table <code>…typical.capTbl</code></td><td>rc_corner BEST(T 0), WORST(T 125)</td></tr>
-  <tr><td>View</td><td>constraint_mode FUNC, view FUNC_SS_WORST / FUNC_FF_BEST</td><td><code>mcu_pad_top.mmmc.view</code>(부록 S4)</td></tr>
+  <tr><td>View</td><td>constraint_mode FUNC, view FUNC_SS_WORST / FUNC_FF_BEST</td><td><code>mcu_pad_top.mmmc.view</code>(부록 E)</td></tr>
  </table>
  <div class="chk"><b class="l">합성과 대조.</b> 타이밍 lib(slow 3종)는 합성과 같다. 다른 점: IO LEF가 합성은 <code>giolib045.lef</code>, P&amp;R은 <code>giolib045_modify.lef</code>. P&amp;R에만 <code>gsclib045_multibitsDFF.lef</code>와 cap table이 있다. tech LEF와 QRC는 파일명이 같고 폴더만 다르다.</div>
 </div>"""
 
-new_pages = render(doc(cover + p7 + p13), "newpages")
-assert len(new_pages.pages) == 3, f"new pages overflowed: {len(new_pages.pages)}"
+new_pages = render(doc(cover_fe + p7 + cover_be + p13), "newpages")
+assert len(new_pages.pages) == 4, f"new pages overflowed: {len(new_pages.pages)}"
 
 # ---------------------------------------------------------------- overlays
 def white(x, y, w, h):
@@ -253,7 +274,10 @@ OV = {}
 OV[8] = (f'<div class="ov note" style="left:{L}pt;top:768pt;width:{Wd}pt;font-size:8.6pt">'
          f'<b class="l">10 ns 최종 SDC는 다르다.</b> 위 <code>set_input_transition 0.1</code> 수정은 2.5 ns 실험에서만 썼다. 10 ns 최종 합성과 P&amp;R에 들어간 SDC는 <code>set_driving_cell PADDI</code>를 그대로 두었다 '
          f'(<code>log/all.log</code> 607행, <code>02_report_port.rpt</code>의 입력 드라이버가 모두 <code>PADDI/Y</code>). 10 ns SDC 전문은 부록 S2(p.{S["S2"]}).</div>')
-OV[12] = (white(36, 354, 523.5, 60.5) +
+OV[12] = (white(36, 315.5, 523.5, 34) +
+          f'<div class="ov" style="left:39pt;top:316.5pt;width:519pt;font-size:10.3pt;line-height:1.55;padding-left:11pt;text-indent:-11pt">'
+          '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다. 배선 후 지연(+3.46 ns worst)은 BE 포트폴리오 부록 A의 post-layout 시뮬에서 확인한다.</div>' +
+          white(36, 354, 523.5, 60.5) +
           f'<div class="ov" style="left:{L}pt;top:355pt;width:{Wd}pt">'
           f'<div class="chk"><b class="l">확인 필요</b> 문서 5의 확대 파형 캡션은 하강 지연을 약 1.15 ns로, 본문 측정은 +1.773 ns로 적었다. 본문은 +1.773 ns를 썼고 확대 파형 캡처는 넣지 않았다.</div>'
           f'<div class="note"><b class="l">확인 완료: 사용한 넷리스트.</b> 3-c의 등가성 검사(Conformal 1)와 이 pre-layout 시뮬레이션은 모두 <b>10 ns 넷리스트</b>로 수행했다. '
@@ -284,19 +308,34 @@ ov_pdf = render(doc(ov_html), "overlays")
 assert len(ov_pdf.pages) == len(order)
 
 # ---------------------------------------------------------------- merge
-w = pypdf.PdfWriter()
-repl = {1: 0, 7: 1, 13: 2}
-for i in range(1, N0 + 1):
-    if i in repl:
-        pg = new_pages.pages[repl[i]]
-    else:
-        pg = orig.pages[i - 1]
-        if i in OV:
-            pg.merge_page(ov_pdf.pages[order.index(i)])
-    w.add_page(pg)
-for pg in appx_pdf.pages:
-    w.add_page(pg)
-w.add_metadata({"/Title": "MCU_V1_portfolio"})
-with open(OUT, "wb") as f:
-    w.write(f)
-print("pages:", len(w.pages), "appendix starts:", S)
+def is_dark(img):
+    from PIL import ImageStat
+    return ImageStat.Stat(img.convert("L")).mean[0] < 100
+
+def book(cover_idx, orig_pages, appx, out):
+    w = pypdf.PdfWriter()
+    w.add_page(new_pages.pages[cover_idx])
+    for k in orig_pages:
+        if k == 7:
+            w.add_page(new_pages.pages[1]); continue
+        if k == 13:
+            w.add_page(new_pages.pages[3]); continue
+        w.add_page(orig.pages[k - 1])
+        pg = w.pages[-1]
+        n = 0
+        for im in pg.images:
+            if im.image.mode in ("RGB", "L") and is_dark(im.image):
+                im.replace(invert_hc(im.image), quality=92); n += 1
+        if k in OV:
+            pg.merge_page(ov_pdf.pages[order.index(k)])
+    for p in appx.pages:
+        w.add_page(p)
+    w.add_metadata({"/Title": out.stem})
+    with open(out, "wb") as f:
+        w.write(f)
+    return len(w.pages)
+
+OUTDIR.mkdir(parents=True, exist_ok=True)
+fe = OUTDIR / "Park_Heeseo_project_FE_portfolio.pdf"
+be = OUTDIR / "Park_Heeseo_project_BE_portfolio.pdf"
+print("FE pages", book(0, FE_ORIG, afe, fe), "BE pages", book(2, BE_ORIG, abe, be), S)
