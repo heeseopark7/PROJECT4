@@ -119,7 +119,7 @@ def cover(part, part_ko, lead, tiles, rows, flow):
     tr = "".join(f'<tr><td>{a}</td><td>{b}</td></tr>' for a, b in rows)
     return f"""
 <div class="page" style="padding-top:120pt">
- <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">Physical Implementation 포트폴리오</div>
+ <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">{part} Portfolio</div>
  <div style="font-size:27pt;font-weight:700;margin:6pt 0 0;letter-spacing:-0.6pt">{PROJ}</div>
  <div style="font-size:13pt;font-weight:600;color:var(--teal);margin:0 0 8pt">MCU RTL to GDSII · {part_ko}</div>
  <p style="font-size:11.4pt;line-height:1.65;color:#3f4b52">{lead}</p>
@@ -348,10 +348,10 @@ def head(y, txt, code):
 
 L, Wd = 36.75, 521.75
 OV = {}
-OV[12] = (white(36, 315.5, 523.5, 34) +
-          f'<div class="ov" style="left:39pt;top:316.5pt;width:519pt;font-size:10.3pt;line-height:1.55;padding-left:11pt;text-indent:-11pt">'
-          '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다.</div>' +
-          white(36, 354, 523.5, 60.5))
+OV[12] = (white(36, 280, 523.5, 70) + white(36, 354, 523.5, 60.5) +
+          f'<ul class="ov" style="left:{L}pt;top:283pt;width:{Wd}pt;margin:0;padding-left:15pt;font-size:10.3pt;line-height:1.6">'
+          '<li>두 시뮬레이션의 결과 데이터와 순서는 같고, 에지 시각만 1~2 ns 뒤로 밀린다. 이 밀림이 합성 SDF에서 생긴 타이밍 차이의 전부다.</li>'
+          '<li style="margin-top:3pt">pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다.</li></ul>')
 OV[14] = head(120.2, "① Init / Floorplan", "0_InitDesign.tcl + init.io") + head(430.9, "② Power plan", "1_PowerPlan.tcl")
 OV[15] = head(43.7, "③ Place", "2_PlaceOpt.tcl") + head(454.9, "④ CTS", "3_PostCTSopt.tcl")
 OV[16] = (head(43.9, "⑤ Route", "4_RouteDesign_PowerAnalysis.tcl") .replace("</code>)</div>", "</code>, NanoRoute)</div>")
