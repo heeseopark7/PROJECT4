@@ -166,7 +166,6 @@ def cover(part, part_ko, lead, tiles, rows, flow):
  <div style="font-size:27pt;font-weight:700;margin:6pt 0 0;letter-spacing:-0.6pt">{PROJ}</div>
  <div style="font-size:13pt;font-weight:600;color:var(--teal);margin:0 0 8pt">MCU RTL to GDS2 · {part_ko}</div>
  <p style="font-size:11.4pt;line-height:1.65;color:#3f4b52">{lead}</p>
- <div class="note" style="font-size:9pt">RTL은 Claude의 도움을 받아 작성했고 코드 구조는 설명할 수 있는 수준으로 이해했다. RTL 시뮬레이션, 합성, P&amp;R은 직접 수행했다.</div>
  <table style="table-layout:fixed;margin:6pt 0 16pt"><tr>{"".join(tile(*t) for t in tiles)}</tr></table>
  <h3 style="margin-top:0">구성</h3>
  <table><tr><th>항목</th><th style="width:9%">쪽</th></tr>{tr}</table>
@@ -458,6 +457,15 @@ add(18, white(36, 435, 523.5, 49) +
 add(20, white(36, 603, 523.5, 50.5) +
     '<div class="ov" style="left:39pt;top:605pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
     '•&nbsp; setup 최악 경로는 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로이고 배선 후에도 그대로 최악이다.</div>')
+
+# BE p15 (4-c CTS): add the layout snapshot saved by 3_PostCTSopt.tcl (snap/3_cts.png),
+# shade-inverted like the other GUI captures (luminance inverted, colour kept)
+from PIL import ImageOps
+_y, _cb, _cr = Image.open(TOP / "5_PNR/snap/3_cts.png").convert("RGB").convert("YCbCr").split()
+Image.merge("YCbCr", (ImageOps.invert(_y), _cb, _cr)).convert("RGB").save(WORK / "cts_snap.png")
+add(15, f'<img class="ov" src="{(WORK / "cts_snap.png").as_uri()}" style="left:36.5pt;top:646pt;width:172pt;border:0.6pt solid #333">'
+        '<div class="ov cap" style="left:215pt;top:650pt;width:79pt;font-size:8.2pt;line-height:1.5">'
+        'CTS 후 레이아웃. <code>3_PostCTSopt.tcl</code>이 <code>saveDesign</code> 뒤에 남긴 <code>snap/3_cts.png</code>를 음영 반전했다.</div>')
 
 # FE p4: RTL code excerpts are not in the guideline -> replaced by the embedded-program table (from old p5)
 add(4, white(36, 284, 523.5, 540) +
