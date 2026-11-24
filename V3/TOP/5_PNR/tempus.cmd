@@ -1,0 +1,23 @@
+#######################################################
+#                                                     
+#  Tempus Timing Solution Command Logging File                     
+#  Created on Tue Nov 24 22:11:39 2026                
+#                                                     
+#######################################################
+
+#@(#)CDS: Tempus Timing Solution v22.17-s087_1 (64bit) 10/01/2024 11:02 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: NanoRoute 22.17-s087_1 NR240905-1647/22_17-UB (database version 18.20.629) {superthreading v2.20}
+#@(#)CDS: AAE 22.17-s014 (64bit) 10/01/2024 (Linux 3.10.0-693.el7.x86_64)
+#@(#)CDS: CTE 22.17-s017_1 () Sep 12 2024 04:53:54 ( )
+#@(#)CDS: SYNTECH 22.17-s006_1 () Aug 12 2024 03:52:27 ( )
+#@(#)CDS: CPE v22.17-s051
+
+::stop_gui -keepDgui
+read_design RouteDesign.dat mcu_core_top
+check_timing 
+report_annotated_parasitics
+report_analysis_coverage 
+report_timing -late -max_paths 1
+report_timing -early -max_paths 1
+report_timing -late -max_paths 1 > reports/timing/tempus_setup.rpt
+report_timing -early -max_paths 1 > reports/timing/tempus_hold.rpt
