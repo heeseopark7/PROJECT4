@@ -101,20 +101,20 @@ def render(html_text, name, margin=None):
 
 # ---------------------------------------------------------------- appendix (rendered first: page numbers go into the TOC)
 appx_fe = f"""
-<div class="bar">부록 S1 · 합성 실행 스크립트 원문 (3-c-i)</div>
+<div class="bar">부록 S1 · 합성 실행 스크립트 원문 </div>
 <p>10 ns 최종 합성(11/19 00:16~00:21, <code>3_SYN/log/all.log</code>)에 쓴 파일을 그대로 옮겼다. <code>3_SYN</code>에서 <code>./run_synthesis</code>를 실행하면 Genus가 <code>syn_mcu_pad_top.tcl</code>을 처음부터 끝까지 실행한다.
 같은 폴더의 <code>syn_mcu_pad_top_mmmc.tcl</code>은 다른 설계용 수업 템플릿으로, 실행에 쓰지 않았다.</p>
 {code_file("3_SYN/run_synthesis")}
 {code_file("3_SYN/script/syn_mcu_pad_top.tcl")}
 <div style="break-before: page"></div>
-<div class="bar">부록 S2 · 10 ns 최종 SDC 원문 (3-c-ii)</div>
+<div class="bar">부록 S2 · 10 ns 최종 SDC 원문 </div>
 <p>합성 스크립트가 <code>source -verbose ./cons/mcu_pad_top.sdc</code>로 읽는다. 10 ns 최종 합성과 P&amp;R에 들어간 상태 그대로다.
 입력 구동은 <code>set_driving_cell PADDI</code>로 칩 입력을 PADDI 패드 셀이 구동한다고 가정하고, 출력 부하는 <code>PADDO/A</code> 입력 용량으로 둔다. 64~66행 위의 주석("instead of the PADDI cell")은 실제로 켜진 줄과 맞지 않는 남은 주석이다.</p>
 {code_file("3_SYN/cons/mcu_pad_top.sdc")}
 {code_file("3_SYN/cons/dont_use_45nm.tcl", "SDC 바로 뒤에 source한다. 지연, 홀드, 타이, 스캔 플립플롭 셀을 합성에서 쓰지 않게 막는다.")}
 """
 appx_be = f"""
-<div class="bar">부록 A · APR 스크립트 원문 (4-a)</div>
+<div class="bar">부록 A · APR 스크립트 원문</div>
 <p>Innovus 22.17-s086_1에서 단계별로 실행했다. 각 스크립트는 앞 단계 DB를 <code>restoreDesign</code>으로 열고 <code>saveDesign</code>으로 다음 DB를 남긴다.
 실행 기록(<code>innovus.cmd*</code>)과 대조해 일치함을 확인했다. 실행 뒤 바뀐 곳은 3_PostCTSopt.tcl의 <code>file mkdir snap</code> 삭제와 5_ChipFinish.tcl의 <code>saveNetlist -flat</code>에서 <code>-flat</code> 제거 두 곳이다.</p>
 {code_file("5_PNR/0_InitDesign.tcl")}
@@ -125,7 +125,7 @@ appx_be = f"""
 {code_file("5_PNR/4_RouteDesign_PowerAnalysis.tcl")}
 {code_file("5_PNR/5_ChipFinish.tcl")}
 <div style="break-before: page"></div>
-<div class="bar">부록 B · Import 설정 원문 (4-b)</div>
+<div class="bar">부록 B · Import 설정 원문</div>
 <p><code>0_InitDesign.tcl</code>의 <code>init_mmmc_file</code>이다. setup은 FUNC_SS_WORST, hold는 FUNC_FF_BEST로 본다. 첫 실행 로그(<code>5_PNR/innovus.log</code>)에서 아래 파일을 모두 읽은 것을 확인했다.</p>
 {code_file("5_PNR/mcu_pad_top.mmmc.view")}
 {code_file("5_PNR/add_pad", "P&amp;R에 넣은 넷리스트는 11/10 합성 출력의 endmodule 앞에 이 전원 패드 16개를 붙인 파일이다. 현재 3_SYN/mapped의 넷리스트(11/19 재합성)에는 이 16줄이 없으므로, 0_InitDesign.tcl을 다시 돌릴 때는 다시 붙여야 한다.")}
@@ -178,9 +178,9 @@ cover_fe = cover("Front-End", "Front-End",
     LEAD + "이 권은 설계 스펙, 기능 시뮬레이션, 합성, pre-layout 시뮬레이션을 다룬다.",
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
      ("PASS", "기능 시뮬레이션 (RTL)"), ("PASS", "pre-layout 시뮬레이션")],
-    [("3-a 설계 논리 다이어그램과 스펙", fp(2)), ("3-b 기능 시뮬레이션 (파형)", fp(6)),
-     ("3-c 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", fp(7)),
-     ("3-d Pre-layout 시뮬레이션 (3-b와 동일 검증, 타이밍으로 생긴 차이)", fp(11)),
+    [("1. 설계 논리 다이어그램과 스펙", fp(2)), ("2. 기능 시뮬레이션 (파형)", fp(6)),
+     ("3. 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", fp(7)),
+     ("4. Pre-layout 시뮬레이션 (2와 동일 검증, 타이밍으로 생긴 차이)", fp(11)),
      ("부록 S1 합성 실행 스크립트 원문 (run_synthesis, syn_mcu_pad_top.tcl)", S["S1"]),
      ("부록 S2 10 ns SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)", S["S2"])],
     "FE 플로우: xrun(기능 시뮬) → Genus(합성) → xrun(pre-layout, 합성 SDF).")
@@ -188,15 +188,15 @@ cover_be = cover("Back-End", "Back-End",
     LEAD + "이 권은 APR(Innovus)과 STA(Tempus)를 다룬다. 입력은 FE의 10 ns 합성 넷리스트와 SDC다.",
     [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
      ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("3,144 Met", "Tempus setup·hold 검사, 위반 0")],
-    [("4-a APR 전 과정 스크립트 · 4-b Import 파일 정리", bp(13)), ("4-c 단계별 캡처 (고대비, 음영 반전)", bp(14)),
-     ("4-d NanoRoute 후 타이밍 리포트 (Setup + Hold)", bp(17)),
-     ("4-e STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)", bp(17)),
-     ("4-f ECO 수행 과정", bp(19)), ("4-g 최종 타이밍 리포트 (Setup + Hold)", bp(19)),
+    [("1. APR 전 과정 스크립트 · 2. Import 파일 정리", bp(13)), ("3. 단계별 캡처 (고대비, 음영 반전)", bp(14)),
+     ("4. NanoRoute 후 타이밍 리포트 (Setup + Hold)", bp(17)),
+     ("5. STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)", bp(17)),
+     ("6. ECO 수행 과정", bp(19)), ("7. 최종 타이밍 리포트 (Setup + Hold)", bp(19)),
      ("부록 A APR 스크립트 원문 (0_InitDesign.tcl ~ 5_ChipFinish.tcl, init.io)", S["D"]),
      ("부록 B Import 설정 원문 (mcu_pad_top.mmmc.view, add_pad)", S["E"])],
     "BE 플로우: Innovus(APR) → Tempus(STA).")
 
-# ---------------------------------------------------------------- page 7 (3-c-i)
+# ---------------------------------------------------------------- page 7 
 syn_excerpt = lines("3_SYN/script/syn_mcu_pad_top.tcl", 25, 36)
 syn_flow = "\n".join([
     lines("3_SYN/script/syn_mcu_pad_top.tcl", 73, 75), "...",
@@ -206,7 +206,7 @@ syn_flow = "\n".join([
     lines("3_SYN/script/syn_mcu_pad_top.tcl", 212, 215)])
 p7 = f"""
 <div class="page">
- <div class="bar">FE · 3-c 합성 (Genus, GPDK045 slow 코너)</div>
+ <div class="bar">FE · 3. 합성 (Genus, GPDK045 slow 코너)</div>
  <h3>(i) 합성 실행 스크립트</h3>
  <p>합성은 <code>3_SYN</code> 폴더에서 <code>./run_synthesis</code>로 실행했다. 이 csh 래퍼가 <code>genus -f ./script/syn_mcu_pad_top.tcl -log ./log/all.log</code>를 부르고 시작·종료 시각을 <code>cds_syn_runtime</code>에 남긴다.
  라이브러리는 slow 코너만 읽는다: 표준 셀 <code>slow_vdd1v0_basicCells.lib</code>, <code>slow_vdd1v0_multibitsDFF.lib</code>와 패드 <code>pads_SS_s1vg.lib</code>. hold용 fast 라이브러리는 P&amp;R의 MMMC에서 따로 읽는다.</p>
@@ -223,15 +223,14 @@ p7 = f"""
  <pre class="code">{html.escape(syn_excerpt)}</pre>
  <div class="fh"><span>syn_mcu_pad_top.tcl · 흐름 요약 (발췌)</span><span>233 lines</span></div>
  <pre class="code">{html.escape(syn_flow)}</pre>
- <div class="note"><b class="l">원문 수록.</b> 스크립트 전문(233줄)과 <code>run_synthesis</code>는 부록 S1(p.{S['S1']})에 그대로 실었다. 10 ns 최종 실행 기록은 <code>log/all.log</code>(11/19 00:16~00:21)이고, 결과는 00~20번 리포트로 남겼다.
-</div>
+ 
 </div>"""
 
 # ---------------------------------------------------------------- page 13 (4-a, 4-b)
 p13 = f"""
 <div class="page p13">
- <div class="bar">BE · 4-a APR 전 과정 스크립트 · 4-b Import 파일 정리</div>
- <h3>4-a 스크립트 구성</h3>
+ <div class="bar">BE · 1. APR 전 과정 스크립트 · 2. Import 파일 정리</div>
+ <h3>1. 스크립트 구성</h3>
  <p>P&amp;R은 Innovus에서 단계별 Tcl 스크립트로 진행했다. 각 단계는 앞 DB를 <code>restoreDesign</code>으로 열고, 끝에서 <code>saveDesign</code>으로 저장한 뒤 타이밍, DRC, 연결성을 확인했다.</p>
  <table>
   <tr><th style="width:27%">스크립트</th><th style="width:20%">DB (입력 → 출력)</th><th>주요 명령</th></tr>
@@ -242,8 +241,8 @@ p13 = f"""
   <tr><td><code>4_RouteDesign_</code><br><code>PowerAnalysis.tcl</code></td><td>PostCTSopt → RouteDesign</td><td>NanoRoute <code>routeDesign -globalDetail</code>, <code>optDesign -postRoute -drv/-setup/-hold</code>(bcwc), <code>extractRC</code>, <code>report_power</code></td></tr>
   <tr><td><code>5_ChipFinish.tcl</code></td><td>RouteDesign → ChipFinish</td><td><code>addFiller</code>, <code>verify_drc</code>, <code>verifyConnectivity</code>, <code>saveNetlist</code>, <code>write_sdf</code>, <code>writeTimingCon</code>, <code>streamOut</code></td></tr>
  </table>
- <div class="note"><b class="l">원문 수록.</b> 6개 스크립트와 init.io 원문은 부록 A(p.{S['D']})에 있다. 실행 기록(<code>innovus.cmd*</code>)과 대조해 floorplan 값, 패드 좌표, 링 offset, CTS 목표 스큐, postRoute 분석 모드가 일치함을 확인했다.</div>
- <h3>4-b Import 파일 (init 단계에서 실제로 읽은 파일, <code>innovus.log</code> 기준)</h3>
+ 
+ <h3>2. Import 파일 (init 단계에서 실제로 읽은 파일, <code>innovus.log</code> 기준)</h3>
  <table>
   <tr><th style="width:17%">종류</th><th style="width:47%">파일</th><th>출처 / 비고</th></tr>
   <tr><td>넷리스트</td><td><code>../3_SYN/mapped/mcu_pad_top_syn_final.v</code></td><td>Genus 10 ns 출력(11/10) + 전원 패드 16개(<code>add_pad</code>)</td></tr>
@@ -267,7 +266,7 @@ orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
 p6 = f"""
 <div class="page">
- <div class="bar">FE · 3-b 기능 시뮬레이션 (Waveform) <span style="color:#9be3a1">PASS</span></div>
+ <div class="bar">FE · 2. 기능 시뮬레이션 (Waveform) <span style="color:#9be3a1">PASS</span></div>
  <p style="font-size:10pt">자기검증 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다. 시뮬레이터는 xrun이다.</p>
  {fig("wave_uart.png")}
  <p class="cap" style="margin:3pt 0 10pt">UART 송신 확대. 루프백 모드에서 'A'(0x41)를 8N1로 송신한다. start bit(low) 뒤 LSB first로 1,0,0,0,0,0,1,0이 나가고 stop bit(high)로 끝난다. 비트당 640 ns다.</p>
@@ -349,10 +348,10 @@ _sg = (lines("2_SIM/PRE/sdf_gate.log", 1, 12) +
        f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
 p11 = f"""
 <div class="page">
- <div class="bar">FE · 3-d Pre-layout 시뮬레이션 <span style="color:#9be3a1">PASS</span></div>
- <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 걸고, 3-b와 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
+ <div class="bar">FE · 4. Pre-layout 시뮬레이션 <span style="color:#9be3a1">PASS</span></div>
+ <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 걸고, 2와 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
  {fig("pre_X55.png")}
- <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 3-b의 RTL 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
+ <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 2의 RTL 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
  <div style="display:flex;gap:9pt">
   <div style="flex:1;min-width:0">{fig("pre_X56.png")}<p class="cap" style="margin-top:3pt">UART 송신 확대. RTL과 같은 프레임(start 뒤 1,0,0,0,0,0,1,0, stop)이고 에지만 하강 +1.773 ns, 상승 +1.958 ns 늦다. 프레임 길이는 5760.185 ns다.</p></div>
   <div style="flex:1;min-width:0">{fig("pre_X57.png")}<p class="cap" style="margin-top:3pt">SPI 전송 확대. 8번째 SCLK 상승에서 mosi_byte=0xA5, miso_byte=0x3C가 완성된다. SCLK 상승이 RTL보다 1.392 ns 늦고 7주기 간격은 1.12 µs로 같다.</p></div>
@@ -396,7 +395,7 @@ OV[18] = (f'<div class="ov" style="left:{L}pt;top:512pt;width:{Wd}pt">'
           '<tr><td>기타 최적화</td><td><code>FE_PDC</code> BUF</td><td class="num">6</td></tr>'
           '<tr><td>Hold 지연 버퍼</td><td><code>FE_PHC</code> (hold fix 셀)</td><td class="num">0</td></tr>'
           '<tr><th colspan="2">합계</th><th class="num">882</th></tr></table>'
-          '<div class="cap">CTS 176개는 4-c의 클럭 버퍼 수와 같다. 최적화 셀 706개는 preCTS의 setup 위반과 max_tran 위반을 고치면서 들어왔다. hold를 맞추려는 셀은 없다.</div></div>')
+          '<div class="cap">CTS 176개는 3의 클럭 버퍼 수와 같다. 최적화 셀 706개는 preCTS의 setup 위반과 max_tran 위반을 고치면서 들어왔다. hold를 맞추려는 셀은 없다.</div></div>')
 OV[19] = (white(36, 373.5, 523.5, 40) +
           f'<div class="ov note" style="left:{L}pt;top:374.25pt;width:{Wd}pt;height:38.5pt;font-size:8.6pt;padding:5pt 9pt;line-height:1.55">'
           '<b>Hold 위반 없음.</b> post-layout STA에서 hold 위반이 0건(WNS +0.053 ns)이라 hold용 지연 버퍼(<code>FE_PHC</code>)는 0개이고 전후 비교는 필요하지 않았다. '
@@ -439,7 +438,7 @@ add(19, white(36, 38, 523.5, 331) + white(36, 481, 523.5, 192))
 add(16, white(300, 148.6, 259, 84))
 add(18, white(36, 435, 523.5, 49) +
     '<div class="ov" style="left:39pt;top:437pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
-    '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(4-g의 setup 경로). 개수는 아래 표에 정리했다.</div>')
+    '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(7의 setup 경로). 개수는 아래 표에 정리했다.</div>')
 add(20, white(36, 603, 523.5, 50.5) +
     '<div class="ov" style="left:39pt;top:605pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
     '•&nbsp; setup 최악 경로는 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로이고 배선 후에도 그대로 최악이다.</div>')
@@ -464,8 +463,17 @@ add(4, white(36, 284, 523.5, 540) +
     '<tr><td>④ SPI 설정</td><td class="num">6735 ~ 6855 ns</td><td>슬레이브 SSDR=0x3C, 마스터 SPDR=0xA5(전송 시작)</td></tr>'
     '<tr><td>⑤ SPI 전송</td><td class="num">6855 ~ 8365 ns</td><td>SCLK 8개(160 ns 주기), RAM[2]=0x3C</td></tr>'
     '<tr><td>⑥ 슬레이브 확인</td><td class="num">8365 ~ 8455 ns</td><td>받은 0xA5를 읽어 RAM[3]=0xA5, 이후 <code>j 0xAC</code>로 제자리 점프(종료)</td></tr></table>'
-    '<div class="note">리셋 해제 후 pc=0xAC 도달까지 843클럭, APB 접근 204회(대부분 상태 레지스터 폴링)다. CPU가 하는 일의 대부분이 대기라서 합성과 P&amp;R에서는 프로그램 속도가 아니라 회로 전체의 가장 긴 경로가 중요하다.</div>'
+    '<p style="font-size:9.6pt">리셋 해제 후 pc=0xAC 도달까지 843클럭, APB 접근 204회(대부분 상태 레지스터 폴링)다. CPU가 하는 일의 대부분이 대기라서 합성과 P&amp;R에서는 프로그램 속도가 아니라 회로 전체의 가장 긴 경로가 중요하다.</p>'
     '</div>')
+
+def rebar(y0, y1, txt):
+    return (f'<div class="ov" style="left:36.75pt;top:{y0}pt;width:521.75pt;height:{y1-y0}pt;background:#0a5f5a;border-radius:3pt;'
+            f'color:#fff;font-weight:700;font-size:14pt;line-height:{y1-y0}pt;padding-left:9pt;letter-spacing:-0.2pt">{txt}</div>')
+add(2, rebar(40.0, 70.5, "FE · 1. 설계 논리 다이어그램과 스펙"))
+add(12, white(36, 41, 420, 16) + '<div class="ov" style="left:37.5pt;top:41.5pt;color:#0a5f5a;font-weight:700;font-size:11.2pt">2(RTL)와 비교: 타이밍 때문에 생긴 차이</div>')
+add(14, rebar(40.0, 70.5, "BE · 3. 단계별 캡처 (고대비, 음영 반전)"))
+add(17, rebar(40.0, 70.5, "BE · 4. NanoRoute 후 타이밍 리포트 (Setup + Hold)") + rebar(581.5, 612.0, "BE · 5. STA 전후의 Hold 타이밍 변화와 버퍼 삽입"))
+add(19, rebar(417.25, 447.75, "BE · 6. ECO 수행 과정 (STA 수행 시)") + rebar(684.25, 714.75, "BE · 7. 최종 타이밍 리포트 (Setup + Hold)"))
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
