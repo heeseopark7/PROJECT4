@@ -162,7 +162,7 @@ def cover(part, part_ko, lead, tiles, rows, flow):
     tr = "".join(f'<tr><td>{a}</td><td>{b}</td></tr>' for a, b in rows)
     return f"""
 <div class="page" style="padding-top:120pt">
- <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">Physical Implementation 포트폴리오 · {part} (패드 포함 mcu_pad_top)</div>
+ <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">Physical Implementation 포트폴리오</div>
  <div style="font-size:27pt;font-weight:700;margin:6pt 0 0;letter-spacing:-0.6pt">{PROJ}</div>
  <div style="font-size:13pt;font-weight:600;color:var(--teal);margin:0 0 8pt">MCU RTL to GDS2 · {part_ko}</div>
  <p style="font-size:11.4pt;line-height:1.65;color:#3f4b52">{lead}</p>
@@ -175,7 +175,7 @@ def cover(part, part_ko, lead, tiles, rows, flow):
 
 LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL 시뮬레이션부터 합성, 등가성 검사, "
         "P&amp;R, STA, post-layout 시뮬레이션까지 진행해 GDS2를 만든 기록이다. 클럭 10 ns(100 MHz) 기준, 공정은 GPDK045. ")
-cover_fe = cover("Front-End", "Front-End (FE) 포트폴리오",
+cover_fe = cover("Front-End", "Front-End",
     LEAD + "이 권은 설계 스펙부터 합성, 등가성 검사, pre-layout 시뮬레이션까지(가이드라인 3)를 다룬다. P&amp;R 이후는 BE 포트폴리오에 있다.",
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
      ("PASS", "Conformal RTL ↔ 합성"), ("PASS", "RTL · pre-layout 시뮬")],
@@ -185,7 +185,7 @@ cover_fe = cover("Front-End", "Front-End (FE) 포트폴리오",
      ("부록 S1 합성 실행 스크립트 원문 (run_synthesis, syn_mcu_pad_top.tcl)", S["S1"]),
      ("부록 S2 10 ns 최종 SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)", S["S2"])],
     "FE 플로우: xrun(RTL 시뮬) → Genus(합성) → Conformal(RTL↔합성) → xrun(pre-layout, 합성 SDF).")
-cover_be = cover("Back-End", "Back-End (BE) 포트폴리오",
+cover_be = cover("Back-End", "Back-End",
     LEAD + "이 권은 P&amp;R부터 STA, post-layout 시뮬레이션까지(가이드라인 4)를 다룬다. 입력은 FE 포트폴리오의 10 ns 합성 넷리스트와 SDC다.",
     [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
      ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("PASS", "post-layout 시뮬, 합성↔PnR 등가성")],
@@ -343,6 +343,20 @@ _d = lines("3_SYN/cons/mcu_pad_top.sdc", 57, 66).split("\n")
 _d = [("#" + l) if l.startswith("set_driving_cell") else (l[1:] if l.startswith("#set_input_transition") else l) for l in _d]
 OV[8] += cbox(37.5, 655.5, 520.5, 87.8, "2.5 ns 실험 때의 구동 모델: 위 파일 64~65행의 주석만 바꾼 상태 (이 버전은 저장소에 따로 없음)", "\n".join(_d))
 OV[8] += _ov8_note
+
+def lg(rel, *ranges, label=None):
+    parts = [lines(rel, a, b) for a, b in ranges]
+    rng = ", ".join(f"{a}~{b}" for a, b in ranges)
+    return (label or f"{PROJ}/TOP/{rel} · {rng}행"), "\n...\n".join(parts)
+
+# BE: report/log captures replaced by excerpts of the logs they came from
+add(17, cbox(37.5, 117.0, 255.8, 179.2, *lg("5_PNR/innovus.log10", (4871, 4899), label="innovus.log10 · timeDesign -postRoute (4871~4899행)")))
+add(17, cbox(302.2, 117.0, 255.8, 111.0, *lg("5_PNR/innovus.log10", (4927, 4944), label="innovus.log10 · timeDesign -postRoute -hold (4927~4944행)")))
+add(17, cbox(37.5, 642.8, 255.8, 114.0, *lg("5_PNR/tempus.log", (229, 229), (243, 250), label="tempus.log · check_timing (229, 243~250행)")))
+add(17, cbox(302.2, 642.8, 255.8, 120.0, *lg("5_PNR/tempus.log", (281, 294), label="tempus.log · report_analysis_coverage (281~294행)")))
+add(18, cbox(37.5, 40.5, 520.5, 227.2, *lg("5_PNR/tempus.log2", (330, 351), label="tempus.log2 · report_timing -early, hold 최악 경로 (330~351행)")))
+add(20, cbox(162.8, 40.5, 270.0, 378.8, *lg("5_PNR/tempus.log2", (252, 328), label="tempus.log2 · report_timing -late, setup 최악 경로 (252~328행)")))
+add(21, cbox(302.2, 222.8, 255.8, 48.0, *lg("2_SIM/POST/max/post_sim_max.log", (919, 927), label="post_sim_max.log · SDF statistics (919~927행)")))
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
