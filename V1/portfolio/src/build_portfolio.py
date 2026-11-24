@@ -266,14 +266,16 @@ def orig_img(pg, name):
 wf = orig_img(6, "X30.jpg")                        # 0 us at x~130, 1 us ~ 124 px
 L_END, R_BEG, GAP = 380, 905, 16                   # keep 0~2.0 us and 6.3~8.65 us
 left, right = wf.crop((0, 0, L_END, wf.height)), wf.crop((R_BEG, 0, wf.width, wf.height))
-comp = Image.new("RGB", (left.width + GAP + right.width, wf.height), (255, 255, 255))
-comp.paste(left, (0, 0)); comp.paste(right, (left.width + GAP, 0))
+from PIL import ImageFilter
+K = 4                                              # upscale with Lanczos + unsharp mask (nearest looked blocky)
+up = lambda im: im.resize((im.width * K, im.height * K), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=2, percent=120, threshold=2))
+left, right = up(left), up(right)
+comp = Image.new("RGB", (left.width + GAP * K + right.width, left.height), (255, 255, 255))
+comp.paste(left, (0, 0)); comp.paste(right, (left.width + GAP * K, 0))
 dr = ImageDraw.Draw(comp)
-x0 = left.width
-for y in range(0, wf.height, 8):                   # zig-zag break mark
-    dr.line([(x0 + 3, y), (x0 + GAP - 3, y + 4)], fill=(120, 130, 140), width=1)
-    dr.line([(x0 + GAP - 3, y + 4), (x0 + 3, y + 8)], fill=(120, 130, 140), width=1)
-comp = comp.resize((comp.width * 4, comp.height * 4), Image.NEAREST)   # integer, no smoothing: keeps the original pixels
+x0, x1 = left.width + 12, left.width + GAP * K - 12
+for y in range(0, comp.height, 24):                # zig-zag break mark, drawn after upscaling
+    dr.line([(x0, y), (x1, y + 12), (x0, y + 24)], fill=(110, 120, 130), width=3)
 comp.save(WORK / "wave_full_cut.png")
 orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save(WORK / "wave_spi.png")
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
