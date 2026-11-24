@@ -1,0 +1,24 @@
+        Reading SDF file from location "./mcu_pad_top_post_wst.sdf"
+        Compiled SDF file "mcu_pad_top_post_wst.sdf.X" older than source SDF file "./mcu_pad_top_post_wst.sdf".
+        Recompiling.
+        Writing compiled SDF file to "mcu_pad_top_post_wst.sdf.X".
+        Annotating SDF timing data:
+                Compiled SDF file:     mcu_pad_top_post_wst.sdf.X
+                Log file:              sdf_post_wst.log
+                Backannotation scope:  tb_mcu_top.u_mcu_pad_top
+                Configuration file:
+                MTM control:           MAXIMUM
+                Scale factors:
+                Scale type:
+xmelab: *W,SDFINF: Instance u_mcu_top not found at scope level <top-level> <./mcu_pad_top_post_wst.sdf, line 6684>.
+xmelab: *W,SDFINF: Instance u_mcu_top not found at scope level <top-level> <./mcu_pad_top_post_wst.sdf, line 100453>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100479>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100489>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100529>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100549>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100559>.
+xmelab: *W,SDFNDP: Annotation resulted in a negative delay value or pulse limit to specify path or interconnect delay ((IOPATH PAD Y)), setting to 0 <./mcu_pad_top_post_wst.sdf, line 100579>.
+        Annotation completed with 0 Errors and 8 Warnings
+        SDF statistics:
+                 No. of Pathdelays = 16097       No. of Disabled Pathdelays = 0        Annotated = 0.17% (28/16097)
+                 No. of Tchecks    = 12687       No. of Disabled Tchecks    = 0        Annotated = 0.00% (0/12687)

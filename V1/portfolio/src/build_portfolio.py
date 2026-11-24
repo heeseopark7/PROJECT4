@@ -365,6 +365,14 @@ _sg += (f"\n\n# 같은 파일 집계\n'Unable to annotate'      : {len(_un)}건"
         f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
 add(11, cbox(302.2, 545.2, 255.8, 105.8, "2_SIM/PRE/sdf_gate.log · 1~12행 + 집계", _sg))
 
+# Captures whose log files no longer exist (2.5 ns synthesis, flat-netlist post-sim): transcribed by hand
+# from the original captures into src/transcribed/ and shown as text, labelled as such.
+TR = pathlib.Path(__file__).resolve().parent / "transcribed"
+def tr(name): return (TR / name).read_text().rstrip("\n")
+add(10, cbox(37.5, 45.0, 255.8, 171.0, "2.5 ns 수정 전 setup 최악 경로 · 원본 리포트 파일 없음, 당시 캡처에서 옮겨 적음", tr("syn_2p5ns_before_path1.txt")))
+add(10, cbox(302.2, 45.0, 255.8, 329.2, "2.5 ns 수정 후 QoR · 원본 리포트 파일 없음, 당시 캡처에서 옮겨 적음", tr("syn_2p5ns_after_qor.txt")))
+add(21, cbox(37.5, 222.8, 255.8, 115.5, "수정 전(-flat 넷리스트) xmelab SDF 로그 · 원본 로그 없음, 당시 캡처에서 옮겨 적음", tr("post_sim_flat_sdf.txt"), wrap=True))
+
 # BE: report/log captures replaced by excerpts of the logs they came from
 add(17, cbox(37.5, 117.0, 255.8, 179.2, *lg("5_PNR/innovus.log10", (4871, 4899), label="innovus.log10 · timeDesign -postRoute (4871~4899행)")))
 add(17, cbox(302.2, 117.0, 255.8, 111.0, *lg("5_PNR/innovus.log10", (4927, 4944), label="innovus.log10 · timeDesign -postRoute -hold (4927~4944행)")))
