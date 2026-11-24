@@ -122,15 +122,14 @@ def cover(part, part_ko, lead, tiles, rows, flow):
  <div class="mono" style="background:none;padding:0;color:var(--teal);font-size:7.8pt">{part} Portfolio</div>
  <div style="font-size:27pt;font-weight:700;margin:6pt 0 0;letter-spacing:-0.6pt">{PROJ}</div>
  <div style="font-size:13pt;font-weight:600;color:var(--teal);margin:0 0 8pt">MCU RTL to GDSII · {part_ko}</div>
- <p style="font-size:11.4pt;line-height:1.65;color:#3f4b52">{lead}</p>
+ <table style="font-size:9.6pt;margin:4pt 0 10pt">{"".join(f'<tr><th style="width:17%;background:#f2f5f6">{k}</th><td>{v}</td></tr>' for k, v in lead)}</table>
  <table style="table-layout:fixed;margin:6pt 0 16pt"><tr>{"".join(tile(*t) for t in tiles)}</tr></table>
  <h3 style="margin-top:0">구성</h3>
  <table><tr><th>항목</th><th style="width:9%">쪽</th></tr>{tr}</table>
- <p style="font-size:10.4pt;color:#3f4b52;margin-top:10pt">{flow}</p>
 </div>"""
 
-LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL부터 GDSII까지 구현한 기록이다. "
-        "클럭 10 ns(100 MHz) 기준, 공정은 GPDK045. ")
+SPEC = [("Design", "MCU: 단일 사이클 MIPS CPU · APB 브리지 · UART · SPI Master/Slave"),
+        ("Clock", "10 ns (100 MHz)"), ("Process", "GPDK045")]
 
 # ---------------------------------------------------------------- page 7 
 sec7 = f"""
@@ -328,15 +327,16 @@ def start(seq, k):
         n += len(SEC[j].pages) if j in SEC else 1
 imp_pg = start(BE_SEQ, 13) + find_page(WORK / "sec13.pdf", "2. Import 파일 정리")
 cover_fe = cover("Front-End", "Front-End",
-    LEAD + "이 권은 설계 스펙, Function Simulation, Synthesis, Pre-layout Simulation을 다룬다.",
+    SPEC + [("Tool", "xrun · Genus"), ("Flow", "RTL → Function Simulation → Synthesis → Pre-layout Simulation")],
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
      ("PASS", "Function Simulation (RTL)"), ("PASS", "Pre-layout Simulation")],
     [("1. Design Logic Diagram", start(FE_SEQ, 2)), ("2. Function Simulation", start(FE_SEQ, 6)),
      ("3. Synthesis", start(FE_SEQ, 7)),
      ("4. Pre-layout Simulation", start(FE_SEQ, 11))],
-    "FE 플로우: xrun(Function Simulation) → Genus(합성) → xrun(pre-layout, 합성 SDF).")
+    None)
 cover_be = cover("Back-End", "Back-End",
-    LEAD + "이 권은 APR(Innovus)과 STA(Tempus)를 다룬다. 입력은 FE의 10 ns 합성 넷리스트와 SDC다.",
+    SPEC + [("Tool", "Innovus · Tempus"), ("Input", "Synthesis Netlist · SDC (10 ns)"),
+            ("Flow", "Floorplan → Power Plan → Place → CTS → Route → Chip Finish → STA")],
     [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
      ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("3,144 Met", "Tempus setup·hold 검사, 위반 0")],
     [("1. APR 전 과정 Script", start(BE_SEQ, 13)), ("2. Import 파일 정리", imp_pg),
@@ -344,7 +344,7 @@ cover_be = cover("Back-End", "Back-End",
      ("4. Nano Routing 후 타이밍 리포트 (Setup + Hold)", start(BE_SEQ, 17)),
      ("5. STA 전후의 Hold Timing 변화와 Buffer Insertion", start(BE_SEQ, 17)),
      ("6. 최종 타이밍 리포트 (Setup + Hold)", start(BE_SEQ, 19))],
-    "BE 플로우: Innovus(APR) → Tempus(STA).")
+    None)
 COV = {"fe": one(cover_fe, "cover_fe"), "be": one(cover_be, "cover_be")}
 
 # ---------------------------------------------------------------- overlays
