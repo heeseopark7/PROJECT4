@@ -260,8 +260,47 @@ p13 = f"""
  <div class="chk"><b class="l">합성과 대조.</b> 타이밍 lib(slow 3종)는 합성과 같다. 다른 점: IO LEF가 합성은 <code>giolib045.lef</code>, P&amp;R은 <code>giolib045_modify.lef</code>. P&amp;R에만 <code>gsclib045_multibitsDFF.lef</code>와 cap table이 있다. tech LEF와 QRC는 파일명이 같고 폴더만 다르다.</div>
 </div>"""
 
-new_pages = render(doc(cover_fe + p7 + cover_be + p13), "newpages")
-assert len(new_pages.pages) == 4, f"new pages overflowed: {len(new_pages.pages)}"
+# ---------------------------------------------------------------- page 6 (3-b): rebuilt so the full-run waveform
+# can be shown with its middle cut out (the original 1200x171 capture is too wide to read at page width)
+from PIL import Image, ImageDraw
+def orig_img(pg, name):
+    return [i for i in orig.pages[pg - 1].images if i.name == name][0].image.convert("RGB")
+wf = orig_img(6, "X30.jpg")                        # 0 us at x~130, 1 us ~ 124 px
+L_END, R_BEG, GAP = 380, 905, 16                   # keep 0~2.0 us and 6.3~8.65 us
+left, right = wf.crop((0, 0, L_END, wf.height)), wf.crop((R_BEG, 0, wf.width, wf.height))
+comp = Image.new("RGB", (left.width + GAP + right.width, wf.height), (255, 255, 255))
+comp.paste(left, (0, 0)); comp.paste(right, (left.width + GAP, 0))
+dr = ImageDraw.Draw(comp)
+x0 = left.width
+for y in range(0, wf.height, 8):                   # zig-zag break mark
+    dr.line([(x0 + 3, y), (x0 + GAP - 3, y + 4)], fill=(120, 130, 140), width=1)
+    dr.line([(x0 + GAP - 3, y + 4), (x0 + 3, y + 8)], fill=(120, 130, 140), width=1)
+comp = comp.resize((comp.width * 3, comp.height * 3), Image.LANCZOS)
+comp.save(WORK / "wave_full_cut.png")
+orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save(WORK / "wave_spi.png")
+fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
+p6 = f"""
+<div class="page">
+ <div class="bar">FE · 3-b 기능 시뮬레이션 (Waveform) <span style="color:#9be3a1">PASS</span></div>
+ <p style="font-size:10pt">자기검증 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다. 시뮬레이터는 xrun이다.</p>
+ {fig("wave_full_cut.png")}
+ <p class="cap" style="margin:3pt 0 10pt">RTL 시뮬레이션 전체 파형. 가운데 약 2.0~6.3 µs 구간(UART 프레임 중간 비트)은 잘라내고 앞뒤만 이어 붙였다(가운데 지그재그 선). 0.525 µs에 UARTTXD가 내려가 송신이 시작되고, 8645 ns에 pc=0xAC로 종료하며 RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지고 err=0이다.</p>
+ {fig("wave_uart.png")}
+ <p class="cap" style="margin:3pt 0 10pt">UART 송신 확대. 루프백 모드에서 'A'(0x41)를 8N1로 송신한다. start bit(low) 뒤 LSB first로 1,0,0,0,0,0,1,0이 나가고 stop bit(high)로 끝난다. 비트당 640 ns다.</p>
+ {fig("wave_spi.png")}
+ <p class="cap" style="margin:3pt 0 10pt">SPI 전송 확대. 모드 0에서 master가 0xA5를 보내고 slave가 0x3C로 응답한다. SCLK 주기 160 ns, 상승 에지에서 8비트를 샘플한다.</p>
+ <table style="font-size:9pt">
+  <tr><th>검사 항목</th><th>기대값</th><th>결과</th></tr>
+  <tr><td>RAM[0] / [1] / [2] / [3]</td><td>0x37 / 0x41 / 0x3C / 0xA5</td><td style="color:#1f7a3f;font-weight:700">일치</td></tr>
+  <tr><td>UARTTXD 프레임, 데이터</td><td>1개, 0x41</td><td style="color:#1f7a3f;font-weight:700">일치</td></tr>
+  <tr><td>SPI SCLK 상승 에지, MOSI, MISO</td><td>8개, 0xA5, 0x3C</td><td style="color:#1f7a3f;font-weight:700">일치</td></tr>
+  <tr><td>APB stall / penable 횟수</td><td>같은 횟수(204), 겹침 없음</td><td style="color:#1f7a3f;font-weight:700">일치</td></tr>
+  <tr><td>종료 pc, 시각, 오류</td><td>0xAC, 8645 ns, err=0</td><td style="color:#1f7a3f;font-weight:700">PASS tb_mcu_top</td></tr>
+ </table>
+</div>"""
+
+new_pages = render(doc(cover_fe + p7 + cover_be + p13 + p6), "newpages")
+assert len(new_pages.pages) == 5, f"new pages overflowed: {len(new_pages.pages)}"
 
 # ---------------------------------------------------------------- overlays
 def white(x, y, w, h):
@@ -396,6 +435,8 @@ def book(cover_idx, orig_pages, appx, out):
     w = pypdf.PdfWriter()
     w.add_page(new_pages.pages[cover_idx])
     for k in orig_pages:
+        if k == 6:
+            w.add_page(new_pages.pages[4]); continue
         if k == 7:
             w.add_page(new_pages.pages[1]); continue
         if k == 13:
