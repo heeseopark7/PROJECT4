@@ -185,12 +185,15 @@ sec13 = f"""
 from PIL import Image, ImageDraw
 def orig_img(pg, name):
     return [i for i in orig.pages[pg - 1].images if i.name == name][0].image.convert("RGB")
+orig_img(6, "X30.jpg").save(WORK / "wave_full.png")
 orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save(WORK / "wave_spi.png")
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
 p6 = f"""
 <div class="page">
  <div class="bar">2. Function Simulation</div>
  <p style="font-size:10pt">자기검증 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다. 시뮬레이터는 xrun이다.</p>
+ {fig("wave_full.png")}
+ <p class="cap" style="margin:3pt 0 10pt">RTL 시뮬레이션 전체 파형. 8645 ns에 pc=0xAC로 종료하고 RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지며 err=0이다.</p>
  {fig("wave_uart.png")}
  <p class="cap" style="margin:3pt 0 10pt">UART 송신 확대. 루프백 모드에서 'A'(0x41)를 8N1로 송신한다. start bit(low) 뒤 LSB first로 1,0,0,0,0,0,1,0이 나가고 stop bit(high)로 끝난다. 비트당 640 ns다.</p>
  {fig("wave_spi.png")}
@@ -238,8 +241,15 @@ p9 = f"""
   <tr><th>클럭</th><th>Critical slack</th><th>TNS / 위반 경로</th><th>인스턴스 (순차 / 조합)</th><th>코어 면적</th><th>칩 셀 면적</th></tr>
   <tr><td class="num" style="text-align:left">10 ns</td><td class="num">+2.3 ps</td><td class="num">0 / 0</td><td class="num">5,256 (1,816 / 3,440)</td><td class="num">21,856 µm²</td><td class="num">237,856 µm²</td></tr>
  </table>
- {fbox(560, "07_MAIN_CLOCK_post_syn_opt.rpt · 11~94행 (Path 1, 10 ns)", lines("3_SYN/report/07_MAIN_CLOCK_post_syn_opt.rpt", 11, 94))}
+ {fbox(505, "07_MAIN_CLOCK_post_syn_opt.rpt · 11~94행 (Path 1, 10 ns)", lines("3_SYN/report/07_MAIN_CLOCK_post_syn_opt.rpt", 11, 94))}
  <p class="cap" style="margin:2pt 0 0"><b style="color:var(--ink)">10 ns 최악 setup 경로.</b> <code>r_pc_reg_4</code>에서 명령어 ROM, CPU 디코드와 가산기, 주소 디코드를 지나 UART 블록의 <code>r_count_reg_4/D</code>까지 데이터 경로 9,789 ps, slack +2 ps(MET).</p>
+ <table style="font-size:8.8pt;margin-top:8pt">
+  <tr><th style="width:30%">Required Time</th><th>계산 (ps)</th></tr>
+  <tr><td>캡처 클럭 도착</td><td class="num" style="text-align:left">10,000 (주기) + 200 (source latency) + 200 (network latency) = 10,400</td></tr>
+  <tr><td>Required Time</td><td class="num" style="text-align:left">10,400 − 109 (setup) − 100 (uncertainty) = 10,191</td></tr>
+  <tr><td>Arrival Time</td><td class="num" style="text-align:left">400 (launch 클럭) + 9,789 (data path) = 10,189</td></tr>
+  <tr><td>Slack</td><td class="num" style="text-align:left">10,191 − 10,189 = +2 (MET)</td></tr>
+ </table>
 </div>"""
 p10 = f"""
 <div class="page">
@@ -348,7 +358,7 @@ def head(y, txt, code):
 
 L, Wd = 36.75, 521.75
 OV = {}
-OV[12] = (white(36, 280, 523.5, 70) + white(36, 354, 523.5, 60.5) +
+OV[12] = (white(36, 256.55, 523.5, 22) + white(36, 280, 523.5, 70) + white(36, 354, 523.5, 60.5) +
           f'<ul class="ov" style="left:{L}pt;top:283pt;width:{Wd}pt;margin:0;padding-left:15pt;font-size:10.3pt;line-height:1.6">'
           '<li>두 시뮬레이션의 결과 데이터와 순서는 같고, 에지 시각만 1~2 ns 뒤로 밀린다. 이 밀림이 합성 SDF에서 생긴 타이밍 차이의 전부다.</li>'
           '<li style="margin-top:3pt">pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다.</li></ul>')
