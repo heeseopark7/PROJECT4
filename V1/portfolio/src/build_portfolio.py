@@ -114,9 +114,9 @@ appx_fe = f"""
 {code_file("3_SYN/cons/dont_use_45nm.tcl", "SDC 바로 뒤에 source한다. 지연, 홀드, 타이, 스캔 플립플롭 셀을 합성에서 쓰지 않게 막는다.")}
 """
 appx_be = f"""
-<div class="bar">부록 D · APR 스크립트 원문 (4-a)</div>
+<div class="bar">부록 A · APR 스크립트 원문 (4-a)</div>
 <p>Innovus 22.17-s086_1에서 단계별로 실행했다. 각 스크립트는 앞 단계 DB를 <code>restoreDesign</code>으로 열고 <code>saveDesign</code>으로 다음 DB를 남긴다.
-실행 기록(<code>innovus.cmd*</code>)과 대조해 일치함을 확인했다. 실행 뒤 바뀐 곳은 3_PostCTSopt.tcl의 <code>file mkdir snap</code> 삭제와 5_ChipFinish.tcl의 <code>saveNetlist -flat</code>에서 <code>-flat</code> 제거(post-layout 시뮬 SDF 적용 문제 해결, 부록 A) 두 곳이다.</p>
+실행 기록(<code>innovus.cmd*</code>)과 대조해 일치함을 확인했다. 실행 뒤 바뀐 곳은 3_PostCTSopt.tcl의 <code>file mkdir snap</code> 삭제와 5_ChipFinish.tcl의 <code>saveNetlist -flat</code>에서 <code>-flat</code> 제거 두 곳이다.</p>
 {code_file("5_PNR/0_InitDesign.tcl")}
 {code_file("5_PNR/init.io", "0_InitDesign.tcl의 init_io_file. 변마다 12슬롯, 48슬롯 패드 링과 코너 셀 4개의 위치를 정한다.")}
 {code_file("5_PNR/1_PowerPlan.tcl")}
@@ -125,14 +125,14 @@ appx_be = f"""
 {code_file("5_PNR/4_RouteDesign_PowerAnalysis.tcl")}
 {code_file("5_PNR/5_ChipFinish.tcl")}
 <div style="break-before: page"></div>
-<div class="bar">부록 E · Import 설정 원문 (4-b)</div>
+<div class="bar">부록 B · Import 설정 원문 (4-b)</div>
 <p><code>0_InitDesign.tcl</code>의 <code>init_mmmc_file</code>이다. setup은 FUNC_SS_WORST, hold는 FUNC_FF_BEST로 본다. 첫 실행 로그(<code>5_PNR/innovus.log</code>)에서 아래 파일을 모두 읽은 것을 확인했다.</p>
 {code_file("5_PNR/mcu_pad_top.mmmc.view")}
 {code_file("5_PNR/add_pad", "P&amp;R에 넣은 넷리스트는 11/10 합성 출력의 endmodule 앞에 이 전원 패드 16개를 붙인 파일이다. 현재 3_SYN/mapped의 넷리스트(11/19 재합성)에는 이 16줄이 없으므로, 0_InitDesign.tcl을 다시 돌릴 때는 다시 붙여야 한다.")}
 """
 orig = pypdf.PdfReader(str(ORIG))
-FE_ORIG = list(range(2, 13))     # original pages in the FE book (after its cover)
-BE_ORIG = list(range(13, 23))    # original pages in the BE book
+FE_ORIG = [2, 3, 4, 6, 7, 8, 9, 10, 11, 12]   # original pages in the FE book; p5 (RTL code) dropped, its program table moves to p4
+BE_ORIG = list(range(13, 21))    # original pages in the BE book; appendix A~C (p21, p22) dropped: not in the guideline
 
 def find_page(path, needle):
     d = pypdfium2.PdfDocument(str(path))
@@ -148,8 +148,9 @@ FE0 = 1 + len(FE_ORIG)
 BE0 = 1 + len(BE_ORIG)
 S = {"S1": FE0 + 1 + find_page(WORK / "appendix_fe.pdf", "부록 S1"),
      "S2": FE0 + 1 + find_page(WORK / "appendix_fe.pdf", "부록 S2"),
-     "D": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 D"),
-     "E": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 E")}
+     "D": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 A"),
+     "E": BE0 + 1 + find_page(WORK / "appendix_be.pdf", "부록 B")}
+fp = lambda k: FE_ORIG.index(k) + 2   # original page k -> page number in the FE book
 bp = lambda k: k - 11            # original page k -> page number in the BE book
 
 # ---------------------------------------------------------------- page 1 (cover)
@@ -172,30 +173,29 @@ def cover(part, part_ko, lead, tiles, rows, flow):
  <p style="font-size:10.4pt;color:#3f4b52;margin-top:10pt">{flow}</p>
 </div>"""
 
-LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL 시뮬레이션부터 합성, 등가성 검사, "
-        "P&amp;R, STA, post-layout 시뮬레이션까지 진행해 GDS2를 만든 기록이다. 클럭 10 ns(100 MHz) 기준, 공정은 GPDK045. ")
+LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이브를 담은 MCU를 RTL부터 GDS2까지 구현한 기록이다. "
+        "클럭 10 ns(100 MHz) 기준, 공정은 GPDK045. ")
 cover_fe = cover("Front-End", "Front-End",
-    LEAD + "이 권은 설계 스펙부터 합성, 등가성 검사, pre-layout 시뮬레이션까지(가이드라인 3)를 다룬다. P&amp;R 이후는 BE 포트폴리오에 있다.",
+    LEAD + "이 권은 설계 스펙, 기능 시뮬레이션, 합성, pre-layout 시뮬레이션을 다룬다.",
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
-     ("PASS", "Conformal RTL ↔ 합성"), ("PASS", "RTL · pre-layout 시뮬")],
-    [("3-a 설계 논리 다이어그램과 스펙", 2), ("3-b 기능 시뮬레이션 (파형)", 6),
-     ("3-c 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", 7),
-     ("3-d Pre-layout 시뮬레이션 (3-b와 동일 검증, 타이밍으로 생긴 차이)", 11),
+     ("PASS", "기능 시뮬레이션 (RTL)"), ("PASS", "pre-layout 시뮬레이션")],
+    [("3-a 설계 논리 다이어그램과 스펙", fp(2)), ("3-b 기능 시뮬레이션 (파형)", fp(6)),
+     ("3-c 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", fp(7)),
+     ("3-d Pre-layout 시뮬레이션 (3-b와 동일 검증, 타이밍으로 생긴 차이)", fp(11)),
      ("부록 S1 합성 실행 스크립트 원문 (run_synthesis, syn_mcu_pad_top.tcl)", S["S1"]),
-     ("부록 S2 10 ns 최종 SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)", S["S2"])],
-    "FE 플로우: xrun(RTL 시뮬) → Genus(합성) → Conformal(RTL↔합성) → xrun(pre-layout, 합성 SDF).")
+     ("부록 S2 10 ns SDC 원문 (mcu_pad_top.sdc, dont_use_45nm.tcl)", S["S2"])],
+    "FE 플로우: xrun(기능 시뮬) → Genus(합성) → xrun(pre-layout, 합성 SDF).")
 cover_be = cover("Back-End", "Back-End",
-    LEAD + "이 권은 P&amp;R부터 STA, post-layout 시뮬레이션까지(가이드라인 4)를 다룬다. 입력은 FE 포트폴리오의 10 ns 합성 넷리스트와 SDC다.",
+    LEAD + "이 권은 APR(Innovus)과 STA(Tempus)를 다룬다. 입력은 FE의 10 ns 합성 넷리스트와 SDC다.",
     [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
-     ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("PASS", "post-layout 시뮬, 합성↔PnR 등가성")],
+     ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("3,144 Met", "Tempus setup·hold 검사, 위반 0")],
     [("4-a APR 전 과정 스크립트 · 4-b Import 파일 정리", bp(13)), ("4-c 단계별 캡처 (고대비, 음영 반전)", bp(14)),
      ("4-d NanoRoute 후 타이밍 리포트 (Setup + Hold)", bp(17)),
      ("4-e STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)", bp(17)),
      ("4-f ECO 수행 과정", bp(19)), ("4-g 최종 타이밍 리포트 (Setup + Hold)", bp(19)),
-     ("부록 A~C post-layout 시뮬레이션, 등가성 검사, 한계", bp(21)),
-     ("부록 D APR 스크립트 원문 (0_InitDesign.tcl ~ 5_ChipFinish.tcl, init.io)", S["D"]),
-     ("부록 E Import 설정 원문 (mcu_pad_top.mmmc.view, add_pad)", S["E"])],
-    "BE 플로우: Innovus(P&amp;R) → Conformal(합성↔PnR) → Tempus(STA) → xrun(post-layout, worst/best).")
+     ("부록 A APR 스크립트 원문 (0_InitDesign.tcl ~ 5_ChipFinish.tcl, init.io)", S["D"]),
+     ("부록 B Import 설정 원문 (mcu_pad_top.mmmc.view, add_pad)", S["E"])],
+    "BE 플로우: Innovus(APR) → Tempus(STA).")
 
 # ---------------------------------------------------------------- page 7 (3-c-i)
 syn_excerpt = lines("3_SYN/script/syn_mcu_pad_top.tcl", 25, 36)
@@ -243,7 +243,7 @@ p13 = f"""
   <tr><td><code>4_RouteDesign_</code><br><code>PowerAnalysis.tcl</code></td><td>PostCTSopt → RouteDesign</td><td>NanoRoute <code>routeDesign -globalDetail</code>, <code>optDesign -postRoute -drv/-setup/-hold</code>(bcwc), <code>extractRC</code>, <code>report_power</code></td></tr>
   <tr><td><code>5_ChipFinish.tcl</code></td><td>RouteDesign → ChipFinish</td><td><code>addFiller</code>, <code>verify_drc</code>, <code>verifyConnectivity</code>, <code>saveNetlist</code>, <code>write_sdf</code>, <code>writeTimingCon</code>, <code>streamOut</code></td></tr>
  </table>
- <div class="note"><b class="l">원문 수록.</b> 6개 스크립트와 init.io 원문은 부록 D(p.{S['D']})에 있다. 실행 기록(<code>innovus.cmd*</code>)과 대조해 floorplan 값, 패드 좌표, 링 offset, CTS 목표 스큐, postRoute 분석 모드가 일치함을 확인했다.</div>
+ <div class="note"><b class="l">원문 수록.</b> 6개 스크립트와 init.io 원문은 부록 A(p.{S['D']})에 있다. 실행 기록(<code>innovus.cmd*</code>)과 대조해 floorplan 값, 패드 좌표, 링 offset, CTS 목표 스큐, postRoute 분석 모드가 일치함을 확인했다.</div>
  <h3>4-b Import 파일 (init 단계에서 실제로 읽은 파일, <code>innovus.log</code> 기준)</h3>
  <table>
   <tr><th style="width:17%">종류</th><th style="width:47%">파일</th><th>출처 / 비고</th></tr>
@@ -254,7 +254,7 @@ p13 = f"""
   <tr><td>타이밍 lib (FF)</td><td><code>fast_vdd1v0_basicCells.lib</code>, <code>fast_vdd1v0_multibitsDFF.lib</code>, <code>pads_FF_s1vg.lib</code></td><td>hold, FUNC_FF_BEST (1.1 V, 0°C)</td></tr>
   <tr><td>LEF</td><td><code>gsclib045_tech.lef</code>(gsclib045_tech/lef), <code>gsclib045_macro.lef</code>, <code>gsclib045_multibitsDFF.lef</code>, <code>giolib045_modify.lef</code></td><td>GPDK045 gsclib045 v4.4, giolib045 v3.5</td></tr>
   <tr><td>RC</td><td><code>gpdk045.tch</code>(gsclib045/qrc/qx) + cap table <code>…typical.capTbl</code></td><td>rc_corner BEST(T 0), WORST(T 125)</td></tr>
-  <tr><td>View</td><td>constraint_mode FUNC, view FUNC_SS_WORST / FUNC_FF_BEST</td><td><code>mcu_pad_top.mmmc.view</code>(부록 E)</td></tr>
+  <tr><td>View</td><td>constraint_mode FUNC, view FUNC_SS_WORST / FUNC_FF_BEST</td><td><code>mcu_pad_top.mmmc.view</code>(부록 B)</td></tr>
  </table>
  <div class="chk"><b class="l">합성과 대조.</b> 타이밍 lib(slow 3종)는 합성과 같다. 다른 점: IO LEF가 합성은 <code>giolib045.lef</code>, P&amp;R은 <code>giolib045_modify.lef</code>. P&amp;R에만 <code>gsclib045_multibitsDFF.lef</code>와 cap table이 있다. tech LEF와 QRC는 파일명이 같고 폴더만 다르다.</div>
 </div>"""
@@ -318,7 +318,6 @@ def fbox(h, title, text, wrap=False):
     ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
     return (f'<div class="cbox" style="position:relative;left:auto;top:auto;width:100%;height:{h}pt;margin-bottom:3pt">'
             f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
-orig_img(10, "X50.jpg").save(WORK / "schematic.png")
 p8 = f"""
 <div class="page">
  <h3 style="margin-top:0">(ii) 제약 (SDC)</h3>
@@ -347,23 +346,42 @@ p9 = f"""
 </div>"""
 p10 = f"""
 <div class="page">
- <div style="display:flex;gap:9pt">
-  <div style="flex:1;min-width:0">{fbox(300, "19_mcu_pad_top_SYN_qor.rpt · 10~51행", lines("3_SYN/report/19_mcu_pad_top_SYN_qor.rpt", 10, 51))}
-   <p class="cap"><b style="color:var(--ink)">10 ns 합성 QoR.</b> Critical path slack +2.3 ps, TNS 0, 위반 경로 0. 인스턴스 5,256개(순차 1,816, 조합 3,440), 셀 면적 237,855 µm².</p></div>
-  <div style="flex:1;min-width:0">{fbox(300, "09_mcu_pad_top_SYN_area.rpt · 10~36행", lines("3_SYN/report/09_mcu_pad_top_SYN_area.rpt", 10, 36))}
-   <p class="cap"><b style="color:var(--ink)">계층별 면적.</b> 코어 21,856 µm² 중 데이터 RAM 10,493, UART 5,157, CPU 4,279 µm². 나머지 약 216,000 µm²(칩 셀 면적의 약 91%)는 패드 15개다.</p></div>
- </div>
- <ul style="font-size:10pt;margin:4pt 0 10pt">
+ {fbox(420, "19_mcu_pad_top_SYN_qor.rpt · 10~51행", lines("3_SYN/report/19_mcu_pad_top_SYN_qor.rpt", 10, 51))}
+ <p class="cap"><b style="color:var(--ink)">10 ns 합성 QoR.</b> Critical path slack +2.3 ps, TNS 0, 위반 경로 0. 인스턴스 5,256개(순차 1,816, 조합 3,440), 셀 면적 237,855 µm².</p>
+ <ul style="font-size:10pt;margin:6pt 0 10pt">
   <li>최악 경로는 PC 레지스터 → 명령어 ROM → CPU 디코드 → 32비트 가산기 → 주소 디코드 → UART 블록으로 이어지는, 단일 사이클 구조의 가장 긴 조합 경로다.</li>
   <li>slack이 +2.3 ps로 거의 0인 것은 여유가 없는 것이 아니라, 10 ns 제약을 맞추는 선에서 툴이 남는 시간을 면적 최적화에 쓴 결과로 보인다.</li>
-  <li><code>check_design</code>에서 unresolved reference, undriven, multidriven이 모두 0이었고 합성은 에러 없이 끝났다.</li>
  </ul>
- <img src="{(WORK / "schematic.png").as_uri()}" style="width:62%;display:block;margin:0 auto;border:0.6pt solid var(--line)">
- <p class="cap" style="text-align:center;margin-top:3pt">합성 후 칩 레벨 스키매틱. 입력 PADDI 7개, 출력 PADDO 8개가 mcu_top을 감싼다. 디버그 출력 4개는 의도적으로 열려 있다.</p>
 </div>"""
 
-new_pages = render(doc(cover_fe + p7 + cover_be + p13 + p6 + p8 + p9 + p10 + FIT), "newpages")
-assert len(new_pages.pages) == 8, f"new pages overflowed: {len(new_pages.pages)}"
+for nm in ("X55.png", "X56.png", "X57.png"):
+    orig_img(11, nm).save(WORK / f"pre_{nm}")
+_t = (TOP / "2_SIM/PRE/sdf_gate.log").read_text(errors="replace").split("\n")
+_un = [l for l in _t if "Unable to annotate" in l]
+_sg = (lines("2_SIM/PRE/sdf_gate.log", 1, 12) +
+       f"\n\n# 같은 파일 집계\n'Unable to annotate'      : {len(_un)}건"
+       f"\n그중 REMOVAL이 아닌 항목    : {sum('REMOVAL' not in l for l in _un)}건"
+       f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
+p11 = f"""
+<div class="page">
+ <div class="bar">FE · 3-d Pre-layout 시뮬레이션 <span style="color:#9be3a1">PASS</span></div>
+ <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 걸고, 3-b와 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
+ {fig("pre_X55.png")}
+ <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 3-b의 RTL 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
+ <div style="display:flex;gap:9pt">
+  <div style="flex:1;min-width:0">{fig("pre_X56.png")}<p class="cap" style="margin-top:3pt">UART 송신 확대. RTL과 같은 프레임(start 뒤 1,0,0,0,0,0,1,0, stop)이고 에지만 하강 +1.773 ns, 상승 +1.958 ns 늦다. 프레임 길이는 5760.185 ns다.</p></div>
+  <div style="flex:1;min-width:0">{fig("pre_X57.png")}<p class="cap" style="margin-top:3pt">SPI 전송 확대. 8번째 SCLK 상승에서 mosi_byte=0xA5, miso_byte=0x3C가 완성된다. SCLK 상승이 RTL보다 1.392 ns 늦고 7주기 간격은 1.12 µs로 같다.</p></div>
+ </div>
+ <div style="display:flex;gap:9pt;margin-top:4pt">
+  <div style="flex:1;min-width:0">{fbox(150, "2_SIM/PRE/pre_sim.log · 2364~2378행", lines("2_SIM/PRE/pre_sim.log", 2364, 2378))}
+   <p class="cap">시뮬레이션 로그. UARTTXD 프레임 1개, 데이터 0x41, SCLK 상승 에지 8개, MOSI 0xA5, MISO 0x3C가 모두 ok이고 <code>PASS tb_mcu_top</code>으로 8645 ns에 종료했다.</p></div>
+  <div style="flex:1;min-width:0">{fbox(150, "2_SIM/PRE/sdf_gate.log · 1~12행 + 집계", _sg)}
+   <p class="cap">SDF 적용 로그(<code>sdf_gate.log</code>). 적용되지 않은 488건은 모두 비동기 리셋 플립플롭의 REMOVAL 검사이고 에러는 0건이다.</p></div>
+ </div>
+</div>"""
+
+new_pages = render(doc(cover_fe + p7 + cover_be + p13 + p6 + p8 + p9 + p10 + p11 + FIT), "newpages")
+assert len(new_pages.pages) == 9, f"new pages overflowed: {len(new_pages.pages)}"
 
 # ---------------------------------------------------------------- overlays
 def white(x, y, w, h):
@@ -378,12 +396,8 @@ L, Wd = 36.75, 521.75
 OV = {}
 OV[12] = (white(36, 315.5, 523.5, 34) +
           f'<div class="ov" style="left:39pt;top:316.5pt;width:519pt;font-size:10.3pt;line-height:1.55;padding-left:11pt;text-indent:-11pt">'
-          '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다. 배선 후 지연(+3.46 ns worst)은 BE 포트폴리오 부록 A의 post-layout 시뮬에서 확인한다.</div>' +
-          white(36, 354, 523.5, 60.5) +
-          f'<div class="ov" style="left:{L}pt;top:355pt;width:{Wd}pt">'
-          f'<div class="note"><b class="l">확인 완료: 하강 지연.</b> 첫 UARTTXD 하강 지연은 11쪽 UART 송신 확대 파형에서 측정한 <b>+1.773 ns</b>(RTL 525 ns → 526.773 ns)로 확정했다. 예전 메모의 약 1.15 ns는 잘못 적은 값이다.</div>'
-          f'<div class="note"><b class="l">확인 완료: 사용한 넷리스트.</b> 3-c의 등가성 검사(Conformal 1)와 이 pre-layout 시뮬레이션은 모두 <b>10 ns 넷리스트</b>로 수행했다. '
-          f'넷리스트 3행이 <code>Generated on: Nov 10 2026 00:24:47</code>이고 그 합성 로그의 SDC가 <code>set CLK_PERIOD 10</code>이다.</div></div>')
+          '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다.</div>' +
+          white(36, 354, 523.5, 60.5))
 OV[14] = head(120.2, "① Init / Floorplan", "0_InitDesign.tcl + init.io") + head(430.9, "② Power plan", "1_PowerPlan.tcl")
 OV[15] = head(43.7, "③ Place", "2_PlaceOpt.tcl") + head(454.9, "④ CTS", "3_PostCTSopt.tcl")
 OV[16] = (head(43.9, "⑤ Route", "4_RouteDesign_PowerAnalysis.tcl") .replace("</code>)</div>", "</code>, NanoRoute)</div>")
@@ -403,6 +417,7 @@ OV[19] = (white(36, 373.5, 523.5, 40) +
           '<b>Hold 위반 없음.</b> post-layout STA에서 hold 위반이 0건(WNS +0.053 ns)이라 hold용 지연 버퍼(<code>FE_PHC</code>)는 0개이고 전후 비교는 필요하지 않았다. '
           '삽입 셀 개수는 앞 쪽 표(클럭 176, 최적화 706, 합계 882)에 정리했다.</div>')
 
+
 def cbox(x, y, w, h, title, text, wrap=False):
     ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
     return (f'<div class="cbox" style="left:{x}pt;top:{y}pt;width:{w}pt;height:{h}pt">'
@@ -414,12 +429,6 @@ def rl(rel, a, b):
 def add(k, frag):
     OV[k] = OV.get(k, "") + frag
 
-add(4, cbox(37.5, 315.8, 255.8, 198.8, *rl("1_RTL/mcu_pad_top.v", 119, 156)))
-add(4, cbox(302.2, 315.8, 255.8, 62.2, *rl("1_RTL/mcu_top.v", 88, 97)))
-add(4, cbox(37.5, 555.8, 255.8, 120.0, *rl("1_RTL/sccpu.v", 148, 170)))
-add(4, cbox(302.2, 555.8, 255.8, 123.8, *rl("1_RTL/apb_bridge.v", 32, 56)))
-add(5, cbox(37.5, 45.0, 255.8, 128.2, *rl("1_RTL/scdatamem.v", 28, 49)))
-add(5, cbox(302.2, 45.0, 255.8, 68.2, *rl("1_RTL/scinstmem.v", 44, 55)))
 
 def lg(rel, *ranges, label=None):
     parts = [lines(rel, a, b) for a, b in ranges]
@@ -428,22 +437,8 @@ def lg(rel, *ranges, label=None):
 
 # FE: 10 ns synthesis reports, Conformal log and pre-sim logs (files exist in the repo).
 # The 2.5 ns reports (p10 top) are not in the repo and stay as captures; the schematic stays as is.
-add(11, cbox(37.5, 64.5, 255.8, 111.8, *lg("4_EC/log/all.log", (120, 138), label="4_EC/log/all.log · report verification (120~138행)")))
-add(11, cbox(302.2, 64.5, 255.8, 126.0, *lg("4_EC/log/all.log", (139, 160), label="4_EC/log/all.log · report statistics (139~160행)")))
-add(11, cbox(37.5, 545.2, 255.8, 117.0, *lg("2_SIM/PRE/pre_sim.log", (2364, 2378), label="2_SIM/PRE/pre_sim.log · 2364~2378행")))
-_sg = lines("2_SIM/PRE/sdf_gate.log", 1, 12)
-_t = (TOP / "2_SIM/PRE/sdf_gate.log").read_text(errors="replace").split("\n")
-_un = [l for l in _t if "Unable to annotate" in l]
-_sg += (f"\n\n# 같은 파일 집계\n'Unable to annotate'      : {len(_un)}건"
-        f"\n그중 REMOVAL이 아닌 항목    : {sum('REMOVAL' not in l for l in _un)}건"
-        f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
-add(11, cbox(302.2, 545.2, 255.8, 105.8, "2_SIM/PRE/sdf_gate.log · 1~12행 + 집계", _sg))
 
-# Captures whose log files no longer exist (2.5 ns synthesis, flat-netlist post-sim): transcribed by hand
-# from the original captures into src/transcribed/ and shown as text, labelled as such.
-TR = pathlib.Path(__file__).resolve().parent / "transcribed"
-def tr(name): return (TR / name).read_text().rstrip("\n")
-add(21, cbox(37.5, 222.8, 255.8, 115.5, "수정 전(-flat 넷리스트) xmelab SDF 로그 · 원본 로그 없음, 당시 캡처에서 옮겨 적음", tr("post_sim_flat_sdf.txt"), wrap=True))
+
 
 # BE: report/log captures replaced by excerpts of the logs they came from
 add(17, cbox(37.5, 117.0, 255.8, 179.2, *lg("5_PNR/innovus.log10", (4871, 4899), label="innovus.log10 · timeDesign -postRoute (4871~4899행)")))
@@ -452,20 +447,31 @@ add(17, cbox(37.5, 642.8, 255.8, 114.0, *lg("5_PNR/tempus.log", (229, 229), (243
 add(17, cbox(302.2, 642.8, 255.8, 120.0, *lg("5_PNR/tempus.log", (281, 294), label="tempus.log · report_analysis_coverage (281~294행)")))
 add(18, cbox(37.5, 40.5, 520.5, 227.2, *lg("5_PNR/tempus.log2", (330, 351), label="tempus.log2 · report_timing -early, hold 최악 경로 (330~351행)")))
 add(20, cbox(162.8, 40.5, 270.0, 378.8, *lg("5_PNR/tempus.log2", (252, 328), label="tempus.log2 · report_timing -late, setup 최악 경로 (252~328행)")))
-add(21, cbox(302.2, 222.8, 255.8, 48.0, *lg("2_SIM/POST/max/post_sim_max.log", (919, 927), label="post_sim_max.log · SDF statistics (919~927행)")))
 
 add(2, white(289.0, 528.6, 11.5, 11.2) +
        '<div class="ov" style="left:289.2pt;top:528.2pt;font-size:9.1pt;line-height:1.2;letter-spacing:0">10</div>')
-add(19, white(36, 501.5, 523.5, 172) +
-    f'<div class="ov" style="left:{L}pt;top:503pt;width:{Wd}pt"><table style="font-size:8.9pt">'
-    '<tr><th style="width:17%">단계</th><th style="width:25%">발견</th><th>조치</th><th style="width:22%">결과</th></tr>'
-    '<tr><td>CTS 이후 최적화</td><td>preCTS −0.352 ns, max_tran 33 net</td><td>postCTS 최적화(버퍼 삽입, sizing)</td><td>setup +0.148 ns, max_tran 0</td></tr>'
-    '<tr><td>post-layout 시뮬</td><td>PASS였지만 SDF 적용률 0.17%</td><td>PnR 넷리스트를 계층 구조로 저장(<code>-flat</code> 제거)</td><td>적용률 91.99%</td></tr>'
-    '</table></div>')
+add(19, white(36, 38, 523.5, 331) + white(36, 481, 523.5, 192))
+add(16, white(300, 148.6, 259, 84))
+add(18, white(36, 435, 523.5, 49) +
+    '<div class="ov" style="left:39pt;top:437pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
+    '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(4-g의 setup 경로). 개수는 아래 표에 정리했다.</div>')
 add(20, white(36, 603, 523.5, 50.5) +
     '<div class="ov" style="left:39pt;top:605pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
     '•&nbsp; setup 최악 경로는 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로이고 배선 후에도 그대로 최악이다.</div>')
-add(22, white(36, 73, 523.5, 33.5))
+
+# FE p4: RTL code excerpts are not in the guideline -> replaced by the embedded-program table (from old p5)
+add(4, white(36, 284, 523.5, 540) +
+    f'<div class="ov" style="left:{L}pt;top:288pt;width:{Wd}pt">'
+    '<h3 style="margin-top:0">내장 프로그램 (RTL 시뮬레이션 실측)</h3>'
+    '<table style="font-size:9pt"><tr><th style="width:24%">단계</th><th style="width:20%">시각</th><th>일어난 일</th></tr>'
+    '<tr><td>① 1~10 합계</td><td class="num">0 ~ 355 ns</td><td>add, addi, bne 루프 10바퀴, RAM[0]=0x37(55)</td></tr>'
+    '<tr><td>② UART 설정, 송신 요청</td><td class="num">395 ~ 495 ns</td><td>UARTIBRD=4, UARTCR=0x381, UARTDR=0x41</td></tr>'
+    '<tr><td>③ 송신, 루프백 수신</td><td class="num">495 ~ 6685 ns</td><td>525 ns에 UARTTXD 하강, 수신 완료 후 RAM[1]=0x41</td></tr>'
+    '<tr><td>④ SPI 설정</td><td class="num">6735 ~ 6855 ns</td><td>슬레이브 SSDR=0x3C, 마스터 SPDR=0xA5(전송 시작)</td></tr>'
+    '<tr><td>⑤ SPI 전송</td><td class="num">6855 ~ 8365 ns</td><td>SCLK 8개(160 ns 주기), RAM[2]=0x3C</td></tr>'
+    '<tr><td>⑥ 슬레이브 확인</td><td class="num">8365 ~ 8455 ns</td><td>받은 0xA5를 읽어 RAM[3]=0xA5, 이후 <code>j 0xAC</code>로 제자리 점프(종료)</td></tr></table>'
+    '<div class="note">리셋 해제 후 pc=0xAC 도달까지 843클럭, APB 접근 204회(대부분 상태 레지스터 폴링)다. CPU가 하는 일의 대부분이 대기라서 합성과 P&amp;R에서는 프로그램 속도가 아니라 회로 전체의 가장 긴 경로가 중요하다.</div>'
+    '</div>')
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
@@ -478,8 +484,8 @@ def book(cover_idx, orig_pages, appx, out):
     w = pypdf.PdfWriter()
     w.add_page(new_pages.pages[cover_idx])
     for k in orig_pages:
-        if k in (6, 8, 9, 10):
-            w.add_page(new_pages.pages[{6: 4, 8: 5, 9: 6, 10: 7}[k]]); continue
+        if k in (6, 8, 9, 10, 11):
+            w.add_page(new_pages.pages[{6: 4, 8: 5, 9: 6, 10: 7, 11: 8}[k]]); continue
         if k == 7:
             w.add_page(new_pages.pages[1]); continue
         if k == 13:
