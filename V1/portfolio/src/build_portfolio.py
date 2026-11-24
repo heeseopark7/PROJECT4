@@ -282,7 +282,7 @@ OV[12] = (white(36, 315.5, 523.5, 34) +
           '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다. 배선 후 지연(+3.46 ns worst)은 BE 포트폴리오 부록 A의 post-layout 시뮬에서 확인한다.</div>' +
           white(36, 354, 523.5, 60.5) +
           f'<div class="ov" style="left:{L}pt;top:355pt;width:{Wd}pt">'
-          f'<div class="chk"><b class="l">확인 필요</b> 문서 5의 확대 파형 캡션은 하강 지연을 약 1.15 ns로, 본문 측정은 +1.773 ns로 적었다. 본문은 +1.773 ns를 썼고 확대 파형 캡처는 넣지 않았다.</div>'
+          f'<div class="note"><b class="l">확인 완료: 하강 지연.</b> 첫 UARTTXD 하강 지연은 11쪽 UART 송신 확대 파형에서 측정한 <b>+1.773 ns</b>(RTL 525 ns → 526.773 ns)로 확정했다. 예전 메모의 약 1.15 ns는 잘못 적은 값이다.</div>'
           f'<div class="note"><b class="l">확인 완료: 사용한 넷리스트.</b> 3-c의 등가성 검사(Conformal 1)와 이 pre-layout 시뮬레이션은 모두 <b>10 ns 넷리스트</b>로 수행했다. '
           f'넷리스트 3행이 <code>Generated on: Nov 10 2026 00:24:47</code>이고 그 합성 로그의 SDC가 <code>set CLK_PERIOD 10</code>이다. pre-sim은 11/10 01:21, EC는 11/10에 실행했다. '
           f'5 ns 넷리스트는 11/13에 생성되어 두 검증에 쓰이지 않았다. 11/19 10 ns 재합성본은 생성 시각 한 줄만 다르고 내용이 같다.</div></div>')
@@ -348,6 +348,22 @@ def lg(rel, *ranges, label=None):
     parts = [lines(rel, a, b) for a, b in ranges]
     rng = ", ".join(f"{a}~{b}" for a, b in ranges)
     return (label or f"{PROJ}/TOP/{rel} · {rng}행"), "\n...\n".join(parts)
+
+# FE: 10 ns synthesis reports, Conformal log and pre-sim logs (files exist in the repo).
+# The 2.5 ns reports (p10 top) are not in the repo and stay as captures; the schematic stays as is.
+add(9, cbox(37.5, 243.8, 255.8, 330.0, *lg("3_SYN/report/19_mcu_pad_top_SYN_qor.rpt", (10, 51), label="19_mcu_pad_top_SYN_qor.rpt · 10~51행 (10 ns)")))
+add(9, cbox(302.2, 243.8, 255.8, 123.0, *lg("3_SYN/report/07_MAIN_CLOCK_post_syn_opt.rpt", (11, 28), label="07_MAIN_CLOCK_post_syn_opt.rpt · 11~28행 (10 ns)")))
+add(10, cbox(37.5, 539.2, 255.8, 139.5, *lg("3_SYN/report/09_mcu_pad_top_SYN_area.rpt", (10, 36), label="09_mcu_pad_top_SYN_area.rpt · 10~36행 (10 ns)")))
+add(11, cbox(37.5, 64.5, 255.8, 111.8, *lg("4_EC/log/all.log", (120, 138), label="4_EC/log/all.log · report verification (120~138행)")))
+add(11, cbox(302.2, 64.5, 255.8, 126.0, *lg("4_EC/log/all.log", (139, 160), label="4_EC/log/all.log · report statistics (139~160행)")))
+add(11, cbox(37.5, 545.2, 255.8, 117.0, *lg("2_SIM/PRE/pre_sim.log", (2364, 2378), label="2_SIM/PRE/pre_sim.log · 2364~2378행")))
+_sg = lines("2_SIM/PRE/sdf_gate.log", 1, 12)
+_t = (TOP / "2_SIM/PRE/sdf_gate.log").read_text(errors="replace").split("\n")
+_un = [l for l in _t if "Unable to annotate" in l]
+_sg += (f"\n\n# 같은 파일 집계\n'Unable to annotate'      : {len(_un)}건"
+        f"\n그중 REMOVAL이 아닌 항목    : {sum('REMOVAL' not in l for l in _un)}건"
+        f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
+add(11, cbox(302.2, 545.2, 255.8, 105.8, "2_SIM/PRE/sdf_gate.log · 1~12행 + 집계", _sg))
 
 # BE: report/log captures replaced by excerpts of the logs they came from
 add(17, cbox(37.5, 117.0, 255.8, 179.2, *lg("5_PNR/innovus.log10", (4871, 4899), label="innovus.log10 · timeDesign -postRoute (4871~4899행)")))
