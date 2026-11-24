@@ -109,8 +109,7 @@ appx_fe = f"""
 <div style="break-before: page"></div>
 <div class="bar">부록 S2 · 10 ns 최종 SDC 원문 (3-c-ii)</div>
 <p>합성 스크립트가 <code>source -verbose ./cons/mcu_pad_top.sdc</code>로 읽는다. 10 ns 최종 합성과 P&amp;R에 들어간 상태 그대로다.
-입력 구동은 <code>set_driving_cell PADDI</code>가 켜져 있고 <code>set_input_transition 0.1</code>은 주석이다(2.5 ns 실험의 수정은 이 파일에 들어가지 않았다).
-파일 위쪽 주석("instead of the PADDI cell")은 2.5 ns 실험 때의 설명으로, 실제로 켜진 줄과 맞지 않는다.</p>
+입력 구동은 <code>set_driving_cell PADDI</code>로 칩 입력을 PADDI 패드 셀이 구동한다고 가정하고, 출력 부하는 <code>PADDO/A</code> 입력 용량으로 둔다. 64~66행 위의 주석("instead of the PADDI cell")은 실제로 켜진 줄과 맞지 않는 남은 주석이다.</p>
 {code_file("3_SYN/cons/mcu_pad_top.sdc")}
 {code_file("3_SYN/cons/dont_use_45nm.tcl", "SDC 바로 뒤에 source한다. 지연, 홀드, 타이, 스캔 플립플롭 셀을 합성에서 쓰지 않게 막는다.")}
 """
@@ -226,7 +225,7 @@ p7 = f"""
  <div class="fh"><span>syn_mcu_pad_top.tcl · 흐름 요약 (발췌)</span><span>233 lines</span></div>
  <pre class="code">{html.escape(syn_flow)}</pre>
  <div class="note"><b class="l">원문 수록.</b> 스크립트 전문(233줄)과 <code>run_synthesis</code>는 부록 S1(p.{S['S1']})에 그대로 실었다. 10 ns 최종 실행 기록은 <code>log/all.log</code>(11/19 00:16~00:21)이고, 결과는 00~20번 리포트로 남겼다.
- 초기 캡처의 <code>LIB_LIST {{fast_… slow_… pads_SS_…}}</code> 줄은 처음 작성한 버전이다. 11/10, 11/13, 11/19 합성 로그 모두 위의 slow 단일 코너 목록으로 실행되었다.</div>
+</div>
 </div>"""
 
 # ---------------------------------------------------------------- page 13 (4-a, 4-b)
@@ -275,7 +274,7 @@ x0 = left.width
 for y in range(0, wf.height, 8):                   # zig-zag break mark
     dr.line([(x0 + 3, y), (x0 + GAP - 3, y + 4)], fill=(120, 130, 140), width=1)
     dr.line([(x0 + GAP - 3, y + 4), (x0 + 3, y + 8)], fill=(120, 130, 140), width=1)
-comp = comp.resize((comp.width * 3, comp.height * 3), Image.LANCZOS)
+comp = comp.resize((comp.width * 4, comp.height * 4), Image.NEAREST)   # integer, no smoothing: keeps the original pixels
 comp.save(WORK / "wave_full_cut.png")
 orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save(WORK / "wave_spi.png")
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
@@ -299,8 +298,72 @@ p6 = f"""
  </table>
 </div>"""
 
-new_pages = render(doc(cover_fe + p7 + cover_be + p13 + p6), "newpages")
-assert len(new_pages.pages) == 5, f"new pages overflowed: {len(new_pages.pages)}"
+import re as _re
+def hl(t):
+    out = []
+    for ln in html.escape(t).split("\n"):
+        i = ln.find("//")
+        m = i if i >= 0 else (ln.find("#") if ln.lstrip().startswith("#") else -1)
+        if m >= 0:
+            ln = ln[:m] + '<span class="cm">' + ln[m:] + "</span>"
+        out.append(ln)
+    return "\n".join(out)
+
+FIT = """<script>window.fitAll = () => { document.querySelectorAll('pre.fit').forEach(el => {
+  let f = 7.2; el.style.fontSize = f + 'pt';
+  while ((el.scrollHeight > el.clientHeight + 0.5 || el.scrollWidth > el.clientWidth + 0.5) && f > 2.5) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
+}); };</script>"""
+
+def fbox(h, title, text, wrap=False):
+    ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
+    return (f'<div class="cbox" style="position:relative;left:auto;top:auto;width:100%;height:{h}pt;margin-bottom:3pt">'
+            f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
+orig_img(10, "X50.jpg").save(WORK / "schematic.png")
+p8 = f"""
+<div class="page">
+ <h3 style="margin-top:0">(ii) 제약 (SDC)</h3>
+ <p>합성 스크립트가 <code>source -verbose ./cons/mcu_pad_top.sdc</code>로 읽는 10 ns 제약이다. 아래는 파일 19~99행(머리 주석 제외 전부)이다.</p>
+ {fbox(520, f"{PROJ}/TOP/3_SYN/cons/mcu_pad_top.sdc · 19~99행", lines("3_SYN/cons/mcu_pad_top.sdc", 19, 99), wrap=True)}
+ <p class="cap" style="margin:2pt 0 8pt">클럭 <code>MAIN_CLOCK</code> 10 ns(100 MHz), 소스·네트워크 latency 0.2 ns, setup uncertainty 0.1 ns, clock transition 0.1 ns, 입출력 지연(max 0.1 / min 0.01 ns), 동작 조건(slow: PVT_0P9V_125C, fast: PVT_1P1V_0C)과 신호 패드 15개의 <code>set_dont_touch</code>가 들어 있다.</p>
+ <table style="font-size:8.8pt">
+  <tr><th style="width:24%">항목</th><th>설정과 이유</th></tr>
+  <tr><td>입력 구동</td><td><code>set_driving_cell -lib_cell PADDI -pin Y</code>: 칩 입력(clk 제외 6개)을 입력 패드 셀이 구동한다고 본다.</td></tr>
+  <tr><td>출력 부하</td><td><code>set_load [load_of PADDO/A]</code>: 출력 8개가 출력 패드 셀 입력을 구동한다.</td></tr>
+  <tr><td>패드 보호</td><td>신호 패드 15개 <code>set_dont_touch</code>로 합성이 패드 셀을 바꾸지 않게 한다.</td></tr>
+  <tr><td>이상 네트워크</td><td><code>set_ideal_network</code> clk, clrn: 합성 단계에서는 버퍼링하지 않고 CTS와 P&amp;R에 맡긴다.</td></tr>
+  <tr><td>dont_use</td><td><code>dont_use_45nm.tcl</code>: 지연·홀드·타이·스캔 플립플롭 셀을 합성에서 쓰지 않는다(부록 S2).</td></tr>
+ </table>
+</div>"""
+p9 = f"""
+<div class="page">
+ <h3 style="margin-top:0">(iii) 타이밍 리포트 (Setup)</h3>
+ <p>클럭 10 ns(100 MHz)를 목표로 합성했다. 이 넷리스트가 P&amp;R 입력이다.</p>
+ <table style="font-size:8.8pt">
+  <tr><th>클럭</th><th>Critical slack</th><th>TNS / 위반 경로</th><th>인스턴스 (순차 / 조합)</th><th>코어 면적</th><th>칩 셀 면적</th></tr>
+  <tr><td class="num" style="text-align:left">10 ns</td><td class="num">+2.3 ps</td><td class="num">0 / 0</td><td class="num">5,256 (1,816 / 3,440)</td><td class="num">21,856 µm²</td><td class="num">237,856 µm²</td></tr>
+ </table>
+ {fbox(560, "07_MAIN_CLOCK_post_syn_opt.rpt · 11~94행 (Path 1, 10 ns)", lines("3_SYN/report/07_MAIN_CLOCK_post_syn_opt.rpt", 11, 94))}
+ <p class="cap" style="margin:2pt 0 0"><b style="color:var(--ink)">10 ns 최악 setup 경로.</b> <code>r_pc_reg_4</code>에서 명령어 ROM, CPU 디코드와 가산기, 주소 디코드를 지나 UART 블록의 <code>r_count_reg_4/D</code>까지 데이터 경로 9,789 ps, slack +2 ps(MET).</p>
+</div>"""
+p10 = f"""
+<div class="page">
+ <div style="display:flex;gap:9pt">
+  <div style="flex:1;min-width:0">{fbox(300, "19_mcu_pad_top_SYN_qor.rpt · 10~51행", lines("3_SYN/report/19_mcu_pad_top_SYN_qor.rpt", 10, 51))}
+   <p class="cap"><b style="color:var(--ink)">10 ns 합성 QoR.</b> Critical path slack +2.3 ps, TNS 0, 위반 경로 0. 인스턴스 5,256개(순차 1,816, 조합 3,440), 셀 면적 237,855 µm².</p></div>
+  <div style="flex:1;min-width:0">{fbox(300, "09_mcu_pad_top_SYN_area.rpt · 10~36행", lines("3_SYN/report/09_mcu_pad_top_SYN_area.rpt", 10, 36))}
+   <p class="cap"><b style="color:var(--ink)">계층별 면적.</b> 코어 21,856 µm² 중 데이터 RAM 10,493, UART 5,157, CPU 4,279 µm². 나머지 약 216,000 µm²(칩 셀 면적의 약 91%)는 패드 15개다.</p></div>
+ </div>
+ <ul style="font-size:10pt;margin:4pt 0 10pt">
+  <li>최악 경로는 PC 레지스터 → 명령어 ROM → CPU 디코드 → 32비트 가산기 → 주소 디코드 → UART 블록으로 이어지는, 단일 사이클 구조의 가장 긴 조합 경로다.</li>
+  <li>slack이 +2.3 ps로 거의 0인 것은 여유가 없는 것이 아니라, 10 ns 제약을 맞추는 선에서 툴이 남는 시간을 면적 최적화에 쓴 결과로 보인다.</li>
+  <li><code>check_design</code>에서 unresolved reference, undriven, multidriven이 모두 0이었고 합성은 에러 없이 끝났다.</li>
+ </ul>
+ <img src="{(WORK / "schematic.png").as_uri()}" style="width:62%;display:block;margin:0 auto;border:0.6pt solid var(--line)">
+ <p class="cap" style="text-align:center;margin-top:3pt">합성 후 칩 레벨 스키매틱. 입력 PADDI 7개, 출력 PADDO 8개가 mcu_top을 감싼다. 디버그 출력 4개는 의도적으로 열려 있다.</p>
+</div>"""
+
+new_pages = render(doc(cover_fe + p7 + cover_be + p13 + p6 + p8 + p9 + p10 + FIT), "newpages")
+assert len(new_pages.pages) == 8, f"new pages overflowed: {len(new_pages.pages)}"
 
 # ---------------------------------------------------------------- overlays
 def white(x, y, w, h):
@@ -313,9 +376,6 @@ def head(y, txt, code):
 
 L, Wd = 36.75, 521.75
 OV = {}
-_ov8_note = (f'<div class="ov note" style="left:{L}pt;top:768pt;width:{Wd}pt;font-size:8.6pt">'
-         f'<b class="l">10 ns 최종 SDC는 다르다.</b> 위 <code>set_input_transition 0.1</code> 수정은 2.5 ns 실험에서만 썼다. 10 ns 최종 합성과 P&amp;R에 들어간 SDC는 <code>set_driving_cell PADDI</code>를 그대로 두었다 '
-         f'(<code>log/all.log</code> 607행, <code>02_report_port.rpt</code>의 입력 드라이버가 모두 <code>PADDI/Y</code>). 10 ns SDC 전문은 부록 S2(p.{S["S2"]}).</div>')
 OV[12] = (white(36, 315.5, 523.5, 34) +
           f'<div class="ov" style="left:39pt;top:316.5pt;width:519pt;font-size:10.3pt;line-height:1.55;padding-left:11pt;text-indent:-11pt">'
           '•&nbsp; pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다. 배선 후 지연(+3.46 ns worst)은 BE 포트폴리오 부록 A의 post-layout 시뮬에서 확인한다.</div>' +
@@ -323,8 +383,7 @@ OV[12] = (white(36, 315.5, 523.5, 34) +
           f'<div class="ov" style="left:{L}pt;top:355pt;width:{Wd}pt">'
           f'<div class="note"><b class="l">확인 완료: 하강 지연.</b> 첫 UARTTXD 하강 지연은 11쪽 UART 송신 확대 파형에서 측정한 <b>+1.773 ns</b>(RTL 525 ns → 526.773 ns)로 확정했다. 예전 메모의 약 1.15 ns는 잘못 적은 값이다.</div>'
           f'<div class="note"><b class="l">확인 완료: 사용한 넷리스트.</b> 3-c의 등가성 검사(Conformal 1)와 이 pre-layout 시뮬레이션은 모두 <b>10 ns 넷리스트</b>로 수행했다. '
-          f'넷리스트 3행이 <code>Generated on: Nov 10 2026 00:24:47</code>이고 그 합성 로그의 SDC가 <code>set CLK_PERIOD 10</code>이다. pre-sim은 11/10 01:21, EC는 11/10에 실행했다. '
-          f'5 ns 넷리스트는 11/13에 생성되어 두 검증에 쓰이지 않았다. 11/19 10 ns 재합성본은 생성 시각 한 줄만 다르고 내용이 같다.</div></div>')
+          f'넷리스트 3행이 <code>Generated on: Nov 10 2026 00:24:47</code>이고 그 합성 로그의 SDC가 <code>set CLK_PERIOD 10</code>이다.</div></div>')
 OV[14] = head(120.2, "① Init / Floorplan", "0_InitDesign.tcl + init.io") + head(430.9, "② Power plan", "1_PowerPlan.tcl")
 OV[15] = head(43.7, "③ Place", "2_PlaceOpt.tcl") + head(454.9, "④ CTS", "3_PostCTSopt.tcl")
 OV[16] = (head(43.9, "⑤ Route", "4_RouteDesign_PowerAnalysis.tcl") .replace("</code>)</div>", "</code>, NanoRoute)</div>")
@@ -344,17 +403,6 @@ OV[19] = (white(36, 373.5, 523.5, 40) +
           '<b>Hold 위반 없음.</b> post-layout STA에서 hold 위반이 0건(WNS +0.053 ns)이라 hold용 지연 버퍼(<code>FE_PHC</code>)는 0개이고 전후 비교는 필요하지 않았다. '
           '삽입 셀 개수는 앞 쪽 표(클럭 176, 최적화 706, 합계 882)에 정리했다.</div>')
 
-import re as _re
-def hl(t):
-    out = []
-    for ln in html.escape(t).split("\n"):
-        i = ln.find("//")
-        m = i if i >= 0 else (ln.find("#") if ln.lstrip().startswith("#") else -1)
-        if m >= 0:
-            ln = ln[:m] + '<span class="cm">' + ln[m:] + "</span>"
-        out.append(ln)
-    return "\n".join(out)
-
 def cbox(x, y, w, h, title, text, wrap=False):
     ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
     return (f'<div class="cbox" style="left:{x}pt;top:{y}pt;width:{w}pt;height:{h}pt">'
@@ -372,16 +420,6 @@ add(4, cbox(37.5, 555.8, 255.8, 120.0, *rl("1_RTL/sccpu.v", 148, 170)))
 add(4, cbox(302.2, 555.8, 255.8, 123.8, *rl("1_RTL/apb_bridge.v", 32, 56)))
 add(5, cbox(37.5, 45.0, 255.8, 128.2, *rl("1_RTL/scdatamem.v", 28, 49)))
 add(5, cbox(302.2, 45.0, 255.8, 68.2, *rl("1_RTL/scinstmem.v", 44, 55)))
-OV[8] = (cbox(95.2, 66.8, 405.0, 475.5, *rl("3_SYN/cons/mcu_pad_top.sdc", 19, 99), wrap=True)
-         + white(36, 545, 523.5, 43)
-         + f'<div class="ov" style="left:{L}pt;top:546pt;width:{Wd}pt;font-size:8.9pt;line-height:1.6;color:#56636b">'
-           '<code>mcu_pad_top.sdc</code> (10 ns 최종본, 파일에서 19~99행 발췌). 클럭 정의(<code>MAIN_CLOCK</code>, 10 ns), 소스·네트워크 latency 0.2 ns, setup uncertainty 0.1 ns, '
-           'clock transition 0.1 ns, 입출력 지연(max 0.1 / min 0.01 ns), 출력 부하, 동작 조건(slow: PVT_0P9V_125C, fast: PVT_1P1V_0C)과 패드 15개의 '
-           '<code>set_dont_touch</code>가 들어 있다. 입력 구동은 <code>set_driving_cell -lib_cell PADDI</code>다.</div>')
-_d = lines("3_SYN/cons/mcu_pad_top.sdc", 57, 66).split("\n")
-_d = [("#" + l) if l.startswith("set_driving_cell") else (l[1:] if l.startswith("#set_input_transition") else l) for l in _d]
-OV[8] += cbox(37.5, 655.5, 520.5, 87.8, "2.5 ns 실험 때의 구동 모델: 위 파일 64~65행의 주석만 바꾼 상태 (이 버전은 저장소에 따로 없음)", "\n".join(_d))
-OV[8] += _ov8_note
 
 def lg(rel, *ranges, label=None):
     parts = [lines(rel, a, b) for a, b in ranges]
@@ -390,9 +428,6 @@ def lg(rel, *ranges, label=None):
 
 # FE: 10 ns synthesis reports, Conformal log and pre-sim logs (files exist in the repo).
 # The 2.5 ns reports (p10 top) are not in the repo and stay as captures; the schematic stays as is.
-add(9, cbox(37.5, 243.8, 255.8, 330.0, *lg("3_SYN/report/19_mcu_pad_top_SYN_qor.rpt", (10, 51), label="19_mcu_pad_top_SYN_qor.rpt · 10~51행 (10 ns)")))
-add(9, cbox(302.2, 243.8, 255.8, 123.0, *lg("3_SYN/report/07_MAIN_CLOCK_post_syn_opt.rpt", (11, 28), label="07_MAIN_CLOCK_post_syn_opt.rpt · 11~28행 (10 ns)")))
-add(10, cbox(37.5, 539.2, 255.8, 139.5, *lg("3_SYN/report/09_mcu_pad_top_SYN_area.rpt", (10, 36), label="09_mcu_pad_top_SYN_area.rpt · 10~36행 (10 ns)")))
 add(11, cbox(37.5, 64.5, 255.8, 111.8, *lg("4_EC/log/all.log", (120, 138), label="4_EC/log/all.log · report verification (120~138행)")))
 add(11, cbox(302.2, 64.5, 255.8, 126.0, *lg("4_EC/log/all.log", (139, 160), label="4_EC/log/all.log · report statistics (139~160행)")))
 add(11, cbox(37.5, 545.2, 255.8, 117.0, *lg("2_SIM/PRE/pre_sim.log", (2364, 2378), label="2_SIM/PRE/pre_sim.log · 2364~2378행")))
@@ -408,8 +443,6 @@ add(11, cbox(302.2, 545.2, 255.8, 105.8, "2_SIM/PRE/sdf_gate.log · 1~12행 + �
 # from the original captures into src/transcribed/ and shown as text, labelled as such.
 TR = pathlib.Path(__file__).resolve().parent / "transcribed"
 def tr(name): return (TR / name).read_text().rstrip("\n")
-add(10, cbox(37.5, 45.0, 255.8, 171.0, "2.5 ns 수정 전 setup 최악 경로 · 원본 리포트 파일 없음, 당시 캡처에서 옮겨 적음", tr("syn_2p5ns_before_path1.txt")))
-add(10, cbox(302.2, 45.0, 255.8, 329.2, "2.5 ns 수정 후 QoR · 원본 리포트 파일 없음, 당시 캡처에서 옮겨 적음", tr("syn_2p5ns_after_qor.txt")))
 add(21, cbox(37.5, 222.8, 255.8, 115.5, "수정 전(-flat 넷리스트) xmelab SDF 로그 · 원본 로그 없음, 당시 캡처에서 옮겨 적음", tr("post_sim_flat_sdf.txt"), wrap=True))
 
 # BE: report/log captures replaced by excerpts of the logs they came from
@@ -421,12 +454,22 @@ add(18, cbox(37.5, 40.5, 520.5, 227.2, *lg("5_PNR/tempus.log2", (330, 351), labe
 add(20, cbox(162.8, 40.5, 270.0, 378.8, *lg("5_PNR/tempus.log2", (252, 328), label="tempus.log2 · report_timing -late, setup 최악 경로 (252~328행)")))
 add(21, cbox(302.2, 222.8, 255.8, 48.0, *lg("2_SIM/POST/max/post_sim_max.log", (919, 927), label="post_sim_max.log · SDF statistics (919~927행)")))
 
+add(2, white(289.0, 528.6, 11.5, 11.2) +
+       '<div class="ov" style="left:289.2pt;top:528.2pt;font-size:9.1pt;line-height:1.2;letter-spacing:0">10</div>')
+add(19, white(36, 501.5, 523.5, 172) +
+    f'<div class="ov" style="left:{L}pt;top:503pt;width:{Wd}pt"><table style="font-size:8.9pt">'
+    '<tr><th style="width:17%">단계</th><th style="width:25%">발견</th><th>조치</th><th style="width:22%">결과</th></tr>'
+    '<tr><td>CTS 이후 최적화</td><td>preCTS −0.352 ns, max_tran 33 net</td><td>postCTS 최적화(버퍼 삽입, sizing)</td><td>setup +0.148 ns, max_tran 0</td></tr>'
+    '<tr><td>post-layout 시뮬</td><td>PASS였지만 SDF 적용률 0.17%</td><td>PnR 넷리스트를 계층 구조로 저장(<code>-flat</code> 제거)</td><td>적용률 91.99%</td></tr>'
+    '</table></div>')
+add(20, white(36, 603, 523.5, 50.5) +
+    '<div class="ov" style="left:39pt;top:605pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
+    '•&nbsp; setup 최악 경로는 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로이고 배선 후에도 그대로 최악이다.</div>')
+add(22, white(36, 73, 523.5, 33.5))
+
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
-FIT = """<script>window.fitAll = () => { document.querySelectorAll('pre.fit').forEach(el => {
-  let f = 7.2; el.style.fontSize = f + 'pt';
-  while ((el.scrollHeight > el.clientHeight + 0.5 || el.scrollWidth > el.clientWidth + 0.5) && f > 2.5) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
-}); };</script>"""
+
 ov_pdf = render(doc(ov_html + FIT), "overlays")
 assert len(ov_pdf.pages) == len(order)
 
@@ -435,8 +478,8 @@ def book(cover_idx, orig_pages, appx, out):
     w = pypdf.PdfWriter()
     w.add_page(new_pages.pages[cover_idx])
     for k in orig_pages:
-        if k == 6:
-            w.add_page(new_pages.pages[4]); continue
+        if k in (6, 8, 9, 10):
+            w.add_page(new_pages.pages[{6: 4, 8: 5, 9: 6, 10: 7}[k]]); continue
         if k == 7:
             w.add_page(new_pages.pages[1]); continue
         if k == 13:
