@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build the FE and BE portfolios from the original single portfolio PDF.
 FE = new cover + original pages 2-12 (+ appendix S1, S2); BE = new cover + original 13-22 (+ appendix D, E).
-Pages 7 and 13 are rewritten, pages 8, 12, 14-16, 18, 19 are patched, dark script/log captures are
-inverted to high contrast, and the appendices are taken verbatim from the V1/TOP files.
+Pages 7 and 13 are rewritten, pages 8, 12, 14-16, 18, 19 are patched, the code/script captures on
+pages 4, 5, 8 are covered by text excerpts read from the V1/TOP files (no screenshots), and the
+appendices are taken verbatim from the same files. All other images are left as in the original.
 
 usage: python3 build_portfolio.py <V1/TOP dir> <original pdf> <output dir> <work dir>
 needs: pypdf, pypdfium2, node + playwright (chromium)
@@ -12,8 +13,6 @@ import pypdf, pypdfium2
 
 TOP, ORIG, OUTDIR, WORK = map(pathlib.Path, sys.argv[1:5])
 PROJ = "Park Heeseo_project"
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from invert import invert_hc
 SRC = pathlib.Path(__file__).resolve().parent
 FONTS = (SRC / "fonts").as_uri()
 WORK.mkdir(parents=True, exist_ok=True)
@@ -30,7 +29,7 @@ CSS = f"""
         --line:#c5d0d5; --th:#e9eef0; --codebg:#eef2f3; --org:#a8510a; --orgbg:#fdf1e4; }}
 * {{ box-sizing: border-box; }}
 html, body {{ margin:0; padding:0; background: transparent; }}
-body {{ font-family: Pret, sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.6;
+body {{ font-variant-ligatures: none; font-feature-settings: 'liga' 0, 'calt' 0; font-family: Pret, sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.6;
         -webkit-font-smoothing: antialiased; letter-spacing: -0.1pt; }}
 code, .mono {{ font-family: JBM, Pret, monospace; font-size: 0.86em; background: var(--codebg);
         padding: 0.5pt 3pt; border-radius: 2pt; letter-spacing: 0; }}
@@ -58,6 +57,10 @@ pre.code {{ font-family: JBM, Pret, monospace; font-size: 6.9pt; line-height: 1.
 .fn {{ font-size: 8pt; color: var(--muted); margin: -6pt 0 10pt; }}
 .cap {{ font-size: 8.4pt; color: var(--muted); }}
 .ov {{ position:absolute; }}
+.cbox {{ position:absolute; background:#f7f9fa; border:0.6pt solid var(--line); display:flex; flex-direction:column; overflow:hidden; }}
+.cbox .ch {{ background: var(--teal); color:#fff; font-family: JBM, Pret, monospace; font-size:5.6pt; padding:1.2pt 4pt; letter-spacing:0; white-space:nowrap; overflow:hidden; }}
+.cbox pre {{ margin:0; padding:3pt 4pt; flex:1; overflow:hidden; font-family: JBM, monospace; white-space: pre; line-height:1.3; color:#1b2731; letter-spacing:0; }}
+.cbox .cm {{ color:#5c7a78; }}
 .p13 table {{ font-size: 8.1pt; line-height: 1.42; margin-bottom: 6pt; }}
 .p13 th, .p13 td {{ padding: 2.4pt 5pt; }}
 .p13 h3 {{ margin: 9pt 0 5pt; }}
@@ -89,7 +92,7 @@ def render(html_text, name, margin=None):
     js.write_text("""const { chromium } = require('playwright');
 (async () => { const [src, out, m] = process.argv.slice(2); const mm = JSON.parse(m);
   const b = await chromium.launch(); const p = await b.newPage();
-  await p.goto('file://' + src, { waitUntil: 'networkidle' }); await p.evaluate(() => document.fonts.ready);
+  await p.goto('file://' + src, { waitUntil: 'networkidle' }); await p.evaluate(() => document.fonts.ready); await p.evaluate(() => window.fitAll && window.fitAll());
   await p.pdf({ path: out, width: '%.2fpx', height: '%.2fpx', printBackground: true, margin: mm });
   await b.close(); })();""" % (W_PT*4/3, H_PT*4/3))
     import json
@@ -271,7 +274,7 @@ def head(y, txt, code):
 
 L, Wd = 36.75, 521.75
 OV = {}
-OV[8] = (f'<div class="ov note" style="left:{L}pt;top:768pt;width:{Wd}pt;font-size:8.6pt">'
+_ov8_note = (f'<div class="ov note" style="left:{L}pt;top:768pt;width:{Wd}pt;font-size:8.6pt">'
          f'<b class="l">10 ns 최종 SDC는 다르다.</b> 위 <code>set_input_transition 0.1</code> 수정은 2.5 ns 실험에서만 썼다. 10 ns 최종 합성과 P&amp;R에 들어간 SDC는 <code>set_driving_cell PADDI</code>를 그대로 두었다 '
          f'(<code>log/all.log</code> 607행, <code>02_report_port.rpt</code>의 입력 드라이버가 모두 <code>PADDI/Y</code>). 10 ns SDC 전문은 부록 S2(p.{S["S2"]}).</div>')
 OV[12] = (white(36, 315.5, 523.5, 34) +
@@ -302,16 +305,55 @@ OV[19] = (white(36, 373.5, 523.5, 40) +
           '<b>Hold 위반 없음.</b> post-layout STA에서 hold 위반이 0건(WNS +0.053 ns)이라 hold용 지연 버퍼(<code>FE_PHC</code>)는 0개이고 전후 비교는 필요하지 않았다. '
           '삽입 셀 개수는 앞 쪽 표(클럭 176, 최적화 706, 합계 882)에 정리했다.</div>')
 
+import re as _re
+def hl(t):
+    out = []
+    for ln in html.escape(t).split("\n"):
+        i = ln.find("//")
+        m = i if i >= 0 else (ln.find("#") if ln.lstrip().startswith("#") else -1)
+        if m >= 0:
+            ln = ln[:m] + '<span class="cm">' + ln[m:] + "</span>"
+        out.append(ln)
+    return "\n".join(out)
+
+def cbox(x, y, w, h, title, text, wrap=False):
+    ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
+    return (f'<div class="cbox" style="left:{x}pt;top:{y}pt;width:{w}pt;height:{h}pt">'
+            f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
+
+def rl(rel, a, b):
+    return f"{PROJ}/TOP/{rel} · {a}~{b}행", lines(rel, a, b)
+
+def add(k, frag):
+    OV[k] = OV.get(k, "") + frag
+
+add(4, cbox(37.5, 315.8, 255.8, 198.8, *rl("1_RTL/mcu_pad_top.v", 119, 156)))
+add(4, cbox(302.2, 315.8, 255.8, 62.2, *rl("1_RTL/mcu_top.v", 88, 97)))
+add(4, cbox(37.5, 555.8, 255.8, 120.0, *rl("1_RTL/sccpu.v", 148, 170)))
+add(4, cbox(302.2, 555.8, 255.8, 123.8, *rl("1_RTL/apb_bridge.v", 32, 56)))
+add(5, cbox(37.5, 45.0, 255.8, 128.2, *rl("1_RTL/scdatamem.v", 28, 49)))
+add(5, cbox(302.2, 45.0, 255.8, 68.2, *rl("1_RTL/scinstmem.v", 44, 55)))
+OV[8] = (cbox(95.2, 66.8, 405.0, 475.5, *rl("3_SYN/cons/mcu_pad_top.sdc", 19, 99), wrap=True)
+         + white(36, 545, 523.5, 43)
+         + f'<div class="ov" style="left:{L}pt;top:546pt;width:{Wd}pt;font-size:8.9pt;line-height:1.6;color:#56636b">'
+           '<code>mcu_pad_top.sdc</code> (10 ns 최종본, 파일에서 19~99행 발췌). 클럭 정의(<code>MAIN_CLOCK</code>, 10 ns), 소스·네트워크 latency 0.2 ns, setup uncertainty 0.1 ns, '
+           'clock transition 0.1 ns, 입출력 지연(max 0.1 / min 0.01 ns), 출력 부하, 동작 조건(slow: PVT_0P9V_125C, fast: PVT_1P1V_0C)과 패드 15개의 '
+           '<code>set_dont_touch</code>가 들어 있다. 입력 구동은 <code>set_driving_cell -lib_cell PADDI</code>다.</div>')
+_d = lines("3_SYN/cons/mcu_pad_top.sdc", 57, 66).split("\n")
+_d = [("#" + l) if l.startswith("set_driving_cell") else (l[1:] if l.startswith("#set_input_transition") else l) for l in _d]
+OV[8] += cbox(37.5, 655.5, 520.5, 87.8, "2.5 ns 실험 때의 구동 모델: 위 파일 64~65행의 주석만 바꾼 상태 (이 버전은 저장소에 따로 없음)", "\n".join(_d))
+OV[8] += _ov8_note
+
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
-ov_pdf = render(doc(ov_html), "overlays")
+FIT = """<script>window.fitAll = () => { document.querySelectorAll('pre.fit').forEach(el => {
+  let f = 7.2; el.style.fontSize = f + 'pt';
+  while ((el.scrollHeight > el.clientHeight + 0.5 || el.scrollWidth > el.clientWidth + 0.5) && f > 2.5) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
+}); };</script>"""
+ov_pdf = render(doc(ov_html + FIT), "overlays")
 assert len(ov_pdf.pages) == len(order)
 
 # ---------------------------------------------------------------- merge
-def is_dark(img):
-    from PIL import ImageStat
-    return ImageStat.Stat(img.convert("L")).mean[0] < 100
-
 def book(cover_idx, orig_pages, appx, out):
     w = pypdf.PdfWriter()
     w.add_page(new_pages.pages[cover_idx])
@@ -322,10 +364,6 @@ def book(cover_idx, orig_pages, appx, out):
             w.add_page(new_pages.pages[3]); continue
         w.add_page(orig.pages[k - 1])
         pg = w.pages[-1]
-        n = 0
-        for im in pg.images:
-            if im.image.mode in ("RGB", "L") and is_dark(im.image):
-                im.replace(invert_hc(im.image), quality=92); n += 1
         if k in OV:
             pg.merge_page(ov_pdf.pages[order.index(k)])
     for p in appx.pages:
