@@ -57,6 +57,7 @@ pre.code {{ font-family: JBM, Pret, monospace; font-size: 6.9pt; line-height: 1.
 .fn {{ font-size: 8pt; color: var(--muted); margin: -6pt 0 10pt; }}
 .cap {{ font-size: 8.4pt; color: var(--muted); }}
 .ov {{ position:absolute; }}
+.stg {{ break-inside: avoid; margin-bottom: 8pt; }}
 .cbox {{ position:absolute; background:#f7f9fa; border:0.6pt solid var(--line); display:flex; flex-direction:column; overflow:hidden; }}
 .cbox .ch {{ background: var(--teal); color:#fff; font-family: JBM, Pret, monospace; font-size:5.6pt; padding:1.2pt 4pt; letter-spacing:0; white-space:nowrap; overflow:hidden; }}
 .cbox pre {{ margin:0; padding:3pt 4pt; flex:1; overflow:hidden; font-family: JBM, monospace; white-space: pre; line-height:1.3; color:#1b2731; letter-spacing:0; }}
@@ -188,6 +189,31 @@ def orig_img(pg, name):
 orig_img(6, "X30.jpg").save(WORK / "wave_full.png")
 orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save(WORK / "wave_spi.png")
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
+import re as _re
+def hl(t):
+    out = []
+    for ln in html.escape(t).split("\n"):
+        i = ln.find("//")
+        m = i if i >= 0 else (ln.find("#") if ln.lstrip().startswith("#") else -1)
+        if m >= 0:
+            ln = ln[:m] + '<span class="cm">' + ln[m:] + "</span>"
+        out.append(ln)
+    return "\n".join(out)
+
+FITW = """<script>window.fitAll = () => { document.querySelectorAll('pre.fitw').forEach(el => {
+  let f = 6.2; el.style.fontSize = f + 'pt';
+  while (el.scrollWidth > el.clientWidth + 0.5 && f > 4.6) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
+  if (el.scrollWidth > el.clientWidth + 0.5) { el.style.whiteSpace = 'pre-wrap'; el.style.wordBreak = 'break-all'; }
+}); };</script>"""
+FIT = """<script>window.fitAll = () => { document.querySelectorAll('pre.fit').forEach(el => {
+  let f = 7.2; el.style.fontSize = f + 'pt';
+  while ((el.scrollHeight > el.clientHeight + 0.5 || el.scrollWidth > el.clientWidth + 0.5) && f > 2.5) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
+}); };</script>"""
+
+def fbox(h, title, text, wrap=False):
+    ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
+    return (f'<div class="cbox" style="position:relative;left:auto;top:auto;width:100%;height:{h}pt;margin-bottom:3pt">'
+            f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
 p6 = f"""
 <div class="page">
  <div class="bar">2. Function Simulation</div>
@@ -206,28 +232,10 @@ p6 = f"""
   <tr><td>APB stall / penable 횟수</td><td>같은 횟수(204), 겹침 없음</td><td style="color:#1f7a3f;font-weight:700">일치</td></tr>
   <tr><td>종료 pc, 시각, 오류</td><td>0xAC, 8645 ns, err=0</td><td style="color:#1f7a3f;font-weight:700">PASS tb_mcu_top</td></tr>
  </table>
+ {fbox(150, "2_SIM/FUNCTION/func_sim.log · 45~60행", lines("2_SIM/FUNCTION/func_sim.log", 45, 60))}
+ <p class="cap">위 표의 근거. 테스트벤치가 기대값과 비교한 결과가 모두 ok이고 <code>PASS tb_mcu_top</code>으로 8645 ns에 종료했다.</p>
 </div>"""
 
-import re as _re
-def hl(t):
-    out = []
-    for ln in html.escape(t).split("\n"):
-        i = ln.find("//")
-        m = i if i >= 0 else (ln.find("#") if ln.lstrip().startswith("#") else -1)
-        if m >= 0:
-            ln = ln[:m] + '<span class="cm">' + ln[m:] + "</span>"
-        out.append(ln)
-    return "\n".join(out)
-
-FIT = """<script>window.fitAll = () => { document.querySelectorAll('pre.fit').forEach(el => {
-  let f = 7.2; el.style.fontSize = f + 'pt';
-  while ((el.scrollHeight > el.clientHeight + 0.5 || el.scrollWidth > el.clientWidth + 0.5) && f > 2.5) { f -= 0.1; el.style.fontSize = f.toFixed(2) + 'pt'; }
-}); };</script>"""
-
-def fbox(h, title, text, wrap=False):
-    ws = ' style="white-space:pre-wrap;word-break:break-all"' if wrap else ""
-    return (f'<div class="cbox" style="position:relative;left:auto;top:auto;width:100%;height:{h}pt;margin-bottom:3pt">'
-            f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
 sec8 = f"""
 <h3 style="margin-top:0">(ii) Constraint</h3>
 {code_file("3_SYN/cons/mcu_pad_top.sdc")}
@@ -319,15 +327,82 @@ p2 = f"""
  <table style="font-size:9.2pt"><tr><th style="width:22%;background:#f2f5f6">최상위</th><td><code>mcu_pad_top</code> = 패드 링 + 코어 <code>mcu_top</code>(인스턴스 <code>u_mcu_top</code>), RTL 21개 파일</td></tr><tr><th style="width:22%;background:#f2f5f6">클럭, 리셋</th><td><code>clk</code> 100 MHz(주기 10 ns), <code>clrn</code> 비동기 active-low 리셋</td></tr><tr><th style="width:22%;background:#f2f5f6">CPU (<code>sccpu</code>)</th><td>32비트 단일 사이클 MIPS 계열, 정수 명령어 20개, 레지스터 32개($0 = 0). APB 접근 시 <code>i_stall</code>로 정지</td></tr><tr><th style="width:22%;background:#f2f5f6">명령어 ROM (<code>scinstmem</code>)</th><td>256 word, case 문으로 구현해 합성 시 조합 논리가 됨(코어 면적의 약 1.6%)</td></tr><tr><th style="width:22%;background:#f2f5f6">데이터 RAM (<code>scdatamem</code>)</th><td>32 word(<code>0x0000_0000~007F</code>), 32×32 플립플롭 배열, 10,493 µm²(코어 21,856 µm²의 약 48%)</td></tr><tr><th style="width:22%;background:#f2f5f6">APB 브리지</th><td>SETUP → ACCESS 2클럭 전송, SETUP 동안 CPU stall. PREADY=1, PSLVERR=0 고정</td></tr><tr><th style="width:22%;background:#f2f5f6">UART (슬롯 0)</th><td>8N1, 16배 오버샘플링, TX FIFO 16×8, RX FIFO 16×11, 루프백 모드. IBRD=4에서 비트 주기 640 ns</td></tr><tr><th style="width:22%;background:#f2f5f6">SPI Master (슬롯 1)</th><td>모드 0~3, MSB first, SCLK 주기 160 ns(프로그램 설정)</td></tr><tr><th style="width:22%;background:#f2f5f6">SPI Slave (슬롯 2)</th><td>외부 SCLK, CS_N, MOSI를 2-FF 동기화 후 샘플. SCLK는 시스템 클럭의 1/8 이하 필요(본 설계 1/16)</td></tr><tr><th style="width:22%;background:#f2f5f6">칩 핀</th><td>입력 7개(clk, clrn, UARTRXD, SPIMISO, SLVSCLK, SLVMOSI, SLVCSN), 출력 8개(UARTTXD, UARTINTR, SPISCLK, SPIMOSI, SPICSN, SPIINTR, SLVMISO, SLVINTR), 모두 I/O 패드 경유. 코어 디버그 출력(pc, inst, aluout, memout)은 핀 수 제한으로 미연결</td></tr><tr><th style="width:22%;background:#f2f5f6">패드 링</th><td>48슬롯 = 신호 패드 15 + 전원 패드 16 + 필러 17. 패드 크기 60×240 µm, 칩 셀 면적의 약 91%(10 ns 합성 기준)</td></tr><tr><th style="width:22%;background:#f2f5f6">공정, 툴</th><td>GPDK045 / xrun, Genus, Innovus, Tempus</td></tr></table>
 </div>"""
 
+from PIL import ImageOps
+_y, _cb, _cr = Image.open(TOP / "5_PNR/snap/3_cts.png").convert("RGB").convert("YCbCr").split()
+Image.merge("YCbCr", (ImageOps.invert(_y), _cb, _cr)).convert("RGB").save(WORK / "cts_snap.png")
+orig_img(15, "X77.png").save(WORK / "clock_tree.png")
+def ev(label, rel, *ranges):
+    txt = "\n...\n".join(lines(rel, a, b) for a, b in ranges)
+    return (f'<div class="fh" style="margin-top:5pt"><span>{html.escape(label)}</span></div>'
+            f'<pre class="code fitw" style="font-size:6.2pt;margin-bottom:4pt;white-space:pre;overflow:hidden">{hl(txt)}</pre>')
+def kv(rows):
+    return ('<table style="font-size:8.6pt;margin:0 0 4pt"><tr><th>항목</th><th>결과</th></tr>' +
+            "".join(f'<tr><td>{a}</td><td class="num">{b}</td></tr>' for a, b in rows) + '</table>')
+for nm in ("X66.png", "X68.png"): orig_img(14, nm).save(WORK / f"stg_{nm}")
+for nm in ("X73.png", "X75.png"): orig_img(15, nm).save(WORK / f"stg_{nm}")
+for nm in ("X81.png", "X83.png"): orig_img(16, nm).save(WORK / f"stg_{nm}")
+img = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.75pt solid #555">'
+def stage(title, code, body):
+    return (f'<div class="stg"><h3>{title} (<code style="font-size:9pt">{code}</code>)</h3>{body}</div>')
+def row(left, right):
+    return f'<div style="display:flex;gap:9pt"><div style="flex:1;min-width:0">{left}</div><div style="flex:1;min-width:0">{right}</div></div>'
+_files = ["mcu_pad_top.v", "mcu_pad_top.sdf", "mcu_pad_top.sdf_2.1", "mcu_pad_top_post_wst.sdf", "mcu_pad_top_post_bst.sdf", "mcu_pad_top.gds"]
+_sizes = "\n".join(f"{(TOP / '5_PNR' / f).stat().st_size:>10,d} B  {f}" for f in _files)
+NOTE_CONN = '<code>-noOpen -noWeakConnect -noUnConnPin -noUnroutedNet</code> 옵션으로 실행한 결과'
+sec14 = f"""
+<div class="bar">3. 단계별 캡처</div>
+<p>Innovus GUI 캡처는 인쇄 가독성을 위해 어두운 배경을 흰색으로 반전했다. 각 단계 표의 수치는 바로 아래 로그 발췌에서 가져왔으며, 클럭은 모두 10 ns다.</p>
+{stage("① Init / Floorplan", "0_InitDesign.tcl + init.io", row(
+  img("stg_X66.png") + '<p class="cap">die 1663 × 1663.1 µm, 코어 약 479 × 479 µm. 패드 48슬롯 링과 코너 셀 4개를 놓고 신호 패드 15개, 전원 패드 16개, 빈 슬롯 17개는 IO 필러로 채웠다.</p>',
+  kv([("prePlace setup WNS", "+3.342 ns"), ("경로 수", "3,640 (reg2reg 3,140, IO 502)"), ("위반 경로", "0"), ("Density", "9.530%")]) +
+  ev("innovus.log · timeDesign -prePlace (663~678행)", "5_PNR/innovus.log", (663, 678)) +
+  '<div class="note" style="font-size:8.6pt">코어 대비 셀 면적이 작은 것은 die 크기를 패드 링이 결정하는 pad-limited 구조이기 때문이다.</div>'))}
+{stage("② Power plan", "1_PowerPlan.tcl", row(
+  img("stg_X68.png") + '<p class="cap">바깥 링과 안쪽 링(Metal10/11), 수직·수평 스트라이프, 4면의 전원 패드 8개(PADVDD/PADVSS)를 <code>sroute</code>로 링에 연결했다.</p>',
+  kv([("verify_drc", "0 viol."), ("verifyConnectivity*", "0 viol., 경고 0"), ("저장", "PowerPlan.dat")]) +
+  ev("innovus.log4 · verify_drc, verifyConnectivity, saveDesign (1009~1056행)", "5_PNR/innovus.log4", (1009, 1009), (1021, 1021), (1029, 1029), (1041, 1043), (1050, 1050), (1056, 1056)) +
+  f'<p class="cap">* {NOTE_CONN}.</p>'))}
+{stage("③ Place", "2_PlaceOpt.tcl",
+  row(img("stg_X73.png") + '<p class="cap">표준 셀 5,242개를 코어 중앙에 배치했다. 모듈별 색으로 CPU, 메모리, APB, UART, SPI 영역이 구분된다.</p>',
+      img("stg_X75.png") + '<p class="cap">혼잡도(Early Global Route): Overflow 0%(H, V). 셀이 코어 중앙에 몰려 국소 밀도는 0.9 안팎이지만 배선 혼잡은 없다.</p>') +
+  kv([("checkPlace", "배치 5,242개, 미배치 0, 밀도 9.52%"), ("Early Global Route", "Overflow 0.00% H, 0.00% V"),
+      ("preCTS setup WNS", "−0.352 ns (TNS −0.530 ns, 위반 3개)"), ("preCTS max_tran", "33 net → CTS 이후 최적화에서 해소")]) +
+  row(ev("innovus.log5 · checkPlace, reportCongestion (760~764, 857~859행)", "5_PNR/innovus.log5", (760, 764), (857, 859)),
+      ev("innovus.log5 · timeDesign -preCTS (2157~2183행)", "5_PNR/innovus.log5", (2160, 2183))))}
+{stage("④ CTS", "3_PostCTSopt.tcl",
+  row(img("cts_snap.png") + '<p class="cap">CTS 후 레이아웃(<code>3_PostCTSopt.tcl</code>이 저장한 <code>snap/3_cts.png</code>, 음영 반전).</p>',
+      kv([("클럭 버퍼", "176개"), ("스큐 setup / hold 코너", "0.165 / 0.044 ns"), ("삽입 지연 평균", "약 1.82 ns"), ("postCTS setup WNS", "+0.099 ns"),
+          ("최적화 후 setup (SS_WORST)", "+0.148 ns"), ("최적화 후 hold (FF_BEST)", "+0.052 ns"), ("max_tran 위반", "0 (해소)")]) +
+      '<div class="note" style="font-size:8.6pt">목표 스큐 0.01 ns(스크립트 설정)에는 못 미쳤지만, 0.165 ns는 주기의 약 1.7%이고 setup·hold를 모두 만족해 그대로 진행했다.</div>') +
+  row(img("clock_tree.png") + '<p class="cap">클럭 트리. 루트 <code>clk</code>에서 클럭 버퍼 176개를 거쳐 플립플롭 1,816개(posedge 1,799, negedge 17)로 클럭을 분배한다. 최대 leaf fanout 20.</p>',
+      ev("reports/clock/skew_groups.rpt (22~27행), clock_trees.rpt (15행)", "5_PNR/reports/clock/skew_groups.rpt", (22, 27)) .replace("</pre>", "\n...\n" + html.escape(lines("5_PNR/reports/clock/clock_trees.rpt", 15, 15)) + "</pre>", 1) +
+      ev("innovus.log9 · timeDesign -postCTS: 최적화 전 / 후 setup, hold (4800, 5823, 5835, 5882행)", "5_PNR/innovus.log9", (4800, 4800), (5823, 5823), (5835, 5835), (5882, 5882))))}
+{stage("⑤ Route", "4_RouteDesign_PowerAnalysis.tcl", row(
+  img("stg_X81.png") + '<p class="cap">신호 배선은 Metal1~9, 전원 링과 스트라이프는 Metal10/11을 사용했다.</p>',
+  kv([("verify_drc", "0 viol."), ("verifyConnectivity*", "0 viol., 경고 0"), ("postRoute setup / hold WNS", "+0.441 / +0.053 ns")]) +
+  ev("innovus.log10 · verify_drc, verifyConnectivity, timeDesign (1692~4937행)", "5_PNR/innovus.log10", (1692, 1692), (1704, 1704), (3191, 3191), (3212, 3212), (4881, 4881), (4937, 4937)) +
+  f'<p class="cap">* {NOTE_CONN}. 4881행이 setup, 4937행이 hold WNS다.</p>'))}
+{stage("⑥ Filler / 출력", "5_ChipFinish.tcl", row(
+  img("stg_X83.png") + '<p class="cap">빈 공간에 FILL1~FILL64 필러 15,145개를 삽입했다(FILL64가 9,014개). 코어 밀도가 낮아 큰 필러가 대부분이다.</p>',
+  kv([("필러 후 verify_drc", "0 viol."), ("필러 후 verifyConnectivity*", "0 viol."), ("넷리스트 mcu_pad_top.v", "1.3 MB"), ("SDF 2종", "각 3.8 MB"), ("GDS mcu_pad_top.gds", "10.7 MB")]) +
+  ev("innovus.log14 · addFiller, verify_drc, verifyConnectivity (814~892행)", "5_PNR/innovus.log14", (814, 814), (822, 822), (829, 829), (854, 854), (866, 866), (871, 871), (892, 892)) +
+  f'<div class="fh" style="margin-top:5pt"><span>산출물 파일 크기 (5_PNR)</span></div><pre class="code" style="font-size:6.2pt">{html.escape(_sizes)}</pre>' +
+  f'<p class="cap">* {NOTE_CONN}.</p>'))}
+<div class="stg">
+<div class="note" style="font-size:9pt"><b>streamOut 로그.</b> <code>Streamout is finished!</code>로 끝났고 GDS version 3, 단위 2000 DBU로 기록되었다. 인스턴스 21,332개, 신호 net 77,331개(Metal1~7), 전원 net 913개가 들어갔고 메시지 요약은 129 warning, 0 error다(경고 수는 세션 누적 값).</div>
+{ev("innovus.log14 · streamOut (1030, 1285~1304, 1345~1348행)", "5_PNR/innovus.log14", (1030, 1030), (1285, 1304), (1345, 1348))}
+</div>
+"""
+
 def one(html_text, name):
     r = render(doc(html_text + FIT), name)
     assert len(r.pages) == 1, f"{name} overflowed: {len(r.pages)}"
     return r
 SEC = {2: one(p2, "sec2"), 6: one(p6, "sec6"), 9: one(p9, "sec9"), 10: one(p10, "sec10"), 11: one(p11, "sec11"),
        19: one(p19, "sec19"), 20: one(p20, "sec20"),
-       7: render(doc(sec7), "sec7", M), 8: render(doc(sec8), "sec8", M), 13: render(doc(sec13), "sec13", M)}
+       7: render(doc(sec7), "sec7", M), 8: render(doc(sec8), "sec8", M), 13: render(doc(sec13), "sec13", M), 14: render(doc(sec14 + FITW, "body{width:521.7pt}"), "sec14", M)}
 FE_SEQ = [2, 3, 4, 6, 7, 8, 9, 10, 11, 12]
-BE_SEQ = [13, 14, 15, 16, 17, 18, 19, 20]
+BE_SEQ = [13, 14, 17, 18, 19, 20]
 def start(seq, k):
     n = 2
     for j in seq:
@@ -431,10 +506,7 @@ add(16, white(300, 149.3, 259, 84))
 
 # BE p15 (4-c CTS): add the layout snapshot saved by 3_PostCTSopt.tcl (snap/3_cts.png),
 # shade-inverted like the other GUI captures (luminance inverted, colour kept)
-from PIL import ImageOps
-_y, _cb, _cr = Image.open(TOP / "5_PNR/snap/3_cts.png").convert("RGB").convert("YCbCr").split()
-Image.merge("YCbCr", (ImageOps.invert(_y), _cb, _cr)).convert("RGB").save(WORK / "cts_snap.png")
-orig_img(15, "X77.png").save(WORK / "clock_tree.png")
+
 add(15, white(35, 470, 263, 372) + white(299, 646, 262, 196) +
     f'<img class="ov" src="{(WORK / "cts_snap.png").as_uri()}" style="left:36.5pt;top:473.8pt;width:257.8pt;height:230.8pt;border:0.75pt solid #555">'
     '<div class="ov cap" style="left:37.3pt;top:707pt;width:256pt;font-size:8.4pt;line-height:1.55">CTS 후 레이아웃(<code>3_PostCTSopt.tcl</code>이 저장한 <code>snap/3_cts.png</code>, 음영 반전).</div>'
@@ -477,6 +549,8 @@ add(17, para(44, 532, 513, 28, "preCTS 위반은 이상적 클럭(ideal clock) �
 add(17, para(36.5, 618.5, 522.5, 15, "배선 후 설계를 Tempus로 STA했다. 분석 조건을 먼저 점검한 뒤 코너별 최악 경로를 추출했다."))
 add(18, para(36.5, 271.5, 522.5, 28, '<b style="color:#14202a">Hold 최악 경로</b> (Tempus, FUNC_FF_BEST): SPI 슬레이브 2-FF 동기화기의 <code>r_mosi_s_reg_0</code> → <code>r_mosi_s_reg_1</code> 직결 경로. Arrival 0.259 ns(CK→Q 0.057 + 클럭 지연 0.202), Required 0.206 ns, slack +0.053 ns (MET).', 8.6, CAP))
 add(18, para(40, 374.5, 150, 12.5, "Tempus STA", 10.3))
+
+add(17, para(36.5, 300, 258, 55, '<b style="color:#14202a">Setup</b> (postRoute, SS_WORST, 클럭 10 ns): WNS +0.441 ns, TNS 0, 위반 경로 0개. DRV는 Real 열 기준 max_cap, max_tran 위반 0이다.', 8.6, CAP))
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
