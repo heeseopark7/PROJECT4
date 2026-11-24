@@ -134,8 +134,8 @@ LEAD = ("단일 사이클 MIPS CPU, APB 브리지, UART, SPI 마스터/슬레이
 
 # ---------------------------------------------------------------- page 7 
 sec7 = f"""
-<div class="bar">FE · 3. 합성 (Genus, GPDK045 slow 코너)</div>
-<h3>(i) 합성 실행 스크립트</h3>
+<div class="bar">3. Synthesis</div>
+<h3>(i) Synthesis Run Script</h3>
 {code_file("3_SYN/run_synthesis")}
 {code_file("3_SYN/script/syn_mcu_pad_top.tcl")}
 """
@@ -143,7 +143,7 @@ sec7 = f"""
 # ---------------------------------------------------------------- page 13 (4-a, 4-b)
 sec13 = f"""
 <div class="p13">
-<div class="bar">BE · 1. APR 전 과정 스크립트</div>
+<div class="bar">1. APR 전 과정 Script</div>
  <table>
   <tr><th style="width:27%">스크립트</th><th style="width:20%">DB (입력 → 출력)</th><th>주요 명령</th></tr>
   <tr><td><code>0_InitDesign.tcl</code><br><code>init.io</code></td><td>넷리스트 → InitDesign</td><td><code>init_design</code>, <code>checkDesign</code>, <code>floorPlan -r 1 0.6 352×4</code>, 전원 패드 <code>placeInstance</code>, <code>addIoFiller</code>, <code>timeDesign -prePlace</code></td></tr>
@@ -163,7 +163,7 @@ sec13 = f"""
 {code_file("5_PNR/5_ChipFinish.tcl")}
 <div style="break-before: page"></div>
 <div class="p13">
-<div class="bar">BE · 2. Import 파일 정리</div>
+<div class="bar">2. Import 파일 정리</div>
  <table>
   <tr><th style="width:17%">종류</th><th style="width:47%">파일</th><th>출처 / 비고</th></tr>
   <tr><td>넷리스트</td><td><code>../3_SYN/mapped/mcu_pad_top_syn_final.v</code></td><td>Genus 10 ns 출력(11/10) + 전원 패드 16개(<code>add_pad</code>)</td></tr>
@@ -189,7 +189,7 @@ orig_img(6, "X31.jpg").save(WORK / "wave_uart.png"); orig_img(6, "X32.jpg").save
 fig = lambda f: f'<img src="{(WORK / f).as_uri()}" style="width:100%;display:block;border:0.6pt solid var(--line)">'
 p6 = f"""
 <div class="page">
- <div class="bar">FE · 2. 기능 시뮬레이션 (Waveform) <span style="color:#9be3a1">PASS</span></div>
+ <div class="bar">2. Function Simulation</div>
  <p style="font-size:10pt">자기검증 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다. 시뮬레이터는 xrun이다.</p>
  {fig("wave_uart.png")}
  <p class="cap" style="margin:3pt 0 10pt">UART 송신 확대. 루프백 모드에서 'A'(0x41)를 8N1로 송신한다. start bit(low) 뒤 LSB first로 1,0,0,0,0,0,1,0이 나가고 stop bit(high)로 끝난다. 비트당 640 ns다.</p>
@@ -226,13 +226,13 @@ def fbox(h, title, text, wrap=False):
     return (f'<div class="cbox" style="position:relative;left:auto;top:auto;width:100%;height:{h}pt;margin-bottom:3pt">'
             f'<div class="ch">{html.escape(title)}</div><pre class="fit"{ws}>{hl(text)}</pre></div>')
 sec8 = f"""
-<h3 style="margin-top:0">(ii) 제약 (SDC)</h3>
+<h3 style="margin-top:0">(ii) Constraint</h3>
 {code_file("3_SYN/cons/mcu_pad_top.sdc")}
 {code_file("3_SYN/cons/dont_use_45nm.tcl")}
 """
 p9 = f"""
 <div class="page">
- <h3 style="margin-top:0">(iii) 타이밍 리포트 (Setup)</h3>
+ <h3 style="margin-top:0">(iii) Timing Report (Setup)</h3>
  <p>클럭 10 ns(100 MHz)를 목표로 합성했다. 이 넷리스트가 P&amp;R 입력이다.</p>
  <table style="font-size:8.8pt">
   <tr><th>클럭</th><th>Critical slack</th><th>TNS / 위반 경로</th><th>인스턴스 (순차 / 조합)</th><th>코어 면적</th><th>칩 셀 면적</th></tr>
@@ -261,10 +261,10 @@ _sg = (lines("2_SIM/PRE/sdf_gate.log", 1, 12) +
        f"\n에러(*E,)                  : {sum('*E,' in l for l in _t)}건")
 p11 = f"""
 <div class="page">
- <div class="bar">FE · 4. Pre-layout 시뮬레이션 <span style="color:#9be3a1">PASS</span></div>
- <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 걸고, 2와 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
+ <div class="bar">4. Pre-layout Simulation</div>
+ <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 걸고, Function Simulation과 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
  {fig("pre_X55.png")}
- <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 2의 RTL 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
+ <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 Function Simulation 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
  <div style="display:flex;gap:9pt">
   <div style="flex:1;min-width:0">{fig("pre_X56.png")}<p class="cap" style="margin-top:3pt">UART 송신 확대. RTL과 같은 프레임(start 뒤 1,0,0,0,0,0,1,0, stop)이고 에지만 하강 +1.773 ns, 상승 +1.958 ns 늦다. 프레임 길이는 5760.185 ns다.</p></div>
   <div style="flex:1;min-width:0">{fig("pre_X57.png")}<p class="cap" style="margin-top:3pt">SPI 전송 확대. 8번째 SCLK 상승에서 mosi_byte=0xA5, miso_byte=0x3C가 완성된다. SCLK 상승이 RTL보다 1.392 ns 늦고 7주기 간격은 1.12 µs로 같다.</p></div>
@@ -279,7 +279,7 @@ p11 = f"""
 
 p19 = f"""
 <div class="page">
- <div class="bar">BE · 6. 최종 타이밍 리포트 (Setup + Hold)</div>
+ <div class="bar">6. 최종 타이밍 리포트 (Setup + Hold)</div>
  <p>최종 sign-off는 Tempus의 배선 후 STA다. Innovus postRoute 결과(setup +0.441 ns, hold +0.053 ns)와 정확히 일치한다.</p>
  {fbox(630, "tempus.log2 · report_timing -late, setup 최악 경로 (252~328행)", lines("5_PNR/tempus.log2", 252, 328))}
  <p class="cap"><b style="color:var(--ink)">Setup 최악 경로</b> (FUNC_SS_WORST, 클럭 10 ns): <code>r_pc_reg_7</code>에서 UART TX FIFO의 쓰기 enable(<code>uut5/uut2/r_mem_reg_13_3/E</code>)까지 약 50개 셀. Arrival 9.599 ns, Required 10.040 ns(10.000 − setup 0.203 − uncertainty 0.100 + 캡처 클럭 지연 0.343), slack +0.441 ns (MET).</p>
@@ -316,23 +316,23 @@ def start(seq, k):
     for j in seq:
         if j == k: return n
         n += len(SEC[j].pages) if j in SEC else 1
-imp_pg = start(BE_SEQ, 13) + find_page(WORK / "sec13.pdf", "BE · 2. Import")
+imp_pg = start(BE_SEQ, 13) + find_page(WORK / "sec13.pdf", "2. Import 파일 정리")
 cover_fe = cover("Front-End", "Front-End",
-    LEAD + "이 권은 설계 스펙, 기능 시뮬레이션, 합성, pre-layout 시뮬레이션을 다룬다.",
+    LEAD + "이 권은 설계 스펙, Function Simulation, Synthesis, Pre-layout Simulation을 다룬다.",
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
-     ("PASS", "기능 시뮬레이션 (RTL)"), ("PASS", "pre-layout 시뮬레이션")],
-    [("1. 설계 논리 다이어그램과 스펙", start(FE_SEQ, 2)), ("2. 기능 시뮬레이션 (파형)", start(FE_SEQ, 6)),
-     ("3. 합성 (실행 스크립트, 제약, setup 타이밍 리포트)", start(FE_SEQ, 7)),
-     ("4. Pre-layout 시뮬레이션 (2와 동일 검증, 타이밍으로 생긴 차이)", start(FE_SEQ, 11))],
-    "FE 플로우: xrun(기능 시뮬) → Genus(합성) → xrun(pre-layout, 합성 SDF).")
+     ("PASS", "Function Simulation (RTL)"), ("PASS", "Pre-layout Simulation")],
+    [("1. Design Logic Diagram", start(FE_SEQ, 2)), ("2. Function Simulation", start(FE_SEQ, 6)),
+     ("3. Synthesis", start(FE_SEQ, 7)),
+     ("4. Pre-layout Simulation", start(FE_SEQ, 11))],
+    "FE 플로우: xrun(Function Simulation) → Genus(합성) → xrun(pre-layout, 합성 SDF).")
 cover_be = cover("Back-End", "Back-End",
     LEAD + "이 권은 APR(Innovus)과 STA(Tempus)를 다룬다. 입력은 FE의 10 ns 합성 넷리스트와 SDC다.",
     [("+0.441 / +0.053 ns", "postRoute setup / hold WNS"), ("0 viol.", "verify_drc, verifyConnectivity (필러 후)"),
      ("176 / 706", "삽입 셀: 클럭 트리 / 최적화"), ("3,144 Met", "Tempus setup·hold 검사, 위반 0")],
-    [("1. APR 전 과정 스크립트", start(BE_SEQ, 13)), ("2. Import 파일 정리", imp_pg),
-     ("3. 단계별 캡처 (고대비, 음영 반전)", start(BE_SEQ, 14)),
-     ("4. NanoRoute 후 타이밍 리포트 (Setup + Hold)", start(BE_SEQ, 17)),
-     ("5. STA 전후의 Hold 타이밍 변화와 버퍼 삽입 (삽입 셀 개수)", start(BE_SEQ, 17)),
+    [("1. APR 전 과정 Script", start(BE_SEQ, 13)), ("2. Import 파일 정리", imp_pg),
+     ("3. 단계별 캡처", start(BE_SEQ, 14)),
+     ("4. Nano Routing 후 타이밍 리포트 (Setup + Hold)", start(BE_SEQ, 17)),
+     ("5. STA 전후의 Hold Timing 변화와 Buffer Insertion", start(BE_SEQ, 17)),
      ("6. 최종 타이밍 리포트 (Setup + Hold)", start(BE_SEQ, 19))],
     "BE 플로우: Innovus(APR) → Tempus(STA).")
 COV = {"fe": one(cover_fe, "cover_fe"), "be": one(cover_be, "cover_be")}
@@ -365,7 +365,7 @@ OV[18] = (f'<div class="ov" style="left:{L}pt;top:512pt;width:{Wd}pt">'
           '<tr><td>기타 최적화</td><td><code>FE_PDC</code> BUF</td><td class="num">6</td></tr>'
           '<tr><td>Hold 지연 버퍼</td><td><code>FE_PHC</code> (hold fix 셀)</td><td class="num">0</td></tr>'
           '<tr><th colspan="2">합계</th><th class="num">882</th></tr></table>'
-          '<div class="cap">CTS 176개는 3의 클럭 버퍼 수와 같다. 최적화 셀 706개는 preCTS의 setup 위반과 max_tran 위반을 고치면서 들어왔다. hold를 맞추려는 셀은 없다.</div></div>')
+          '<div class="cap">CTS 176개는 단계별 캡처(CTS)의 클럭 버퍼 수와 같다. 최적화 셀 706개는 preCTS의 setup 위반과 max_tran 위반을 고치면서 들어왔다. hold를 맞추려는 셀은 없다.</div></div>')
 
 
 def cbox(x, y, w, h, title, text, wrap=False):
@@ -402,7 +402,7 @@ add(2, white(289.0, 528.6, 11.5, 11.2) +
 add(16, white(300, 148.6, 259, 84))
 add(18, white(36, 435, 523.5, 49) +
     '<div class="ov" style="left:39pt;top:437pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
-    '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(6의 setup 경로). 개수는 아래 표에 정리했다.</div>')
+    '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(최종 타이밍 리포트의 setup 경로). 개수는 아래 표에 정리했다.</div>')
 
 # BE p15 (4-c CTS): add the layout snapshot saved by 3_PostCTSopt.tcl (snap/3_cts.png),
 # shade-inverted like the other GUI captures (luminance inverted, colour kept)
@@ -430,10 +430,10 @@ add(4, white(36, 284, 523.5, 540) +
 def rebar(y0, y1, txt):
     return (f'<div class="ov" style="left:36.75pt;top:{y0}pt;width:521.75pt;height:{y1-y0}pt;background:#0a5f5a;border-radius:3pt;'
             f'color:#fff;font-weight:700;font-size:14pt;line-height:{y1-y0}pt;padding-left:9pt;letter-spacing:-0.2pt">{txt}</div>')
-add(2, rebar(40.0, 70.5, "FE · 1. 설계 논리 다이어그램과 스펙"))
-add(12, white(36, 41, 420, 16) + '<div class="ov" style="left:37.5pt;top:41.5pt;color:#0a5f5a;font-weight:700;font-size:11.2pt">2(RTL)와 비교: 타이밍 때문에 생긴 차이</div>')
-add(14, rebar(40.0, 70.5, "BE · 3. 단계별 캡처 (고대비, 음영 반전)"))
-add(17, rebar(40.0, 70.5, "BE · 4. NanoRoute 후 타이밍 리포트 (Setup + Hold)") + rebar(581.5, 612.0, "BE · 5. STA 전후의 Hold 타이밍 변화와 버퍼 삽입"))
+add(2, rebar(40.0, 70.5, "1. Design Logic Diagram"))
+add(12, white(36, 41, 420, 16) + '<div class="ov" style="left:37.5pt;top:41.5pt;color:#0a5f5a;font-weight:700;font-size:11.2pt">Function Simulation과 비교: 타이밍으로 생긴 차이</div>')
+add(14, rebar(40.0, 70.5, "3. 단계별 캡처"))
+add(17, rebar(40.0, 70.5, "4. Nano Routing 후 타이밍 리포트 (Setup + Hold)") + rebar(581.5, 612.0, "5. STA 전후의 Hold Timing 변화와 Buffer Insertion"))
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
