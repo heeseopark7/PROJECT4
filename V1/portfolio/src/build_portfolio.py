@@ -352,9 +352,10 @@ def white(x, y, w, h):
     return f'<div class="ov" style="left:{x}pt;top:{y}pt;width:{w}pt;height:{h}pt;background:#fff"></div>'
 
 def head(y, txt, code):
-    return (white(36, y - 3, 380, 16.5) +
-            f'<div class="ov" style="left:37.3pt;top:{y - 2.6}pt;font-size:12.4pt;font-weight:700;line-height:1.2">{txt} '
-            f'(<code style="font-size:10pt;font-weight:400">{code}</code>)</div>')
+    return (white(36, y - 3, 523.5, 17.5) +
+            f'<div class="ov" style="left:36.75pt;top:{y - 2.8}pt;width:521.75pt;color:#0a5f5a;font-size:11.2pt;font-weight:700;line-height:1.2;'
+            f'padding-bottom:2pt;border-bottom:1.3pt solid #0a5f5a">{txt} '
+            f'(<code style="font-size:9.4pt;font-weight:400">{code}</code>)</div>')
 
 L, Wd = 36.75, 521.75
 OV = {}
@@ -364,7 +365,7 @@ OV[12] = (white(36, 256.55, 523.5, 22) + white(36, 280, 523.5, 70) + white(36, 3
           '<li style="margin-top:3pt">pre-layout 시뮬은 클럭 트리와 실제 배선 지연이 없는 합성 시점의 지연이다.</li></ul>')
 OV[14] = head(120.2, "① Init / Floorplan", "0_InitDesign.tcl + init.io") + head(430.9, "② Power plan", "1_PowerPlan.tcl")
 OV[15] = head(43.7, "③ Place", "2_PlaceOpt.tcl") + head(454.9, "④ CTS", "3_PostCTSopt.tcl")
-OV[16] = (head(43.9, "⑤ Route", "4_RouteDesign_PowerAnalysis.tcl") .replace("</code>)</div>", "</code>, NanoRoute)</div>")
+OV[16] = (head(43.9, "⑤ Route", "4_RouteDesign_PowerAnalysis.tcl") 
           + head(339.9, "⑥ Filler / 출력", "5_ChipFinish.tcl"))
 OV[18] = (f'<div class="ov" style="left:{L}pt;top:512pt;width:{Wd}pt">'
           '<div style="font-weight:700;font-size:10pt;margin-bottom:4pt">삽입 셀 개수 (최종 P&amp;R 넷리스트 <code>mcu_pad_top.v</code>의 인스턴스 이름 기준)</div>'
@@ -409,7 +410,7 @@ add(18, cbox(37.5, 40.5, 520.5, 227.2, *lg("5_PNR/tempus.log2", (330, 351), labe
 
 add(2, white(289.0, 528.6, 11.5, 11.2) +
        '<div class="ov" style="left:289.2pt;top:528.2pt;font-size:9.1pt;line-height:1.2;letter-spacing:0">10</div>')
-add(16, white(300, 148.6, 259, 84))
+add(16, white(300, 149.3, 259, 84))
 add(18, white(36, 435, 523.5, 49) +
     '<div class="ov" style="left:39pt;top:437pt;width:519pt;font-size:10.3pt;line-height:1.6;padding-left:11pt;text-indent:-11pt">'
     '•&nbsp; <b>최적화 버퍼</b>: setup 최악 경로에 <code>FE_OFC*</code> 이름의 버퍼·인버터가 다수 보인다(최종 타이밍 리포트의 setup 경로). 개수는 아래 표에 정리했다.</div>')
@@ -419,9 +420,13 @@ add(18, white(36, 435, 523.5, 49) +
 from PIL import ImageOps
 _y, _cb, _cr = Image.open(TOP / "5_PNR/snap/3_cts.png").convert("RGB").convert("YCbCr").split()
 Image.merge("YCbCr", (ImageOps.invert(_y), _cb, _cr)).convert("RGB").save(WORK / "cts_snap.png")
-add(15, f'<img class="ov" src="{(WORK / "cts_snap.png").as_uri()}" style="left:36.5pt;top:646pt;width:172pt;border:0.6pt solid #333">'
-        '<div class="ov cap" style="left:215pt;top:650pt;width:79pt;font-size:8.2pt;line-height:1.5">'
-        'CTS 후 레이아웃. <code>3_PostCTSopt.tcl</code>이 <code>saveDesign</code> 뒤에 남긴 <code>snap/3_cts.png</code>를 음영 반전했다.</div>')
+orig_img(15, "X77.png").save(WORK / "clock_tree.png")
+add(15, white(35, 470, 263, 372) + white(299, 646, 262, 196) +
+    f'<img class="ov" src="{(WORK / "cts_snap.png").as_uri()}" style="left:36.5pt;top:473.8pt;width:257.8pt;height:230.8pt;border:0.75pt solid #555">'
+    '<div class="ov cap" style="left:37.3pt;top:707pt;width:256pt;font-size:8.4pt;line-height:1.55">CTS 후 레이아웃(<code>3_PostCTSopt.tcl</code>이 저장한 <code>snap/3_cts.png</code>, 음영 반전).</div>'
+    '<div class="ov note" style="left:36.5pt;top:738pt;width:257.8pt;font-size:8.6pt;padding:5pt 8pt;line-height:1.55">스크립트의 목표 스큐(0.01 ns)는 맞추지 못했다. 0.165 ns는 10 ns 주기의 약 1.7%이고 setup, hold 모두 통과해 그대로 두었다.</div>'
+    f'<img class="ov" src="{(WORK / "clock_tree.png").as_uri()}" style="left:301.2pt;top:650pt;width:257.5pt;border:0.75pt solid #555">'
+    '<div class="ov cap" style="left:302pt;top:789pt;width:256pt;font-size:8.4pt;line-height:1.55">클럭 트리. 루트 <code>clk</code>에서 클럭 버퍼 176개가 플립플롭 1,816개(posedge 1,799, negedge 17)에 분배한다. 최대 leaf fanout 20.</div>')
 
 # FE p4: RTL code excerpts are not in the guideline -> replaced by the embedded-program table (from old p5)
 add(4, white(36, 284, 523.5, 540) +
