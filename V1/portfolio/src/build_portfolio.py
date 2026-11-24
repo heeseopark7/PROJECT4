@@ -289,14 +289,14 @@ p11 = f"""
 p19 = f"""
 <div class="page">
  <div class="bar">6. 최종 타이밍 리포트 (Setup + Hold)</div>
- <p>최종 sign-off는 Tempus의 배선 후 STA다. Innovus postRoute 결과(setup +0.441 ns, hold +0.053 ns)와 정확히 일치한다.</p>
+ <p>최종 sign-off는 배선 후 Tempus STA 결과이며, Innovus postRoute 결과(setup +0.441 ns, hold +0.053 ns)와 일치한다.</p>
  {fbox(630, "tempus.log2 · report_timing -late, setup 최악 경로 (252~328행)", lines("5_PNR/tempus.log2", 252, 328))}
  <p class="cap"><b style="color:var(--ink)">Setup 최악 경로</b> (FUNC_SS_WORST, 클럭 10 ns): <code>r_pc_reg_7</code>에서 UART TX FIFO의 쓰기 enable(<code>uut5/uut2/r_mem_reg_13_3/E</code>)까지 약 50개 셀. Arrival 9.599 ns, Required 10.040 ns(10.000 − setup 0.203 − uncertainty 0.100 + 캡처 클럭 지연 0.343), slack +0.441 ns (MET).</p>
 </div>"""
 p20 = f"""
 <div class="page">
  {fbox(230, "tempus.log2 · report_timing -early, hold 최악 경로 (330~351행)", lines("5_PNR/tempus.log2", 330, 351))}
- <p class="cap"><b style="color:var(--ink)">Hold 최악 경로</b> (FUNC_FF_BEST): SPI 슬레이브 2-FF 동기화기의 <code>r_mosi_s_reg_0</code>에서 <code>r_mosi_s_reg_1</code>로 가는 직결 경로. 도착 0.259 ns(CK→Q 0.057 + 클럭 지연 0.202), 요구 0.206 ns, slack +0.053 ns(MET).</p>
+ <p class="cap"><b style="color:var(--ink)">Hold 최악 경로</b> (FUNC_FF_BEST): SPI 슬레이브 2-FF 동기화기의 <code>r_mosi_s_reg_0</code> → <code>r_mosi_s_reg_1</code> 직결 경로. Arrival 0.259 ns(CK→Q 0.057 + 클럭 지연 0.202), Required 0.206 ns, slack +0.053 ns (MET).</p>
  <table style="font-size:9.2pt;margin-top:8pt">
   <tr><th style="width:20%">항목</th><th>Setup (SS_WORST)</th><th style="width:30%">Hold (FF_BEST)</th></tr>
   <tr><td>WNS</td><td class="num">+0.441 ns</td><td class="num">+0.053 ns</td></tr>
@@ -306,8 +306,8 @@ p20 = f"""
   <tr><td>DRC / 연결성</td><td colspan="2" class="num">0 viol. / 0 viol. (필러 삽입 후)</td></tr>
  </table>
  <ul style="font-size:10pt">
-  <li>setup 최악 경로는 합성 때부터 보이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로이고 배선 후에도 그대로 최악이다.</li>
-  <li>hold +53 ps는 얇아 보이지만 플립플롭끼리 직결된 경로의 구조적 최소값(CK→Q 0.057 ns에서 hold 시간 0.004 ns를 뺀 값)에 가깝다.</li>
+  <li>setup 최악 경로는 합성 단계부터 최악이던 PC → ROM → CPU 가산기 → 주소 디코드 → FIFO enable 경로로, 배선 후에도 최악 경로로 남았다.</li>
+  <li>hold slack +53 ps는 작아 보이지만, 플립플롭 직결 경로의 구조적 최소값(CK→Q 0.057 ns − hold 시간 0.004 ns)에 가깝다.</li>
  </ul>
 </div>"""
 
@@ -383,7 +383,7 @@ OV[18] = (white(35, 396, 525, 446) +
           '<div class="cap">CTS(<code>ccopt_design</code>)가 클럭 버퍼 176개와 인버터 1개를 삽입했다.</div></div>'
           '<div style="flex:1;min-width:0">' + fbox(112, "innovus.log9 · optDesign -postCTS -hold (482, 5518, 5650~5655행)",
               lines("5_PNR/innovus.log9", 482, 482) + "\n...\n" + lines("5_PNR/innovus.log9", 5518, 5518) + "\n...\n" + lines("5_PNR/innovus.log9", 5650, 5655)) +
-          '<div class="cap">hold 최적화 결과 "Hold timing is met. Hold fixing is not needed". postRoute(<code>innovus.log10</code> 4753행)도 같다.</div></div>'
+          '<div class="cap"><code>optDesign -postCTS -hold</code>에서 "Hold timing is met"으로 판정되어 hold fix가 수행되지 않았다. postRoute(<code>innovus.log10</code> 4753행)도 같다.</div></div>'
           '</div>'
           '<div style="font-weight:700;font-size:9.6pt;margin:7pt 0 3pt">삽입 셀 개수 (최종 넷리스트 <code>mcu_pad_top.v</code>의 인스턴스 이름 기준)</div>'
           '<table style="font-size:8.6pt"><tr><th style="width:22%">종류</th><th>이름 접두어와 셀</th><th style="width:12%">개수</th></tr>'
@@ -438,9 +438,9 @@ orig_img(15, "X77.png").save(WORK / "clock_tree.png")
 add(15, white(35, 470, 263, 372) + white(299, 646, 262, 196) +
     f'<img class="ov" src="{(WORK / "cts_snap.png").as_uri()}" style="left:36.5pt;top:473.8pt;width:257.8pt;height:230.8pt;border:0.75pt solid #555">'
     '<div class="ov cap" style="left:37.3pt;top:707pt;width:256pt;font-size:8.4pt;line-height:1.55">CTS 후 레이아웃(<code>3_PostCTSopt.tcl</code>이 저장한 <code>snap/3_cts.png</code>, 음영 반전).</div>'
-    '<div class="ov note" style="left:36.5pt;top:738pt;width:257.8pt;font-size:8.6pt;padding:5pt 8pt;line-height:1.55">스크립트의 목표 스큐(0.01 ns)는 맞추지 못했다. 0.165 ns는 10 ns 주기의 약 1.7%이고 setup, hold 모두 통과해 그대로 두었다.</div>'
+    '<div class="ov note" style="left:36.5pt;top:738pt;width:257.8pt;font-size:8.6pt;padding:5pt 8pt;line-height:1.55">목표 스큐 0.01 ns(스크립트 설정)에는 못 미쳤지만, 0.165 ns는 주기의 약 1.7%이고 setup·hold를 모두 만족해 그대로 진행했다.</div>'
     f'<img class="ov" src="{(WORK / "clock_tree.png").as_uri()}" style="left:301.2pt;top:650pt;width:257.5pt;border:0.75pt solid #555">'
-    '<div class="ov cap" style="left:302pt;top:789pt;width:256pt;font-size:8.4pt;line-height:1.55">클럭 트리. 루트 <code>clk</code>에서 클럭 버퍼 176개가 플립플롭 1,816개(posedge 1,799, negedge 17)에 분배한다. 최대 leaf fanout 20.</div>')
+    '<div class="ov cap" style="left:302pt;top:789pt;width:256pt;font-size:8.4pt;line-height:1.55">클럭 트리. 루트 <code>clk</code>에서 클럭 버퍼 176개를 거쳐 플립플롭 1,816개(posedge 1,799, negedge 17)로 클럭을 분배한다. 최대 leaf fanout 20.</div>')
 
 # FE p4: RTL code excerpts are not in the guideline -> replaced by the embedded-program table (from old p5)
 add(4, white(36, 284, 523.5, 540) +
@@ -463,6 +463,20 @@ add(2, rebar(40.0, 70.5, "1. Design Logic Diagram"))
 add(12, white(36, 41, 420, 16) + '<div class="ov" style="left:37.5pt;top:41.5pt;color:#0a5f5a;font-weight:700;font-size:11.2pt">Function Simulation과 비교</div>')
 add(14, rebar(40.0, 70.5, "3. 단계별 캡처"))
 add(17, rebar(40.0, 70.5, "4. Nano Routing 후 타이밍 리포트 (Setup + Hold)") + rebar(581.5, 612.0, "5. STA 전후의 Hold Timing 변화와 Buffer Insertion"))
+
+def para(x, y, w, h, html_txt, size=10.3, color="#14202a", bg="#fff"):
+    return (f'<div class="ov" style="left:{x}pt;top:{y}pt;width:{w}pt;height:{h}pt;background:{bg}"></div>'
+            f'<div class="ov" style="left:{x + 1}pt;top:{y + 1}pt;width:{w - 2}pt;font-size:{size}pt;line-height:1.55;color:{color}">{html_txt}</div>')
+CAP = "#56636b"
+add(14, para(36.5, 78, 522.5, 29, "Innovus GUI 캡처는 인쇄 가독성을 위해 어두운 배경을 흰색으로 반전했다. 각 단계가 끝난 시점의 타이밍과 검증 결과를 함께 정리했으며, 클럭은 모두 10 ns다."))
+add(14, para(306, 270, 250, 29, "코어 대비 셀 면적이 작은 것은 die 크기를 패드 링이 결정하는 pad-limited 구조이기 때문이다.", 9, bg="#e3f2f0"))
+add(15, para(301, 313.5, 258, 27, "혼잡도(Early Global Route): Overflow 0%(H, V). 셀이 코어 중앙에 몰려 국소 밀도는 0.9 안팎이지만 배선 혼잡은 없다.", 8.6, CAP))
+add(16, para(36, 297, 260, 27, "신호 배선은 Metal1~9, 전원 링과 스트라이프는 Metal10/11을 사용했다. 신호 패드와 코어 사이 배선이 모두 연결되었다.", 8.6, CAP))
+add(17, para(36.5, 78, 522.5, 29, "배선 완료 후(postRoute) <code>timeDesign</code> 결과다. setup은 slow 코너(FUNC_SS_WORST), hold는 fast 코너(FUNC_FF_BEST) 기준이다."))
+add(17, para(44, 532, 513, 28, "preCTS 위반은 이상적 클럭(ideal clock) 기준의 값이며, CTS와 최적화를 거쳐 postRoute에서는 모든 경로가 타이밍을 만족한다.", 9.6, bg="#e3f2f0"))
+add(17, para(36.5, 618.5, 522.5, 15, "배선 후 설계를 Tempus로 STA했다. 분석 조건을 먼저 점검한 뒤 코너별 최악 경로를 추출했다."))
+add(18, para(36.5, 271.5, 522.5, 28, '<b style="color:#14202a">Hold 최악 경로</b> (Tempus, FUNC_FF_BEST): SPI 슬레이브 2-FF 동기화기의 <code>r_mosi_s_reg_0</code> → <code>r_mosi_s_reg_1</code> 직결 경로. Arrival 0.259 ns(CK→Q 0.057 + 클럭 지연 0.202), Required 0.206 ns, slack +0.053 ns (MET).', 8.6, CAP))
+add(18, para(40, 374.5, 150, 12.5, "Tempus STA", 10.3))
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
