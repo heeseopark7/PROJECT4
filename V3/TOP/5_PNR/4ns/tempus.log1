@@ -1,0 +1,432 @@
+
+Cadence Tempus(TM) Timing Solution.
+Copyright 2022 Cadence Design Systems, Inc. All rights reserved worldwide.
+
+Version:	v22.17-s087_1, built Tue Oct 1 11:02:53 PDT 2024
+Options:	
+Date:		Thu Nov 26 03:01:28 2026
+Host:		kopo-seongnam (x86_64 w/Linux 3.10.0-1160.el7.x86_64) (20cores*80cpus*Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz 28160KB)
+OS:		CentOS Linux 7 (Core)
+
+License:
+		[03:01:28.158577] Configured Lic search path (22.01-s003): 5280@localhost
+
+		tpsxl	Tempus Timing Signoff Solution XL	22.1	Denied
+		tpsl	Tempus Timing Signoff Solution L	22.1	checkout succeeded
+		8 CPU jobs allowed with the current license(s). Use set_multi_cpu_usage to set your required CPU count.
+Change the soft stacksize limit to 0.2%RAM (770 mbytes). Set global soft_stack_size_limit to change the value.
+environment variable TMPDIR is '/tmp/ssv_tmpdir_121684_V6XceX'.
+<CMD> ::stop_gui -keepDgui
+<CMD> read_design RouteDesign.dat mcu_core_top
+# Tempus Timing Solution 22.17-s087_1
+# read_design
+#  dir RouteDesign.dat mcu_core_top
+Set Default Input Pin Transition as 0.1 ps.
+Loading design 'mcu_core_top' saved by 'Innovus' '22.17-s086_1' on 'Thu Nov 26 01:46:18 2026'.
+#% Begin Load MMMC data ... (date=11/26 03:02:09, mem=1286.4M)
+**WARN: (UI-638):	The option '-cap_table' to the command 'create_rc_corner' is ignored since it is related to the RC extraction mode which Tempus does not support. Tempus only supports the signoff QRC extraction.
+**WARN: (UI-638):	The option '-cap_table' to the command 'create_rc_corner' is ignored since it is related to the RC extraction mode which Tempus does not support. Tempus only supports the signoff QRC extraction.
+Number of views requested 1 are allowed with the current licenses... continuing with set_analysis_view.
+#% End Load MMMC data ... (date=11/26 03:02:09, total cpu=0:00:00.0, real=0:00:00.0, peak res=1286.4M, current mem=1284.9M)
+BEST WORST
+Reading pin direction from '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/libs/lef/gsclib045_tech.lef' ...
+Reading pin direction from '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/libs/lef/gsclib045_macro.lef' ...
+Reading pin direction from '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/libs/lef/gsclib045_multibitsDFF.lef' ...
+Loading view definition file from /home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/viewDefinition.tcl
+Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib' ...
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_basicCells.lib)
+Read 489 cells in library 'slow_vdd1v0' 
+Reading SS_Max_0p90v_125c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/slow_vdd1v0_multibitsDFF.lib' ...
+Read 16 cells in library 'slow_vdd1v0' 
+Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib' ...
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP9'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP8'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP7'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP6'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP5'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP4'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP3'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP2'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'DECAP10'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+**WARN: (TECHLIB-302):	No function defined for cell 'ANTENNA'. The cell will only be used for analysis. (File /GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_basicCells.lib)
+Read 489 cells in library 'fast_vdd1v0' 
+Reading FF_Min_1p10v_0c timing library '/GPDK045/digital/gsclib045_all_v4.4/gsclib045/timing/fast_vdd1v0_multibitsDFF.lib' ...
+Read 16 cells in library 'fast_vdd1v0' 
+*** End library_loading (cpu=0.02min, real=0.03min, mem=13.5M, fe_cpu=0.45min, fe_real=0.72min, fe_mem=1569.5M) ***
+#% Begin Load netlist data ... (date=11/26 03:02:11, mem=1293.1M)
+*** Begin netlist parsing (mem=1569.5M) ***
+Reading verilogBinary netlist '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.v.bin'
+
+*** Memory Usage v#1 (Current mem = 1917.504M, initial mem = 642.340M) ***
+*** End netlist parsing (cpu=0:00:00.1, real=0:00:00.0, mem=1917.5M) ***
+#% End Load netlist data ... (date=11/26 03:02:11, total cpu=0:00:00.5, real=0:00:00.0, peak res=1407.3M, current mem=1396.7M)
+Reading pin dir info from /tmp/ssv_tmpdir_121684_V6XceX/.bbx_121684_c166c249-acaa-47b8-a770-9b902abcf270.
+Set top cell to mcu_core_top.
+Building hierarchical netlist for Cell mcu_core_top ...
+***** UseNewTieNetMode *****.
+*** Netlist is unique.
+** info: there are 1036 modules.
+** info: there are 7941 stdCell insts.
+** info: there are 7941 stdCell insts with at least one signal pin.
+
+*** Memory Usage v#1 (Current mem = 2283.461M, initial mem = 642.340M) ***
+Set Default Input Pin Transition as 0.1 ps.
+Set Shrink Factor to 0.90000
+Loading preference file /home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/gui.pref.tcl ...
+**WARN: (UI-156):	preference name 'MinFPModuleSize' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'MinFlightLineWidth' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'MaxFlightLineNetTerms' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'LevelFlight' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DirectionSink' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DirectionSource' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'ShowNumberBlockConnection' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'StrecthRestriction' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'StretchRectilinear' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'MoveRestriction' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DisplayRelFPlan' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'LegalizeMacro' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DisplayFPlanFlightLine' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DisplayPinName' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'DisplayBusGuideAsLine' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'ExclusiveFlight' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'ShowToUnplace' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'FlightLineInMove' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'ShowConnectionInOutNumber' is not supported in Tempus Timing Solution.
+**WARN: (UI-156):	preference name 'ConnectionColorType' is not supported in Tempus Timing Solution.
+**WARN: (EMS-27):	Message (UI-156) has exceeded the current message display limit of 20.
+To increase the message display limit, refer to the product command reference manual.
+**WARN: (IMPSYC-6134):	Setting analysis mode to hold does not have any impact on timing analysis as simultaneous setup/hold mode analysis is on. Use '-early' option to report hold timing reports.
+**WARN: (IMPTCM-77):	Option "-drouteStartIteration" for command setNanoRouteMode is obsolete and will be removed in a future release. The obsolete option still works in this release but to avoid this warning and to ensure compatibility with future releases, remove the obsolete option from your script.
+#WARNING (NRIF-90) Option setNanoRouteMode -route_bottom_routing_layer is obsolete. It will continue to work for the current release. To ensure compatibility with future releases, use option setDesignMode -bottomRoutingLayer instead.
+#WARNING (NRIF-91) Option setNanoRouteMode -route_top_routing_layer is obsolete. It will continue to work for the current release. To ensure compatibility with future releases, use option setDesignMode -topRoutingLayer instead.
+**WARN: (IMPSP-504):	"set_place_mode" cannot be used in timer mode.
+addRing command will ignore shorts while creating rings.
+addRing command will disallow rings to go over rows.
+addRing command will consider rows while creating rings.
+The ring targets are set to core/block ring wires.
+**WARN: (IMPSP-5121):	Failed to run 'read_design' because cell 'TIELO' is not a standard cell. Cannot use as a filler. Check the filler cell type in the LEF. Filler cells need to be CLASS CORE.
+**WARN: (IMPSP-5121):	Failed to run 'read_design' because cell 'TIEHI' is not a standard cell. Cannot use as a filler. Check the filler cell type in the LEF. Filler cells need to be CLASS CORE.
+**ERROR: (IMPSP-5234):	No valid tie-cell name given in this string 'TIELO TIEHI'.
+
+Usage: set_tie_hi_lo_mode [-help] [-reset] [-cell {{tieCellList1} {tieCellList2} ...}] [-createHierPort {true|false}] [-honorDontTouch {true|false}]
+                          [-honorDontUse {true|false}] [-maxDistance <dist-in-microns>] [-maxFanout <nr-pins>] [-modulePrevention {true|false}]
+                          [-prefix <tie-prefix>] [-reportHierPort {true|false}]
+
+**ERROR: (IMPTCM-10):	Failed to set value for option "-cell".
+addStripe will allow jog to connect padcore ring and block ring.
+
+Stripes will not extend to closest target.
+When breaking rings, the power planner will consider the existence of blocks.
+addStripe will break automatically at non-default domains when generating global stripes over the core area or default domain.
+The entire stripe set will break at the domain if one of the nets is not in the domain.
+Stripes will not be created over regions without power planning wires.
+Offset for stripe breaking is set to 0.
+Stripes will stop at the boundary of the specified area.
+The power planner will set stripe antenna targets to none (no trimming allowed).
+**WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMaxRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -topRoutingLayer' instead.
+**WARN: (IMPPSP-1003):	Found use of 'setRouteMode -earlyGlobalMinRouteLayer'. This will continue to work in this release; however, it is recommended to use 'setDesignMode -bottomRoutingLayer' instead.
+**ERROR: (IMPFP-10172):	Cannot find topCell's floorplan data.
+/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mmmc/modes/FUNC/FUNC.sdc
+Total number of combinational cells: 314
+Total number of sequential cells: 168
+Total number of tristate cells: 10
+Total number of level shifter cells: 0
+Total number of power gating cells: 0
+Total number of isolation cells: 0
+Total number of power switch cells: 0
+Total number of pulse generator cells: 0
+Total number of always on buffers: 0
+Total number of retention cells: 0
+Total number of physical cells: 0
+List of usable buffers: BUFX12 BUFX16 BUFX2 BUFX20 BUFX3 BUFX4 BUFX6 BUFX8 CLKBUFX12 CLKBUFX16 CLKBUFX2 CLKBUFX20 CLKBUFX3 CLKBUFX4 CLKBUFX6 CLKBUFX8
+Total number of usable buffers: 16
+List of unusable buffers:
+Total number of unusable buffers: 0
+List of usable inverters: CLKINVX1 CLKINVX12 CLKINVX16 CLKINVX2 CLKINVX20 CLKINVX3 CLKINVX4 CLKINVX6 CLKINVX8 INVX1 INVX12 INVX16 INVX2 INVX20 INVX3 INVX4 INVX6 INVXL INVX8
+Total number of usable inverters: 19
+List of unusable inverters:
+Total number of unusable inverters: 0
+List of identified usable delay cells: DLY1X1 DLY1X4 DLY2X1 DLY2X4 DLY3X1 DLY3X4 DLY4X4 DLY4X1
+Total number of identified usable delay cells: 8
+List of identified unusable delay cells:
+Total number of identified unusable delay cells: 0
+#% Begin Load MMMC data post ... (date=11/26 03:02:12, mem=1672.2M)
+#% End Load MMMC data post ... (date=11/26 03:02:12, total cpu=0:00:00.0, real=0:00:00.0, peak res=1672.2M, current mem=1672.2M)
+#% Begin Load SymbolTable ... (date=11/26 03:02:12, mem=1672.2M)
+#% End Load SymbolTable ... (date=11/26 03:02:12, total cpu=0:00:00.1, real=0:00:00.0, peak res=1673.3M, current mem=1673.3M)
+Reading property file /home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.prop
+*** Completed restoreProperty (cpu=0:00:00.0 real=0:00:00.0 mem=2232.6M) ***
+Set Default Input Pin Transition as 0.1 ps.
+Extraction setup Started 
+Summary of Active RC-Corners : 
+ 
+ Analysis View: FUNC_SS_WORST
+    RC-Corner Name        : WORST
+    RC-Corner Index       : 0
+    RC-Corner Temperature : 125 Celsius
+    RC-Corner Cap Table   : ''
+    RC-Corner PostRoute Res Factor        : 1
+    RC-Corner PostRoute Cap Factor        : 1
+    RC-Corner PostRoute XCap Factor       : 1
+    RC-Corner Technology file: '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+ 
+ Analysis View: FUNC_FF_BEST
+    RC-Corner Name        : BEST
+    RC-Corner Index       : 1
+    RC-Corner Temperature : 0 Celsius
+    RC-Corner Cap Table   : ''
+    RC-Corner PostRoute Res Factor        : 1
+    RC-Corner PostRoute Cap Factor        : 1
+    RC-Corner PostRoute XCap Factor       : 1
+    RC-Corner Technology file: '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/libs/mmmc/BEST/gpdk045.tch'
+Restoring parasitic data from file '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.rcdb.d' ...
+**WARN: (IMPEXT-3298):	Parasitic database '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.rcdb.d' was created in 'postRoute' mode. The current mode of the tool is 'Quantus QRC'. Changing mode to make it similar to parasitic database.
+**WARN: (IMPEXT-7000):	The option '-effortLevel low' for setExtractRCMode is ignored because only Quantus QRC extraction mode, that is, '-engine postRoute -effortLevel signoff' is supported in Tempus Timing Solution. To avoid this message, remove this option from your scripts.
+Begin read_parasitics... (cpu: 0:00:00.0 real: 0:00:00.0 mem: 2232.602M)
+Following multi-corner parasitics specified:
+	/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.rcdb.d (rcdb)
+		Cell mcu_core_top has rcdb /home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mcu_core_top.rcdb.d specified
+Cell mcu_core_top, hinst 
+Done read_parasitics... (cpu: 0:00:00.2 real: 0:00:00.0 mem: 2240.602M)
+#% Begin Loading timing constraints ... (date=11/26 03:02:13, mem=1688.9M)
+Reading timing constraints file '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mmmc/modes/FUNC/FUNC.sdc' ...
+Current (total cpu=0:00:29.6, real=0:00:45.0, peak res=2052.2M, current mem=2052.2M)
+mcu_core_top
+INFO (CTE): Constraints read successfully.
+Ending "Constraint file reading stats" (total cpu=0:00:00.1, real=0:00:00.0, peak res=2064.2M, current mem=2064.2M)
+Current (total cpu=0:00:29.7, real=0:00:45.0, peak res=2064.2M, current mem=2064.2M)
+Reading latency file '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mmmc/views/FUNC_SS_WORST/latency.sdc' ...
+Reading latency file '/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mmmc/views/FUNC_FF_BEST/latency.sdc' ...
+#% End Loading timing constraints ... (date=11/26 03:02:13, total cpu=0:00:00.4, real=0:00:00.0, peak res=2081.5M, current mem=2081.5M)
+FUNC_SS_WORST FUNC_FF_BEST
+FF_BEST SS_WORST
+#% Begin Load power constraints ... (date=11/26 03:02:13, mem=2081.5M)
+'set_default_switching_activity' finished successfully.
+#% End Load power constraints ... (date=11/26 03:02:13, total cpu=0:00:00.0, real=0:00:00.0, peak res=2082.3M, current mem=2082.3M)
+#% Begin load AAE data ... (date=11/26 03:02:13, mem=2082.3M)
+AAE DB initialization (MEM=2710.7 CPU=0:00:00.0 REAL=0:00:00.0) 
+#% End load AAE data ... (date=11/26 03:02:14, total cpu=0:00:00.5, real=0:00:01.0, peak res=2088.7M, current mem=2088.7M)
+**WARN: (IMPCTE-107):	The following globals have been obsoleted since version (null). They will be removed in the next release. 
+timing_enable_separate_device_slew_effect_sensitivities
+Ending "read_design" (total cpu=0:00:06.1, real=0:00:06.0, peak res=2090.0M, current mem=1931.9M)
+Loading  (mcu_core_top)
+Traverse HInst (mcu_core_top)
+<CMD> report_clocks 
+      ---------------------------------------------------------------------------------------  
+                                            Clock Descriptions                                         
+      ---------------------------------------------------------------------------------------  
+                                                                            Attributes          
+      ---------------------------------------------------------------------------------------  
+       Clock Name   Source       View        Period    Lead   Trail   Generated   Propagated   
+      ---------------------------------------------------------------------------------------  
+       MAIN_CLOCK    clk      FUNC_FF_BEST    4.000   0.000   2.000       n           y        
+       MAIN_CLOCK    clk     FUNC_SS_WORST    4.000   0.000   2.000       n           y        
+      ---------------------------------------------------------------------------------------  
+<CMD> check_timing
+AAE_INFO: opIsDesignInPostRouteState() is 0
+#################################################################################
+# Design Name: mcu_core_top
+# Design Mode: 65nm
+# Analysis Mode: MMMC Non-OCV 
+# Parasitics Mode: SPEF/RCDB 
+# Signoff Settings: SI Off 
+#################################################################################
+Start delay calculation (fullDC) (1 T). (MEM=2342.77)
+*** Calculating scaling factor for FF_Min_1p10v_0c libraries using the default operating condition of each library.
+/home/hah013/PROJ4/V3/TOP/5_PNR/4ns/RouteDesign.dat/mmmc/modes/FUNC/FUNC.sdc
+End delay calculation. (MEM=2882.41 CPU=0:00:02.5 REAL=0:00:03.0)
+End delay calculation (fullDC). (MEM=2874.41 CPU=0:00:03.0 REAL=0:00:03.0)
+    -------------------------------------------------------------------------------  
+                                 TIMING CHECK SUMMARY                                
+    -------------------------------------------------------------------------------  
+     Warning                            Warning Description              Number of   
+                                                                         Warnings    
+    -------------------------------------------------------------------------------  
+    no_drive                 No drive assertion                         14
+    -------------------------------------------------------------------------------
+<CMD> report_annotated_parasitics
+####################################################################
+# report_annotated_parasitics: Thu Nov 26 03:06:56 2026
+#   view: FUNC_FF_BEST
+#   -list_not_annotated
+####################################################################
+#
+# list syntax: type: net_name [nrCap Cap nrXCap XCap nrRes Res]
+# unit: pF, Ohm
+
+# Summary of Annotated Parasitics:
++------------------------------------------------------------------------------+
+|    Net Type         |    Count   |   Annotated (%)     | Not Annotated (%)   |
++---------------------+------------+---------------------+---------------------+
+| total               |       8954 |       8141 90.92%   |        813  9.08%   |
++---------------------+------------+---------------------+---------------------+
+| assign (*)          |          2 |          0  0.00%   |          2 100.00%   |
+| 0-term:floating (*) |        791 |          0  0.00%   |        791 100.00%   |
+| 1-term:no load      |         20 |          0  0.00%   |         20 100.00%   |
+| real net (complete) |       8141 |       8141 100.00%   |          0  0.00%   |
+| real net (broken)   |          0 |          0  0.00%   |          0  0.00%   |
+| zero capacitance net|          0 |          0  0.00%   |          0  0.00%   |
++------------------------------------------------------------------------------+
+Note for Net Types marked "(*)":  Such nets are never timed, but reported here for informational purpose.
+
++-----------------------------------------------------------------+
+| Annotated |    Res (KOhm)   |    Cap (pF)     |    XCap (pF)    |
++-----------+-----------------+-----------------+-----------------+
+| Count     |        138611   |        140718   |             0   |
+| Value     |      803.5189   |       13.6680   |        0.0000   |
++-----------------------------------------------------------------+
+<CMD> report_analysis_coverage 
+    -------------------------------------------------------------------------------------------  
+                                   TIMING CHECK COVERAGE SUMMARY                                  
+    -------------------------------------------------------------------------------------------  
+     Check Type                      No. of   Met              Violated         Untested         
+                                     Checks                                                      
+    -------------------------------------------------------------------------------------------  
+    DataCheckHold                  17        0 (0%)           0 (0%)           17 (100%)
+    DataCheckSetup                 17        0 (0%)           0 (0%)           17 (100%)
+    ExternalDelay (Early)          8         8 (100%)         0 (0%)           0 (0%)
+    ExternalDelay (Late)           8         8 (100%)         0 (0%)           0 (0%)
+    Hold                           2994      2994 (100%)      0 (0%)           0 (0%)
+    PulseWidth                     4071      3588 (88%)       0 (0%)           483 (11%)
+    Recovery                       483       466 (96%)        0 (0%)           17 (3%)
+    Removal                        483       466 (96%)        0 (0%)           17 (3%)
+    Setup                          2994      2994 (100%)      0 (0%)           0 (0%)
+    -------------------------------------------------------------------------------------------
+<CMD> report_timing -late -max_paths 1
+Path 1: MET Setup Check with Pin u_mcu_top/uut5/uut3/dut/r_rptr_reg_3/CK 
+Endpoint:   u_mcu_top/uut5/uut3/dut/r_rptr_reg_3/D (^) checked with  leading edge of 'MAIN_CLOCK'
+Beginpoint: u_mcu_top/uut1/r_pc_reg_8/Q            (^) triggered by  leading edge of 'MAIN_CLOCK'
+Path Groups: {MAIN_CLOCK}
+Analysis View: FUNC_SS_WORST
+Other End Arrival Time          0.369
+- Setup                         0.114
++ Phase Shift                   4.000
+- Uncertainty                   0.100
+= Required Time                 4.155
+- Arrival Time                  4.146
+= Slack Time                    0.009
+     Clock Rise Edge                 0.000
+     + Clock Network Latency (Prop)  0.356
+     = Beginpoint Arrival Time       0.356
+      ------------------------------------------------------------------------------------------
+      Instance                                Arc           Cell        Delay  Arrival  Required  
+                                                                               Time     Time  
+      ------------------------------------------------------------------------------------------
+      u_mcu_top/uut1/r_pc_reg_8               CK ^          -           -      0.356    0.365  
+      u_mcu_top/uut1/r_pc_reg_8               CK ^ -> Q ^   DFFRHQX4    0.322  0.677    0.686  
+      u_mcu_top/uut2/fopt6016                 A ^ -> Y v    CLKINVX8    0.060  0.737    0.746  
+      u_mcu_top/uut2/FE_RC_572_0              A v -> Y v    CLKAND2X12  0.107  0.844    0.853  
+      u_mcu_top/uut2/g6671                    B v -> Y v    CLKAND2X6   0.088  0.932    0.941  
+      u_mcu_top/uut2/FE_OFC1419_n_1060        A v -> Y ^    CLKINVX6    0.036  0.968    0.977  
+      u_mcu_top/uut2/g6984                    B ^ -> Y v    NOR2X6      0.042  1.011    1.020  
+      u_mcu_top/uut2/g6981                    B v -> Y ^    NOR2X4      0.049  1.060    1.069  
+      u_mcu_top/uut2/g5716                    A ^ -> Y ^    CLKAND2X6   0.110  1.170    1.179  
+      u_mcu_top/uut2/g5683                    B ^ -> Y v    NAND2X8     0.099  1.269    1.278  
+      u_mcu_top/uut1/g21462__26348            B v -> Y v    CLKAND2X12  0.153  1.422    1.431  
+      u_mcu_top/uut1/g26579                   B v -> Y v    CLKAND2X12  0.160  1.581    1.590  
+      u_mcu_top/uut1/g21268__5122             A1N v -> Y v  OAI2BB1X2   0.188  1.769    1.778  
+      u_mcu_top/uut1/g21203__6260             A v -> Y ^    NOR2X6      0.094  1.863    1.872  
+      u_mcu_top/uut1/g21159__5477             B ^ -> Y v    NAND2X8     0.082  1.945    1.954  
+      u_mcu_top/uut1/g20443__5107             B v -> Y ^    NAND2X4     0.064  2.009    2.018  
+      u_mcu_top/uut1/g26229                   B ^ -> Y v    NAND2X6     0.075  2.084    2.093  
+      u_mcu_top/uut1/u_add/FE_OFC1138_n_3500  A v -> Y ^    INVX2       0.056  2.140    2.149  
+      u_mcu_top/uut1/u_add/g14520__2398       B ^ -> Y v    NOR2X2      0.052  2.192    2.201  
+      u_mcu_top/uut1/u_add/g14488__6260       B v -> Y ^    NOR2X8      0.079  2.271    2.280  
+      u_mcu_top/uut1/u_add/g14348__9315       A1N ^ -> Y ^  AOI2BB1X4   0.144  2.415    2.424  
+      u_mcu_top/uut1/u_add/g14264__6260       B ^ -> Y v    NOR2X4      0.061  2.476    2.485  
+      u_mcu_top/uut1/u_add/g15636             B v -> Y ^    NOR2X8      0.062  2.538    2.547  
+      u_mcu_top/uut1/u_add/g15484             B ^ -> Y v    NOR2X6      0.054  2.593    2.602  
+      u_mcu_top/uut1/u_add/g14119__14946      A v -> Y ^    NOR2X4      0.061  2.653    2.662  
+      u_mcu_top/uut1/u_add/g15089             A ^ -> Y v    NAND2X4     0.081  2.734    2.743  
+      u_mcu_top/uut1/u_add/g15231             A1 v -> Y ^   OAI21X4     0.079  2.813    2.822  
+      u_mcu_top/uut1/u_add/g15229             B ^ -> Y v    NAND2X6     0.080  2.893    2.902  
+      u_mcu_top/uut1/g19796                   B v -> Y ^    NAND2X6     0.052  2.945    2.954  
+      u_mcu_top/uut1/g19768                   B ^ -> Y v    NAND2X8     0.077  3.021    3.030  
+      u_mcu_top/g1242                         A v -> Y ^    NOR2X6      0.077  3.098    3.107  
+      u_mcu_top/g45                           A ^ -> Y v    NAND2X6     0.077  3.175    3.184  
+      u_mcu_top/g3018                         A v -> Y ^    NOR2X8      0.080  3.255    3.264  
+      u_mcu_top/g3016                         B ^ -> Y ^    CLKAND2X6   0.116  3.371    3.380  
+      u_mcu_top/g3011                         B ^ -> Y ^    CLKAND2X12  0.119  3.490    3.499  
+      u_mcu_top/uut5/uut6/g3544               B ^ -> Y ^    CLKAND2X3   0.105  3.595    3.604  
+      u_mcu_top/uut5/uut6/g3530               B ^ -> Y ^    CLKAND2X6   0.107  3.702    3.711  
+      u_mcu_top/uut5/uut3/dut/g44             B ^ -> Y ^    CLKAND2X6   0.115  3.818    3.827  
+      u_mcu_top/uut5/uut3/dut/g35             B ^ -> Y ^    AND2X1      0.169  3.986    3.995  
+      u_mcu_top/uut5/uut3/dut/g4453           B ^ -> Y v    NAND2X1     0.093  4.079    4.088  
+      u_mcu_top/uut5/uut3/dut/g31             A v -> Y ^    NAND2X1     0.067  4.146    4.155  
+      u_mcu_top/uut5/uut3/dut/r_rptr_reg_3    D ^           DFFRX1      0.000  4.146    4.155  
+      ------------------------------------------------------------------------------------------
+
+<CMD> report_timing -late -max_paths 1 > reports/timing/tempus_setup.rpt
+<CMD> report_timing -late -max_paths 10 > reports/timing/tempus_setup_top10.rpt
+<CMD> report_timing -early -max_paths 1
+Path 1: MET Hold Check with Pin u_mcu_top/uut6/uut3/r_miso_s1_reg/CK 
+Endpoint:   u_mcu_top/uut6/uut3/r_miso_s1_reg/D (v) checked with  leading edge of 'MAIN_CLOCK'
+Beginpoint: SPIMISO                             (v) triggered by  leading edge of 'MAIN_CLOCK'
+Path Groups: {MAIN_CLOCK}
+Analysis View: FUNC_FF_BEST
+Other End Arrival Time          0.188
++ Hold                          0.004
++ Phase Shift                   0.000
+= Required Time                 0.192
+  Arrival Time                  0.204
+  Slack Time                    0.012
+     Clock Rise Edge                      0.000
+     + Input Delay                        0.010
+     = Beginpoint Arrival Time            0.010
+      --------------------------------------------------------------------------------------
+      Instance                                Arc         Cell      Delay  Arrival  Required  
+                                                                           Time     Time  
+      --------------------------------------------------------------------------------------
+      -                                       SPIMISO v   -         -      0.010    -0.002  
+      u_mcu_top/uut6/uut3/FE_PHC1442_SPIMISO  A v -> Y v  CLKBUFX4  0.044  0.054    0.042  
+      u_mcu_top/uut6/uut3/FE_PHC1446_SPIMISO  A v -> Y v  CLKBUFX4  0.023  0.077    0.066  
+      u_mcu_top/uut6/uut3/FE_PHC1452_SPIMISO  A v -> Y v  CLKBUFX4  0.023  0.100    0.089  
+      u_mcu_top/uut6/uut3/FE_PHC1458_SPIMISO  A v -> Y v  CLKBUFX2  0.022  0.123    0.111  
+      u_mcu_top/uut6/uut3/FE_PHC1464_SPIMISO  A v -> Y v  CLKBUFX2  0.022  0.144    0.132  
+      u_mcu_top/uut6/uut3/FE_PHC1470_SPIMISO  A v -> Y v  CLKBUFX2  0.022  0.166    0.154  
+      u_mcu_top/uut6/uut3/g9310               A v -> Y v  MX2X1     0.038  0.204    0.192  
+      u_mcu_top/uut6/uut3/r_miso_s1_reg       D v         DFFRHQX1  0.000  0.204    0.192  
+      --------------------------------------------------------------------------------------
+
+<CMD> report_timing -early -max_paths 1 > reports/timing/tempus_hold.rpt
+<CMD> write_sdf -view FUNC_SS_WORST mcu_core_top_post_wst.sdf
+*Info: outputing delay to SDF file "mcu_core_top_post_wst.sdf".
+**WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+<CMD> write_sdf -view FUNC_FF_BEST mcu_core_top_post_bst.sdf
+*Info: outputing delay to SDF file "mcu_core_top_post_bst.sdf".
+**WARN: (SDF-808):	The software is currently operating in a high performance mode which optimizes the handling of multiple timing arcs between input and output pin pairs. With the current settings, the SDF file generated will contain the same delay information for all of these arcs. To have the SDF recalculated with explicit pin pair data, you should use the option '-recompute_delay_calc'. This setting is recommended for generating SDF for functional  simulation applications.
+<CMD> exit
+
+*** Memory Usage v#1 (Current mem = 2808.809M, initial mem = 642.340M) ***
+
+*** Summary of all messages that are not suppressed in this session:
+Severity  ID               Count  Summary                                  
+ERROR     IMPFP-10172          1  Cannot find topCell's floorplan data.    
+WARNING   IMPEXT-3298          1  Parasitic database '%s' was created in '...
+WARNING   IMPEXT-7000          1  The option '%s %s' for setExtractRCMode ...
+WARNING   UI-638               2  The %s to the command '%s' %s ignored si...
+WARNING   UI-156             122  preference name '%s' is not supported in...
+WARNING   IMPSYC-6134          1  Setting analysis mode to %s does not hav...
+WARNING   IMPSP-5121           2  Failed to run '%s' because cell '%s' is ...
+ERROR     IMPSP-5234           1  No valid tie-cell name given in this str...
+WARNING   IMPSP-504            1  "%s" cannot be used in timer mode.       
+WARNING   NRIF-90              1  Option setNanoRouteMode -route_bottom_ro...
+WARNING   NRIF-91              1  Option setNanoRouteMode -route_top_routi...
+WARNING   IMPCTE-107           1  The following globals have been obsolete...
+ERROR     IMPTCM-10            1  Failed to set value for option "%s".     
+WARNING   IMPTCM-77            1  Option "%s" for command %s is obsolete a...
+WARNING   IMPPSP-1003          2  Found use of '%s'. This will continue to...
+WARNING   SDF-808              2  The software is currently operating in a...
+WARNING   TECHLIB-302         20  No function defined for cell '%s'. The c...
+*** Message Summary: 158 warning(s), 3 error(s)
+
+--- Ending "Tempus Timing Solution" (totcpu=0:02:39, real=0:25:18, mem=2808.8M) ---
