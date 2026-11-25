@@ -16,7 +16,7 @@
 |---|---|---|---|
 | `V1` | 패드 포함 칩 레벨 완성본 (`mcu_pad_top`) | 완료 | `v1-pad` |
 | `V2` | 패드 없는 코어 단독 기준선 (`mcu_core_top`), RTL 변경 없음 | 완료 | `v2-core` |
-| `V3` | 가산기 구조 교체 (계획서의 v2) | **완료 (툴 작업 전부, 문서화 진행 중)** | `v3` (사용자가 로컬에서 푸시) |
+| `V3` | 가산기 구조 교체 (계획서의 v2) + 4 ns PnR timing closure(V2/V3) | **완료 (툴 작업 전부, 문서화 진행 중)** | `v3` (사용자가 로컬에서 푸시) |
 | `V4` | 주소 디코드 레지스터화 (계획서 v3) | 선택 | `v4` |
 | `V5`, `V6` | 전력/면적 축, SPI FIFO | 선택/후순위 | |
 
@@ -55,6 +55,15 @@
 | `2_SIM/1_FUNCTION/run_function.tcl` | `../TESTBENCH` 경로 | `add32_ks.v` 한 줄 추가, 테스트벤치 경로 `../4_TESTBENCH`(실제 폴더 이름) | 불가피 + 경로 오타 수정 |
 | `5_PNR/mcu_core_top.mmmc.view` | `-sdc_files ./mcu_core_top_pnr.sdc` | `-sdc_files ../3_SYN/mapped/mcu_core_top_syn_final.sdc` | **사용자 결정** (아래 참고) |
 | `3_SYN/mapped/mcu_core_top_syn_final.sdc` | (V2도 같은 흔적) | 61, 62번 줄 `#set_ideal_network [get_ports clk/clrn]` 주석 처리 | 사용자 결정 |
+
+**4 ns PnR 실험에서 추가된 것 (V3, 저장소):**
+| 위치 | 내용 |
+|---|---|
+| `5_PNR/4ns/` | 10 ns `5_PNR` 스크립트 복사본. 다른 점은 `0_InitDesign.tcl` 9번 줄 `init_verilog ../../3_SYN/4ns/mapped/...`, `mcu_core_top.mmmc.view` 73번 줄 `-sdc_files ../../3_SYN/4ns/mapped/...sdc` 두 줄뿐 |
+| `3_SYN/4ns/mapped/mcu_core_top_syn_final.sdc` | 61, 62번 줄 ideal 두 줄 주석 처리 (10 ns와 같은 방식) |
+| `4_EC/POST/4ns/script.tcl` | Golden `../../../3_SYN/4ns/mapped/...`, Revised `../../../5_PNR/4ns/mcu_core_top.v` |
+
+V2 4 ns는 서버 `~/sweep_v2/`(저장소 밖)에서 V3 `5_PNR/4ns` 스크립트를 그대로 복사해 실행했다 (`~/sweep_v2/3_SYN/4ns/mapped/` SDC의 ideal 두 줄도 주석 처리). 수동 ECO 스크립트(`6_ECO_manual.tcl`, 교수님 `6_ECO.tcl` 구조에서 `innovus.eco`/`optDesign` 제거, `ecoChangeCell` + `refinePlace` + `ecoRoute` + `extractRC`, 분석 모드 bcwc)와 ECO 후 산출물(`*_ECO.*`, `RouteDesign_ECO.dat`, `ChipFinish_ECO.dat`)도 서버에만 있다. V2 4 ns 수치는 **사용자 캡처 기준**이다.
 
 **PnR SDC 처리 (중요):** V2는 합성 SDC에서 ideal 두 줄을 뺀 사본 `5_PNR/mcu_core_top_pnr.sdc`를 읽었다. V3는 사본을 만들지 않고 mmmc가 합성 결과 SDC를 직접 읽게 바꾸고, 그 파일에서 ideal 두 줄을 주석 처리했다. **적용된 제약은 V2와 같다** (주기 10 ns, clk/clrn ideal 없음, Innovus SDC 경고 3개도 V2와 같음, CTS 버퍼 141개로 정상). 단, 이 방식은 **합성을 다시 돌리면 `mapped/`의 SDC가 덮어써져 ideal 줄이 살아난다.** 재합성 후 PnR을 하면 반드시 두 줄을 다시 주석 처리하거나 V2 방식(PnR용 사본)으로 돌아가야 한다. `3_SYN/10ns/mapped/`에는 원본(ideal 줄 있음)이 남아 있다.
 
@@ -120,7 +129,9 @@
 - [x] EC (합성 ↔ PnR) PASS: 1,824(PO 8 + DFF 1,816) Equivalent, black box 0
 - [x] Tempus: setup +0.341 ns(`r_pc_reg_8 → uut5/uut2/r_mem_reg_2_4/E`, `u_add` 셀 44개 약 3.98 ns = 데이터 경로의 42.7%), hold +0.009 ns(`SPIMISO → uut6/uut3/r_miso_s1_reg`, FE_PHC 버퍼 5개), Setup/Hold 3,144/3,144 Met, real net 6,077개 100% annotated, no_drive 14. SDF worst/best 생성(SDF-808 경고, V2와 동일)
 - [x] post-layout 시뮬 worst/best PASS 8645 ns: 첫 UARTTXD 하강 worst +1.042 / best +0.262 ns, 첫 SCLK 상승 worst +0.861 / best +0.221 ns. 경로 지연 91.64%(14,768/16,116), 체크 82.30%, RECREM 외 미적용 0, 에러 0, MTM MAXIMUM/MINIMUM 확인. `u_add` 파형 확인
-- [ ] 버전 페이지 5칸 최종본, 슬랙-주기 그래프 (초안: `V3/V3_portfolio.docx`)
+- [x] **4 ns PnR (V3, `5_PNR/4ns`)**: 기본 플로우로 통과. postRoute setup +0.006 / hold +0.012 ns, Tempus setup +0.009 / hold +0.012 ns, EC PASS(1,802). 13-2장
+- [x] **4 ns PnR (V2, 서버 `~/sweep_v2`)**: 기본 플로우 postRoute setup −0.001 ns(1개) → 수동 ECO 셀 1개 교체로 Tempus +0.010 ns, EC PASS(1,824). 13-2장, 13-3장 (캡처 기준)
+- [ ] 버전 페이지 5칸 최종본, 슬랙-주기 그래프 (초안: `V3/V3_portfolio.docx`, 4 ns 결과 미반영)
 - [ ] 저장소 정리 (흔적 파일 `5_PNR/.tempus.tcl.swp`, `4_EC/POST/log/all.log~`, 용량 약 188 MB 중 sweep 백업 처리 결정)
 - [ ] 태그 `v3` (사용자 로컬에서)
 
@@ -159,16 +170,77 @@ V3 값은 `V3/TOP/3_SYN/<주기>/report`에서 대조. V2 값은 서버 `~/sweep
 - V3 FF는 10 ns 1,816, 4 ns 이하 1,794 (22개 감소, 원인 미확인). V2는 3 ns에서만 2,072 (원인 미확인).
 - 경로 지연 구간 분해와 주기별 정리는 `V3/V3_portfolio.docx`.
 
+## 13-2. 4 ns PnR (timing closure 실험)
+목적: 합성 기준 통과 주기를 PnR/사인오프 기준으로 확인하고 closure 과정을 기록. 두 버전 모두 합성에서 통과한 가장 빠른 공통 주기 4 ns. 스크립트와 옵션은 10 ns와 같고 입력 경로만 다르다. V3 값은 `V3/TOP/5_PNR/4ns` 로그와 대조, V2 값은 캡처 기준.
+
+**단계별 setup WNS (SS_WORST)**
+| 단계 | V3 4 ns | V2 4 ns | (참고) V3 10 ns |
+|---|---|---|---|
+| 합성 | 0.0 ps | 0.0 ps | +1.8 ps |
+| prePlace | +0.563 ns | +0.548 ns | +3.371 ns |
+| preCTS | **−0.103 ns, 위반 988 / TNS −34.570** | **−0.110 ns, 위반 551 / TNS −26.650** | −0.016 ns, 위반 1 |
+| CTS 직후 | −0.001 ns, 위반 1 | +0.001 ns, 위반 0 | +0.039 ns |
+| CTS 후 최적화 (setup / hold) | −0.001 ns(2개) / +0.002 ns | 0.000 ns(max_tran 1 net −0.019) / +0.002 ns | +0.091 / +0.001 ns |
+| **postRoute (setup / hold)** | **+0.006 / +0.012 ns** | **−0.001 ns(1개) / +0.006 ns** | +0.341 / +0.009 ns |
+| 수동 ECO 후 | - | **+0.010 / +0.006 ns** | - |
+| **Tempus (setup / hold)** | **+0.009 / +0.012 ns** | **+0.010 / +0.006 ns (ECO 후)** | +0.341 / +0.009 ns |
+
+**물리/전력 비교 (4 ns)**
+| 지표 | V3 4 ns | V2 4 ns |
+|---|---|---|
+| 넷리스트 셀 / 셀 면적 | 7,549 / 30,989.30 µm² | 6,752 / 28,783.75 µm² |
+| die / 코어 | 289.0 × 285.76 µm / 51,689 µm² | 279.2 × 278.92 µm / 47,978 µm² |
+| 배치 셀 (placeDesign 직후) / Density 최종 | 7,274 / 56.473% | - / 54.821% |
+| 혼잡도 Usage, Overflow | 2.4% H, 4.0% V, 0 | 2.2% H, 3.7% V, 0 |
+| 세로 스트라이프 (Metal10) | 5쌍 (10 ns 4쌍) | (GUI 미확인) |
+| 클럭 버퍼 / sink / 최대 배선 길이 | 139 / 1,794 / 272.11 µm | 141 / 1,816 / 272.68 µm |
+| skew setup / hold, 삽입 지연 평균 | 0.102 / 0.050 ns, 0.496 ns | 0.098 / 0.045 ns, 0.486 ns |
+| 정적 전력 (입력 활동 0.2, 클럭 4 ns) | 2.064 mW | 1.866 mW |
+| 필러 / 신호 배선 최상위층 | 10,170 / Metal8 | 9,272 / Metal6 |
+| streamOut 인스턴스 (로직 셀 계산) | 18,111 (7,941) | 16,338 (7,066), ECO 후 |
+| Tempus Setup/Hold 체크 | 2,994 / 2,994 Met | 3,016 / 3,016 Met (ECO 후), real net 8,141(V3) 100% |
+| EC 합성 ↔ PnR | PASS 1,802 (8 + 1,794) | PASS 1,824 (8 + 1,816), ECO 후 넷리스트 |
+| DRC / 연결성 (전 단계) | 0 / 0 | 0 / 0 |
+
+**최악 경로 변화 (V3 4 ns)**
+| 단계 | 최악 경로 | 비고 |
+|---|---|---|
+| 합성 | `r_pc_reg_8` → … → TX FIFO `r_mem_reg_8_7` | `u_add` 7셀 0.885 ns |
+| preCTS | `r_pc_reg_4` → ROM → CPU → **RAM(`uut3`) → 레지스터 파일 `r_regs_reg_9_25`** | `u_add` 없음, RAM 구간 0.984 ns. 상위 10개 중 7개 레지스터 파일 |
+| postCTS | `r_pc_reg_8` → … → `r_regs_reg_13_25` (−0.001) | 상위 10개 중 2개만 위반 |
+| Tempus 최종 | `r_pc_reg_8` → ROM → CPU 디코드 → **`u_add`(11셀 0.809 ns, 21.3%)** → 주소 디코드 → UART 레지스터 → RX FIFO `r_rptr_reg_3` | launch 0.356 / capture 0.369 ns. 상위 10개: FIFO 7, 레지스터 파일 3 |
+
+- 배치 직후 위반이 넓고 얕게(평균 약 −35 ps) 퍼졌다가 CTS(`ccopt_design`의 데이터 경로 최적화/useful skew, 추정)에서 거의 해소되고 배선 후 최적화로 닫혔다.
+- 배치 후 셀 면적이 넷리스트보다 약 8.8% 줄었다(V3 Density 54.669% × 51,689 ≈ 28,258 µm²). 원인 미확인.
+- hold: V3 최악은 `SPIMISO → uut6/uut3/r_miso_s1_reg`(FE_PHC 6개), V2 최악은 리셋 removal `clrn → uut5/uut2/r_wptr_reg_1/RN`(async_default, FE_PHC 8개).
+- 전력은 입력 활동 주기 8 ns 고정이지만 클럭은 4 ns로 토글하므로 10 ns 결과와 직접 비교하지 않는다 (같은 4 ns끼리만 비교).
+- Tempus와 Innovus 차이: V3 setup +0.009 vs +0.006 ns(3 ps, 원인 미확인), hold는 일치.
+- 4 ns 게이트 시뮬은 하지 않았다 (테스트벤치 `CLK_PERIOD=10`, `UART_BIT=640` 고정. STA와 EC로 확인).
+
+## 13-3. V2 4 ns 수동 ECO (closure)
+| 단계 | 내용 |
+|---|---|
+| 문제 | postRoute setup −0.001 ns, Tempus −0.000 ns(Required = Arrival 4.179 ns), Setup 3,015/3,016 Met. 2위 경로 +0.010 ns |
+| 분석 | 위반 경로 `r_pc_reg_5` → ROM(0.567) → CPU 디코드(0.706) → 주소 가산기(0.473) → **RAM 읽기(1.005, 26.5%)** → `w_ram_out` 선택 → 레지스터 파일 `uut1/r_regs_reg_12_15/D`. 데이터 경로 3.789 ns |
+| 선택 | 끝점 직전 셀 `u_mcu_top/uut1/g28776__4733` OAI2BB2XL(가장 약한 크기, 0.148 ns). 해당 FF만 구동해 다른 경로 영향이 작음 |
+| 수정 | `ecoChangeCell -cell OAI2BB2X1` → `refinePlace`(인접 INVX1 1개 0.20 µm 이동) → `ecoRoute` → `extractRC`. `optDesign` 미사용 |
+| 결과 | 셀 지연 0.148 → 0.125 ns(−23 ps), FF setup 요구 0.094 → 0.079 ns(−15 ps), 해당 경로 slack +0.037 ns. 최악 경로는 기존 2위 TX FIFO `r_mem_reg_8_5`(+0.010 ns)로 이동, 상위 5개(+0.010/+0.013/+0.022/+0.024/+0.032) 나머지 값 변화 없음 |
+| 검증 | Tempus Setup 3,016/3,016 Met, hold/removal +0.006 ns 변화 없음, DRC 0, 연결성 0, 필러 9,272(ECO 전과 같음), EC PASS 1,824. 셀 위치 (153.0, 163.4) µm |
+| 산출물 | `mcu_core_top_ECO.v` 685K, `.sdf` 4.0M, `.sdf_2.1` 3.9M, `.sdc` 5.2K, `.gds` 8.8M (ls -lh) |
+
 ## 14. 해석과 결론
 - **가설(더 빠른 클럭까지 닫힌다)은 지지되지 않았다.** 통과 최소 주기는 V2 3.9 ns, V3 3.97 ns로 V3가 약간 느리고, 같은 주기에서 면적은 V3가 크다(4 ns +7.7%, 3.9 ns +15.9%).
 - **이유: Genus가 RTL 가산기 구조를 유지하지 않고 타이밍 제약에 맞게 다시 만든다.** 10 ns에서는 Kogge-Stone로 짠 `u_add`가 면적을 줄이는 ripple 형태(경로상 43셀, 약 3.9 ns)로 합성되었고 PnR/Tempus 후에도 유지되었다(44셀, 3.98 ns). 빡빡한 주기에서는 얕은 구조(7~14셀, 약 0.8~0.9 ns)로 바뀌었다. V2의 `+`/`-`도 툴이 같은 방식으로 최적화하므로 RTL 수준의 구조 지정은 이점이 없었다. 3.75 ns에서 CPU 구간 지연은 V2 1,667 ps, V3 1,668 ps로 같았다.
 - **가설의 다른 부분(최악 경로 이동)은 관찰되었다.** V3 한계 주기(3.97 ns)에서 최악 경로가 `u_add`가 아닌 시프터(`sll`)를 지났다. 빡빡한 주기에서는 끝점이 TX FIFO 카운터에서 FIFO 메모리(`r_mem_reg`)로 옮겨갔다.
 - **10 ns PnR에서는 차이가 거의 없다.** setup −0.007 ns, hold −0.002 ns, 코어 면적 +1.0%. CTS 후 최적화 단계에서만 V3 setup 여유가 0.184 ns 작았고 배선 후 최적화에서 따라잡았다.
-- **전력 −9.2%는 실제 이득으로 해석하지 않는다.** 벡터 없이 입력 활동도 0.2를 전파한 정적 분석이라 논리 구조가 바뀌면 추정 활동도가 달라진다. 합성 단계에서도 V3가 4.4% 낮았다(같은 경향).
+- **전력 −9.2%는 실제 이득으로 해석하지 않는다.** 벡터 없이 입력 활동도 0.2를 전파한 정적 분석이라 논리 구조가 바뀌면 추정 활동도가 달라진다. 합성 단계에서도 V3가 4.4% 낮았다(같은 경향). 같은 4 ns PnR에서는 반대로 V3가 10.6% 높았다(셀이 7.7% 많음).
+- **4 ns PnR: 두 버전 모두 사인오프 기준으로 닫혔다.** V3는 기본 플로우로(+0.009 ns), V2는 기본 플로우에서 1 ps 미달 후 수동 ECO 셀 1개로(+0.010 ns). 차이가 1 ps 수준이라 버전 간 우열이 아니라 **둘 다 4 ns가 한계 근처**라고 해석한다. 같은 4 ns에서 V3는 면적 +7.7%, 코어 +7.7%, 전력 +10.6%로 가산기 변경의 비용만 남았다.
+- **4 ns 병목은 한 경로가 아니다.** RAM 읽기 → 레지스터 파일 계열과 ROM → CPU → 주소 디코드 → UART FIFO 계열이 경계에서 경쟁한다(배치 직후에는 전자, 최종에는 후자가 1위). 다음 개선 대상은 가산기가 아니라 이 경로들(CPU-RAM 배치 제약, RAM 출력 파이프라인 = 계획서 V4 성격)이다.
 
 ## 15. 한계 (문서에 그대로 기록)
 1. 합성 결과가 주기에 단조롭지 않아(V3 3.95 실패, 3.97 통과) 통과 최소 주기는 측정한 점 기준이다. 실패한 주기끼리의 면적 비교는 신뢰도가 낮다(예: 3.5 ns에서 RTL 미변경 RAM 면적 차이가 가장 큼).
-2. 통과 주기는 합성 기준이며 PnR은 10 ns에서만 했다.
+2. 합성 통과 주기(3.9/3.97 ns)는 합성 기준이다. PnR은 10 ns와 4 ns에서 했고, 4 ns는 두 버전 모두 사인오프 통과(V2는 수동 ECO 1회). PnR 기준 최소 주기를 더 좁히지는 않았다.
+10. 4 ns: 게이트 시뮬 미실시(STA+EC로 확인), V2 값은 캡처 기준(로그는 서버에만), V2는 ECO 적용으로 V3와 플로우가 1단계 다르다, 정적 전력의 클럭 주기가 10 ns와 달라 직접 비교 불가, Innovus 로그 Design Mode 표시가 90nm(ECO 세션)/65nm(Tempus)로 공정 설정 없음.
 3. V2 sweep 값은 서버 리포트 캡처 기준이다 (10 ns 재현 결과가 V2 원본과 완전히 같아 복사본 신뢰성은 확인).
 4. 전력은 정적 분석(활동 0.2, 8 ns 기준)이다.
 5. 테스트 프로그램에 `sub`가 없어 시뮬에서 `cin=1` 경로는 단독 랜덤 테스트로만 검증했다.
@@ -187,7 +259,9 @@ V3 값은 `V3/TOP/3_SYN/<주기>/report`에서 대조. V2 값은 서버 `~/sweep
 ## 17. 미해결 / 후속
 - V1 PPT 정정 항목 (V2 README 참고: 보레이트 카운터 → TX FIFO 카운터, SDC 서술 불일치, RCA 서술, 캡션 1.15 ns 불일치).
 - 공개 전 점검: 로그에 서버/계정 이름(`kopo-seongnam`, `/home/hah013`), 큰 산출물(GDS, SDF, `.dat`, sweep 백업), ARM/cmsdk 파일 제외.
-- 선택 실험(별도 버전으로만): 빡빡한 주기 PnR(V2와 V3 둘 다 필요), `interconnect_mode ple`, `setDesignMode -process`.
+- 선택 실험(별도 버전으로만): 이용률 sweep(`V3/PD_실험_계획.md` 2장, 폴더 이름 사용자 확인 필요), `interconnect_mode ple`, `setDesignMode -process`.
+- `V3/PD_실험_계획.md` 1장 체크리스트는 아직 갱신 안 함 (4 ns 폴더 이름도 실제는 `5_PNR/4ns`).
+- 저장소 흔적: `4_EC/POST/4ns/script.tcl`은 `script/` 하위가 아닌 폴더 바로 아래에 있고, 4 ns EC 로그는 저장소에 없다(결과는 캡처).
 
 ## 18. 사용자 선호 / 작업 방식 메모
 - **가이드 우선:** 사용자가 직접 수정한다. 지시 전에는 어떤 파일도 수정/생성하지 않고, 파일과 위치, 변경 내용만 안내한다. **시킨 것만 한다:** 요청한 파일과 범위 밖은 발견해도 고치지 않고 위치와 이유만 알린다 (루트 `CLAUDE.md`에도 동일).
