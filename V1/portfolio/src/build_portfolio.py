@@ -396,7 +396,7 @@ sec14 = f"""
 
 p12 = f"""
 <div class="page">
- <h3 style="margin-top:0">Function Simulation과 비교</h3>
+ <h3 style="margin-top:0">Simulation 비교</h3>
  <table style="font-size:9.2pt">
   <tr><th style="width:24%">항목</th><th style="width:17%">Function Simulation</th><th style="width:22%">Pre-layout Simulation</th><th>해석</th></tr>
   <tr><td>첫 UARTTXD 하강</td><td class="num">525 ns</td><td class="num">526.773 ns (+1.773)</td><td>플립플롭 CK→Q, 경로, 출력 패드 지연의 합이 반영됨</td></tr>
