@@ -219,7 +219,7 @@ p6 = f"""
  <div class="bar">2. Function Simulation</div>
  <p style="font-size:10pt">Self-checking 테스트벤치(<code>tb_mcu_top</code>)가 RAM 4곳, UARTTXD 프레임과 데이터, SPI 8클럭과 MOSI/MISO 바이트, 종료 pc를 기대값과 비교한다. APB 접근마다 stall 1클럭 뒤 penable 1클럭이 나오고 둘이 겹치지 않는지도 검사한다. 시뮬레이터는 xrun이다.</p>
  {fig("wave_full.png")}
- <p class="cap" style="margin:3pt 0 10pt">RTL 시뮬레이션 전체 파형. 8645 ns에 pc=0xAC로 종료하고 RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지며 err=0이다.</p>
+ <p class="cap" style="margin:3pt 0 10pt">Function Simulation 전체 파형. 8645 ns에 pc=0xAC로 종료하고 RAM[0..3]이 55, 65, 60, 165(0x37, 0x41, 0x3C, 0xA5)로 채워지며 err=0이다.</p>
  {fig("wave_uart.png")}
  <p class="cap" style="margin:3pt 0 10pt">UART 송신 확대. 루프백 모드에서 'A'(0x41)를 8N1로 송신한다. start bit(low) 뒤 LSB first로 1,0,0,0,0,0,1,0이 나가고 stop bit(high)로 끝난다. 비트당 640 ns다.</p>
  {fig("wave_spi.png")}
@@ -279,12 +279,12 @@ _sg = (lines("2_SIM/PRE/sdf_gate.log", 1, 12) +
 p11 = f"""
 <div class="page">
  <div class="bar">4. Pre-layout Simulation</div>
- <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 적용하고, Function Simulation과 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 RTL 시뮬레이션에서만 수행한다.</p>
+ <p style="font-size:10pt">합성 넷리스트(<code>mcu_pad_top_syn_final.v</code>)에 합성이 만든 SDF를 최대 지연(MAXIMUM) 기준으로 적용하고, Function Simulation과 같은 테스트벤치로 검증했다. RAM과 pc 같은 내부 신호는 칩 핀에서 보이지 않으므로 칩 핀에서 볼 수 있는 항목(UART 프레임, SPI 바이트)만 검사한다. 내부 신호 검사는 Function Simulation에서만 수행한다.</p>
  {fig("pre_X55.png")}
- <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 Function Simulation 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 RTL(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
+ <p class="cap" style="margin:3pt 0 9pt">Pre-layout 시뮬레이션 전체 파형(칩 핀 신호). UART 루프백 송신(0x41)과 SPI 전송(MOSI 0xA5, MISO 0x3C)이 Function Simulation 파형과 같은 순서로 나타나고 err=0이다. 첫 UARTTXD 하강은 Function Simulation(525 ns)보다 1.773 ns 늦은 526.773 ns다(Baseline 마커).</p>
  <div style="display:flex;gap:9pt">
-  <div style="flex:1;min-width:0">{fig("pre_X56.png")}<p class="cap" style="margin-top:3pt">UART 송신 확대. RTL과 같은 프레임(start 뒤 1,0,0,0,0,0,1,0, stop)이고 에지만 하강 +1.773 ns, 상승 +1.958 ns 늦다. 프레임 길이는 5760.185 ns다.</p></div>
-  <div style="flex:1;min-width:0">{fig("pre_X57.png")}<p class="cap" style="margin-top:3pt">SPI 전송 확대. 8번째 SCLK 상승에서 mosi_byte=0xA5, miso_byte=0x3C가 완성된다. SCLK 상승이 RTL보다 1.392 ns 늦고 7주기 간격은 1.12 µs로 같다.</p></div>
+  <div style="flex:1;min-width:0">{fig("pre_X56.png")}<p class="cap" style="margin-top:3pt">UART 송신 확대. Function Simulation과 같은 프레임(start 뒤 1,0,0,0,0,0,1,0, stop)이고 에지만 하강 +1.773 ns, 상승 +1.958 ns 늦다. 프레임 길이는 5760.185 ns다.</p></div>
+  <div style="flex:1;min-width:0">{fig("pre_X57.png")}<p class="cap" style="margin-top:3pt">SPI 전송 확대. 8번째 SCLK 상승에서 mosi_byte=0xA5, miso_byte=0x3C가 완성된다. SCLK 상승이 Function Simulation보다 1.392 ns 늦고 7주기 간격은 1.12 µs로 같다.</p></div>
  </div>
  <div style="display:flex;gap:9pt;margin-top:4pt">
   <div style="flex:1;min-width:0">{fbox(150, "2_SIM/PRE/pre_sim.log · 2364~2378행", lines("2_SIM/PRE/pre_sim.log", 2364, 2378))}
@@ -394,11 +394,28 @@ sec14 = f"""
 </div>
 """
 
+p12 = f"""
+<div class="page">
+ <h3 style="margin-top:0">Function Simulation과 비교</h3>
+ <table style="font-size:9.2pt">
+  <tr><th style="width:24%">항목</th><th style="width:17%">Function Simulation</th><th style="width:22%">Pre-layout Simulation</th><th>해석</th></tr>
+  <tr><td>첫 UARTTXD 하강</td><td class="num">525 ns</td><td class="num">526.773 ns (+1.773)</td><td>플립플롭 CK→Q, 경로, 출력 패드 지연의 합이 반영됨</td></tr>
+  <tr><td>UARTTXD 상승</td><td class="num">기준</td><td class="num">+1.958 ns</td><td>하강과 상승의 지연이 다름(셀의 rise/fall 지연 차이)</td></tr>
+  <tr><td>UART 프레임 구간 (start 하강 ~ stop 상승)</td><td class="num">5760 ns</td><td class="num">5760.185 ns</td><td>사실상 동일, 기능에는 영향 없음</td></tr>
+  <tr><td>첫 SCLK 상승</td><td class="num">기준</td><td class="num">+1.392 ns</td><td>같은 이유</td></tr>
+  <tr><td>SCLK 7주기 간격</td><td class="num">1.12 µs</td><td class="num">1.12 µs</td><td>SCLK 주기 160 ns 유지</td></tr>
+  <tr><td>결과 값 (UART, MOSI, MISO)</td><td class="num">0x41, 0xA5, 0x3C</td><td class="num">0x41, 0xA5, 0x3C</td><td>값과 순서가 같고 에지 시각만 이동</td></tr>
+ </table>
+ <ul style="font-size:10.3pt;margin:4pt 0 0;padding-left:15pt">
+  <li>두 시뮬레이션의 결과 데이터와 순서는 같고, 에지 시각만 1~2 ns 늦어진다. 이 차이는 합성 SDF에 반영된 셀과 출력 패드 지연이며, 기능에는 영향이 없다.</li>
+ </ul>
+</div>"""
+
 def one(html_text, name):
     r = render(doc(html_text + FIT), name)
     assert len(r.pages) == 1, f"{name} overflowed: {len(r.pages)}"
     return r
-SEC = {2: one(p2, "sec2"), 6: one(p6, "sec6"), 9: one(p9, "sec9"), 10: one(p10, "sec10"), 11: one(p11, "sec11"),
+SEC = {2: one(p2, "sec2"), 12: one(p12, "sec12"), 6: one(p6, "sec6"), 9: one(p9, "sec9"), 10: one(p10, "sec10"), 11: one(p11, "sec11"),
        19: one(p19, "sec19"), 20: one(p20, "sec20"),
        7: render(doc(sec7), "sec7", M), 8: render(doc(sec8), "sec8", M), 13: render(doc(sec13), "sec13", M), 14: render(doc(sec14 + FITW, "body{width:521.7pt}"), "sec14", M)}
 FE_SEQ = [2, 3, 4, 6, 7, 8, 9, 10, 11, 12]
@@ -412,7 +429,7 @@ imp_pg = start(BE_SEQ, 13) + find_page(WORK / "sec13.pdf", "2. Import 파일 정
 cover_fe = cover("Front-End", "Front-End",
     SPEC + [("Tool", "xrun · Genus"), ("Flow", "RTL → Function Simulation → Synthesis → Pre-layout Simulation")],
     [("10 ns", "최종 클럭 (100 MHz)"), ("+2.3 ps", "10 ns 합성 slack (TNS 0)"),
-     ("PASS", "Function Simulation (RTL)"), ("PASS", "Pre-layout Simulation")],
+     ("PASS", "Function Simulation"), ("PASS", "Pre-layout Simulation")],
     [("1. Design Logic Diagram", start(FE_SEQ, 2)), ("2. Function Simulation", start(FE_SEQ, 6)),
      ("3. Synthesis", start(FE_SEQ, 7)),
      ("4. Pre-layout Simulation", start(FE_SEQ, 11))],
@@ -517,7 +534,7 @@ add(15, white(35, 470, 263, 372) + white(299, 646, 262, 196) +
 # FE p4: RTL code excerpts are not in the guideline -> replaced by the embedded-program table (from old p5)
 add(4, white(36, 284, 523.5, 540) +
     f'<div class="ov" style="left:{L}pt;top:288pt;width:{Wd}pt">'
-    '<h3 style="margin-top:0">내장 프로그램 (RTL 시뮬레이션 실측)</h3>'
+    '<h3 style="margin-top:0">내장 프로그램 (Function Simulation 실측)</h3>'
     '<table style="font-size:9pt"><tr><th style="width:24%">단계</th><th style="width:20%">시각</th><th>일어난 일</th></tr>'
     '<tr><td>① 1~10 합계</td><td class="num">0 ~ 355 ns</td><td>add, addi, bne 루프 10바퀴, RAM[0]=0x37(55)</td></tr>'
     '<tr><td>② UART 설정, 송신 요청</td><td class="num">395 ~ 495 ns</td><td>UARTIBRD=4, UARTCR=0x381, UARTDR=0x41</td></tr>'
@@ -548,9 +565,30 @@ add(17, para(36.5, 78, 522.5, 29, "배선 완료 후(postRoute) <code>timeDesign
 add(17, para(44, 532, 513, 28, "preCTS 위반은 이상적 클럭(ideal clock) 기준의 값이며, CTS와 최적화를 거쳐 postRoute에서는 모든 경로가 타이밍을 만족한다.", 9.6, bg="#e3f2f0"))
 add(17, para(36.5, 618.5, 522.5, 15, "배선 후 설계를 Tempus로 STA했다. 분석 조건을 먼저 점검한 뒤 코너별 최악 경로를 추출했다."))
 add(18, para(36.5, 271.5, 522.5, 28, '<b style="color:#14202a">Hold 최악 경로</b> (Tempus, FUNC_FF_BEST): SPI 슬레이브 2-FF 동기화기의 <code>r_mosi_s_reg_0</code> → <code>r_mosi_s_reg_1</code> 직결 경로. Arrival 0.259 ns(CK→Q 0.057 + 클럭 지연 0.202), Required 0.206 ns, slack +0.053 ns (MET).', 8.6, CAP))
-add(18, para(40, 374.5, 150, 12.5, "Tempus STA", 10.3))
 
 add(17, para(36.5, 300, 258, 55, '<b style="color:#14202a">Setup</b> (postRoute, SS_WORST, 클럭 10 ns): WNS +0.441 ns, TNS 0, 위반 경로 0개. DRV는 Real 열 기준 max_cap, max_tran 위반 0이다.', 8.6, CAP))
+
+# BE 5: hold-WNS table redrawn so every row has the same style
+add(18, white(35, 304, 525, 88) +
+    f'<div class="ov" style="left:{L}pt;top:305pt;width:{Wd}pt"><table style="font-size:9.2pt;margin:0">'
+    '<tr><th style="width:38%">시점</th><th style="width:18%">도구</th><th style="width:24%">Hold WNS</th><th>위반 경로</th></tr>'
+    '<tr><td>postCTS 최적화 후</td><td>Innovus</td><td class="num">+0.052 ns</td><td class="num">0</td></tr>'
+    '<tr><td>postRoute</td><td>Innovus</td><td class="num">+0.053 ns</td><td class="num">0</td></tr>'
+    '<tr><td>Tempus STA</td><td>Tempus</td><td class="num">+0.053 ns</td><td class="num">0</td></tr></table></div>')
+# FE 1: address map drawn as a table instead of the low-res image
+add(4, white(35, 42, 262, 240) +
+    '<div class="ov" style="left:37.5pt;top:45pt;width:255.7pt">'
+    '<div style="font-weight:700;font-size:8.4pt;margin-bottom:3pt">주소 공간 (CPU <code>lw</code> / <code>sw</code>, 32비트)</div>'
+    '<table style="font-size:7.3pt;line-height:1.35;margin:0">'
+    '<tr><th>주소</th><th>대상</th><th>디코드</th></tr>'
+    '<tr style="background:#eef6e9"><td class="mono" style="background:none;padding:2pt 4pt">0x0000_0000~007F</td><td>데이터 RAM (32 word)</td><td><code>aluout[6:2]</code></td></tr>'
+    '<tr style="background:#fbecec"><td class="mono" style="background:none;padding:2pt 4pt">0x4000_0000~0FFF</td><td>APB 슬롯 0: UART</td><td><code>[15:12]=0</code></td></tr>'
+    '<tr style="background:#fbecec"><td class="mono" style="background:none;padding:2pt 4pt">0x4000_1000~1FFF</td><td>APB 슬롯 1: SPI Master</td><td><code>[15:12]=1</code></td></tr>'
+    '<tr style="background:#fbecec"><td class="mono" style="background:none;padding:2pt 4pt">0x4000_2000~2FFF</td><td>APB 슬롯 2: SPI Slave</td><td><code>[15:12]=2</code></td></tr>'
+    '<tr style="background:#f3f4f5"><td class="mono" style="background:none;padding:2pt 4pt">0x4000_3000~FFFF</td><td>슬레이브 없음</td><td>읽기 0, 쓰기 무시</td></tr>'
+    '<tr style="background:#f3f4f5"><td>그 밖의 주소</td><td>RAM으로 취급</td><td><code>aluout[6:2]</code>만 사용</td></tr>'
+    '</table>'
+    '<p class="cap" style="font-size:8.6pt;margin-top:5pt">주소 공간. 상위 16비트가 <code>0x4000</code>이면 APB 영역, 아니면 RAM이다. 주변장치 레지스터는 <code>PADDR = aluout[11:2]</code>로 고른다.</p></div>')
 
 order = sorted(OV)
 ov_html = "".join(f'<div class="page" style="background:transparent;padding:0">{OV[k]}</div>' for k in order)
