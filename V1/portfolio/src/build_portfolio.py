@@ -404,7 +404,7 @@ p12 = f"""
   <tr><td>UART 프레임 구간 (start 하강 ~ stop 상승)</td><td class="num">5760 ns</td><td class="num">5760.185 ns</td><td>사실상 동일, 기능에는 영향 없음</td></tr>
   <tr><td>첫 SCLK 상승</td><td class="num">기준</td><td class="num">+1.392 ns</td><td>같은 이유</td></tr>
   <tr><td>SCLK 7주기 간격</td><td class="num">1.12 µs</td><td class="num">1.12 µs</td><td>SCLK 주기 160 ns 유지</td></tr>
-  <tr><td>결과 값 (UART, MOSI, MISO)</td><td class="num">0x41, 0xA5, 0x3C</td><td class="num">0x41, 0xA5, 0x3C</td><td>값과 순서가 같고 에지 시각만 이동</td></tr>
+  <tr><td>결과 값 (UART, MOSI, MISO)</td><td class="num">0x41, 0xA5, 0x3C</td><td class="num">0x41, 0xA5, 0x3C</td><td>값과 순서는 같고 에지만 지연: UART 0x41은 +1.773 ns(하강) / +1.958 ns(상승), SPI 0xA5, 0x3C는 SCLK 기준 +1.392 ns</td></tr>
  </table>
  <ul style="font-size:10.3pt;margin:4pt 0 0;padding-left:15pt">
   <li>두 시뮬레이션의 결과 데이터와 순서는 같고, 에지 시각만 1~2 ns 늦어진다. 이 차이는 합성 SDF에 반영된 셀과 출력 패드 지연이며, 기능에는 영향이 없다.</li>
