@@ -6,7 +6,9 @@
 //             SPI  : APB slot 1, 0x4000_1000 ~ 0x4000_1FFF (spi_apb_top, master)
 //             SLV  : APB slot 2, 0x4000_2000 ~ 0x4000_2FFF (spi_slave_apb_top, slave)
 //           All three slaves share PCLK = clk, PRESETn = clrn, PENABLE, PWRITE,
-//           PADDR = aluout[11:2] and PWDATA; only PSEL and PRDATA are per slave.
+//           PADDR and PWDATA; only PSEL and PRDATA are per slave.
+//           [V4] PSEL, PWRITE, PADDR (= aluout[11:2]) and PWDATA are registered
+//           in the DECODE clock, so the slaves see register outputs only.
 //
 // Memory map:
 //   0x0000_0000 ~ 0x0000_007F : data RAM (any address outside the APB region)
@@ -16,7 +18,8 @@
 // Data paths:
 //   (1) fetch  : pc -> scinstmem -> inst -> sccpu
 //   (2) RAM    : sccpu -> aluout/data/wmem -> scdatamem -> ram_out -> memout
-//   (3) APB    : sccpu -> decoder (req) -> apb_bridge -> stall / penable
+//   (3) APB    : sccpu -> decoder (req) -> decode registers -> slaves
+//                apb_bridge -> stall / psel / penable (DECODE, SETUP, ACCESS)
 //   (4) read   : RAM data or APB read data -> memout -> sccpu
 //==============================================================================
 
@@ -78,12 +81,24 @@ wire    [31:0]      w_prdata_slv                        ;   // [SLV]  SPI slave 
 wire                w_wmem                              ;   // sccpu -> RAM / APB, store strobe
 wire                w_stall                             ;   // apb_bridge -> sccpu, hold the CPU
 wire                w_penable                           ;   // apb_bridge -> slaves, ACCESS phase
+wire                w_psel                              ;   // [V4] apb_bridge -> slaves, SETUP / ACCESS phase
+wire                w_capture                           ;   // [V4] apb_bridge -> decode registers, DECODE clock
 wire                w_is_lw                             ;   // current instruction is lw (opcode 0x23)
 wire                w_in_apb                            ;   // data address upper 16 bits == 0x4000
 wire                w_req                               ;   // lw/sw to the APB region in progress
 wire                w_psel_uart                         ;   // [UART] slot 0 select
 wire                w_psel_spi                          ;   // [SPI]  slot 1 select
 wire                w_psel_slv                          ;   // [SLV]  slot 2 select
+
+//------------------------------------------------------------------------------
+// [V4] Decode registers (loaded in the DECODE clock, held for SETUP / ACCESS)
+//------------------------------------------------------------------------------
+reg                 r_psel_uart                         ;   // [UART] registered slot 0 select
+reg                 r_psel_spi                          ;   // [SPI]  registered slot 1 select
+reg                 r_psel_slv                          ;   // [SLV]  registered slot 2 select
+reg                 r_pwrite                            ;   // registered PWRITE (w_wmem)
+reg     [9:0]       r_paddr                             ;   // registered PADDR (aluout[11:2])
+reg     [31:0]      r_pwdata                            ;   // registered PWDATA (w_data)
 
 //------------------------------------------------------------------------------
 // Address decoder
@@ -132,28 +147,53 @@ scdatamem   uut3    (
 );
 
 //------------------------------------------------------------------------------
-// apb_bridge : makes the SETUP / ACCESS timing and stalls the CPU
+// apb_bridge : makes the DECODE / SETUP / ACCESS timing and stalls the CPU
 //------------------------------------------------------------------------------
 apb_bridge  uut4    (
                 .clk            (clk         )   ,
                 .nRst           (clrn        )   ,
                 .i_req          (w_req       )   ,
-                .o_psel         (            )   ,
+                .o_psel         (w_psel      )   ,
                 .o_penable      (w_penable   )   ,
-                .o_stall        (w_stall     )
+                .o_stall        (w_stall     )   ,
+                .o_capture      (w_capture   )
 );
 
 //------------------------------------------------------------------------------
-// uart_ex_top : [UART] APB slave, slot 0 (PADDR is the word address [11:2])
+// [V4] Decode registers
+//   Loaded in the DECODE clock (w_capture). The CPU is stalled during DECODE
+//   and SETUP, so aluout / w_data / w_wmem do not change until ACCESS ends.
+//------------------------------------------------------------------------------
+always @(posedge clk or negedge clrn) begin
+    if (!clrn)  begin
+        r_psel_uart <=  1'b0            ;
+        r_psel_spi  <=  1'b0            ;
+        r_psel_slv  <=  1'b0            ;
+        r_pwrite    <=  1'b0            ;
+        r_paddr     <=  10'd0           ;
+        r_pwdata    <=  32'd0           ;
+    end
+    else if (w_capture) begin
+        r_psel_uart <=  w_psel_uart     ;
+        r_psel_spi  <=  w_psel_spi      ;
+        r_psel_slv  <=  w_psel_slv      ;
+        r_pwrite    <=  w_wmem          ;
+        r_paddr     <=  aluout[11:2]    ;
+        r_pwdata    <=  w_data          ;
+    end
+end
+
+//------------------------------------------------------------------------------
+// uart_ex_top : [UART] APB slave, slot 0 (PADDR is the registered word address [11:2])
 //------------------------------------------------------------------------------
 uart_ex_top uut5    (
                 .PCLK           (clk            )   ,
                 .PRESETn        (clrn           )   ,
-                .PSEL           (w_psel_uart    )   ,
+                .PSEL           (r_psel_uart & w_psel)   ,
                 .PENABLE        (w_penable      )   ,
-                .PWRITE         (w_wmem         )   ,
-                .PADDR          (aluout[11:2]   )   ,
-                .PWDATA         (w_data         )   ,
+                .PWRITE         (r_pwrite       )   ,
+                .PADDR          (r_paddr        )   ,
+                .PWDATA         (r_pwdata       )   ,
                 .PRDATA         (w_prdata       )   ,
                 .PREADY         (               )   ,
                 .PSLVERR        (               )   ,
@@ -167,16 +207,16 @@ uart_ex_top uut5    (
 );
 
 //------------------------------------------------------------------------------
-// spi_apb_top : [SPI] APB slave, slot 1 (PADDR is the word address [11:2])
+// spi_apb_top : [SPI] APB slave, slot 1 (PADDR is the registered word address [11:2])
 //------------------------------------------------------------------------------
 spi_apb_top uut6    (
                 .PCLK           (clk            )   ,
                 .PRESETn        (clrn           )   ,
-                .PSEL           (w_psel_spi     )   ,
+                .PSEL           (r_psel_spi & w_psel)   ,
                 .PENABLE        (w_penable      )   ,
-                .PWRITE         (w_wmem         )   ,
-                .PADDR          (aluout[11:2]   )   ,
-                .PWDATA         (w_data         )   ,
+                .PWRITE         (r_pwrite       )   ,
+                .PADDR          (r_paddr        )   ,
+                .PWDATA         (r_pwdata       )   ,
                 .PRDATA         (w_prdata_spi   )   ,
                 .SPISCLK        (SPISCLK        )   ,
                 .SPIMOSI        (SPIMOSI        )   ,
@@ -186,18 +226,18 @@ spi_apb_top uut6    (
 );
 
 //------------------------------------------------------------------------------
-// spi_slave_apb_top : [SLV] APB slave, slot 2 (PADDR is the word address [11:2])
+// spi_slave_apb_top : [SLV] APB slave, slot 2 (PADDR is the registered word address [11:2])
 //   Needs its own pins: connect SLVSCLK / SLVMOSI / SLVCSN to a master and
 //   SLVMISO back to it (outside this chip, or to the master pins on the board).
 //------------------------------------------------------------------------------
 spi_slave_apb_top uut7 (
                 .PCLK           (clk            )   ,
                 .PRESETn        (clrn           )   ,
-                .PSEL           (w_psel_slv     )   ,
+                .PSEL           (r_psel_slv & w_psel)   ,
                 .PENABLE        (w_penable      )   ,
-                .PWRITE         (w_wmem         )   ,
-                .PADDR          (aluout[11:2]   )   ,
-                .PWDATA         (w_data         )   ,
+                .PWRITE         (r_pwrite       )   ,
+                .PADDR          (r_paddr        )   ,
+                .PWDATA         (r_pwdata       )   ,
                 .PRDATA         (w_prdata_slv   )   ,
                 .SLVSCLK        (SLVSCLK        )   ,
                 .SLVMOSI        (SLVMOSI        )   ,
@@ -209,9 +249,10 @@ spi_slave_apb_top uut7 (
 //------------------------------------------------------------------------------
 // Read data mux
 //   RAM address     : scdatamem output
-//   APB address     : read data of the selected slave (slot 0 / 1 / 2)
+//   APB address     : read data of the selected slave (slot 0 / 1 / 2),
+//                     chosen by the registered select [V4]
 //   APB, no slave   : 0
 //------------------------------------------------------------------------------
-assign  memout = w_in_apb ? (w_psel_uart ? w_prdata : w_psel_spi ? w_prdata_spi : w_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;
+assign  memout = w_in_apb ? (r_psel_uart ? w_prdata : r_psel_spi ? w_prdata_spi : r_psel_slv ? w_prdata_slv : 32'd0) : w_ram_out ;
 
 endmodule
