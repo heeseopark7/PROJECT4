@@ -17,7 +17,7 @@
 | `V1` | 패드 포함 완성본 | 완료 | `v1-pad` |
 | `V2` | 패드 없는 코어 단독 기준선 | 완료 | `v2-core` |
 | `V3` | 가산기 구조 교체(Kogge-Stone) + 4 ns PnR closure | 완료 | `v3` (사용자 로컬) |
-| **`V4`** | **주소 디코드 레지스터화 (V3 기반)** | **진행 중 (RTL, 기능 시뮬 완료)** | `v4` |
+| **`V4`** | **주소 디코드 레지스터화 (V3 기반)** | **진행 중 (RTL, 기능 시뮬, 합성 10 ns, EC 완료)** | `v4` |
 | `V5`, `V6` | 전력/면적 축(이용률 sweep 등), SPI FIFO | 선택/후순위 | |
 
 ## 3. V4 범위, 가설, 기준
@@ -91,12 +91,12 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 
 ## 9. 작업 순서와 체크리스트
 - [x] 0. 루트 `CLAUDE.md`의 "현재 작업"을 V4로 변경
-- [ ] 1. `V4/TOP` 폴더 세팅 (8장 기준, 사용자): `1_RTL`, `2_SIM` 완료. `3_SYN`, `4_EC`, `5_PNR`은 저장소에 아직 없음
+- [ ] 1. `V4/TOP` 폴더 세팅 (8장 기준, 사용자): `1_RTL`, `2_SIM`, `3_SYN`, `4_EC` 완료. `5_PNR`, `4_EC/POST`는 저장소에 아직 없음
 - [x] 2. RTL 수정: `apb_bridge.v`, `mcu_top.v`
 - [x] 3. 테스트벤치 체크 조정 (6장)
 - [x] 4. iverilog 회귀: PASS, RAM/pc/UART/SPI 값 동일, APB 166, 총 클럭 856
 - [x] 5. xrun 기능 시뮬 PASS, 캡처 6장 (전체, APB 3클럭, 폴링 루프, UART, SPI, 콘솔)
-- [ ] 6. 합성 10 ns, EC(RTL ↔ 합성), 짧은 sweep (V3와 같은 주기 우선)
+- [ ] 6. 합성 10 ns, EC(RTL ↔ 합성), 짧은 sweep (V3와 같은 주기 우선): **10 ns 합성, EC 완료.** sweep 남음
 - [ ] 7. pre-layout 시뮬 (10 ns 합성 결과로 `mapped/` 복원 확인)
 - [ ] 8. PnR 10 ns (0~5), Tempus, EC(합성 ↔ PnR), post-layout 시뮬 worst/best
 - [ ] 9. (선택) 빠른 주기 PnR
@@ -109,7 +109,8 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 | RTL 회귀 | (이 환경) | `iverilog -g2012 -o tb.vvp -s tb_mcu_top $(ls 1_RTL/*.v) 2_SIM/4_TESTBENCH/tb_mcu_top.v && vvp tb.vvp` (총 클럭 측정 시 `-Dfunction_sim`은 `$shm_*` 때문에 iverilog에서 안 됨, 별도 출력 추가로 측정) |
 | 기능 시뮬 | `2_SIM/1_FUNCTION` | `./run_function.tcl` |
 | 합성 | `3_SYN` | `./run_synthesis` → 끝나면 바로 `<주기>/`에 `report mapped log fv` 백업 (예: `10ns/`, `3p75ns/`) |
-| EC | `4_EC` | `mkdir -p log`, `lec`, `dofile ./script/script.tcl` |
+| EC 1단계 (RTL ↔ Genus 중간 넷리스트) | `3_SYN` | `lec -xl -nogui -dofile fv/mcu_core_top/rtl_to_fv_map.do` (Genus가 합성 때 만드는 dofile, 경로가 `3_SYN` 기준이라 반드시 `3_SYN`에서 실행). 로그 `fv/mcu_core_top/rtl_to_fv_map.log` |
+| EC 2단계 (Genus 중간 넷리스트 ↔ 최종 넷리스트) | `4_EC` | `mkdir -p log`, `lec`, `dofile ./script/script.tcl` (V4에서 Golden을 `fv_map.v.gz`로 바꿈, 13장) |
 | pre-layout | `2_SIM/2_PRE` | `mkdir -p dump`, `./run_pre.tcl` |
 | PnR | `5_PNR` | `mkdir -p reports/clock reports/timing snap`, `innovus -files 0_InitDesign.tcl` 후 같은 세션에서 `source 1_...` ~ `5_ChipFinish.tcl` |
 | EC (합성 ↔ PnR) | `4_EC/POST` | `mkdir -p log`, `lec`, `dofile ./script/script.tcl` |
@@ -137,9 +138,11 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 - [x] **CLAUDE.md 갱신:** 현재 작업을 V4로 변경 (V3 완료, V4 진행 중, 수정 금지 대상에 V3 추가).
 - [x] **RTL 수정** (`1_RTL`, 나머지 20개 파일은 V3와 동일):
   - `apb_bridge.v`: FF 1개(`r_access`) → 2비트 `r_state` (S_IDLE=0/DECODE, S_SETUP=1, S_ACCESS=2, ACCESS 다음은 무조건 IDLE). `o_capture = i_req & (state==IDLE)` 포트 추가, `o_psel = SETUP|ACCESS`, `o_penable = ACCESS`(둘 다 FF 출력, `i_req` 무관), `o_stall = i_req & (state != ACCESS)`.
-  - `mcu_top.v`: 디코드 레지스터 `r_psel_uart/spi/slv`, `r_pwrite`, `r_paddr[9:0]`, `r_pwdata[31:0]`(47비트)를 `w_capture`에 저장. 슬레이브 3개의 PSEL = `r_psel_* & w_psel`, PWRITE/PADDR/PWDATA = 레지스터 출력. `memout`의 APB 쪽 선택을 `r_psel_*`로. 조합 디코드(`w_in_apb`, `w_req`, `w_psel_*`)와 RAM 쓰기 enable은 그대로. `uut4.o_psel`을 `w_psel`에 연결.
+  - `mcu_top.v`: 디코드 레지스터 `r_psel_uart/spi/slv`, `r_pwrite`, `r_paddr[9:0]`, `r_pwdata[15:0]`(30비트)를 `w_capture`에 저장. 슬레이브 3개의 PSEL = `r_psel_* & w_psel`, PWRITE/PADDR/PWDATA = 레지스터 출력. `memout`의 APB 쪽 선택을 `r_psel_*`로. 조합 디코드(`w_in_apb`, `w_req`, `w_psel_*`)와 RAM 쓰기 enable은 그대로. `uut4.o_psel`을 `w_psel`에 연결.
   - 슬레이브는 모두 `psel & penable`(ACCESS)에서만 읽기/쓰기를 하므로(`reg_block.v` 129~130, `spi_regs.v` 99, `spis_regs.v` 96) 수정 불필요.
-  - 예상 FF 증가: 상태 +1, 디코드 레지스터 +47 → 최대 +48 (계산값). PWDATA 중 슬레이브가 안 쓰는 비트는 합성에서 제거될 수 있어 실제 FF 수는 합성 결과로 확인.
+  - `r_pwdata`는 처음에 32비트로 만들었으나, 첫 합성 check_design에서 `r_pwdata[31:16]`이 출력을 받는 곳이 없다는 경고(Unloaded Sequential Pin 16)가 나왔다. 슬레이브가 쓰는 PWDATA 최대 폭이 UART IBRD [15:0](`reg_block.v` 181번 줄)이라서다. 16비트로 줄이고 슬레이브에는 `{16'd0, r_pwdata}`로 연결했다(커밋 5dcc986). 재시뮬 결과 동일(PASS, APB 166, 856클럭, 8,785 ns), 재합성 넷리스트도 셀 수/면적/경로가 이전과 같다(그 16개 FF는 이전에도 합성에서 지워졌음).
+  - 예상 FF 증가: 상태 +1, 디코드 레지스터 +30 → 최대 +31 (계산값). 실제 +29 (아래 합성 항목, 차이 2개는 EC 항목에서 원인 확인).
+  - 이후 사용자가 `uut5` 연결부 정렬만 탭으로 바꿈 (커밋 ebc7f7c, 기능 변경 없음).
   - RTL 코드 캡처 5장 (`apb_bridge` 상태 머신, 조합 디코드, 디코드 레지스터, UART 슬레이브 연결, `memout` mux).
 - [x] **테스트벤치 조정:** 6장. iverilog와 xrun 결과 동일.
 - [x] **기능 시뮬 (xrun) PASS:** RAM[0~3] = 0x37/0x41/0x3C/0xA5, 최종 pc 0xAC, `stall = 2 x penable` ok, **APB 접근 166, 총 클럭 856**, UARTTXD 0x41 1프레임, SCLK 8, MOSI 0xA5, MISO 0x3C, **8,785 ns 종료** (V3 8,645 ns).
@@ -148,12 +151,31 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
   - UART: start bit 575 ns(V3 525 ns), stop bit 시작 6,335 ns, 비트당 640 ns, tx_byte 0x41, r_ram[1]=65.
   - SPI: 첫 SCLK 상승 7,105 ns, 8번째 8,225 ns(V3 8,135 ns), 1,120 ns = 7 × 160 ns. MOSI 0xA5, MISO 0x3C, r_ram[2]=60, r_ram[3]=165.
   - 해석: 3장 "사이클 증가 측정 결과".
+- [x] **합성 10 ns** (`r_pwdata` 16비트 기준, `3_SYN/report`, 로그와 대조): slack **+2.1 ps**, TNS 0, 위반 0. 인스턴스 5,252(V3 5,243), **FF 1,845(V3 1,816, +29)**, 조합 3,407(V3 3,427), 계층 25. 셀 면적 **22,097.646 µm²(V3 22,019.670, +77.976, +0.35%)**. 런타임 3분 31초(CPU).
+  - check_design: Unresolved 0, Empty 0, Unloaded Port 0, **Unloaded Sequential Pin 0**, Unloaded Combinational Pin 4(V3와 같음), Assigns 98, Constant Leaf Pin 7, Constant hierarchical Pin **1,923**(V3 1,869, +54: 슬레이브 3개 × PWDATA 상위 16비트 상수 = 48, 나머지 6 원인 미확인).
+  - 계층별 면적: `mcu_top` 자체(하위 제외, 계산값) 123.120 → 412.794 µm²(63 → 127셀), `apb_bridge` 11.628 → 23.256(3 → 10셀). RTL 미변경인 `sccpu` 4,404.276 → 4,254.480(`u_add` 386.118 → 353.628), `scinstmem` 376.542 → 323.874로 감소 (10 ns에서 앞쪽 로직이 더 작은 셀로 매핑된 것으로 추정).
+  - 셀 종류: sequential 14,461.470 → 14,673.510 µm²(+212.040), logic 7,426.872 → 7,317.432(−109.440), buffer 7 → 0. ADDFX1 7 → 6, ADDHX1 80 → 78. 합성 전력 0.6157 mW(V3 0.6153, 참고용).
+  - **최악 경로: `uut1/r_pc_reg_3` → ROM(`uut2`, 1,250 ps) → CPU 디코드(1,135) → `u_add`(`w_bx[0]` → `w_sum[31]`, 41셀, 4,687) → `mcu_top` 주소 비교 `w_in_apb`(OR4X1 `g1076`, OR4X6 팬아웃 35, INVX1, 872) → `memout` mux(AND2X1, AOI222X1, OAI2BB1X1, 745, 추정) → 레지스터 파일 쓰기 선택(AO22X1, MX2X1, 560) → `uut1/r_regs_reg_13_7`**, 데이터 경로 9,788 ps(V3 9,789). V3의 끝점(UART TX FIFO `r_count_reg_4`)에서 레지스터 파일로 바뀜. Timing Debug 상위 7개 경로도 모두 `r_regs_reg_13_*`, `14_7` 끝점, slack +2 ps(V3 상위 경로는 UART/SPI 끝점).
+  - 해석: 가산기 뒤 구간이 V3 약 2.92 ns(디코드 → UART → FIFO)에서 약 2.35 ns로 짧아졌지만, 10 ns에서는 툴이 남는 시간을 면적 절약에 써서 `u_add`가 약 3.9 → 4.69 ns로 길어지고 총 지연은 같다(추정). 실제 속도 비교는 sweep 최소 주기로 한다. 남은 최악 경로는 RAM 1클럭 접근을 위해 조합으로 남긴 `w_in_apb` 선택이다 (5장 예상과 같음).
+  - 캡처: 스키매틱(최상위, Timing Debug, 경로 전체, 확대 2장), 스크립트, SDC, check_design, 완료 로그, QoR, 경로 리포트 2장, 계층 면적, 셀 종류, 계층, 전력, ADD 셀. 캡처 문서 `3_SYN_V4.docx`(사용자 로컬).
+- [x] **EC (RTL ↔ 합성) PASS (2단계)**
+  - **V3와 같은 스크립트(RTL ↔ 최종 넷리스트)는 FAIL:** Equivalent 1,787(PO 8 + DFF 1,779), **Non-equivalent 66**, Golden 2,639 중 Unreachable 760, **Not-mapped 34**(V3 32).
+    - Not-mapped 34 = `r_regs_reg[15][31:0]`(V3와 같은 32개, 미사용 레지스터) + **`r_regs_reg[11][9]`, `[11][8]`**(t3 비트 9, 8).
+    - Genus가 ROM 프로그램상 t3에 8비트 값만 쓰여 이 두 비트가 리셋 후 항상 0임을 찾아 상수로 대체했다(Genus 로그 GLO-12, 상수 0 대체 FF가 V3 256 → V4 258). FF가 +31이 아니라 +29인 이유도 이것이다.
+    - LEC 기본 설정은 RTL 쪽 t3[9:8]을 임의 값으로 취급해, 이 값을 저장 데이터로 받는 `r_pwdata_reg[9:8]`(2) + `r_ram_reg[0..31][9:8]`(64) = 66개를 Non-equivalent로 판정했다. 설계 차이가 아니라 검증 설정의 한계다.
+    - `set flatten model -seq_constant`(-seq_constant_x_to 0)만 추가해서는 결과가 같았다 (ROM 내용에 의존하는 상수는 찾지 못함). 최종 넷리스트 비교에 `read implementation information`을 추가해도 FAIL 그대로였다.
+  - **해결: Genus 권장 2단계 EC.**
+    - 1단계 RTL ↔ Genus 중간 넷리스트(`fv_map.v.gz`): Genus가 만든 `3_SYN/fv/mcu_core_top/rtl_to_fv_map.do`를 `3_SYN`에서 실행. 구현 정보의 순차 상수 258개를 읽어 RTL FF 258개를 상수로 변환("Converted 258 DFF/DLAT(s) in (G) to ZERO/ONE"), Not-mapped 0, 최상위 비교점 1,367개(DFF 1,350, PO 8, BBOX 9) Equivalent, **PASS**. 정보 불일치 0, diff/abort/unknown 0. 모듈 단위 비교 중 `sccpu`, `sclk_gen`의 NEQ는 경계 상수 맥락이 없어서 생긴 것으로, 상위에서 dynamic flattening으로 재비교해 Equivalent.
+    - 2단계 Genus 중간 넷리스트 ↔ 최종 넷리스트(`mapped/mcu_core_top_syn_final.v`): `4_EC/script/script.tcl`의 Golden을 `../3_SYN/fv/mcu_core_top/fv_map.v.gz`로 바꿔 실행. **비교점 1,853개(PO 8 + DFF 1,845) 모두 Equivalent, PASS**, Incomplete verification 0, User modification 0, Duplicate module definition 1(V3와 같음).
+  - **스크립트 변경 기록 (실험 원칙상 EC 방법 변경):** `4_EC/script/script.tcl`은 RTL `read design` 블록을 `//`로 막고 Golden을 `fv_map.v.gz`로 바꿨다. `set flatten model -seq_constant`, `-seq_constant_x_to 0` 두 줄과 주석 처리된 `read implementation information` 줄이 남아 있다(2단계 결과에는 영향 없음, 추정). V3 스크립트는 수정하지 않았다. PnR 후 EC(`4_EC/POST`, Golden이 합성 넷리스트)는 이 문제와 무관하므로 V3 방식 그대로 쓸 수 있을 것으로 본다(추정).
+  - 캡처: 2단계 compare, report verification 2장만 사용(사용자 결정, PI 포트폴리오 범위 밖). 1단계는 로그로 근거를 남긴다.
 
 ## 14. 비교표 (V3 vs V4)
 | 지표 | V3 | V4 | 차이 |
 |---|---|---|---|
 | 총 실행 클럭 (APB 접근) | 842 (204) | 856 (166) | +14 (+1.7%) |
-| 합성 10 ns slack / 셀 면적 / FF | +1.8 ps / 22,019.670 / 1,816 | | |
+| 합성 10 ns slack / 셀 면적 / FF | +1.8 ps / 22,019.670 / 1,816 | +2.1 ps / 22,097.646 / 1,845 | 면적 +0.35%, FF +29 |
+| 합성 10 ns 최악 경로 끝점 / 데이터 경로 | TX FIFO `r_count_reg_4` / 9,789 ps | 레지스터 파일 `r_regs_reg_13_7` / 9,788 ps | 끝점 이동, 지연 같음 |
 | 합성 통과 최소 주기 | 3.97 ns | | |
 | 실행 시간 (클럭 × 최소 주기) | 약 3,343 ns | | |
 | 10 ns postRoute setup / hold | +0.341 / +0.009 ns | | |
@@ -161,7 +183,7 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 | 클럭 버퍼 / sink / skew | 141 / 1,816 / 0.084, 0.029 ns | | |
 | 정적 전력 (10 ns, 8 ns 기준) | 0.694 mW | | |
 | DRC / 연결성 | 0 / 0 | | |
-| EC (RTL↔합성, 합성↔PnR) | PASS / PASS | | |
+| EC (RTL↔합성, 합성↔PnR) | PASS / PASS | PASS (2단계) / - | 방식 변경 (13장) |
 | RTL / pre / post 시뮬 | PASS | PASS / - / - | |
 
 ## 15. 사용자 선호 / 작업 방식
