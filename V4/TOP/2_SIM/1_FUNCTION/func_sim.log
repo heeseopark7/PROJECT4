@@ -1,5 +1,5 @@
 xrun(64): 22.03-s012: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	22.03-s012: Started on Nov 26, 2026 at 21:41:45 KST
+TOOL:	xrun(64)	22.03-s012: Started on Nov 27, 2026 at 03:24:50 KST
 xrun
 	-64bit
 	+max_err_count+50
@@ -1183,10 +1183,10 @@ xmvlog: *W,SPDUSD: Include directory ../4_TESTBENCH given but not used.
 			streams:  12, words:  2046
 		worklib.sccpu:v <0x07b8e6b9>
 			streams:  24, words: 12806
-		worklib.tb_mcu_top:v <0x50699a10>
+		worklib.tb_mcu_top:v <0x2da82289>
 			streams:  26, words: 20309
-		worklib.mcu_top:v <0x5c5cfc2a>
-			streams:  15, words:  5893
+		worklib.mcu_top:v <0x3e8e44f8>
+			streams:  15, words:  5915
 		worklib.scdatamem:v <0x6c232533>
 			streams:   4, words:  1823
 	Building instance specific data structures.
@@ -1212,10 +1212,8 @@ xcelium>
 xcelium> source /tools/cadence/XCELIUM2203/tools/xcelium/files/xmsimrc
 xcelium> database -open waves -into waves.shm -default
 Created default SHM database waves
-xcelium> probe -create -shm tb_mcu_top.clk tb_mcu_top.clrn tb_mcu_top.pc tb_mcu_top.inst tb_mcu_top.aluout tb_mcu_top.err
+xcelium> probe -create -shm tb_mcu_top.clk tb_mcu_top.pc tb_mcu_top.aluout tb_mcu_top.u_mcu_top.w_req tb_mcu_top.u_mcu_top.w_psel_uart tb_mcu_top.u_mcu_top.uut4.r_state tb_mcu_top.u_mcu_top.w_capture tb_mcu_top.u_mcu_top.w_stall tb_mcu_top.u_mcu_top.w_psel tb_mcu_top.u_mcu_top.w_penable tb_mcu_top.u_mcu_top.r_psel_uart tb_mcu_top.u_mcu_top.r_paddr tb_mcu_top.u_mcu_top.r_pwdata tb_mcu_top.u_mcu_top.r_pwrite
 Created probe 1
-xcelium> probe -create -shm tb_mcu_top.u_mcu_top.uut3.r_ram[0] tb_mcu_top.u_mcu_top.uut3.r_ram[1] tb_mcu_top.u_mcu_top.uut3.r_ram[2] tb_mcu_top.u_mcu_top.uut3.r_ram[3]
-Created probe 2
 xcelium> run
 INFO : RTL simulation (mcu_top)
 ok   : RAM[0] (sum) = 00000037
@@ -1236,4 +1234,4 @@ Simulation complete via $finish(1) at time 8785 NS + 0
 ../4_TESTBENCH/tb_mcu_top.v:238     $finish;
 xcelium> ^C
 xcelium> exit
-TOOL:	xrun(64)	22.03-s012: Exiting on Nov 26, 2026 at 22:37:12 KST  (total: 00:55:27)
+TOOL:	xrun(64)	22.03-s012: Exiting on Nov 27, 2026 at 03:42:50 KST  (total: 00:18:00)

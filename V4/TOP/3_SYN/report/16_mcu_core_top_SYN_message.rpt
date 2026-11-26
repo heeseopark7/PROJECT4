@@ -22,7 +22,7 @@
 |          |       |     |To prevent this optimization, set the 'optimize_constant_0_flops' root attribute to 'false' or        |
 |          |       |     | 'optimize_constant_0_seq' instance attribute to 'false'. You can also see the complete list of       |
 |          |       |     | deleted sequential with command 'report sequential -deleted' (on Reason 'constant0').                |
-|GLO-34    |Info   |    7|Deleting instances not driving any primary outputs.                                                   |
+|GLO-34    |Info   |    6|Deleting instances not driving any primary outputs.                                                   |
 |          |       |     |Optimizations such as constant propagation or redundancy removal could change the connections so a    |
 |          |       |     | hierarchical instance does not drive any primary outputs anymore. To see the list of deleted         |
 |          |       |     | hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is       |

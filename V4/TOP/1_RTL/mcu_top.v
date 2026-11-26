@@ -189,23 +189,23 @@ end
 // uart_ex_top : [UART] APB slave, slot 0 (PADDR is the registered word address [11:2])
 //------------------------------------------------------------------------------
 uart_ex_top uut5    (
-                .PCLK           (clk            )   ,
-                .PRESETn        (clrn           )   ,
-                .PSEL           (r_psel_uart & w_psel)   ,
-                .PENABLE        (w_penable      )   ,
-                .PWRITE         (r_pwrite       )   ,
-                .PADDR          (r_paddr        )   ,
-                .PWDATA         ({16'd0, r_pwdata})   ,
-                .PRDATA         (w_prdata       )   ,
-                .PREADY         (               )   ,
-                .PSLVERR        (               )   ,
-                .UARTRXD        (UARTRXD        )   ,
-                .UARTTXD        (UARTTXD        )   ,
-                .UARTRXINTR     (               )   ,
-                .UARTTXINTR     (               )   ,
-                .UARTRTINTR     (               )   ,
-                .UARTEINTR      (               )   ,
-                .UARTINTR       (UARTINTR       )
+                .PCLK           (clk       	     	)   ,
+                .PRESETn        (clrn          	     	)   ,
+                .PSEL           (r_psel_uart & w_psel	)   ,
+                .PENABLE        (w_penable      	)   ,
+                .PWRITE         (r_pwrite       	)   ,
+                .PADDR          (r_paddr       		)   ,
+                .PWDATA         ({16'd0, r_pwdata}	)   ,
+                .PRDATA         (w_prdata       	)   ,
+                .PREADY         (               	)   ,
+                .PSLVERR        (               	)   ,
+                .UARTRXD        (UARTRXD        	)   ,
+                .UARTTXD        (UARTTXD        	)   ,
+                .UARTRXINTR     (               	)   ,
+                .UARTTXINTR     (               	)   ,
+                .UARTRTINTR     (               	)   ,
+                .UARTEINTR      (               	)   ,
+                .UARTINTR       (UARTINTR       	)
 );
 
 //------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 (DELAYFILE
   (SDFVERSION  "OVI 3.0")
   (DESIGN      "mcu_core_top")
-  (DATE        "Fri Nov 27 01:03:20 KST 2026")
+  (DATE        "Fri Nov 27 03:27:44 KST 2026")
   (VENDOR      "Cadence, Inc.")
   (PROGRAM     "Genus(TM) Synthesis Solution")
   (VERSION     "22.17-s071_1")
@@ -86301,7 +86301,7 @@
   )
   (CELL
      (CELLTYPE "AOI2BB1X1")
-     (INSTANCE u_mcu_top.g1086)
+     (INSTANCE u_mcu_top.g1070)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86315,7 +86315,7 @@
   )
   (CELL
      (CELLTYPE "OR4X6")
-     (INSTANCE u_mcu_top.g1087)
+     (INSTANCE u_mcu_top.g1071)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86331,7 +86331,7 @@
   )
   (CELL
      (CELLTYPE "OR2X1")
-     (INSTANCE u_mcu_top.g1088)
+     (INSTANCE u_mcu_top.g1072)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86343,7 +86343,7 @@
   )
   (CELL
      (CELLTYPE "NAND3BX1")
-     (INSTANCE u_mcu_top.g1089)
+     (INSTANCE u_mcu_top.g1073)
      (DELAY
         (ABSOLUTE
           (PORT AN (::0.000))
@@ -86357,7 +86357,7 @@
   )
   (CELL
      (CELLTYPE "NOR4X1")
-     (INSTANCE u_mcu_top.g1090)
+     (INSTANCE u_mcu_top.g1074)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86373,7 +86373,7 @@
   )
   (CELL
      (CELLTYPE "AND4XL")
-     (INSTANCE u_mcu_top.g1091)
+     (INSTANCE u_mcu_top.g1075)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86389,7 +86389,7 @@
   )
   (CELL
      (CELLTYPE "OR4X1")
-     (INSTANCE u_mcu_top.g1092)
+     (INSTANCE u_mcu_top.g1076)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86405,7 +86405,7 @@
   )
   (CELL
      (CELLTYPE "OR4X1")
-     (INSTANCE u_mcu_top.g1093)
+     (INSTANCE u_mcu_top.g1077)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86421,7 +86421,7 @@
   )
   (CELL
      (CELLTYPE "NOR2X1")
-     (INSTANCE u_mcu_top.g1094)
+     (INSTANCE u_mcu_top.g1078)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86433,7 +86433,7 @@
   )
   (CELL
      (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1095)
+     (INSTANCE u_mcu_top.g1079)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86445,7 +86445,7 @@
   )
   (CELL
      (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1005)
+     (INSTANCE u_mcu_top.g989)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86457,7 +86457,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1404)
+     (INSTANCE u_mcu_top.g1388)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86471,7 +86471,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1405)
+     (INSTANCE u_mcu_top.g1389)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86485,7 +86485,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1406)
+     (INSTANCE u_mcu_top.g1390)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86499,7 +86499,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1407)
+     (INSTANCE u_mcu_top.g1391)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86513,7 +86513,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1408)
+     (INSTANCE u_mcu_top.g1392)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86527,7 +86527,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1409)
+     (INSTANCE u_mcu_top.g1393)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86541,7 +86541,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1410)
+     (INSTANCE u_mcu_top.g1394)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86555,7 +86555,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1411)
+     (INSTANCE u_mcu_top.g1395)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -86569,7 +86569,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1412)
+     (INSTANCE u_mcu_top.g1396)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86589,7 +86589,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1413)
+     (INSTANCE u_mcu_top.g1397)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86609,7 +86609,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1414)
+     (INSTANCE u_mcu_top.g1398)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86629,7 +86629,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1415)
+     (INSTANCE u_mcu_top.g1399)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86649,7 +86649,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1416)
+     (INSTANCE u_mcu_top.g1400)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86669,7 +86669,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1417)
+     (INSTANCE u_mcu_top.g1401)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86689,7 +86689,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1418)
+     (INSTANCE u_mcu_top.g1402)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86709,7 +86709,7 @@
   )
   (CELL
      (CELLTYPE "AOI222X1")
-     (INSTANCE u_mcu_top.g1419)
+     (INSTANCE u_mcu_top.g1403)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86729,7 +86729,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1420)
+     (INSTANCE u_mcu_top.g1404)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86745,7 +86745,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1421)
+     (INSTANCE u_mcu_top.g1405)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86761,7 +86761,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1422)
+     (INSTANCE u_mcu_top.g1406)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86777,7 +86777,7 @@
   )
   (CELL
      (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1423)
+     (INSTANCE u_mcu_top.g1407)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -86789,7 +86789,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1424)
+     (INSTANCE u_mcu_top.g1408)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86805,7 +86805,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1425)
+     (INSTANCE u_mcu_top.g1409)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86821,7 +86821,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1426)
+     (INSTANCE u_mcu_top.g1410)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86837,7 +86837,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1427)
+     (INSTANCE u_mcu_top.g1411)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86853,7 +86853,7 @@
   )
   (CELL
      (CELLTYPE "AO22X1")
-     (INSTANCE u_mcu_top.g1428)
+     (INSTANCE u_mcu_top.g1412)
      (DELAY
         (ABSOLUTE
           (PORT A0 (::0.000))
@@ -86869,7 +86869,7 @@
   )
   (CELL
      (CELLTYPE "NOR3BX1")
-     (INSTANCE u_mcu_top.g1429)
+     (INSTANCE u_mcu_top.g1413)
      (DELAY
         (ABSOLUTE
           (PORT AN (::0.000))
@@ -86883,13 +86883,205 @@
   )
   (CELL
      (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1430)
+     (INSTANCE u_mcu_top.g1414)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
           (PORT B (::0.000))
           (IOPATH A Y (::0.279) (::0.239))
           (IOPATH B Y (::0.290) (::0.224))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1415)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1416)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1417)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1418)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1419)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1420)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1421)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.204) (::0.188))
+          (IOPATH B Y (::0.240) (::0.135))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1422)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1423)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.188) (::0.184))
+          (IOPATH B Y (::0.181) (::0.127))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X2")
+     (INSTANCE u_mcu_top.g1424)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.321) (::0.261))
+          (IOPATH B Y (::0.300) (::0.240))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1425)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NOR2BX1")
+     (INSTANCE u_mcu_top.g1426)
+     (DELAY
+        (ABSOLUTE
+          (PORT AN (::0.000))
+          (PORT B (::0.000))
+          (IOPATH B Y (::0.152) (::0.121))
+          (IOPATH AN Y (::0.170) (::0.134))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1427)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1428)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1429)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AND2X1")
+     (INSTANCE u_mcu_top.g1430)
+     (DELAY
+        (ABSOLUTE
+          (PORT A (::0.000))
+          (PORT B (::0.000))
+          (IOPATH A Y (::0.193) (::0.175))
+          (IOPATH B Y (::0.159) (::0.114))
         )
      )
   )
@@ -86942,200 +87134,8 @@
      )
   )
   (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1435)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1436)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1437)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.204) (::0.188))
-          (IOPATH B Y (::0.240) (::0.135))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1438)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1439)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.188) (::0.184))
-          (IOPATH B Y (::0.181) (::0.127))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X2")
-     (INSTANCE u_mcu_top.g1440)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.321) (::0.261))
-          (IOPATH B Y (::0.300) (::0.240))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1441)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "NOR2BX1")
-     (INSTANCE u_mcu_top.g1442)
-     (DELAY
-        (ABSOLUTE
-          (PORT AN (::0.000))
-          (PORT B (::0.000))
-          (IOPATH B Y (::0.152) (::0.121))
-          (IOPATH AN Y (::0.170) (::0.134))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1443)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1444)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1445)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1446)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1447)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1448)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1449)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
-     (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1450)
-     (DELAY
-        (ABSOLUTE
-          (PORT A (::0.000))
-          (PORT B (::0.000))
-          (IOPATH A Y (::0.193) (::0.175))
-          (IOPATH B Y (::0.159) (::0.114))
-        )
-     )
-  )
-  (CELL
      (CELLTYPE "INVX1")
-     (INSTANCE u_mcu_top.g1451)
+     (INSTANCE u_mcu_top.g1435)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87208,7 +87208,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1038)
+     (INSTANCE u_mcu_top.g1022)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -87222,7 +87222,7 @@
   )
   (CELL
      (CELLTYPE "OAI2BB1X1")
-     (INSTANCE u_mcu_top.g1039)
+     (INSTANCE u_mcu_top.g1023)
      (DELAY
         (ABSOLUTE
           (PORT A0N (::0.000))
@@ -87236,7 +87236,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1040)
+     (INSTANCE u_mcu_top.g1024)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87250,7 +87250,7 @@
   )
   (CELL
      (CELLTYPE "NAND3X1")
-     (INSTANCE u_mcu_top.g1041)
+     (INSTANCE u_mcu_top.g1025)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87264,7 +87264,7 @@
   )
   (CELL
      (CELLTYPE "NAND3X1")
-     (INSTANCE u_mcu_top.g1042)
+     (INSTANCE u_mcu_top.g1026)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87530,7 +87530,7 @@
   )
   (CELL
      (CELLTYPE "NOR3BX1")
-     (INSTANCE u_mcu_top.g1057)
+     (INSTANCE u_mcu_top.g1041)
      (DELAY
         (ABSOLUTE
           (PORT AN (::0.000))
@@ -87775,7 +87775,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1071)
+     (INSTANCE u_mcu_top.g1055)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87789,7 +87789,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1072)
+     (INSTANCE u_mcu_top.g1056)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87803,7 +87803,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1073)
+     (INSTANCE u_mcu_top.g1057)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87817,7 +87817,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1074)
+     (INSTANCE u_mcu_top.g1058)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87831,7 +87831,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1075)
+     (INSTANCE u_mcu_top.g1059)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87845,7 +87845,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1076)
+     (INSTANCE u_mcu_top.g1060)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87859,7 +87859,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1077)
+     (INSTANCE u_mcu_top.g1061)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87873,7 +87873,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1078)
+     (INSTANCE u_mcu_top.g1062)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87887,7 +87887,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1079)
+     (INSTANCE u_mcu_top.g1063)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87901,7 +87901,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1080)
+     (INSTANCE u_mcu_top.g1064)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87915,7 +87915,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1081)
+     (INSTANCE u_mcu_top.g1065)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87929,7 +87929,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1082)
+     (INSTANCE u_mcu_top.g1066)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87943,7 +87943,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1083)
+     (INSTANCE u_mcu_top.g1067)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87957,7 +87957,7 @@
   )
   (CELL
      (CELLTYPE "AND2X1")
-     (INSTANCE u_mcu_top.g1084)
+     (INSTANCE u_mcu_top.g1068)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87969,7 +87969,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1085)
+     (INSTANCE u_mcu_top.g1069)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87983,7 +87983,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1452)
+     (INSTANCE u_mcu_top.g1436)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -87997,7 +87997,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1453)
+     (INSTANCE u_mcu_top.g1437)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88011,7 +88011,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1454)
+     (INSTANCE u_mcu_top.g1438)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88025,7 +88025,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1455)
+     (INSTANCE u_mcu_top.g1439)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88039,7 +88039,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1456)
+     (INSTANCE u_mcu_top.g1440)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88053,7 +88053,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1457)
+     (INSTANCE u_mcu_top.g1441)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88067,7 +88067,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1458)
+     (INSTANCE u_mcu_top.g1442)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88081,7 +88081,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1459)
+     (INSTANCE u_mcu_top.g1443)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88095,7 +88095,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1460)
+     (INSTANCE u_mcu_top.g1444)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88109,7 +88109,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1461)
+     (INSTANCE u_mcu_top.g1445)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88123,7 +88123,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1096)
+     (INSTANCE u_mcu_top.g1080)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88137,7 +88137,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1097)
+     (INSTANCE u_mcu_top.g1081)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88151,7 +88151,7 @@
   )
   (CELL
      (CELLTYPE "MX2X1")
-     (INSTANCE u_mcu_top.g1098)
+     (INSTANCE u_mcu_top.g1082)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88165,7 +88165,7 @@
   )
   (CELL
      (CELLTYPE "NOR2BX1")
-     (INSTANCE u_mcu_top.g1099)
+     (INSTANCE u_mcu_top.g1083)
      (DELAY
         (ABSOLUTE
           (PORT AN (::0.000))
@@ -88177,7 +88177,7 @@
   )
   (CELL
      (CELLTYPE "NOR2BX1")
-     (INSTANCE u_mcu_top.g1100)
+     (INSTANCE u_mcu_top.g1084)
      (DELAY
         (ABSOLUTE
           (PORT AN (::0.000))
@@ -88189,7 +88189,7 @@
   )
   (CELL
      (CELLTYPE "NOR2X1")
-     (INSTANCE u_mcu_top.g1101)
+     (INSTANCE u_mcu_top.g1085)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))
@@ -88201,7 +88201,7 @@
   )
   (CELL
      (CELLTYPE "INVX1")
-     (INSTANCE u_mcu_top.g1102)
+     (INSTANCE u_mcu_top.g1086)
      (DELAY
         (ABSOLUTE
           (PORT A (::0.000))

@@ -3,19 +3,19 @@ Copyright 2024 Cadence Design Systems, Inc. All rights reserved worldwide.
 Cadence and the Cadence logo are registered trademarks and Genus is a trademark
 of Cadence Design Systems, Inc. in the United States and other countries.
 
-[00:59:30.163209] Configured Lic search path (22.01-s003): 5280@172.31.52.241
+[03:24:10.163153] Configured Lic search path (22.01-s003): 5280@172.31.52.241
 
 Version: 22.17-s071_1, built Wed Sep 11 20:37:05 PDT 2024
 Options: -files ./script/syn_mcu_core_top.tcl -log ./log/all.log 
-Date:    Fri Nov 27 00:59:30 2026
+Date:    Fri Nov 27 03:24:10 2026
 Host:    kopo-seongnam (x86_64 w/Linux 3.10.0-1160.el7.x86_64) (20cores*80cpus*2physical cpus*Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz 28160KB) (394624392KB)
-PID:     54178
+PID:     152474
 OS:      CentOS Linux release 7.9.2009 (Core)
 
 Checking out license: Genus_Synthesis
-[00:59:30.265195] Periodic Lic check successful
-[00:59:30.265209] Feature usage summary:
-[00:59:30.265210] Genus_Synthesis
+[03:24:10.475971] Periodic Lic check successful
+[03:24:10.475976] Feature usage summary:
+[03:24:10.475977] Genus_Synthesis
 
 
 
@@ -116,86 +116,86 @@ model name	: Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
 model name	: Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
 model name	: Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
 model name	: Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
-cpu MHz		: 3755.364
-cpu MHz		: 3854.571
-cpu MHz		: 886.706
-cpu MHz		: 800.189
-cpu MHz		: 991.937
+cpu MHz		: 898.114
+cpu MHz		: 3792.022
+cpu MHz		: 3120.263
+cpu MHz		: 2093.847
 cpu MHz		: 799.932
-cpu MHz		: 3943.395
-cpu MHz		: 800.061
+cpu MHz		: 839.410
+cpu MHz		: 813.519
 cpu MHz		: 799.932
-cpu MHz		: 800.189
-cpu MHz		: 801.214
-cpu MHz		: 800.061
-cpu MHz		: 800.061
-cpu MHz		: 800.061
+cpu MHz		: 3125.006
+cpu MHz		: 813.134
 cpu MHz		: 799.932
-cpu MHz		: 800.061
-cpu MHz		: 800.061
-cpu MHz		: 800.061
+cpu MHz		: 3864.312
 cpu MHz		: 799.932
+cpu MHz		: 960.278
+cpu MHz		: 3100.140
+cpu MHz		: 827.362
+cpu MHz		: 3125.134
 cpu MHz		: 800.061
 cpu MHz		: 799.932
 cpu MHz		: 800.061
-cpu MHz		: 800.958
+cpu MHz		: 3037.207
+cpu MHz		: 799.932
 cpu MHz		: 799.932
 cpu MHz		: 800.061
-cpu MHz		: 800.061
-cpu MHz		: 800.061
+cpu MHz		: 3410.064
 cpu MHz		: 799.932
-cpu MHz		: 800.061
-cpu MHz		: 800.061
+cpu MHz		: 3125.262
 cpu MHz		: 799.932
+cpu MHz		: 896.575
 cpu MHz		: 800.061
 cpu MHz		: 800.061
 cpu MHz		: 800.061
-cpu MHz		: 840.307
-cpu MHz		: 3884.564
+cpu MHz		: 1348.901
+cpu MHz		: 799.932
+cpu MHz		: 2784.832
+cpu MHz		: 800.061
+cpu MHz		: 3099.884
+cpu MHz		: 800.061
+cpu MHz		: 3116.162
+cpu MHz		: 800.061
+cpu MHz		: 1738.549
+cpu MHz		: 3799.072
+cpu MHz		: 3101.293
+cpu MHz		: 826.336
+cpu MHz		: 811.340
+cpu MHz		: 807.238
+cpu MHz		: 3262.792
+cpu MHz		: 1423.626
+cpu MHz		: 849.792
+cpu MHz		: 800.317
+cpu MHz		: 1023.596
+cpu MHz		: 1123.187
+cpu MHz		: 893.371
+cpu MHz		: 895.678
+cpu MHz		: 1122.674
+cpu MHz		: 799.932
 cpu MHz		: 814.544
-cpu MHz		: 1249.182
-cpu MHz		: 885.040
-cpu MHz		: 799.932
-cpu MHz		: 879.528
-cpu MHz		: 4000.305
-cpu MHz		: 890.039
+cpu MHz		: 838.385
 cpu MHz		: 800.061
-cpu MHz		: 799.932
-cpu MHz		: 800.061
-cpu MHz		: 1461.309
-cpu MHz		: 835.565
-cpu MHz		: 882.861
-cpu MHz		: 800.061
-cpu MHz		: 799.932
-cpu MHz		: 800.573
-cpu MHz		: 801.086
-cpu MHz		: 897.344
-cpu MHz		: 800.830
-cpu MHz		: 803.137
-cpu MHz		: 828.515
-cpu MHz		: 801.470
-cpu MHz		: 816.723
-cpu MHz		: 801.470
+cpu MHz		: 1551.544
+cpu MHz		: 830.950
+cpu MHz		: 801.214
+cpu MHz		: 859.405
+cpu MHz		: 803.778
+cpu MHz		: 1574.102
 cpu MHz		: 800.189
-cpu MHz		: 804.931
-cpu MHz		: 803.906
-cpu MHz		: 801.086
-cpu MHz		: 800.445
-cpu MHz		: 806.085
-cpu MHz		: 801.342
-cpu MHz		: 800.958
-cpu MHz		: 834.283
-cpu MHz		: 801.727
-cpu MHz		: 800.573
-cpu MHz		: 802.496
-cpu MHz		: 800.830
-cpu MHz		: 806.854
-cpu MHz		: 919.262
-cpu MHz		: 3797.406
+cpu MHz		: 1058.459
+cpu MHz		: 803.393
+cpu MHz		: 1352.746
+cpu MHz		: 803.265
 cpu MHz		: 800.061
-cpu MHz		: 1296.990
-cpu MHz		: 935.797
-cpu MHz		: 801.342
+cpu MHz		: 844.665
+cpu MHz		: 1834.936
+cpu MHz		: 803.393
+cpu MHz		: 1741.241
+cpu MHz		: 801.470
+cpu MHz		: 995.526
+cpu MHz		: 806.726
+cpu MHz		: 3135.260
+cpu MHz		: 800.061
 @file(syn_mcu_core_top.tcl) 7: puts "Hostname : [info hostname]"
 Hostname : localhost
 @file(syn_mcu_core_top.tcl) 13: set TOP_DESIGN  mcu_core_top
@@ -460,7 +460,7 @@ Completed optimize datapath shifters (accepts: 0, rejects: 0, runtime: 0.000s)
 Starting clip mux common data inputs [v1.0] (stage: post_elab, startdef: mcu_core_top, recur: true)
 Completed clip mux common data inputs (accepts: 0, rejects: 0, runtime: 0.000s)
 Starting clip the non-user hierarchies [v2.0] (stage: post_elab, startdef: mcu_core_top, recur: true)
-Completed clip the non-user hierarchies (accepts: 0, rejects: 0, runtime: 0.001s)
+Completed clip the non-user hierarchies (accepts: 0, rejects: 0, runtime: 0.000s)
 Starting basic netlist cleanup [v1.0] (stage: post_elab, startdef: mcu_core_top, recur: true)
 Completed basic netlist cleanup (accepts: 0, rejects: 0, runtime: 0.000s)
 
@@ -482,9 +482,9 @@ stamp 'Elaboration' being created for table 'default'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:08(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    0:59:38 (Nov27) |  214.5 MB | init
+ 00:00:07(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:17 (Nov27) |  212.8 MB | init
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:18(00:00:10) |  00:00:10(00:00:10) | 100.0(100.0) |    0:59:48 (Nov27) |  417.9 MB | Elaboration
+ 00:00:17(00:00:10) |  00:00:10(00:00:10) | 100.0(100.0) |    3:24:27 (Nov27) |  417.7 MB | Elaboration
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: default, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -494,10 +494,10 @@ Info: CPU time includes time of parent + longest thread
 @file(syn_mcu_core_top.tcl) 93: set_db optimize_merge_latches false
   Setting attribute of root '/': 'optimize_merge_latches' = false
 @file(syn_mcu_core_top.tcl) 95: uniquify -verbose ${TOP_DESIGN}
-  Uniquified instance: u_mcu_top/mux_256_18, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_45
-  Uniquified instance: u_mcu_top/mux_256_30, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_44
-  Uniquified instance: u_mcu_top/mux_256_55, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_43
-  Uniquified instance: u_mcu_top/mux_256_83, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_42
+  Uniquified instance: u_mcu_top/mux_258_18, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_45
+  Uniquified instance: u_mcu_top/mux_258_30, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_44
+  Uniquified instance: u_mcu_top/mux_258_55, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_43
+  Uniquified instance: u_mcu_top/mux_258_83, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_530_42
   Uniquified instance: u_mcu_top/uut7/uut2/mux_r_miso_135_15, and its subdesign name is: mcu_core_top_mcu_core_top_mux_663_1
   Uniquified instance: u_mcu_top/uut7/uut2/mux_r_rx_valid_135_15, and its subdesign name is: mcu_core_top_mcu_core_top_mux_795_4
   Uniquified instance: u_mcu_top/uut7/uut2/mux_93_37, and its subdesign name is: mcu_core_top_mcu_core_top_bmux_649_51
@@ -567,7 +567,7 @@ No empty modules in design 'mcu_core_top'
 
   Done Checking the design.
 @file(syn_mcu_core_top.tcl) 106: source -verbose  ./cons/mcu_core_top.sdc   ; #This command can't write report by using the mark '>'
-Sourcing './cons/mcu_core_top.sdc' (Fri Nov 27 00:59:48 KST 2026)...
+Sourcing './cons/mcu_core_top.sdc' (Fri Nov 27 03:24:28 KST 2026)...
 #@ Begin verbose source ./cons/mcu_core_top.sdc
 @file(mcu_core_top.sdc) 8: set STD_LIB_slow  slow_vdd1v0_basicCells.lib:slow_vdd1v0
 @file(mcu_core_top.sdc) 9: set STD_LIB_fast  fast_vdd1v0_basicCells.lib:fast_vdd1v0
@@ -598,7 +598,7 @@ Warning : Could not find requested search value. [SDC-208] [get_libs]
 @file(mcu_core_top.sdc) 58: set_ideal_network [get_ports "clk clrn"]
 #@ End verbose source ./cons/mcu_core_top.sdc
 @file(syn_mcu_core_top.tcl) 107: source -verbose  ./cons/dont_use_45nm.tcl ; #This command can't write report by using the mark '>'
-Sourcing './cons/dont_use_45nm.tcl' (Fri Nov 27 00:59:49 KST 2026)...
+Sourcing './cons/dont_use_45nm.tcl' (Fri Nov 27 03:24:28 KST 2026)...
 #@ Begin verbose source ./cons/dont_use_45nm.tcl
 @file(dont_use_45nm.tcl) 1: set_dont_use [get_lib_cells */ANTENNA*]
 @file(dont_use_45nm.tcl) 2: set_dont_use [get_lib_cells */DLY*]
@@ -617,7 +617,7 @@ The number of exceptions is 1
 @file(syn_mcu_core_top.tcl) 116: echo -n "\n TIMEX > compile is ready :            ";
 
  TIMEX > compile is ready :            @file(syn_mcu_core_top.tcl) 117: sh date
-Fri Nov 27 00:59:50 KST 2026
+Fri Nov 27 03:24:29 KST 2026
 @file(syn_mcu_core_top.tcl) 123: syn_generic ; #This command can't write report by using the mark '>'
 
 Stage: pre_early_cg
@@ -639,12 +639,10 @@ Stage: pre_to_gen_setup
 | hlo_mux_reorder |       0 |       0 |        0.00 | 
 -----------------------------------------------------
 Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 16 sequential instances.
-        : Optimizations such as constant propagation or redundancy removal could change the connections so a hierarchical instance does not drive any primary outputs anymore. To see the list of deleted hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is truncated set the message attribute 'truncate' to false to see the complete list. To prevent this optimization, set the 'delete_unloaded_insts' root/subdesign attribute to 'false' or 'preserve' instance attribute to 'true'.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
         : Deleting 1 hierarchical instance.
+        : Optimizations such as constant propagation or redundancy removal could change the connections so a hierarchical instance does not drive any primary outputs anymore. To see the list of deleted hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is truncated set the message attribute 'truncate' to false to see the complete list. To prevent this optimization, set the 'delete_unloaded_insts' root/subdesign attribute to 'false' or 'preserve' instance attribute to 'true'.
 Running DP early constant propagation (netlist mcu_core_top)...
-...done running DP early constant propagation (9 seconds CPU time, netlist mcu_core_top).
+...done running DP early constant propagation (8 seconds CPU time, netlist mcu_core_top).
 Info    : Deleting instances not driving any primary outputs. [GLO-34]
         : Deleting 3 hierarchical instances.
 Current PLE settings:
@@ -714,7 +712,7 @@ stamp 'PBS_Generic-Start' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -856,72 +854,72 @@ Begin SDR optimization
 No special hier is found 
 End SDR optimization 
 Starting recase case-box optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed recase case-box optimization (accepts: 0, rejects: 0, runtime: 0.073s)
+Completed recase case-box optimization (accepts: 0, rejects: 0, runtime: 0.054s)
 Starting infer macro optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
 Info    : Deleting instances not driving any primary outputs. [GLO-34]
         : Deleting 512 sequential instances.
-Completed infer macro optimization (accepts: 0, rejects: 16, runtime: 0.048s)
+Completed infer macro optimization (accepts: 0, rejects: 16, runtime: 0.043s)
 Starting decode mux sandwich optimization [v2.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed decode mux sandwich optimization (accepts: 0, rejects: 0, runtime: 0.001s)
+Completed decode mux sandwich optimization (accepts: 0, rejects: 0, runtime: 0.002s)
 Starting decode mux optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
 Completed decode mux optimization (accepts: 0, rejects: 0, runtime: 0.001s)
 Starting chop wide muxes [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed chop wide muxes (accepts: 0, rejects: 0, runtime: 0.001s)
+Completed chop wide muxes (accepts: 0, rejects: 0, runtime: 0.000s)
 Starting common data mux cascade opt [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
 Completed common data mux cascade opt (accepts: 0, rejects: 0, runtime: 0.003s)
 Starting mux input consolidation [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed mux input consolidation (accepts: 0, rejects: 0, runtime: 0.006s)
+Completed mux input consolidation (accepts: 0, rejects: 0, runtime: 0.007s)
 Starting constant-data mux optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed constant-data mux optimization (accepts: 0, rejects: 0, runtime: 0.003s)
+Completed constant-data mux optimization (accepts: 0, rejects: 0, runtime: 0.002s)
 Starting chain-to-tree inequality transform [v2.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed chain-to-tree inequality transform (accepts: 0, rejects: 0, runtime: 0.048s)
+Completed chain-to-tree inequality transform (accepts: 0, rejects: 0, runtime: 0.038s)
 Starting reconvergence optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed reconvergence optimization (accepts: 0, rejects: 0, runtime: 0.008s)
+Completed reconvergence optimization (accepts: 0, rejects: 0, runtime: 0.003s)
 Starting logic restructure optimization [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed logic restructure optimization (accepts: 0, rejects: 0, runtime: 0.038s)
+Completed logic restructure optimization (accepts: 0, rejects: 0, runtime: 0.017s)
 Starting identity transform [v3.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed identity transform (accepts: 0, rejects: 1, runtime: 0.018s)
+Completed identity transform (accepts: 0, rejects: 1, runtime: 0.009s)
 Starting reduce operator chain [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
 Completed reduce operator chain (accepts: 0, rejects: 0, runtime: 0.001s)
 Starting common data mux cascade opt [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed common data mux cascade opt (accepts: 0, rejects: 0, runtime: 0.006s)
+Completed common data mux cascade opt (accepts: 0, rejects: 0, runtime: 0.003s)
 Starting mux input consolidation [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed mux input consolidation (accepts: 0, rejects: 0, runtime: 0.008s)
+Completed mux input consolidation (accepts: 0, rejects: 0, runtime: 0.005s)
 Starting optimize datapath elements [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed optimize datapath elements (accepts: 5, rejects: 0, runtime: 0.004s)
+Completed optimize datapath elements (accepts: 5, rejects: 0, runtime: 0.003s)
 Starting datapath recasting [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed datapath recasting (accepts: 0, rejects: 0, runtime: 0.002s)
+Completed datapath recasting (accepts: 0, rejects: 0, runtime: 0.000s)
 Starting word-level redundancy removal [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed word-level redundancy removal (accepts: 0, rejects: 2, runtime: 0.460s)
+Completed word-level redundancy removal (accepts: 0, rejects: 2, runtime: 0.353s)
 Starting clip mux common data inputs [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed clip mux common data inputs (accepts: 3, rejects: 0, runtime: 0.004s)
+Completed clip mux common data inputs (accepts: 3, rejects: 0, runtime: 0.003s)
 Starting clip the non-user hierarchies [v2.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
 Completed clip the non-user hierarchies (accepts: 0, rejects: 0, runtime: 0.001s)
 Starting basic netlist cleanup [v1.0] (stage: pre_rtlopt, startdef: mcu_core_top, recur: true)
-Completed basic netlist cleanup (accepts: 0, rejects: 0, runtime: 0.001s)
+Completed basic netlist cleanup (accepts: 0, rejects: 0, runtime: 0.000s)
 
 Stage: pre_rtlopt
 -----------------------------------------------------------------
 | Transform                   | Accepts | Rejects | Runtime (s) | 
 -----------------------------------------------------------------
-| hlo_recase_casebox          |       0 |       0 |        0.07 | 
-| hlo_infer_macro             |       0 |      16 |        0.05 | 
+| hlo_recase_casebox          |       0 |       0 |        0.05 | 
+| hlo_infer_macro             |       0 |      16 |        0.04 | 
 | hlo_decode_mux_sandwich     |       0 |       0 |        0.00 | 
 | hlo_mux_decode              |       0 |       0 |        0.00 | 
 | hlo_chop_mux                |       0 |       0 |        0.00 | 
 | hlo_mux_cascade_opt         |       0 |       0 |        0.00 | 
 | hlo_mux_consolidation       |       0 |       0 |        0.01 | 
 | hlo_constant_mux_opt        |       0 |       0 |        0.00 | 
-| hlo_inequality_transform    |       0 |       0 |        0.05 | 
-| hlo_reconv_opt              |       0 |       0 |        0.01 | 
-| hlo_restructure             |       0 |       0 |        0.04 | 
-| hlo_identity_transform      |       0 |       1 |        0.02 | 
+| hlo_inequality_transform    |       0 |       0 |        0.04 | 
+| hlo_reconv_opt              |       0 |       0 |        0.00 | 
+| hlo_restructure             |       0 |       0 |        0.02 | 
+| hlo_identity_transform      |       0 |       1 |        0.01 | 
 | hlo_reduce_operator_chain   |       0 |       0 |        0.00 | 
-| hlo_mux_cascade_opt         |       0 |       0 |        0.01 | 
-| hlo_mux_consolidation       |       0 |       0 |        0.01 | 
+| hlo_mux_cascade_opt         |       0 |       0 |        0.00 | 
+| hlo_mux_consolidation       |       0 |       0 |        0.00 | 
 | hlo_optimize_datapath       |       5 |       0 |        0.00 | 
 | hlo_datapath_recast         |       0 |       0 |        0.00 | 
-| hlo_redundancy_removal_word |       0 |       2 |        0.46 | 
+| hlo_redundancy_removal_word |       0 |       2 |        0.35 | 
 | hlo_clip_mux_input          |       3 |       0 |        0.00 | 
 | hlo_clip                    |       0 |       0 |        0.00 | 
 | hlo_cleanup                 |       0 |       0 |        0.00 | 
@@ -1025,7 +1023,7 @@ Best config: CDN_DP_region_12_0_c5 in sccpu: area: 35633841408 ,dp = 7 mux = 13 
 ##>   Num CmultCse                0                  0                  0                  0                  0                  0                  0                  0  
 ##>   Num Downsize                0                  0                  0                  0                  0                  0                  0                  0  
 ##>  Num Speculate                0                  0                  0                  0                  0                  0                  0                  0  
-##>     Runtime(s)                0                  0                  0                  0                  0                  0                  1                  1  
+##>     Runtime(s)                0                  0                  0                  0                  0                  0                  0                  1  
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ##>
 ##>
@@ -5517,7 +5515,7 @@ Info    : Done optimizing datapath logic. [DPOPT-2]
         : Done optimizing datapath logic in 'mcu_core_top'.
 Number of big hc bmuxes after = 0
 Starting bit-level redundancy removal [v1.0] (stage: post_rtlopt, startdef: mcu_core_top, recur: true)
-Completed bit-level redundancy removal (accepts: 0, rejects: 1, runtime: 0.426s)
+Completed bit-level redundancy removal (accepts: 0, rejects: 1, runtime: 0.341s)
 Starting logic reduction [v1.0] (stage: post_rtlopt, startdef: mcu_core_top, recur: true)
 Completed logic reduction (accepts: 0, rejects: 0, runtime: 0.001s)
 Starting mux data reorder optimization [v1.0] (stage: post_rtlopt, startdef: mcu_core_top, recur: true)
@@ -5527,7 +5525,7 @@ Stage: post_rtlopt
 ----------------------------------------------------------------
 | Transform                  | Accepts | Rejects | Runtime (s) | 
 ----------------------------------------------------------------
-| hlo_redundancy_removal_bit |       0 |       1 |        0.43 | 
+| hlo_redundancy_removal_bit |       0 |       1 |        0.34 | 
 | hlo_logic_reduction        |       0 |       0 |        0.00 | 
 | hlo_mux_reorder            |       0 |       0 |        0.00 | 
 ----------------------------------------------------------------
@@ -5548,7 +5546,7 @@ Running post blast mux optimization. Please follow up with Cadence support if ru
 Starting mux speculation [v1.0] (stage: post_muxopt, startdef: mcu_core_top, recur: true)
 Starting speculation optimization
 Completed speculation optimization (accepts:0)
-Completed mux speculation (accepts: 0, rejects: 0, runtime: 0.498s)
+Completed mux speculation (accepts: 0, rejects: 0, runtime: 0.501s)
 
 Stage: post_muxopt
 -----------------------------------------------------
@@ -5579,8 +5577,8 @@ Stage : to_generic
 |           |       |     | flip-flop or latch, set the hdl_preserve_unused_registers attribute to true or use a pragma in the  |
 |           |       |     | RTL.                                                                                                |
 |CDFG-567   |Info   |   22|Instantiating Subdesign.                                                                             |
-|CDFG-738   |Info   |   20|Common subexpression eliminated.                                                                     |
-|CDFG-739   |Info   |   20|Common subexpression kept.                                                                           |
+|CDFG-738   |Info   |   22|Common subexpression eliminated.                                                                     |
+|CDFG-739   |Info   |   22|Common subexpression kept.                                                                           |
 |CDFG-769   |Info   |    3|Identified sum-of-products logic to be optimized during syn_generic.                                 |
 |CWD-19     |Info   |  348|An implementation was inferred.                                                                      |
 |DPOPT-1    |Info   |    1|Optimizing datapath logic.                                                                           |
@@ -5596,7 +5594,7 @@ Stage : to_generic
 |           |       |     |Please check the reported scenario of unconnected instance port to ensure that it matches the design |
 |           |       |     | intent.                                                                                             |
 |GB-6       |Info   |    3|A datapath component has been ungrouped.                                                             |
-|GLO-34     |Info   |    4|Deleting instances not driving any primary outputs.                                                  |
+|GLO-34     |Info   |    3|Deleting instances not driving any primary outputs.                                                  |
 |           |       |     |Optimizations such as constant propagation or redundancy removal could change the connections so a   |
 |           |       |     | hierarchical instance does not drive any primary outputs anymore. To see the list of deleted        |
 |           |       |     | hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is      |
@@ -6322,14 +6320,14 @@ Info    : Deleting instances not driving any primary outputs. [GLO-34]
         : Deleting 258 sequential instances.
 Info    : Deleting instances not driving any primary outputs. [GLO-34]
         : Deleting 2 hierarchical instances.
-PBS_Generic_Opt-Post - Elapsed_Time 104, CPU_Time 105.041381
+PBS_Generic_Opt-Post - Elapsed_Time 94, CPU_Time 96.438385
 stamp 'PBS_Generic_Opt-Post' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) | 100.0(100.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) | 100.0(100.0) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6339,11 +6337,11 @@ stamp 'PBS_Generic-Postgen HBO Optimizations' being created for table 'pbs_debug
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) | 100.0(100.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) | 100.0( 98.9) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  1.1) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6354,7 +6352,7 @@ Info: CPU time includes time of parent + longest thread
 ##>----------------------------------------------------------------------------------------
 ##>STEP                           Elapsed       WNS       TNS     Insts      Area    Memory
 ##>----------------------------------------------------------------------------------------
-##>G:Initial                           10         -         -      7310     50866       479
+##>G:Initial                            9         -         -      7310     50866       483
 ##>G:Setup                              0         -         -         -         -         -
 ##>G:Early Clock Gating                 0         -         -         -         -         -
 ##>G:Launch ST                          0         -         -         -         -         -
@@ -6369,12 +6367,12 @@ Info: CPU time includes time of parent + longest thread
 ##>G:Timer                              0         -         -         -         -         -
 ##>G:Assembly                           0         -         -         -         -         -
 ##>G:DFT                                0         -         -         -         -         -
-##>G:Const Prop                         0         -         -      8888     35372       960
-##>G:PostGen Opt                        1         -         -      8888     35372       960
+##>G:Const Prop                         0         -         -      8888     35372       991
+##>G:PostGen Opt                        1         -         -      8888     35372       991
 ##>G:Early Clock Gating Cleanup         0         -         -         -         -         -
-##>G:Misc                             103
+##>G:Misc                              94
 ##>----------------------------------------------------------------------------------------
-##>Total Elapsed                      114
+##>Total Elapsed                      104
 ##>========================================================================================
 Info    : Done synthesizing. [SYNTH-2]
         : Done synthesizing 'mcu_core_top' to generic gates.
@@ -6387,11 +6385,11 @@ stamp 'GENERIC' being created for table 'default'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:08(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    0:59:38 (Nov27) |  214.5 MB | init
+ 00:00:07(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:17 (Nov27) |  212.8 MB | init
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:18(00:00:10) |  00:00:10(00:00:10) |   7.9(  7.9) |    0:59:48 (Nov27) |  417.9 MB | Elaboration
+ 00:00:17(00:00:10) |  00:00:10(00:00:10) |   8.6(  8.6) |    3:24:27 (Nov27) |  417.7 MB | Elaboration
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:14(00:02:06) |  00:01:56(00:01:56) |  92.1( 92.1) |    1:01:44 (Nov27) |  960.4 MB | GENERIC
+ 00:02:03(00:01:56) |  00:01:46(00:01:46) |  91.4( 91.4) |    3:26:13 (Nov27) |  991.3 MB | GENERIC
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: default, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6402,9 +6400,9 @@ Warning : The filename, column and line number information will not be available
         : The attribute for getting HDL filename and line number is not set.
         : You must set the 'hdl_track_filename_row_col' attribute to 'true' (before elaborate) to enable filename, column, and line number tracking in the datapath report.
 @file(syn_mcu_core_top.tcl) 129: write_snapshot -outdir ${RPT_DIR} -tag syn_generic
-%# Begin write_snapshot (11/27 01:01:44, mem=1891.68M)
-%# Begin qos_stats (11/27 01:01:45, mem=1895.50M)
-%# End qos_stats (11/27 01:01:46, total cpu=17:00:01, real=17:00:01, peak res=992.20M, current mem=1895.50M)
+%# Begin write_snapshot (11/27 03:26:13, mem=1888.12M)
+%# Begin qos_stats (11/27 03:26:13, mem=1891.94M)
+%# End qos_stats (11/27 03:26:14, total cpu=17:00:01, real=17:00:01, peak res=991.30M, current mem=1891.94M)
 Warning : A required object parameter could not be found. [TUI-78]
         : An object named "" could not be found for attribute 'name'.
         : Check if a previous get_db or find returned an empty string.
@@ -6444,17 +6442,17 @@ Norm Cong Hotspot Area:
   Max Cong:                  no_value
   Tot Cong:                  no_value
 ================================================================================
-CPU  Runtime (h:m:s):        00:02:14
-Real Runtime (h:m:s):        00:02:07
-CPU  Elapsed (h:m:s):        00:02:23
-Real Elapsed (h:m:s):        00:02:12
-Memory (MB):                  1895.50
+CPU  Runtime (h:m:s):        00:02:04
+Real Runtime (h:m:s):        00:01:56
+CPU  Elapsed (h:m:s):        00:02:12
+Real Elapsed (h:m:s):        00:02:00
+Memory (MB):                  1891.94
 ================================================================================
 ================================================================================
 Flow Settings:
 ================================================================================
-Total Runtime (h:m:s): 00:02:08
-Total Memory (MB):     1895.50
+Total Runtime (h:m:s): 00:01:57
+Total Memory (MB):     1891.94
 Executable Version:    22.17-s071_1
 ================================================================================
 Total Cell Area =  Cell Area + Physical Cell Area
@@ -6465,9 +6463,9 @@ Total Instances =  Leaf Instances + Physical Instances
 
 Finished exporting design database to file './report/syn_generic_mcu_core_top.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:01, real = 00:01).
 Finished generating snapshot at stage syn_generic (command execution time mm:ss cpu = 00:01, real = 00:03).
-%# End write_snapshot (11/27 01:01:48, total cpu=17:00:01, real=17:00:04, peak res=992.20M, current mem=1895.50M)
+%# End write_snapshot (11/27 03:26:16, total cpu=17:00:02, real=17:00:03, peak res=991.30M, current mem=1891.94M)
 @file(syn_mcu_core_top.tcl) 134: write_db -to_file  ${UNMAPPED_DIR}/syn_generic.db
-Finished exporting design database to file './unmapped/syn_generic.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:01).
+Finished exporting design database to file './unmapped/syn_generic.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:01, real = 00:01).
 @file(syn_mcu_core_top.tcl) 140: syn_map ; #This command can't write report by using the mark '>'
 #--------------------------------------------------------------------------
 # Root attributes for category: opt
@@ -6551,13 +6549,13 @@ stamp 'PBS_TechMap-Start' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  96.5( 95.4) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  97.1( 94.0) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  1.0) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   3.5(  4.6) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   2.9(  5.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6567,15 +6565,15 @@ stamp 'PBS_TechMap-Premap HBO Optimizations' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  96.5( 95.4) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  97.1( 94.0) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  1.0) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   3.5(  4.6) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   2.9(  5.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6738,22 +6736,22 @@ Info    : Relaxed some design requirements on sequential instances to run synthe
         : One or more of the following design requirements relaxed on 17 sequential instance(s): map_prefer_non_inverted_clock_line.
         : To see the list of relaxed sequential instances, set the 'information_level' attribute to 2 or above. If the message is truncated set the message attribute 'truncate' to false to see the complete list.
 INFO: skipping constant propagation
-PBS_Techmap-Global Mapping - Elapsed_Time 49, CPU_Time 50.331867999999986
+PBS_Techmap-Global Mapping - Elapsed_Time 46, CPU_Time 47.987837
 stamp 'PBS_Techmap-Global Mapping' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  66.0( 65.8) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  65.5( 64.4) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.4(  3.2) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.4) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  31.6( 31.0) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  32.6( 31.5) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6763,48 +6761,48 @@ Info    : Wrote formal verification information. [CFM-5]
 Info    : Wrote dofile. [CFM-1]
         : Dofile is 'fv/mcu_core_top/rtl_to_fv_map.do'.
         : Alias mapping flow is enabled.
-PBS_TechMap-Datapath Postmap Operations - Elapsed_Time 4, CPU_Time 2.926265000000001
+PBS_TechMap-Datapath Postmap Operations - Elapsed_Time 3, CPU_Time 2.9335880000000145
 stamp 'PBS_TechMap-Datapath Postmap Operations' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  64.8( 64.2) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  64.2( 63.1) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.4(  3.1) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.4) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  31.0( 30.2) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  31.9( 30.9) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:02(00:00:04) |   1.8(  2.5) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Datapath Postmap Operations
+ 00:02:57(00:02:50) |  00:00:02(00:00:03) |   2.0(  2.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Datapath Postmap Operations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
 Info: CPU time includes time of parent + longest thread
-PBS_TechMap-Postmap HBO Optimizations - Elapsed_Time 0, CPU_Time 0.9172769999999844
+PBS_TechMap-Postmap HBO Optimizations - Elapsed_Time 0, CPU_Time -0.07042500000000018
 stamp 'PBS_TechMap-Postmap HBO Optimizations' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  64.4( 64.2) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  64.2( 63.1) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.4(  3.1) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.4) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  30.9( 30.2) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  32.0( 30.9) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:02(00:00:04) |   1.8(  2.5) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Datapath Postmap Operations
+ 00:02:57(00:02:50) |  00:00:02(00:00:03) |   2.0(  2.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Datapath Postmap Operations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.6(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap HBO Optimizations
+ 00:02:57(00:02:50) |  00:00:00(00:00:00) |  -0.0(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6812,28 +6810,28 @@ Info: CPU time includes time of parent + longest thread
  Doing ConstProp on design:mcu_core_top ... 
 
 Time taken by ConstProp Step: 00:00:00
-PBS_TechMap-Postmap Clock Gating - Elapsed_Time 0, CPU_Time 0.0
+PBS_TechMap-Postmap Clock Gating - Elapsed_Time 0, CPU_Time 1.0
 stamp 'PBS_TechMap-Postmap Clock Gating' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  64.4( 64.2) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  63.8( 63.1) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.4(  3.1) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.4) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  30.9( 30.2) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  31.8( 30.9) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:02(00:00:04) |   1.8(  2.5) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Datapath Postmap Operations
+ 00:02:57(00:02:50) |  00:00:02(00:00:03) |   1.9(  2.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Datapath Postmap Operations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.6(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap HBO Optimizations
+ 00:02:57(00:02:50) |  00:00:00(00:00:00) |  -0.0(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap Clock Gating
+ 00:02:58(00:02:50) |  00:00:01(00:00:00) |   0.7(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap Clock Gating
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6893,30 +6891,30 @@ Operation                   Area   Slacks      Slack    Trans      Cap
         setup_dn         0  (        0 /        0 )  0.00
         mb_split         0  (        0 /        0 )  0.00
 
-PBS_TechMap-Postmap Cleanup - Elapsed_Time 1, CPU_Time 0.927755999999988
+PBS_TechMap-Postmap Cleanup - Elapsed_Time 0, CPU_Time -0.05938199999999938
 stamp 'PBS_TechMap-Postmap Cleanup' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  64.1( 63.8) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  63.8( 62.7) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.3(  3.1) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.3) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  30.7( 30.1) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  31.8( 30.7) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:02(00:00:04) |   1.8(  2.5) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Datapath Postmap Operations
+ 00:02:57(00:02:50) |  00:00:02(00:00:03) |   1.9(  2.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Datapath Postmap Operations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.6(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap HBO Optimizations
+ 00:02:57(00:02:50) |  00:00:00(00:00:00) |  -0.0(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap Clock Gating
+ 00:02:58(00:02:50) |  00:00:01(00:00:00) |   0.7(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap Clock Gating
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:00(00:00:01) |   0.6(  0.6) |    1:02:43 (Nov27) |  981.9 MB | PBS_TechMap-Postmap Cleanup
+ 00:02:57(00:02:51) |  00:00:00(00:00:01) |  -0.0(  0.7) |    3:27:08 (Nov27) |  984.6 MB | PBS_TechMap-Postmap Cleanup
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6926,27 +6924,27 @@ stamp 'PBS_Techmap-Post_MBCI' being created for table 'pbs_debug'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:28(00:00:22) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:00:00 (Nov27) |  479.1 MB | PBS_Generic-Start
+ 00:00:26(00:00:21) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:38 (Nov27) |  483.6 MB | PBS_Generic-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:01:45(00:01:44) |  64.1( 63.8) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic_Opt-Post
+ 00:02:03(00:01:55) |  00:01:36(00:01:34) |  63.8( 62.7) |    3:26:12 (Nov27) |  991.3 MB | PBS_Generic_Opt-Post
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:13(00:02:06) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:44 (Nov27) |  960.4 MB | PBS_Generic-Postgen HBO Optimizations
+ 00:02:03(00:01:56) |  00:00:00(00:00:01) |   0.0(  0.7) |    3:26:13 (Nov27) |  991.3 MB | PBS_Generic-Postgen HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:03(00:00:05) |   2.3(  3.1) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Start
+ 00:02:06(00:02:01) |  00:00:02(00:00:05) |   1.9(  3.3) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Start
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:17(00:02:11) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:01:49 (Nov27) |  946.6 MB | PBS_TechMap-Premap HBO Optimizations
+ 00:02:06(00:02:01) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:26:18 (Nov27) |  985.6 MB | PBS_TechMap-Premap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:08(00:03:00) |  00:00:50(00:00:49) |  30.7( 30.1) |    1:02:38 (Nov27) |  967.2 MB | PBS_Techmap-Global Mapping
+ 00:02:54(00:02:47) |  00:00:47(00:00:46) |  31.8( 30.7) |    3:27:04 (Nov27) |  984.6 MB | PBS_Techmap-Global Mapping
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:02(00:00:04) |   1.8(  2.5) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Datapath Postmap Operations
+ 00:02:57(00:02:50) |  00:00:02(00:00:03) |   1.9(  2.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Datapath Postmap Operations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.6(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap HBO Optimizations
+ 00:02:57(00:02:50) |  00:00:00(00:00:00) |  -0.0(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap HBO Optimizations
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:11(00:03:04) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:02:42 (Nov27) |  967.2 MB | PBS_TechMap-Postmap Clock Gating
+ 00:02:58(00:02:50) |  00:00:01(00:00:00) |   0.7(  0.0) |    3:27:07 (Nov27) |  984.6 MB | PBS_TechMap-Postmap Clock Gating
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:00(00:00:01) |   0.6(  0.6) |    1:02:43 (Nov27) |  981.9 MB | PBS_TechMap-Postmap Cleanup
+ 00:02:57(00:02:51) |  00:00:00(00:00:01) |  -0.0(  0.7) |    3:27:08 (Nov27) |  984.6 MB | PBS_TechMap-Postmap Cleanup
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:00(00:00:00) |   0.0(  0.0) |    1:02:43 (Nov27) |  981.9 MB | PBS_Techmap-Post_MBCI
+ 00:02:57(00:02:51) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:27:08 (Nov27) |  984.6 MB | PBS_Techmap-Post_MBCI
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: pbs_debug, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -6956,8 +6954,8 @@ Info: CPU time includes time of parent + longest thread
 ##>----------------------------------------------------------------------------------------
 ##>STEP                           Elapsed       WNS       TNS     Insts      Area    Memory
 ##>----------------------------------------------------------------------------------------
-##>M:Initial                            0         -         -      8888     35372       946
-##>M:Pre Cleanup                        0         -         -      8888     35372       946
+##>M:Initial                            1         -         -      8888     35372       985
+##>M:Pre Cleanup                        0         -         -      8888     35372       985
 ##>M:Setup                              0         -         -         -         -         -
 ##>M:Early Clock Gating                 0         -         -         -         -         -
 ##>M:Launch ST                          0         -         -         -         -         -
@@ -6972,16 +6970,16 @@ Info: CPU time includes time of parent + longest thread
 ##>M:Timer                              0         -         -         -         -         -
 ##>M:Assembly                           0         -         -         -         -         -
 ##>M:DFT                                0         -         -         -         -         -
-##>M:DP Operations                      4         -         -      5349     22476       967
-##>M:Const Prop                         0       691         0      5349     22476       967
-##>M:Cleanup                            1       691         0      5348     22473       981
-##>M:MBCI                               0         -         -      5348     22473       981
+##>M:DP Operations                      3         -         -      5349     22476       984
+##>M:Const Prop                         0       691         0      5349     22476       984
+##>M:Cleanup                            0       691         0      5348     22473       984
+##>M:MBCI                               0         -         -      5348     22473       984
 ##>M:PostGen Opt                        0         -         -         -         -         -
 ##>M:Early Clock Gating Cleanup         0         -         -         -         -         -
 ##>M:Const Gate Removal                 0         -         -         -         -         -
-##>M:Misc                              49
+##>M:Misc                              47
 ##>----------------------------------------------------------------------------------------
-##>Total Elapsed                       54
+##>Total Elapsed                       51
 ##>========================================================================================
 Info    : Relaxed some design requirements on sequential instances to run synthesis successfully. [MAP-32]
         : One or more of the following design requirements relaxed on 17 sequential instance(s): map_prefer_non_inverted_clock_line.
@@ -6996,13 +6994,13 @@ stamp 'MAPPED' being created for table 'default'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:08(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    0:59:38 (Nov27) |  214.5 MB | init
+ 00:00:07(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:17 (Nov27) |  212.8 MB | init
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:18(00:00:10) |  00:00:10(00:00:10) |   5.4(  5.4) |    0:59:48 (Nov27) |  417.9 MB | Elaboration
+ 00:00:17(00:00:10) |  00:00:10(00:00:10) |   5.8(  5.8) |    3:24:27 (Nov27) |  417.7 MB | Elaboration
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:14(00:02:06) |  00:01:56(00:01:56) |  63.3( 62.7) |    1:01:44 (Nov27) |  960.4 MB | GENERIC
+ 00:02:03(00:01:56) |  00:01:46(00:01:46) |  62.2( 62.0) |    3:26:13 (Nov27) |  991.3 MB | GENERIC
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:57(00:00:59) |  31.3( 31.9) |    1:02:43 (Nov27) |  981.9 MB | MAPPED
+ 00:02:57(00:02:51) |  00:00:54(00:00:55) |  32.0( 32.2) |    3:27:08 (Nov27) |  984.6 MB | MAPPED
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: default, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -7015,9 +7013,9 @@ Warning : The filename, column and line number information will not be available
   report timing -cost_group [list $cg] > ${RPT_DIR}/05_[basename $cg]_post_syn_map.rpt
   }
 @file(syn_mcu_core_top.tcl) 151: write_snapshot -outdir ${RPT_DIR} -tag syn_map
-%# Begin write_snapshot (11/27 01:02:43, mem=1893.56M)
-%# Begin qos_stats (11/27 01:02:43, mem=1893.56M)
-%# End qos_stats (11/27 01:02:44, total cpu=17:00:01, real=17:00:01, peak res=992.20M, current mem=1893.56M)
+%# Begin write_snapshot (11/27 03:27:09, mem=1892.00M)
+%# Begin qos_stats (11/27 03:27:09, mem=1892.00M)
+%# End qos_stats (11/27 03:27:09, total cpu=17:00:01, real=17:00:00, peak res=991.30M, current mem=1892.00M)
 Warning : A required object parameter could not be found. [TUI-78]
         : An object named "" could not be found for attribute 'name'.
 Warning : A required object parameter could not be found. [TUI-78]
@@ -7056,17 +7054,17 @@ Norm Cong Hotspot Area:
   Max Cong:                  no_value        no_value
   Tot Cong:                  no_value        no_value
 ================================================================================
-CPU  Runtime (h:m:s):        00:02:14        00:01:16
-Real Runtime (h:m:s):        00:02:07        00:00:58
-CPU  Elapsed (h:m:s):        00:02:23        00:03:39
-Real Elapsed (h:m:s):        00:02:12        00:03:10
-Memory (MB):                  1895.50         1893.56
+CPU  Runtime (h:m:s):        00:02:04        00:01:11
+Real Runtime (h:m:s):        00:01:56        00:00:56
+CPU  Elapsed (h:m:s):        00:02:12        00:03:23
+Real Elapsed (h:m:s):        00:02:00        00:02:55
+Memory (MB):                  1891.94         1892.00
 ================================================================================
 ================================================================================
 Flow Settings:
 ================================================================================
-Total Runtime (h:m:s): 00:03:06
-Total Memory (MB):     1893.56
+Total Runtime (h:m:s): 00:02:52
+Total Memory (MB):     1892.00
 Executable Version:    22.17-s071_1
 ================================================================================
 Total Cell Area =  Cell Area + Physical Cell Area
@@ -7101,11 +7099,11 @@ Info   : PWRA-0009 [PwrInfo] Power Computation Progress Report :   0%   1%
 Info   : PWRA-0002 Finished power computation.
 Info   : PWRA-0007 [PwrInfo] Completed successfully.
        : Info=6, Warn=2, Error=0, Fatal=0
-Finished exporting design database to file './report/syn_map_mcu_core_top.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:00).
+Finished exporting design database to file './report/syn_map_mcu_core_top.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:01).
 Finished generating snapshot at stage syn_map (command execution time mm:ss cpu = 00:01, real = 00:03).
-%# End write_snapshot (11/27 01:02:46, total cpu=17:00:01, real=17:00:03, peak res=992.20M, current mem=1893.56M)
+%# End write_snapshot (11/27 03:27:12, total cpu=17:00:01, real=17:00:03, peak res=991.30M, current mem=1892.00M)
 @file(syn_mcu_core_top.tcl) 155: write_db -to_file ${MAPPED_DIR}/syn_map.db
-Finished exporting design database to file './mapped/syn_map.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:01).
+Finished exporting design database to file './mapped/syn_map.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:00).
 @file(syn_mcu_core_top.tcl) 161: syn_opt ; #This command can't write report by using the mark '>'
 Current PLE settings:
 
@@ -7417,14 +7415,14 @@ Operation                   Area   Slacks      Slack    Trans      Cap
            undup         0  (        0 /        0 )  0.01
          rem_buf         4  (        4 /        4 )  0.01
          rem_inv        11  (        7 /        7 )  0.04
-        merge_bi         2  (        2 /        2 )  0.02
-      rem_inv_qb        24  (       13 /       13 )  0.18
-    seq_res_area        65  (       10 /       10 )  11.02
-        io_phase        31  (       17 /       17 )  0.18
+        merge_bi         2  (        2 /        2 )  0.03
+      rem_inv_qb        24  (       13 /       13 )  0.17
+    seq_res_area        65  (       10 /       10 )  10.83
+        io_phase        31  (       17 /       17 )  0.17
        gate_comp       140  (       36 /       36 )  0.75
        gcomp_mog         7  (        0 /        0 )  0.12
-       glob_area        93  (       52 /       93 )  1.33
-       area_down       203  (       28 /       28 )  1.21
+       glob_area        93  (       52 /       93 )  1.34
+       area_down       203  (       28 /       28 )  1.22
       size_n_buf         3  (        0 /        0 )  0.06
   gate_deco_area         0  (        0 /        0 )  0.00
          rem_buf         0  (        0 /        0 )  0.00
@@ -7604,9 +7602,9 @@ Operation                   Area   Slacks      Slack    Trans      Cap
         merge_bi         0  (        0 /        0 )  0.01
       rem_inv_qb         0  (        0 /        0 )  0.00
         io_phase        14  (        0 /        0 )  0.02
-       gate_comp        98  (        0 /        0 )  0.38
-       gcomp_mog         7  (        0 /        0 )  0.11
-       glob_area        71  (        8 /       71 )  1.60
+       gate_comp        98  (        0 /        0 )  0.39
+       gcomp_mog         7  (        0 /        0 )  0.12
+       glob_area        71  (        8 /       71 )  1.38
        area_down       192  (        6 /        6 )  0.88
       size_n_buf         0  (        0 /        0 )  0.03
   gate_deco_area         0  (        0 /        0 )  0.00
@@ -7747,9 +7745,9 @@ No max_transition rule violations.
 No max_fanout rule violations.
 
 @file(syn_mcu_core_top.tcl) 167: write_snapshot -outdir ${RPT_DIR} -tag syn_opt
-%# Begin write_snapshot (11/27 01:03:07, mem=1894.39M)
-%# Begin qos_stats (11/27 01:03:07, mem=1894.39M)
-%# End qos_stats (11/27 01:03:07, total cpu=17:00:00, real=17:00:00, peak res=992.20M, current mem=1894.39M)
+%# Begin write_snapshot (11/27 03:27:32, mem=1893.84M)
+%# Begin qos_stats (11/27 03:27:32, mem=1893.84M)
+%# End qos_stats (11/27 03:27:32, total cpu=17:00:01, real=17:00:00, peak res=1000.60M, current mem=1893.84M)
 Warning : A required object parameter could not be found. [TUI-78]
         : An object named "" could not be found for attribute 'name'.
 Warning : A required object parameter could not be found. [TUI-78]
@@ -7788,17 +7786,17 @@ Norm Cong Hotspot Area:
   Max Cong:                  no_value        no_value        no_value
   Tot Cong:                  no_value        no_value        no_value
 ================================================================================
-CPU  Runtime (h:m:s):        00:02:14        00:01:16        00:00:23
-Real Runtime (h:m:s):        00:02:07        00:00:58        00:00:24
-CPU  Elapsed (h:m:s):        00:02:23        00:03:39        00:04:01
-Real Elapsed (h:m:s):        00:02:12        00:03:10        00:03:33
-Memory (MB):                  1895.50         1893.56         1894.39
+CPU  Runtime (h:m:s):        00:02:04        00:01:11        00:00:22
+Real Runtime (h:m:s):        00:01:56        00:00:56        00:00:23
+CPU  Elapsed (h:m:s):        00:02:12        00:03:23        00:03:45
+Real Elapsed (h:m:s):        00:02:00        00:02:55        00:03:18
+Memory (MB):                  1891.94         1892.00         1893.84
 ================================================================================
 ================================================================================
 Flow Settings:
 ================================================================================
-Total Runtime (h:m:s): 00:03:29
-Total Memory (MB):     1894.39
+Total Runtime (h:m:s): 00:03:15
+Total Memory (MB):     1893.84
 Executable Version:    22.17-s071_1
 ================================================================================
 Total Cell Area =  Cell Area + Physical Cell Area
@@ -7829,13 +7827,13 @@ Warning: PWRA-0302 [PwrWarn] Frequency scaling is not applicable for vectorless
 Warning: PWRA-0304 [PwrWarn] -stim option is not applicable with vectorless mode
        : of power analysis, ignored this option.
 Info   : PWRA-0002 Started 'vectorless' power computation.
-Info   : PWRA-0009 [PwrInfo] Power Computation Progress Report :   0%   1%   2%   3%   4%   5%   6%   7%   8%   9%  10%  11%  12%  13%  14%  15%  16%  17%  18%  19%  20%  21%  22%  23%  24%  25%  26%  27%  28%  29%  30%  31%  32%  33%  34%  35%  36%  37%  38%  39%  40%  41%  42%  43%  44%  45%  46%  47%  48%  49%  50%  51%  52%  53%  54%  55%  56%  57%  58%  59%  60%  61%  62%  63%  64%  65%  66%  67%  68%  69%  70%  71%  72%  73%  74%  75%  76%  77%  78%  79%  80%  81%  82%  83%  84%  85%  86%  87%  88%  89%  90%  91%  92%  93%  94%  95%  96%  97%  98%  99% 100%
+Info   : PWRA-0009 [PwrInfo] Power Computation Progress Report :   0%   1%   2%   3%   4%   5%   6%   7%   8%   9%  10%  11%  12%  13%  14%  15%  16%  17%  18%  19%  20%  21%  22%  23%  24%  25%  26%  27%  28%  29%  30%  31%  32%  33%  34%  35%  36%  37%  38%  39%  40%  41%  42%  43%  44%  45%  46%  47%  48%  49%  50%  51%  52%  53%  54%  55%  56%  57%Finished exporting design database to file './report/syn_opt_mcu_core_top.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:01).
+  58%  59%  60%  61%  62%  63%  64%  65%  66%  67%  68%  69%  70%  71%  72%  73%  74%  75%  76%  77%  78%  79%  80%  81%  82%  83%  84%  85%  86%  87%  88%  89%  90%  91%  92%  93%  94%  95%  96%  97%  98%  99% 100%
 Info   : PWRA-0002 Finished power computation.
 Info   : PWRA-0007 [PwrInfo] Completed successfully.
        : Info=6, Warn=2, Error=0, Fatal=0
-Finished exporting design database to file './report/syn_opt_mcu_core_top.db' for 'mcu_core_top' (command execution time mm:ss cpu = 00:00, real = 00:01).
 Finished generating snapshot at stage syn_opt (command execution time mm:ss cpu = 00:01, real = 00:03).
-%# End write_snapshot (11/27 01:03:10, total cpu=17:00:01, real=17:00:03, peak res=992.20M, current mem=1894.39M)
+%# End write_snapshot (11/27 03:27:35, total cpu=17:00:01, real=17:00:03, peak res=1000.60M, current mem=1893.84M)
 @file(syn_mcu_core_top.tcl) 171: puts "Runtime & Memory after syn_opt"
 Runtime & Memory after syn_opt
 @file(syn_mcu_core_top.tcl) 172: time_info OPT
@@ -7843,15 +7841,15 @@ stamp 'OPT' being created for table 'default'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:08(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    0:59:38 (Nov27) |  214.5 MB | init
+ 00:00:07(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:17 (Nov27) |  212.8 MB | init
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:18(00:00:10) |  00:00:10(00:00:10) |   4.8(  4.7) |    0:59:48 (Nov27) |  417.9 MB | Elaboration
+ 00:00:17(00:00:10) |  00:00:10(00:00:10) |   5.1(  5.1) |    3:24:27 (Nov27) |  417.7 MB | Elaboration
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:14(00:02:06) |  00:01:56(00:01:56) |  56.2( 54.7) |    1:01:44 (Nov27) |  960.4 MB | GENERIC
+ 00:02:03(00:01:56) |  00:01:46(00:01:46) |  54.8( 53.5) |    3:26:13 (Nov27) |  991.3 MB | GENERIC
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:57(00:00:59) |  27.8( 27.8) |    1:02:43 (Nov27) |  981.9 MB | MAPPED
+ 00:02:57(00:02:51) |  00:00:54(00:00:55) |  28.1( 27.8) |    3:27:08 (Nov27) |  984.6 MB | MAPPED
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:36(00:03:32) |  00:00:23(00:00:27) |  11.2( 12.7) |    1:03:10 (Nov27) |  967.0 MB | OPT
+ 00:03:21(00:03:18) |  00:00:23(00:00:27) |  12.0( 13.6) |    3:27:35 (Nov27) |  985.9 MB | OPT
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: default, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -7864,7 +7862,7 @@ Finished exporting design database to file './mapped/syn_opt.db' for 'mcu_core_t
 @file(syn_mcu_core_top.tcl) 181: echo -n "\n TIMEX > Compile is completed :            ";
 
  TIMEX > Compile is completed :            @file(syn_mcu_core_top.tcl) 182: sh date
-Fri Nov 27 01:03:11 KST 2026
+Fri Nov 27 03:27:36 KST 2026
 @file(syn_mcu_core_top.tcl) 188: report_analysis_views -type all           > ${RPT_DIR}/08_${TOP_DESIGN}_SYN_analysis_view.rpt 
 @file(syn_mcu_core_top.tcl) 189: report_area                               > ${RPT_DIR}/09_${TOP_DESIGN}_SYN_area.rpt 
 @file(syn_mcu_core_top.tcl) 190: report_clocks                             > ${RPT_DIR}/10_${TOP_DESIGN}_SYN_clock.rpt 
@@ -7954,17 +7952,17 @@ Norm Cong Hotspot Area:
   Max Cong:                  no_value        no_value        no_value
   Tot Cong:                  no_value        no_value        no_value
 ================================================================================
-CPU  Runtime (h:m:s):        00:02:14        00:01:16        00:00:23
-Real Runtime (h:m:s):        00:02:07        00:00:58        00:00:24
-CPU  Elapsed (h:m:s):        00:02:23        00:03:39        00:04:01
-Real Elapsed (h:m:s):        00:02:12        00:03:10        00:03:33
-Memory (MB):                  1895.50         1893.56         1894.39
+CPU  Runtime (h:m:s):        00:02:04        00:01:11        00:00:22
+Real Runtime (h:m:s):        00:01:56        00:00:56        00:00:23
+CPU  Elapsed (h:m:s):        00:02:12        00:03:23        00:03:45
+Real Elapsed (h:m:s):        00:02:00        00:02:55        00:03:18
+Memory (MB):                  1891.94         1892.00         1893.84
 ================================================================================
 ================================================================================
 Flow Settings:
 ================================================================================
-Total Runtime (h:m:s): 00:03:38
-Total Memory (MB):     1927.22
+Total Runtime (h:m:s): 00:03:24
+Total Memory (MB):     1926.67
 Executable Version:    22.17-s071_1
 ================================================================================
 Total Cell Area =  Cell Area + Physical Cell Area
@@ -7976,7 +7974,7 @@ Total Instances =  Leaf Instances + Physical Instances
 @file(syn_mcu_core_top.tcl) 211: write_design -basename ${MAPPED_DIR}/${TOP_DESIGN}_mapped
 (write_design): Writing Genus content. Constraint interface is 'smsc'
 Exporting design data for 'mcu_core_top' to ./mapped/mcu_core_top_mapped...
-%# Begin write_design (11/27 01:03:16, mem=1928.22M)
+%# Begin write_design (11/27 03:27:41, mem=1927.67M)
       flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
 UM:*                                                                   write_design
   Setting attribute of root '/': 'set_boundary_change' = 
@@ -7986,9 +7984,9 @@ Finished SDC export (command execution time mm:ss (real) = 00:00).
 Info: file ./mapped/mcu_core_top_mapped.default_emulate_constraint_mode.sdc has been written
 Info: file ./mapped/mcu_core_top_mapped.default_emulate_constraint_mode.sdc has been written
 ** To load the database source ./mapped/mcu_core_top_mapped.genus_setup.tcl in an Genus(TM) Synthesis Solution session.
-Finished exporting design data for 'mcu_core_top' (command execution time mm:ss cpu = 00:01, real = 00:04).
+Finished exporting design data for 'mcu_core_top' (command execution time mm:ss cpu = 00:01, real = 00:03).
 .
-%# End write_design (11/27 01:03:20, total cpu=17:00:01, real=17:00:04, peak res=992.20M, current mem=1928.22M)
+%# End write_design (11/27 03:27:44, total cpu=17:00:01, real=17:00:03, peak res=1165.30M, current mem=1926.67M)
 @file(syn_mcu_core_top.tcl) 212: write_hdl  > ${MAPPED_DIR}/${TOP_DESIGN}_syn_final.v
 @file(syn_mcu_core_top.tcl) 213: write_sdc  > ${MAPPED_DIR}/${TOP_DESIGN}_syn_final.sdc
 Finished SDC export (command execution time mm:ss (real) = 00:00).
@@ -7996,7 +7994,7 @@ Finished SDC export (command execution time mm:ss (real) = 00:00).
 @file(syn_mcu_core_top.tcl) 223: echo -n "\n TIMEX > End :             " ;
 
  TIMEX > End :             @file(syn_mcu_core_top.tcl) 224: sh date
-Fri Nov 27 01:03:23 KST 2026
+Fri Nov 27 03:27:47 KST 2026
 @file(syn_mcu_core_top.tcl) 226: puts "Final Runtime & Memory."
 Final Runtime & Memory.
 @file(syn_mcu_core_top.tcl) 227: time_info FINAL
@@ -8004,17 +8002,17 @@ stamp 'FINAL' being created for table 'default'
 
   Total Time (Wall) |  Stage Time (Wall)  |   % (Wall)   |    Date - Time     |  Memory   | Stage
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:08(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    0:59:38 (Nov27) |  214.5 MB | init
+ 00:00:07(00:00:00) |  00:00:00(00:00:00) |   0.0(  0.0) |    3:24:17 (Nov27) |  212.8 MB | init
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:00:18(00:00:10) |  00:00:10(00:00:10) |   4.6(  4.4) |    0:59:48 (Nov27) |  417.9 MB | Elaboration
+ 00:00:17(00:00:10) |  00:00:10(00:00:10) |   4.9(  4.8) |    3:24:27 (Nov27) |  417.7 MB | Elaboration
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:02:14(00:02:06) |  00:01:56(00:01:56) |  53.6( 51.6) |    1:01:44 (Nov27) |  960.4 MB | GENERIC
+ 00:02:03(00:01:56) |  00:01:46(00:01:46) |  52.1( 50.5) |    3:26:13 (Nov27) |  991.3 MB | GENERIC
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:12(00:03:05) |  00:00:57(00:00:59) |  26.6( 26.2) |    1:02:43 (Nov27) |  981.9 MB | MAPPED
+ 00:02:57(00:02:51) |  00:00:54(00:00:55) |  26.8( 26.2) |    3:27:08 (Nov27) |  984.6 MB | MAPPED
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:36(00:03:32) |  00:00:23(00:00:27) |  10.6( 12.0) |    1:03:10 (Nov27) |  967.0 MB | OPT
+ 00:03:21(00:03:18) |  00:00:23(00:00:27) |  11.4( 12.9) |    3:27:35 (Nov27) |  985.9 MB | OPT
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
- 00:03:46(00:03:45) |  00:00:10(00:00:13) |   4.6(  5.8) |    1:03:23 (Nov27) |  972.0 MB | FINAL
+ 00:03:31(00:03:30) |  00:00:10(00:00:12) |   4.9(  5.7) |    3:27:47 (Nov27) |  990.9 MB | FINAL
 --------------------+---------------------+--------------+--------------------+-----------+----------------------
 Number of threads: 2 * 1   (id: default, time_info v1.57)
 Info: (*N*) indicates data that was populated from previously saved time_info database
@@ -8027,14 +8025,13 @@ Synthesis Finished .........
 ============================
 #@ End verbose source ./script/syn_mcu_core_top.tcl
 WARNING: This version of the tool is 805 days old.
-@genus:root: 2> gui_raise
+@genus:root: 2> gui_show
 GTD-INFO: Parsing file top.mtarpt...
-@genus:root: 3> 
-@genus:root: 3> exit
+GTD-INFO: Parsing file top.mtarpt...
 
 Lic Summary:
-[02:56:19.453729] Cdslmd servers: kopo-seongnam
-[02:56:19.453736] Feature usage summary:
-[02:56:19.453736] Genus_Synthesis
+[04:04:58.122857] Cdslmd servers: kopo-seongnam
+[04:04:58.122872] Feature usage summary:
+[04:04:58.122873] Genus_Synthesis
 
 Normal exit.
