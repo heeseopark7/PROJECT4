@@ -17,7 +17,7 @@
 | `V1` | 패드 포함 완성본 | 완료 | `v1-pad` |
 | `V2` | 패드 없는 코어 단독 기준선 | 완료 | `v2-core` |
 | `V3` | 가산기 구조 교체(Kogge-Stone) + 4 ns PnR closure | 완료 | `v3` (사용자 로컬) |
-| **`V4`** | **주소 디코드 레지스터화 (V3 기반)** | **시작 전** | `v4` |
+| **`V4`** | **주소 디코드 레지스터화 (V3 기반)** | **진행 중 (RTL, 기능 시뮬 완료)** | `v4` |
 | `V5`, `V6` | 전력/면적 축(이용률 sweep 등), SPI FIFO | 선택/후순위 | |
 
 ## 3. V4 범위, 가설, 기준
@@ -29,6 +29,7 @@
   - V3 10 ns 최악 경로: `r_pc_reg_8` → ROM → CPU(`u_add`) → **주소 디코드(1.012 ns) → UART 레지스터(0.514) → TX FIFO(1.397)** → `r_count_reg_4`.
   - V3 4 ns Tempus 최악 경로도 같은 계열(… → 주소 디코드 0.469 → UART 레지스터 0.212 → RX FIFO 0.444).
   - 단, 4 ns에서는 **RAM 읽기 → 레지스터 파일 계열**(V2 4 ns 위반 경로, V3 preCTS 최악 경로)도 경계에서 경쟁한다. 이 경로는 V4로 줄지 않는다. 그래서 "클럭은 조금 빨라지지만 사이클 증가를 상쇄하지 못할 수 있다"는 것도 열린 결과로 둔다 (추정).
+- **사이클 증가 측정 결과 (기능 시뮬, xrun 확인):** 처음 예상(APB 204회 그대로, 총 클럭 약 1,046)과 달리 **총 클럭 856(V3 842, +14, +1.7%)**, APB 접근 166회(V3 204)였다. 테스트 프로그램이 UART 수신(UARTFR RXFE)과 SPI 완료(SPSR DONE, slave RX valid)를 **폴링으로 기다리는** 구조라서, 대기 시간은 보드레이트와 SPI 분주(클럭 수 고정)로 정해지고 lw가 1클럭 길어진 만큼 폴링 횟수만 줄었다. 따라서 이 워크로드에서 V4의 사이클 비용은 작고, 실행 시간 비교는 최소 주기에 거의 좌우된다 (V4가 이기려면 최소 주기 < 약 3.90 ns, 7장). 단, 이것은 **I/O 대기 위주 프로그램**의 결과이며 APB 접근이 연산과 겹치지 않는 워크로드(대기 없는 연속 접근)에서는 접근당 +1클럭이 그대로 늘어난다는 점을 함께 적는다.
 
 ## 4. 현재 구조 (V3 RTL, 바꾸기 전)
 `V3/TOP/1_RTL/mcu_top.v`
@@ -60,9 +61,11 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 `2_SIM/4_TESTBENCH/tb_mcu_top.v` (`function_sim` 모니터, 165~178번 줄 근처)
 - `n_stall`은 `stall && !penable`인 **클럭 수**를 센다. 3클럭 방식에서는 접근당 2가 되어 **`check("stall = penable", n_stall == n_pen)`가 FAIL**한다. 3클럭 기준(예: `n_stall == 2*n_pen`, 또는 stall 상승 에지 수)으로 고쳐야 한다.
 - "PENABLE은 1클럭", "PENABLE과 stall 동시 금지" 체크는 그대로 유효하다.
-- RAM 4곳, 최종 pc 0xAC, UART 0x41, SPI A5/3C, `info: APB accesses = 204`는 같아야 한다.
-- 총 실행 클럭은 테스트벤치 `cyc`(V3 842)로 비교한다. 예상 약 **1,046**(842 + 204, 계산값). 표시가 필요하면 `cyc`를 출력하는 줄을 추가.
-- 테스트벤치 수정은 기능 변경이 아니라 프로토콜 변경에 맞춘 체크 조정이다. README에 기록한다.
+- RAM 4곳, 최종 pc 0xAC, UART 0x41, SPI A5/3C는 같아야 한다.
+- **실제 수정 (완료):** 226번 줄 체크를 `check("stall = 2 x penable", n_stall == 2*n_pen ...)`로 변경, 헤더 주석 27~28번 줄 갱신, `$display("info : total clocks = %0d", cyc)` 한 줄 추가. 나머지 체크는 그대로.
+- **결과 (xrun 확인):** PASS, APB 접근 **166**(V3 204), 총 클럭 **856**(V3 842), 종료 8,785 ns(V3 8,645 ns). 처음 예상했던 "APB 204회 동일, 약 1,046클럭(842 + 204)"은 폴링 루프를 고려하지 않은 계산이라 틀렸다 (3장).
+- `1_FUNCTION/run_function.tcl`은 수정 없음 (새 파일이 없어 RTL 목록 동일).
+- 테스트벤치 수정은 기능 변경이 아니라 프로토콜 변경에 맞춘 체크 조정이다.
 
 ## 7. V3 기준값 (비교 대상, 모두 `V3/README.md`·`V3/V3_정리.md`에서 로그 확인)
 | 지표 | V3 |
@@ -70,7 +73,7 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 | 총 실행 클럭 (`cyc`) / APB 접근 | 842 / 204 |
 | 합성 10 ns slack / 셀 면적 / FF | +1.8 ps / 22,019.670 µm² / 1,816 |
 | 합성 통과 최소 주기 | **3.97 ns** (3.95 실패, 3.9 실패, 4.0 통과) |
-| 실행 시간 (842 × 3.97) | 약 **3,343 ns** → V4가 이기려면 최소 주기 < 약 3.20 ns (3,343 / 1,046) |
+| 실행 시간 (842 × 3.97) | 약 **3,343 ns** → V4(856클럭)가 이기려면 최소 주기 < 약 **3.90 ns** (3,343 / 856, 계산값). 처음 적었던 3.20 ns(3,343 / 1,046)는 틀린 예상 클럭 기준 |
 | 10 ns PnR setup / hold | +0.341 / +0.009 ns |
 | 10 ns 코어 / Density / 정적 전력 | 36,734 µm² / 61.753% / 0.694 mW (8 ns 기준) |
 | 10 ns 클럭 버퍼 / skew | 141 / 0.084, 0.029 ns |
@@ -87,12 +90,12 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 | 이용률 sweep | V4 범위 아님 (V5 후보, `V3/PD_실험_계획.md` 2장) |
 
 ## 9. 작업 순서와 체크리스트
-- [ ] 0. 루트 `CLAUDE.md`의 "현재 작업"을 V4로 변경 (사용자 요청 시)
-- [ ] 1. `V4/TOP` 폴더 세팅 (8장 기준, 사용자)
-- [ ] 2. RTL 수정: `apb_bridge.v`, `mcu_top.v` (사용자, Claude 안내)
-- [ ] 3. 테스트벤치 체크 조정 (6장)
-- [ ] 4. iverilog 회귀: PASS, RAM/pc/UART/SPI 값 동일, 총 클럭 측정 (요청 시 Claude)
-- [ ] 5. xrun 기능 시뮬, APB 3클럭(DECODE/SETUP/ACCESS) 파형 캡처
+- [x] 0. 루트 `CLAUDE.md`의 "현재 작업"을 V4로 변경
+- [ ] 1. `V4/TOP` 폴더 세팅 (8장 기준, 사용자): `1_RTL`, `2_SIM` 완료. `3_SYN`, `4_EC`, `5_PNR`은 저장소에 아직 없음
+- [x] 2. RTL 수정: `apb_bridge.v`, `mcu_top.v`
+- [x] 3. 테스트벤치 체크 조정 (6장)
+- [x] 4. iverilog 회귀: PASS, RAM/pc/UART/SPI 값 동일, APB 166, 총 클럭 856
+- [x] 5. xrun 기능 시뮬 PASS, 캡처 6장 (전체, APB 3클럭, 폴링 루프, UART, SPI, 콘솔)
 - [ ] 6. 합성 10 ns, EC(RTL ↔ 합성), 짧은 sweep (V3와 같은 주기 우선)
 - [ ] 7. pre-layout 시뮬 (10 ns 합성 결과로 `mapped/` 복원 확인)
 - [ ] 8. PnR 10 ns (0~5), Tempus, EC(합성 ↔ PnR), post-layout 시뮬 worst/best
@@ -131,12 +134,25 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 - V3와 같은 구성으로 찍되, V4 고유 캡처를 추가한다: **APB 3클럭 파형**(DECODE/SETUP/ACCESS, stall, PENABLE, PSEL, 레지스터된 PADDR), **총 실행 클럭 비교**, 최악 경로에서 주소 디코드~FIFO 구간이 사라졌는지.
 
 ## 13. 진행 기록
-(작업하면서 채운다)
+- [x] **CLAUDE.md 갱신:** 현재 작업을 V4로 변경 (V3 완료, V4 진행 중, 수정 금지 대상에 V3 추가).
+- [x] **RTL 수정** (`1_RTL`, 나머지 20개 파일은 V3와 동일):
+  - `apb_bridge.v`: FF 1개(`r_access`) → 2비트 `r_state` (S_IDLE=0/DECODE, S_SETUP=1, S_ACCESS=2, ACCESS 다음은 무조건 IDLE). `o_capture = i_req & (state==IDLE)` 포트 추가, `o_psel = SETUP|ACCESS`, `o_penable = ACCESS`(둘 다 FF 출력, `i_req` 무관), `o_stall = i_req & (state != ACCESS)`.
+  - `mcu_top.v`: 디코드 레지스터 `r_psel_uart/spi/slv`, `r_pwrite`, `r_paddr[9:0]`, `r_pwdata[31:0]`(47비트)를 `w_capture`에 저장. 슬레이브 3개의 PSEL = `r_psel_* & w_psel`, PWRITE/PADDR/PWDATA = 레지스터 출력. `memout`의 APB 쪽 선택을 `r_psel_*`로. 조합 디코드(`w_in_apb`, `w_req`, `w_psel_*`)와 RAM 쓰기 enable은 그대로. `uut4.o_psel`을 `w_psel`에 연결.
+  - 슬레이브는 모두 `psel & penable`(ACCESS)에서만 읽기/쓰기를 하므로(`reg_block.v` 129~130, `spi_regs.v` 99, `spis_regs.v` 96) 수정 불필요.
+  - 예상 FF 증가: 상태 +1, 디코드 레지스터 +47 → 최대 +48 (계산값). PWDATA 중 슬레이브가 안 쓰는 비트는 합성에서 제거될 수 있어 실제 FF 수는 합성 결과로 확인.
+  - RTL 코드 캡처 5장 (`apb_bridge` 상태 머신, 조합 디코드, 디코드 레지스터, UART 슬레이브 연결, `memout` mux).
+- [x] **테스트벤치 조정:** 6장. iverilog와 xrun 결과 동일.
+- [x] **기능 시뮬 (xrun) PASS:** RAM[0~3] = 0x37/0x41/0x3C/0xA5, 최종 pc 0xAC, `stall = 2 x penable` ok, **APB 접근 166, 총 클럭 856**, UARTTXD 0x41 1프레임, SCLK 8, MOSI 0xA5, MISO 0x3C, **8,785 ns 종료** (V3 8,645 ns).
+  - APB 3클럭 파형: sw UARTIBRD에서 DECODE 375~385, SETUP 385~395, ACCESS 395~405 ns (Baseline 375 → 405 ns, 30 ns). w_stall 2클럭, w_penable 1클럭(겹치지 않음), pc 0x20 3클럭 정지, 385 ns에 r_paddr 0x009 / r_pwdata 0x4 / r_pwrite 1. 이어서 sw UARTCR(0x00C/0x381), lw UARTFR(0x006, r_pwrite 0)도 같은 패턴.
+  - UARTFR 폴링 루프: lw 3 + andi 1 + bne 1 = 5클럭(50 ns, w_penable 555 → 605 ns). V3는 4클럭(40 ns). ACCESS의 memout 0x18 → 0x98 (PL011 UARTFR 비트 해석은 RTL 레지스터 정의로 미확인).
+  - UART: start bit 575 ns(V3 525 ns), stop bit 시작 6,335 ns, 비트당 640 ns, tx_byte 0x41, r_ram[1]=65.
+  - SPI: 첫 SCLK 상승 7,105 ns, 8번째 8,225 ns(V3 8,135 ns), 1,120 ns = 7 × 160 ns. MOSI 0xA5, MISO 0x3C, r_ram[2]=60, r_ram[3]=165.
+  - 해석: 3장 "사이클 증가 측정 결과".
 
 ## 14. 비교표 (V3 vs V4)
 | 지표 | V3 | V4 | 차이 |
 |---|---|---|---|
-| 총 실행 클럭 | 842 | | |
+| 총 실행 클럭 (APB 접근) | 842 (204) | 856 (166) | +14 (+1.7%) |
 | 합성 10 ns slack / 셀 면적 / FF | +1.8 ps / 22,019.670 / 1,816 | | |
 | 합성 통과 최소 주기 | 3.97 ns | | |
 | 실행 시간 (클럭 × 최소 주기) | 약 3,343 ns | | |
@@ -146,7 +162,7 @@ APB 접근을 **2클럭 → 3클럭**으로 늘리고 첫 클럭에 디코드 �
 | 정적 전력 (10 ns, 8 ns 기준) | 0.694 mW | | |
 | DRC / 연결성 | 0 / 0 | | |
 | EC (RTL↔합성, 합성↔PnR) | PASS / PASS | | |
-| RTL / pre / post 시뮬 | PASS | | |
+| RTL / pre / post 시뮬 | PASS | PASS / - / - | |
 
 ## 15. 사용자 선호 / 작업 방식
 - **가이드 우선, 시킨 것만 한다.** 사용자가 직접 수정/실행하고, Claude는 지시 전에 파일을 수정하지 않는다. 요청 범위 밖에서 고칠 곳을 발견하면 위치와 이유만 알린다.
