@@ -98,7 +98,7 @@ reg                 r_psel_spi                          ;   // [SPI]  registered
 reg                 r_psel_slv                          ;   // [SLV]  registered slot 2 select
 reg                 r_pwrite                            ;   // registered PWRITE (w_wmem)
 reg     [9:0]       r_paddr                             ;   // registered PADDR (aluout[11:2])
-reg     [31:0]      r_pwdata                            ;   // registered PWDATA (w_data)
+reg     [15:0]      r_pwdata                            ;   // registered PWDATA (w_data[15:0], slaves use [15:0] only)
 
 //------------------------------------------------------------------------------
 // Address decoder
@@ -163,6 +163,8 @@ apb_bridge  uut4    (
 // [V4] Decode registers
 //   Loaded in the DECODE clock (w_capture). The CPU is stalled during DECODE
 //   and SETUP, so aluout / w_data / w_wmem do not change until ACCESS ends.
+//   PWDATA keeps only [15:0]: the widest field any slave writes is UART IBRD
+//   [15:0], so bits [31:16] would be unloaded flip-flops.
 //------------------------------------------------------------------------------
 always @(posedge clk or negedge clrn) begin
     if (!clrn)  begin
@@ -171,7 +173,7 @@ always @(posedge clk or negedge clrn) begin
         r_psel_slv  <=  1'b0            ;
         r_pwrite    <=  1'b0            ;
         r_paddr     <=  10'd0           ;
-        r_pwdata    <=  32'd0           ;
+        r_pwdata    <=  16'd0           ;
     end
     else if (w_capture) begin
         r_psel_uart <=  w_psel_uart     ;
@@ -179,7 +181,7 @@ always @(posedge clk or negedge clrn) begin
         r_psel_slv  <=  w_psel_slv      ;
         r_pwrite    <=  w_wmem          ;
         r_paddr     <=  aluout[11:2]    ;
-        r_pwdata    <=  w_data          ;
+        r_pwdata    <=  w_data[15:0]    ;
     end
 end
 
@@ -193,7 +195,7 @@ uart_ex_top uut5    (
                 .PENABLE        (w_penable      )   ,
                 .PWRITE         (r_pwrite       )   ,
                 .PADDR          (r_paddr        )   ,
-                .PWDATA         (r_pwdata       )   ,
+                .PWDATA         ({16'd0, r_pwdata})   ,
                 .PRDATA         (w_prdata       )   ,
                 .PREADY         (               )   ,
                 .PSLVERR        (               )   ,
@@ -216,7 +218,7 @@ spi_apb_top uut6    (
                 .PENABLE        (w_penable      )   ,
                 .PWRITE         (r_pwrite       )   ,
                 .PADDR          (r_paddr        )   ,
-                .PWDATA         (r_pwdata       )   ,
+                .PWDATA         ({16'd0, r_pwdata})   ,
                 .PRDATA         (w_prdata_spi   )   ,
                 .SPISCLK        (SPISCLK        )   ,
                 .SPIMOSI        (SPIMOSI        )   ,
@@ -237,7 +239,7 @@ spi_slave_apb_top uut7 (
                 .PENABLE        (w_penable      )   ,
                 .PWRITE         (r_pwrite       )   ,
                 .PADDR          (r_paddr        )   ,
-                .PWDATA         (r_pwdata       )   ,
+                .PWDATA         ({16'd0, r_pwdata})   ,
                 .PRDATA         (w_prdata_slv   )   ,
                 .SLVSCLK        (SLVSCLK        )   ,
                 .SLVMOSI        (SLVMOSI        )   ,
