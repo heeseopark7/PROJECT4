@@ -24,8 +24,9 @@
 //             Checks on internal signals (RTL only, "function_sim"):
 //               RAM[0] = 0x37, RAM[1] = 0x41, RAM[2] = 0x3C, RAM[3] = 0xA5
 //               final pc = 0xAC  (program finished)
-//               stall pulses = penable pulses (one pair per APB access)
-//               penable is never high together with stall (SETUP / ACCESS)
+//               [V4] stall clocks = 2 x penable pulses (DECODE + SETUP stall,
+//                    then ACCESS, per APB access)
+//               penable is never high together with stall (DECODE / SETUP / ACCESS)
 //               penable is high for exactly 1 clock per access
 //             The chip (mcu_core_top) has no pc / inst / aluout / memout pins, so a
 //             netlist run ends when the 8th SPI clock edge has been seen.
@@ -223,8 +224,9 @@ initial begin
     check("RAM[2] (SPI master)", u_mcu_top.uut3.r_ram[2], 32'h3C);
     check("RAM[3] (SPI slave)",  u_mcu_top.uut3.r_ram[3], 32'hA5);
     check("final pc",            pc,                      32'hAC);
-    check("stall = penable",     (n_stall == n_pen) && (n_pen != 0), 1);
+    check("stall = 2 x penable", (n_stall == 2*n_pen) && (n_pen != 0), 1);   // [V4] 3-clock APB
     $display("info : APB accesses = %0d", n_pen);
+    $display("info : total clocks = %0d", cyc);                              // [V4] until pc = 0xAC
 `endif
     check("UARTTXD frames",      tx_frames,         1);
     check("UARTTXD data",        tx_byte,           32'h41);
