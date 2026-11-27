@@ -8,8 +8,8 @@
 # +libext+.v -y : xrun would compile .v files automatically in the specific folder decribed with -y option 
 
 # HEX file is defined at ../TESTBENCH/tb_cmsdk_mcu.v 
-cp ../../3_SYN/mapped/mcu_core_top_syn_final.v .
-cp ../../3_SYN/mapped/mcu_core_top_delays.sdf .
+cp ../../3_SYN/10ns/mapped/mcu_core_top_syn_final.v .
+cp ../../3_SYN/10ns/mapped/mcu_core_top_delays.sdf .
 
 xrun -64bit \
      +max_err_count+50 \

@@ -18,20 +18,13 @@
 |DPOPT-6   |Info   |    1|Pre-processed datapath logic.                                                                         |
 |ELAB-1    |Info   |    1|Elaborating Design.                                                                                   |
 |ELAB-3    |Info   |    1|Done Elaborating Design.                                                                              |
-|GLO-12    |Info   |  258|Replacing a flip-flop with a logic constant 0.                                                        |
-|          |       |     |To prevent this optimization, set the 'optimize_constant_0_flops' root attribute to 'false' or        |
-|          |       |     | 'optimize_constant_0_seq' instance attribute to 'false'. You can also see the complete list of       |
-|          |       |     | deleted sequential with command 'report sequential -deleted' (on Reason 'constant0').                |
-|GLO-34    |Info   |    6|Deleting instances not driving any primary outputs.                                                   |
+|GLO-34    |Info   |    4|Deleting instances not driving any primary outputs.                                                   |
 |          |       |     |Optimizations such as constant propagation or redundancy removal could change the connections so a    |
 |          |       |     | hierarchical instance does not drive any primary outputs anymore. To see the list of deleted         |
 |          |       |     | hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is       |
 |          |       |     | truncated set the message attribute 'truncate' to false to see the complete list. To prevent this    |
 |          |       |     | optimization, set the 'delete_unloaded_insts' root/subdesign attribute to 'false' or 'preserve'      |
 |          |       |     | instance attribute to 'true'.                                                                        |
-|GLO-45    |Info   |   20|Replacing the synchronous part of an always feeding back flip-flop with a logic constant.             |
-|          |       |     |To prevent this optimization, set 'optimize_constant_feedback_seqs' root attribute to 'false'. The    |
-|          |       |     | instance attribute 'optimize_constant_feedback_seq' controls this optimization.                      |
 |LBR-9     |Warning|   20|Library cell has no output pins defined.                                                              |
 |          |       |     |Add the missing output pin(s)                                                                         |
 |          |       |     | , then reload the library. Else the library cell will be marked as timing model i.e. unusable.       |
@@ -49,7 +42,7 @@
 |MAP-32    |Info   |    2|Relaxed some design requirements on sequential instances to run synthesis successfully.               |
 |          |       |     |To see the list of relaxed sequential instances, set the 'information_level' attribute to 2 or above. |
 |          |       |     | If the message is truncated set the message attribute 'truncate' to false to see the complete list.  |
-|MESG-11   |Warning|    5|Maximum message print count reached.                                                                  |
+|MESG-11   |Warning|    4|Maximum message print count reached.                                                                  |
 |PHYS-129  |Info   |   20|Via with no resistance will have a value of '0.0' assigned for resistance value.                      |
 |          |       |     |If this is the expected behavior, this message can be ignored.                                        |
 |PHYS-279  |Warning|   20|Physical cell not defined in library.                                                                 |
