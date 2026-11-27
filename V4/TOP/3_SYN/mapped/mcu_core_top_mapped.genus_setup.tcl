@@ -2,7 +2,7 @@
 #
 # Genus(TM) Synthesis Solution setup file
 # Created by Genus(TM) Synthesis Solution 22.17-s071_1
-#   on 11/27/2026 06:39:59
+#   on 11/27/2026 03:27:44
 #
 # This file can only be run in Genus Common UI mode.
 #
@@ -62,8 +62,8 @@ set _slk_ [::legacy::get_attribute slack design:mcu_core_top]
 if {[regexp {^-?[0-9.]+$} $_slk_]} {
   set _slk_ [format %.1f $_slk_]
 }
-if {$_slk_ != "-145.3"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden slack: -145.3,  current slack: $_slk_"
+if {$_slk_ != "2.1"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden slack: 2.1,  current slack: $_slk_"
 }
 unset _slk_
 # multi-mode slack
@@ -72,8 +72,8 @@ set _tns_ [::legacy::get_attribute tns design:mcu_core_top]
 if {[regexp {^-?[0-9.]+$} $_tns_]} {
   set _tns_ [format %.0f $_tns_]
 }
-if {$_tns_ != "176048"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden tns: 176048,  current tns: $_tns_"
+if {$_tns_ != "0"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden tns: 0,  current tns: $_tns_"
 }
 unset _tns_
 # cell area
@@ -81,8 +81,8 @@ set _cell_area_ [::legacy::get_attribute cell_area design:mcu_core_top]
 if {[regexp {^-?[0-9.]+$} $_cell_area_]} {
   set _cell_area_ [format %.0f $_cell_area_]
 }
-if {$_cell_area_ != "45802"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden cell area: 45802,  current cell area: $_cell_area_"
+if {$_cell_area_ != "22098"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden cell area: 22098,  current cell area: $_cell_area_"
 }
 unset _cell_area_
 # net area
@@ -90,7 +90,7 @@ set _net_area_ [::legacy::get_attribute net_area design:mcu_core_top]
 if {[regexp {^-?[0-9.]+$} $_net_area_]} {
   set _net_area_ [format %.0f $_net_area_]
 }
-if {$_net_area_ != "11622"} {
-   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden net area: 11622,  current net area: $_net_area_"
+if {$_net_area_ != "6913"} {
+   mesg_send [::legacy::find -message /messages/PHYS/PHYS-92] "golden net area: 6913,  current net area: $_net_area_"
 }
 unset _net_area_

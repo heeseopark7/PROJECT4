@@ -14,7 +14,7 @@ set_units -time 1000.0ps
 #############################
 reset_design
 #############################
-create_clock -period 4 -name MAIN_CLOCK [get_ports clk]
+create_clock -period 10 -name MAIN_CLOCK [get_ports clk]
 
 # Same clock model as the pad track (source/network latency 0.2 ns,
 # uncertainty 0.1 ns, transition 0.1 ns)

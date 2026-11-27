@@ -1,6 +1,6 @@
 # ####################################################################
 
-#  Created by Genus(TM) Synthesis Solution 22.17-s071_1 on Fri Nov 27 06:39:59 KST 2026
+#  Created by Genus(TM) Synthesis Solution 22.17-s071_1 on Fri Nov 27 03:27:44 KST 2026
 
 # ####################################################################
 
@@ -12,7 +12,7 @@ set_units -time 1000ps
 # Set the current design
 current_design mcu_core_top
 
-create_clock -name "MAIN_CLOCK" -period 4.0 -waveform {0.0 2.0} [get_ports clk]
+create_clock -name "MAIN_CLOCK" -period 10.0 -waveform {0.0 5.0} [get_ports clk]
 set_clock_transition 0.1 [get_clocks MAIN_CLOCK]
 set_load -pin_load 0.003 [get_ports UARTTXD]
 set_load -pin_load 0.003 [get_ports UARTINTR]
